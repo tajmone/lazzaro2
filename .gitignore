@@ -1,0 +1,19 @@
+################################################################################
+# Progetto Lazzaro II
+# https://github.com/tajmone/lazzaro2
+################################################################################
+
+## File temporanei e di lavoro
+##############################
+___*.*
+
+# Link e URL:
+*.lnk
+*.url
+
+#########################
+## USER-SPECIFIC FILES ##
+#########################
+# Reserved for patterns that might be useful to end users of the project.
+
+# EOF #

@@ -5,6 +5,16 @@
 
 * text=auto
 
+## =================
+## WEB-RELATED FILES
+## =================
+*.css      text
+*.htm      text
+*.mht      text
+*.html     text
+*.js       text
+highlight.min.js  eol=lf
+
 ## ===================
 ## Documentation files
 ## ===================

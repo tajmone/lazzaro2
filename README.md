@@ -60,16 +60,18 @@ Qui di seguito sono riportate le risorse destinate all'archiviazione, suddivise 
 
 È stato pianificato il recupero, la ristampa e l'archiviazione delle seguenti risorse:
 
-- [ ] "Hugo per giocare", guida scritta da Paolo Vece.
+- [ ] __"Hugo per giocare"__, guida scritta da Paolo Vece.
     + [x] Richiesta permessi di ristampa e archivizione.
     + [x] Conversione in AsciiDoc e ristampa in HTML5.
     + [ ] Archiviazione su IF Archive.
-- [ ] "Hugo v2.5, Manuale del programmatore", scritto da Ken Tessman e tradotto da Paolo Vece.
+        * [x] Richiesta inoltrata il 2019/05/25.
+        * [ ] In attesa di risposta.
+- [ ] __"Hugo v2.5, Manuale del programmatore"__, scritto da Ken Tessman e tradotto da Paolo Vece. (Vedi [#1])
     + [x] Richiesta permessi di ristampa e archivizione.
     + [ ] Conversione in AsciiDoc e ristampa in HTML5.
-        * [x] conversione in corso.
+        * [x] conversione in corso (in locale).
     + [ ] Archiviazione su IF Archive.
-- [ ] Libreria italiana di Hugo.
+- [ ] __Libreria italiana di Hugo__.
     + [ ] Individuare chi l'ha tradotta.
     + [ ] Richiesta permessi di ristampa e archivizione.
     + [ ] Archiviazione su IF Archive.
@@ -79,8 +81,6 @@ Qui di seguito sono riportate le risorse destinate all'archiviazione, suddivise 
                                REFERENCE LINKS                                
 ------------------------------------------------------------------------------>
 
-[issues]: https://github.com/tajmone/lazzaro2/issues "Vedi gli issues del progetto"
-
 [IF Archive]: https://www.ifarchive.org/ "Visita lo IF Archive"
 
 [Progetto Lazzaro]: http://ifitalia.oldgamesitalia.net/pmwiki/pmwiki.php?n=Main.ProgettoLazzaro
@@ -88,8 +88,12 @@ Qui di seguito sono riportate le risorse destinate all'archiviazione, suddivise 
 [Terra d'IF]: https://github.com/tajmone/Archivio-AT-Tristano/tree/master/Terra_dIF
 [Terra IFArchive]: http://ifarchive.org/indexes/if-archiveXmagazinesXTerra.html "Vai alla sezione 'Terra d'IF' sullo IF Archive"
 
+<!-- link progetto -->
 
+[issues]: https://github.com/tajmone/lazzaro2/issues "Vedi gli issues del progetto"
 [Click here for the English presentation]: ./ABOUT.md "Read the English presentation"
+
+[#1]: https://github.com/tajmone/lazzaro2/issues/1 "Issue #1 — Hugo: Manuale del Progammatore"
 
 <!-- file del progetto -->
 

@@ -1,0 +1,657 @@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>IF Italia - Il sito italiano sull'Interactive Fiction
+</TITLE>
+      <LINK REV="made" HREF="mailto:dickdastardly@highway.it">
+	<META NAME="GENERATOR" CONTENT="NoteTab 4.82">
+	<META NAME="copyright" CONTENT="Tutto il materiale presente in questo sito è (c)Simone Zanella e (c)IF Italia ove non diversamente indicato. Tutti i diritti sono riservati. E' vietata la riproduzione non autorizzata del sito e di sue parti.">
+	<META name="keywords" content="if interactive fiction avventura avventure testuale testuali inform infocom tads ifitalia italia giochi gioco castello adventure text simone zanella monkey island gratis freeware download">
+	<META name="description" content="Il più vasto sito italiano sulle avventure testuali e sull'Interactive Fiction">	<STYLE>
+	<!--
+		P { border: none; padding: 0cm; font-family: "Verdana", sans-serif; font-size: 10pt }
+	-->
+	</STYLE>
+</HEAD>
+<BODY>
+<BLOCKQUOTE><DIV TYPE="HEADER">
+	<P ALIGN="CENTER" STYLE="border: 1px solid #000000; padding: 0.05cm"><FONT COLOR="#000080"><FONT FACE="Verdana, sans-serif">IF
+	ITALIA - Il sito Italiano sull'Interactive Fiction</FONT></FONT></P>
+</DIV>
+<P ALIGN="CENTER"><IMG SRC="../Varie/if3backup.jpg" NAME="Logosmall" ALIGN="MIDDLE" WIDTH="108" HEIGHT="104" BORDER="0"></P>
+<P><FONT SIZE="2" STYLE="font-size: 10pt"><FONT FACE="Verdana, sans-serif"><FONT COLOR="#000080">
+<h2>
+I. INTRODUZIONE</h2>
+
+<p><br>Hugo &egrave; un sistema per la progettazione, la programmazione
+e l'esecuzione di interactive fiction sofisticati, o avventure testuali.
+&Egrave; il risultato di un tentativo di espandere ulteriormente i concetti
+sviluppati nei precedenti sistemi in modo da rendere la programmazione
+di interactive fiction meno criptica e pi&ugrave; accessibile ai progettisti.
+Hugo deve molto al formato originale della Infocom (particolarmente per
+quel che riguarda le sue tabelle interne) cos&igrave; come al compilatore
+Inform distribuito pubblicamente da Graham Nelson (e la sua interpretazione
+sintattica del formato Infocom e la lineare definizione della grammatica).
+<p>Il miglior consiglio che si possa dare per imparare Hugo &egrave; probabilmente
+quello di stampare o avere sottomano in qualche modo il listato del sorgente
+di <tt>SAMPLE.HUG</tt>, e di riferirsi completamente a quello; esempi di
+tutte le funzionalit&agrave; di Hugo posso essere trovati nel codice sorgente
+del gioco di esempio.
+<p>L'e-mail dell'autore (The General Coffee Company Film Productions):
+<br>&lt;<a href="mailto:generalcoffe@geocities.com">generalcoffe@geocities.com</a>>
+<p>Home page di Hugo:
+<br><a href="http://www.geocities.com/hollywood/academy/5976/hugo.html">http://www.geocities.com/hollywood/academy/5976/hugo.html</a>
+<p>(Al momento di questa revisione)
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+<a NAME="NoteLegali"></a>I.a. Note legali</h3>
+
+<p><br>I programmi creati usando il compilatore di Hugo (Hugo Compiler)
+sono di propriet&agrave; dei rispettivi autori. Fate attenzione al fatto,
+comunque, che i file della libreria sono copyright by Kent Tessman, il
+creatore di Hugo, cos&igrave; come l'inteprete (Hugo Engine).
+<p>L'uso dei file della libreria di Hugo e la distribuzione dell'interprete
+sono autorizzati fino a quando le transazioni sono non commerciali e gratuite
+(tranne il caso in cui il prezzo richiesto serva a coprire i costi di distribuzione),
+e che i file della libreria e l'interprete non siano distribuiti in forma
+modificata.
+<p>Coloro i quali siano interessati ad una distribuzione commerciale di
+un prodotto creato con il compilatore di Hugo sono pregati di contattare
+Kent Tessman per le autorizzazioni.
+<p>NOTA: poich&eacute; il compilatore di Hugo e l'interprete vengono forniti
+gratuitamente, non esiste nessuna garanzia riguardo al loro uso.
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+<a NAME="MenoLegali"></a>I.b. (Note meno legali)</h3>
+
+<p><br>Questa sezione aggiuntiva, meno ufficiale, vuole chiarire quali
+sono le mie intenzioni riguardo all'uso legale di Hugo, e cosa comporta
+agli utenti voler distribuire i loro giochi. Prima di tutto, lasciatemi
+dire che, s&igrave;, voglio continuare a mantenere una certa discrezione
+su cosa viene fatto con il mio lavoro, e il paragrafo precedente &egrave;
+l&igrave; con l'intenzione di lasciarmi questa capacit&agrave;. Hugo &egrave;
+pi&ugrave; di un semplice compilatore -- &egrave; un completo sistema di
+progettazione ed un ambiente di esecuzione, cos&igrave; la distribuzione
+pu&ograve; coinvolgere altro oltre ad un semplice file <tt>.HEX</tt> (che,
+sebbene possa essere stato creato con la libreria di Hugo (Hugo Library)
+scritta da me, non &egrave; in realt&agrave; qualcosa che mi riguarda).
+<p>Quella che segue &egrave; una rapida carrellata su come la vedo io riguardo
+i varii tipi di distribuzione:
+<p>1. <i>Freeware</i>. Non ho nessun problema in questo senso, anche se
+l'interprete (Hugo Engine) viene distribuito come parte della distribuzione
+gratuita.
+<br>(Sarebbe comunque gentile farmi venire a conoscenza di questo fatto,
+solo per fare in modo che possa fornire aiuto assicurando che istruzioni
+corrette, informazioni aggiornate, ecc. siano incluse). Riguardo all'utilizzo
+della Hugo Library: l'ho scritta proprio per questo scopo, per fare in
+modo che la gente la usi per scrivere i propri giochi. La distribuzione
+Freeware &egrave; qualcosa che certamente incoraggio. Il codice sorgente
+della Hugo Library, naturalmente, non pu&ograve; essere distribuito in
+forma modificata a meno che sia esplicitamente indicato che a.) &egrave;
+stata scritta da Kent Tessman, e b.) che &egrave; stata successivamente
+modificata e distribuita da qualcun'altro.
+<p>2. <i>Shareware</i>. Ancora, non credo che questo mi disturbi. (Sebbene,
+ancora, vorrei essere tenuto aggiornato sulla distribuzione. L'unica mia
+obiezione potrebbe essere nei confronti di qualcuno che &egrave; moralmente
+riprovevole -- credo di non aver bisogno di scendere in dettagli. In questo
+caso, gli direi di scriversi da solo i propri dannati interprete e libreria).
+Il mercato Shareware per l'IF &egrave; tristemente depresso, ma la scrittura
+di un buon gioco richiede un sacco di talento e duro lavoro -- e se gli
+autori Hugo vogliono provare a guadagnare un po' dalle quote shareware,
+auguro loro la miglior fortuna.
+<p>3. <i>Software commerciale</i>. Questo &egrave; l'unico punto critico
+che mi viene in mente. Sfortunatamente &egrave; piuttosto difficile che
+qualcuno riesca a produrre una pezzo di Interactive Fiction di grande successo
+commerciale. D'altro canto, credo fermamente che Hugo sia in grado di creare
+alcuni giochi di grande impatto visivo (e sonoro). E d'altra parte, specialmente
+con il software commerciale, quello che avete intenzione di distribuire
+potrebbe essere stato scritto per pi&ugrave; della met&agrave; da qualcun
+altro (ad esempio, io, chi contribuisce alla libreria, i porter, poich&eacute;
+sarei impressionato nel vedere qualcuno che scriva un gioco che, per numero
+di righe del sorgente, possa rivaleggiare con le pi&ugrave; di 35.000 righe
+di codice dell'interprete e della libreria). Ma anche in un caso come questo,
+mi aspetterei che ogni licenza individuale dia all'autore la libert&agrave;
+di vendere n copie del gioco senza coinvolgere me o qulunque altro in qualche
+(anche minore) partecipazione.
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+<a NAME="Nomi"></a>I.c. Nomi e ringraziamenti</h3>
+
+<p><br>Coloro i quali si sono presi il compito (qualche volta difficile,
+sono sicuro) di portare Hugo su varie piattaforme -- oltre ai porting per
+DOS 16 bit, DOS 32 bit e Windows fatti dall'autore -- sono:
+<br>&nbsp;
+<center><table CELLSPACING=3 CELLPADDING=3 WIDTH="53%" >
+<tr>
+<td>David Kinder</td>
+
+<td>Amiga</td>
+</tr>
+
+<tr>
+<td>Colin Turnbull</td>
+
+<td>Acorn Archimedes</td>
+</tr>
+
+<tr>
+<td>Bill Lash</td>
+
+<td>Linux (pi&ugrave; Solaris OS, ecc.)</td>
+</tr>
+
+<tr>
+<td>Gerald Bostock</td>
+
+<td>OS/2</td>
+</tr>
+</table></center>
+
+<p>L'autore ha un forte debito nei loro confronti, per tutto il loro lavoro
+e per i loro suggerimenti su come migliorare il compilatore e l'interprete
+per mezzo di critiche generose e dirette.
+<p>Pi&ugrave; di qualche parola di apprezzamento &egrave; dovuta a Volker
+Blasius che (ora con l'aiuto di David Kinder) ha la responsabilit&agrave;
+sostanziale del mantenimento dell'Interactive Fiction Archive a <a href="ftp://ftp.gmd.de/if-archive">ftp://ftp.gmd.de</a>
+-- una delle risorse chiave per i programmatori Hugo e raccoglitore primario
+del materiale dei collaboratori (e lettori) dei newsgroup <a href="news:rec.arts.int-fiction">rec.arts.int-fiction</a>
+e <a href="news:rec.games.int-fiction">rec.games.int-fiction</a>.
+<p>Grazie anche a chi con i suoi commenti e suggerimenti ha contribuito
+a rendere Hugo cos&igrave; utile ed usabile come &egrave; ora: Dr. Jeff
+Jenness, Vikram Ravindran, Jesse McGrew, Paolo Vece, Daniel Cardenas, Cam
+Bowes, Mark Bijster, Jose Luis Cebrian, John Menichelli, Jerome Nichols,
+Jason Dyer, e Jason Brown.
+<br>Riconoscimenti e ringraziamenti vanno anche a Graham Nelson, il cui
+linguaggio Inform ha contribuito a dare forma alla sintassi iniziale ed
+alla struttura di Hugo.
+<p>Ringraziamenti speciali a Julian Arnold e Jim Newland, soci del Comitato
+Hugo Cosa-Se?. Entrambi hanno fornito numerosi contributi a Hugo sia in
+temini di suggerimenti per il linguaggio stesso che per miglioramenti ed
+estensioni alla libreria -- per entrare nello specifico sarebbe qualcosa
+di sicuramente inestimabile.
+<p>Infine, mio fratello Dean Tessman &egrave; stata una risorsa ben sfruttata
+per la sua volont&agrave; a provare attachments multipli di e-mail da 100K
+di eseguibile e per iniziare discussioni su minuzie programmatorie.
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+<a NAME="Contenuto"></a>I.d. Contenuto della distribuzione</h3>
+
+<p><br>Una serie di file fa parte della distribuzione di Hugo:
+<p><i>(NOTA: nel corso di questo manuale, la convenzione dei nomi riguarda
+il mondo MS-DOS/Windows. Dal momento che Hugo &egrave; disponibile per
+altri sistemi, il modo di indicare il nome dei file pu&ograve; variare,
+e la documentazione specifica per le macchine dovrebbe indicare queste
+variazioni).</i>
+<table CELLSPACING=3 CELLPADDING=3 WIDTH="99%" >
+<tr>
+<td><tt>HC.EXE</tt></td>
+
+<td>Hugo Compiler (il compilatore)</td>
+</tr>
+
+<tr>
+<td><tt>HE.EXE</tt></td>
+
+<td>Hugo Engine (l'interprete)</td>
+</tr>
+
+<tr>
+<td><tt>HD.EXE</tt></td>
+
+<td>Hugo Debugger (il debugger)</td>
+</tr>
+
+<tr>
+<td><tt>HDHELP.HLP</tt></td>
+
+<td>Debugger help file (l'help del debugger)</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>HUGOLIB.H</tt></td>
+
+<td>Routine e definizioni della libreria</td>
+</tr>
+
+<tr>
+<td><tt>VERBLIB.H</tt></td>
+
+<td>Routine standard per i verbi</td>
+</tr>
+
+<tr>
+<td><tt>VERBLIB.G</tt></td>
+
+<td>Definizioni standard per la grammatica</td>
+</tr>
+
+<tr>
+<td><tt>OBJLIB.H</tt></td>
+
+<td>Una libreria con la definizione di una serie di oggetti utili (inclusa
+da <tt>HUGOLIB.H</tt>)</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>SAMPLE.HUG</tt></td>
+
+<td>Codice sorgente del gioco di esempio</td>
+</tr>
+
+<tr>
+<td><tt>SHELL.HUG</tt></td>
+
+<td>Un codice sorgente da riempire</td>
+</tr>
+</table>
+
+<p>E due serie di file che, a seconda delle impostazioni scelte da ciascun
+utente, sono incluse opzionalmente da <tt>HUGOLIB.H</tt>, <tt>VERBLIB.H</tt>
+e <tt>VERBLIB.G</tt>:
+<table CELLSPACING=3 CELLPADDING=3 WIDTH="75%" >
+<tr>
+<td><tt>HUGOFIX.H</tt></td>
+
+<td>Routine per il debug</td>
+</tr>
+
+<tr>
+<td><tt>HUGOFIX.G</tt></td>
+
+<td>Grammatica per il debug</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>VERBSTUB.H</tt></td>
+
+<td>Routine per i verbi addizionali</td>
+</tr>
+
+<tr>
+<td><tt>VERBSTUB.G</tt></td>
+
+<td>Grammatica per i verbi addizionali</td>
+</tr>
+</table>
+
+<p>Un file sorgente Hugo addizionale dimostra la capacit&agrave; di creare
+header precompilati:
+<table CELLSPACING=3 CELLPADDING=3 WIDTH="80%" >
+<tr>
+<td><tt>HUGOLIB.HUG</tt></td>
+
+<td>Per creare una versione linkabile di <tt>HUGOLIB.H</tt></td>
+</tr>
+</table>
+
+<p>L'ultima versione di Hugo &egrave; disponibile tramite FTP anonimo a
+<a href="ftp://ftp.gmd.de/if-archive/programming/hugo">ftp.gmd.de</a>
+nella directory if-archive/programming/hugo. La distribuzione di ciascuno
+dei file di Hugo &egrave; autorizzata solo con il permesso dell'autore
+come indicato nelle <a href="#NoteLegali">Note Legali</a> pi&ugrave; sopra.
+<p>I file <tt>.HUG</tt>, <tt>.H</tt> e <tt>.G</tt> sono file di testo e
+come tali vanno scaricati; gli eseguibili sono file binari.
+<p><i>(NOTA SULLA FORMATTAZIONE: i file indicati sopra sono formattati
+con una dimensione di tabulazione di 8 spazi; se la formattazione appare
+incorretta, &egrave; necessario sistemare la dimensione della tabulazione
+nel proprio editor).</i>
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+<a NAME="Convenzioni"></a>I.e. Convenzioni adottate nel manuale</h3>
+
+<p><br>Le seguenti convenzioni vengono adottate in questo manuale:
+<center><table CELLSPACING=3 CELLPADDING=3 WIDTH="50%" >
+<tr>
+<td><tt>&lt;parametro></tt></td>
+
+<td>per i parametri obbligatori</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>[parametro]</tt></td>
+
+<td>per i parametri opzionali</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>FILE</tt></td>
+
+<td>per i nomi di file</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>NomeFunzione</tt></td>
+
+<td>funzioni, ecc.</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>'istruzione'</tt></td>
+
+<td>istruzioni, parole chiave</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>...</tt></td>
+
+<td>per le omissioni</td>
+</tr>
+</table></center>
+
+<br>&nbsp;
+<h3>
+<a NAME="PerCominciare"></a>I.f. Per cominciare</h3>
+
+<p><br>Digitate
+<br>&nbsp;
+<blockquote><tt>hc</tt></blockquote>
+
+<p><br>senza alcun parametro per avere una lista completa delle opzioni
+e delle direttive del compilatore.
+<p>La sintassi MS-DOS per eseguire il compilatore &egrave;
+<br>&nbsp;
+<blockquote><tt>hc [-opzioni] &lt;filesorgente[.HUG]> &lt;fileoggetto></tt></blockquote>
+
+<p><br>Non &egrave; necessario specificare alcuna opzione, il nome del
+file oggetto, o l'esensione del file sorgente. Il modo pi&ugrave; semplice
+di eseguire il compilatore &egrave;
+<br>&nbsp;
+<blockquote><tt>hc &lt;filesorgente></tt></blockquote>
+
+<p><br>Senza alcun parametro indicato esplicitamente, il compilatore assume
+che l'estensione sia <tt>.HUG</tt>. Il file oggetto di default &egrave;
+<tt>&lt;filesorgente>.HEX</tt>.
+<p>Ecco come compilare il gioco di esempio. Con l'eseguibile del compilatore,
+i file della libreria, ed il codice sorgente del gioco di esempio tutti
+nella directory corrente, scrivete
+<br>&nbsp;
+<blockquote><tt>hc -ls sample.hug</tt></blockquote>
+
+<p><br>o, pi&ugrave; semplicemente,
+<br>&nbsp;
+<blockquote><tt>hc -ls sample</tt></blockquote>
+
+<p><br>e dopo qualche secondo (in pi&ugrave;, o in meno, a seconda del
+vostro processore e della vostra configurazione) una schermata di informazioni
+statistiche verr&agrave; visualizzata dopo aver completato la compilazione
+(grazie all'opzione <tt>-s</tt>).
+<p>Il nuovo file <tt>SAMPLE.HEX</tt> dovrebbe essere comparso nella directory
+corrente. Inoltre, l'opzione <tt>-l</tt> ha fatto in modo che tutti i messaggi
+di compilazione (che avrebbero incluso anche gli errori, se ce ne fossero
+stati) siano stati scritti nel file <tt>SAMPLE.LST</tt>.
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+<a NAME="Opzioni"></a>I.g. Opzioni del compilatore</h3>
+
+<p><br>Una serie di opzioni pu&ograve; essere selezionata attraverso la
+riga di comando.
+<br>Le opzioni disponibili sono:
+<center><table CELLSPACING=3 CELLPADDING=3 WIDTH="64%" >
+<tr>
+<td ALIGN=CENTER><b><tt>-a</tt></b></td>
+
+<td>termina la compilazione ad ogni errore</td>
+</tr>
+
+<tr>
+<td><b><tt>-d</tt></b></td>
+
+<td>compila come eseguibile <tt>.HDX</tt> per il debug</td>
+</tr>
+
+<tr>
+<td><b><tt>-e</tt></b></td>
+
+<td>formato degli errori esteso</td>
+</tr>
+
+<tr>
+<td><b><tt>-f</tt></b></td>
+
+<td>riepilogo di tutti gli oggetti</td>
+</tr>
+
+<tr>
+<td><b><tt>-h</tt></b></td>
+
+<td>compila come file <tt>.HLB</tt> per gli header precompilati</td>
+</tr>
+
+<tr>
+<td><b><tt>-i</tt></b></td>
+
+<td>visualizza le informazioni di debug</td>
+</tr>
+
+<tr>
+<td><b><tt>-l</tt></b></td>
+
+<td>salva i messaggi su disco come <tt>&lt;filesorgente>.LST</tt></td>
+</tr>
+
+<tr>
+<td><b><tt>-o</tt></b></td>
+
+<td>visualizza l'albero degli oggetti</td>
+</tr>
+
+<tr>
+<td><b><tt>-p</tt></b></td>
+
+<td>invia l'output alla stampante</td>
+</tr>
+
+<tr>
+<td><b><tt>-s</tt></b></td>
+
+<td>visualizza le statistiche di compilazione</td>
+</tr>
+
+<tr>
+<td><b><tt>-t</tt></b></td>
+
+<td>scrive il testo nel file list per la correzione ortografica</td>
+</tr>
+
+<tr>
+<td><b><tt>-u</tt></b></td>
+
+<td>visualizza l'utilizzo della memoria del file oggetto</td>
+</tr>
+
+<tr>
+<td><b><tt>-v</tt></b></td>
+
+<td>compilazione con indicazioni estese</td>
+</tr>
+
+<tr>
+<td><b><tt>-x</tt></b></td>
+
+<td>ignora le opzioni nel codice sorgente</td>
+</tr>
+</table></center>
+
+<p>La maggior parte dei programmatori Hugo user&agrave; probabilmente l'opzione
+<tt>-l</tt>
+in modo da memorizzare gli errori di compilazione.
+<p>L'opzione <tt>-z</tt> pu&ograve;, in alcune configurazioni, incrementare
+la velocit&agrave; di compilazione inibendo la normale messaggistica ("Compiling...lines
+of..." e "...percente complete").
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+<a NAME="Limiti"></a>I.h. Impostazione dei limiti</h3>
+
+<p><br>Sulla riga di comando &egrave; possibile indicare, dopo le opzioni
+e prima del file sorgente, una serie di impostazioni dei limiti.
+<br>Queste impostazioni riguardano la gestione della memoria, la limitazione
+del numero di certi tipi di elementi di programma, come oggetti e voci
+di dizionario.
+<p>Per elencare le impostazioni, digitare:
+<br>&nbsp;
+<blockquote><tt>hc $list</tt></blockquote>
+
+<p><br>Per cambiare un limite non statico, digitare:
+<br>&nbsp;
+<blockquote><tt>hc $&lt;impostazione>=&lt;nuovo limite> &lt;filesorgente>...</tt></blockquote>
+
+<p><br>Ad esempio, per compilare il gioco di esempio con il numero massimo
+di voci di dizionario raddioppiato rispetto al limite di default di 1024,
+e con le opzioni <tt>-l</tt> e -<tt>s</tt> si usa,
+<br>&nbsp;
+<blockquote><tt>hc -ls $MAXDICT=2048 sample</tt></blockquote>
+
+<p><br>Se viene generato un errore di compilazione indicante che troppi
+simboli di un particolare tipo sono stati dichiarati, &egrave; probabilmente
+possibile scavalcare l'errore semplicemente ricompilando con un limite
+pi&ugrave; alto per quell'impostazione dalla riga di comando.
+<p>Consultate l'Appendice C per un elenco completo delle impostazioni valide
+dei limiti.
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+<a NAME="Directory"></a>I.i. Directory</h3>
+
+<p><br>&Egrave; possibile specificare dove il compilatore andr&agrave;
+a cercare i differenti tipo di file. Questo pu&ograve; essere fatto tramite
+la riga di comando:
+<br>&nbsp;
+<blockquote><tt>hc @&lt;directory>=&lt;directory reale></tt></blockquote>
+
+<p><br>Ad esempio, per specificare che i file sorgenti vanno presi nella
+directory <tt>C:\HUGO\SOURCE</tt>, attivate il compilatore con:
+<br>&nbsp;
+<blockquote><tt>hc @source=c:\hugo\source &lt;nomefile></tt></blockquote>
+
+<p><br>Le directory valide sono:
+<center><table CELLSPACING=3 CELLPADDING=3 >
+<tr>
+<td><tt>source</tt></td>
+
+<td>File sorgenti</td>
+</tr>
+
+<tr>
+<td><tt>object</tt></td>
+
+<td>Dove vengono creati i nuovi file <tt>.HEX</tt></td>
+</tr>
+
+<tr>
+<td><tt>lib</tt></td>
+
+<td>File della libreria</td>
+</tr>
+
+<tr>
+<td><tt>list</tt></td>
+
+<td>File <tt>.LST</tt></td>
+</tr>
+
+<tr>
+<td><tt>resource</tt></td>
+
+<td>Risorse per una lista di risorse</td>
+</tr>
+
+<tr>
+<td><tt>temp</tt></td>
+
+<td>File temporanei di compilazione</td>
+</tr>
+</table></center>
+
+<p>Gli utenti evoluti possono avvantaggiarsi del fatto che &egrave; possibile
+impostare le directory di default attraverso le variabili ambiente. (Il
+metodo di impostare le variabili ambiente pu&ograve; variare da sistema
+operativo a sistema operativo).
+<p>La variabile <tt>HUGO_&lt;NOME></tt> pu&ograve; essere impostata con
+la directory <tt>&lt;nome></tt>. Ad esempio, la directory dei sorgenti
+pu&ograve; essere impostata con la variabile ambiente <tt>HUGO_SOURCE</tt>.
+<p>Le directory indicate sulla riga di comando hanno la precedenza rispetto
+a quelle indicate nelle variabili ambiente. In ogni caso, se il file non
+viene trovato nella directory specificata, viene cercato nella directory
+corrente.
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+<a NAME="Engine"></a>I.j. Hugo Engine</h3>
+
+<p><br>Avendo compilato il gioco di esempio, eseguitelo lanciando
+<br>&nbsp;
+<blockquote><tt>he sample</tt></blockquote>
+
+<p><br>dalla riga di comando. Ancora, non &egrave; necessario specificare
+l'estensione. L'interpete assume <tt>.HEX</tt> se non viene indicato nulla.
+<p><i>(NOTA: la variabile ambiente <tt>HUGO_OBJECT</tt> o <tt>HUGO_GAMES</tt>
+pu&ograve; contenere la directory nella quale l'interprete cercher&agrave;
+il file <tt>.HEX</tt> specificato. La destinazione per il file di salvataggio
+pu&ograve; essere specificata con <tt>HUGO_SAVE</tt>. Queste impostazioni
+sono tutte opzionali).</i>
+<br>&nbsp;
+</FONT></FONT></FONT></P>
+<P ALIGN="CENTER"><IMG SRC="../Varie/Newgif/blurulr6.gif" NAME="Riga" ALIGN="BOTTOM" WIDTH="640" HEIGHT="2" BORDER="0"><BR><BR>
+<FONT SIZE="1" STYLE="font-size: 8pt"><A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A>
+<FONT SIZE="2">Torna alla Home Page</FONT> 
+<A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A></FONT>
+</P>
+<P ALIGN="CENTER"><FONT SIZE="1" STYLE="font-size: 8pt"><FONT COLOR="#000080">&copy;2000 Simone
+Zanella e &copy;2000 IF Italia. E' vietata la riproduzione.</FONT></FONT></P></BLOCKQUOTE>
+</BODY>
+</HTML>

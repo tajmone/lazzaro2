@@ -1,0 +1,429 @@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>IF Italia - Il sito italiano sull'Interactive Fiction
+</TITLE>
+      <LINK REV="made" HREF="mailto:dickdastardly@highway.it">
+	<META NAME="GENERATOR" CONTENT="NoteTab 4.82">
+	<META NAME="copyright" CONTENT="Tutto il materiale presente in questo sito è (c)Simone Zanella e (c)IF Italia ove non diversamente indicato. Tutti i diritti sono riservati. E' vietata la riproduzione non autorizzata del sito e di sue parti.">
+	<META name="keywords" content="if interactive fiction avventura avventure testuale testuali inform infocom tads ifitalia italia giochi gioco castello adventure text simone zanella monkey island gratis freeware download">
+	<META name="description" content="Il più vasto sito italiano sulle avventure testuali e sull'Interactive Fiction">	<STYLE>
+	<!--
+		P { border: none; padding: 0cm; font-family: "Verdana", sans-serif; font-size: 10pt }
+	-->
+	</STYLE>
+</HEAD>
+<BODY>
+<BLOCKQUOTE><DIV TYPE="HEADER">
+	<P ALIGN="CENTER" STYLE="border: 1px solid #000000; padding: 0.05cm"><FONT COLOR="#000080"><FONT FACE="Verdana, sans-serif">IF
+	ITALIA - Il sito Italiano sull'Interactive Fiction</FONT></FONT></P>
+</DIV>
+<P ALIGN="CENTER"><IMG SRC="../Varie/if3backup.jpg" NAME="Logosmall" ALIGN="MIDDLE" WIDTH="108" HEIGHT="104" BORDER="0"></P>
+<P><FONT SIZE="2" STYLE="font-size: 10pt"><FONT FACE="Verdana, sans-serif"><FONT COLOR="#000080">
+
+<h2>
+VII. GRAMMATICA E PARSING</h2>
+
+<h3>
+<a NAME="DefGrammar"></a>VII.a. Definizione della grammatica</h3>
+Ogni comando valido del giocatore deve essere specificato. Pi&ugrave; precisamente
+ogni uso di un particolare verbo deve essere dettagliato per intero nel
+codice sorgente.
+<p>Le definizioni della grammatica devono essere inserite sempre all'inizio
+del codice, prima di ogni oggetto o codice da eseguire. In pratica se diversi
+file addizionali di grammatica devono essere inclusi, o una nuova grammatica
+deve essere definita esplicitamente nel codice sorgente, deve essere fatto
+prima dell'inclusione dei file che contengono del codice da eseguire, o
+prima della definizione di ogni routine, oggetto, ecc.
+<p>La sintassi da usare &egrave;:
+<blockquote><tt>[x]verb "&lt;verbo1>" [, "&lt;verbo2>", "&lt;verbo3>",...]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * &lt;specificazione di sintassi 1> &lt;RoutineVerbo1></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * &lt;specificazione di sintassi 2> &lt;RoutineVerbo2></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt></blockquote>
+Bene, che vuol dire? Ecco alcuni esempi tratti dal file di grammatica della
+libreria <tt>VERBLIB.G</tt>:
+<blockquote><tt>verb "get"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; *&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+DoVague</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * "up"/"out"/"off"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+DoExit</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * "outof"/"offof"/"off" object&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+DoExit</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * "in"/"on" object&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+DoEnter</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * multinotheld "from"/"off" parent&nbsp;&nbsp;&nbsp;&nbsp;
+DoGet</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * multinotheld "offof"/"outof" parent&nbsp;
+DoGet</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * multinotheld&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+DoGet</tt>
+<p><tt>verb "take"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; *&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+DoVague</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * "off" multiheld&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+DoTakeOff</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * multiheld "off"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+DoTakeOff</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * multinotheld&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+DoGet</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * multinotheld "from"/"off" parent&nbsp;&nbsp;&nbsp;&nbsp;
+DoGet</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * multinotheld "offof"/"outof" parent&nbsp;
+DoGet</tt>
+<p><tt>xverb "save"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; *&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+DoSave</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * "game"&nbsp;&nbsp;&nbsp;&nbsp; DoSave</tt>
+<p><tt>verb "read", "peruse"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; *&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+DoVague</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * readable&nbsp;&nbsp;&nbsp;&nbsp; DoRead</tt>
+<p><tt>verb "unlock"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; *&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+DoVague</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * lockable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+DoUnLock</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * lockable "with" held DoUnLock</tt></blockquote>
+Ogni intestazione '<tt>verb</tt>' o '<tt>xverb</tt>' comincia con una nuova
+definizione di un verbo. Un '<tt>xverb</tt>' &egrave; un qualificatore
+speciale che indica che l'interprete non deve chiamare la routine <tt>Main</tt>
+dopo aver completato con successo l'azione. Un '<tt>xverb</tt>' viene di
+solito usato con i verbi non di azione, o di utilit&agrave; come il salvataggio,
+il ripristino, l'uscita dal gioco, o il ricominciare da capo.
+<p>Successivamente nell'intestazione sono indicati uno o pi&ugrave; nomi
+del verbo. Ogni nome specificato user&agrave; la grammatica seguente allo
+stesso modo.
+<br>Questo &egrave; il motivo per il quale "<tt>get</tt>" e "<tt>take</tt>"
+negli esempi precedenti sono definiti separatamente, invece di
+<blockquote><tt>verb "get", "take"</tt></blockquote>
+In questo modo i comandi
+<blockquote><tt>get up</tt></blockquote>
+e
+<blockquote><tt>take off hat</tt></blockquote>
+sono consentiti, mentre
+<blockquote><tt>take up</tt></blockquote>
+e
+<blockquote><tt>get off hat</tt></blockquote>
+non hanno senso.
+<p>Ogni riga che comincia con l'asterisco ('<tt>*</tt>') &egrave; un uso
+valido del verbo che si sta defininendo. (Ogni input del giocatore deve
+cominciare con un verbo. Le eccezioni, dove un comando &egrave; diretto
+ad un oggetto come in
+<blockquote><tt>Ned, get the ball</tt></blockquote>
+verranno dettagliate in seguito).
+<p>Fino a due oggetti ed un qualunque numero di parole del dizionario possono
+essere usate per creare una riga di sintassi. Gli oggetti devono essere
+separati ad almeno una parola del dizionario.
+<p>Specificazioni di oggetto valide sono:
+<br>&nbsp;
+<center><table CELLSPACING=3 CELLPADDING=3 >
+<tr>
+<td><tt>object</tt></td>
+
+<td>qualunque oggetto visibile (l'oggetto diretto)</td>
+</tr>
+
+<tr>
+<td><tt>xobject</tt></td>
+
+<td>l'oggetto indiretto</td>
+</tr>
+
+<tr>
+<td><tt>attribute</tt></td>
+
+<td>qualunque oggetto visibile che ha l'attributo <tt>&lt;attribute></tt></td>
+</tr>
+
+<tr>
+<td><tt>parent</tt></td>
+
+<td>qualunque <tt>xobject</tt> che &egrave; il padre dell'oggetto</td>
+</tr>
+
+<tr>
+<td><tt>held</tt></td>
+
+<td>qualunque oggetto in possesso del giocatore</td>
+</tr>
+
+<tr>
+<td><tt>notheld</tt></td>
+
+<td>un oggetto non in possesso del giocatore</td>
+</tr>
+
+<tr>
+<td><tt>multi</tt></td>
+
+<td>oggetti visibili multipli</td>
+</tr>
+
+<tr>
+<td><tt>multiheld</tt></td>
+
+<td>oggetti multipli in possesso del giocatore</td>
+</tr>
+
+<tr>
+<td><tt>multinotheld</tt></td>
+
+<td>oggetti multipli non posseduti dal giocatore</td>
+</tr>
+
+<tr>
+<td><tt>number</tt></td>
+
+<td>un numero intero positivo</td>
+</tr>
+
+<tr>
+<td><tt>word</tt></td>
+
+<td>qualunque parola del dizionario</td>
+</tr>
+
+<tr>
+<td><tt>string</tt></td>
+
+<td>una stringa tra virgolette</td>
+</tr>
+
+<tr>
+<td><tt>(NomeRoutine)</tt></td>
+
+<td>un nome di routine, tra parentesi</td>
+</tr>
+
+<tr>
+<td><tt>(nomeogg)</tt></td>
+
+<td>un nome di oggetto, tra parentesi</td>
+</tr>
+</table></center>
+
+<p>(Se viene specificato un numero nella sintassi della grammatica, questo
+viene passato alla routine verbo nell'oggetto <tt>global</tt>. Se viene
+specificata una stringa, questa viene passata nella variabile dell'interprete
+<tt>parse$</tt>,
+che pu&ograve; essere trasformata in un array di stringhe usando la funzione
+'<tt>string</tt>').
+<p>Le parole del dizionario che possono essere usate in maniera intercambiabile
+vanno separate da una barra ('<tt>/</tt>').
+<p>Due o pi&ugrave; parole del dizionario digitate in sequenza devono essere
+specificate separatamente. Cio&egrave; se la riga in input &egrave;:
+<blockquote><tt>take hat out of suitcase</tt></blockquote>
+la riga di sintassi
+<blockquote><tt>* object "out" "of" container</tt></blockquote>
+corrisponder&agrave;, mentre
+<blockquote><tt>* object "out of" container</tt></blockquote>
+non verr&agrave; mai riconosciuta, visto che l'interprete tratta in automatico
+"<tt>out</tt>" e "<tt>of</tt>" come due parole separate; il parser non
+trover&agrave; mai una corrispondenza per "<tt>out of</tt>".
+<p>Per quel che riguarda l'indicazione degli oggetti nella riga di sintassi:
+Una volta che l'oggetto diretto &egrave; stato trovato, l'oggetto rimanente
+sulla riga di input verr&agrave; memorizzato come <tt>xobject</tt>. In
+pratica nell'esempio precendente, un oggetto valido sulla riga di input
+con l'attributo <tt>container</tt> verr&agrave; considerato l'oggetto indiretto
+dalla routine verbo.
+<p><i>NOTA</i>: Un punto importante da ricordare quando si mischiano parole
+del dizionario ed oggetti in una riga di sintassi &egrave; che, a meno
+che sia stato indirizzato diversamente, il parser pu&ograve; confondere
+una combinazione parola-oggetto con un nome di oggetto non valido. Considerate
+questo:
+<blockquote><tt>verb "pick"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * object&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DoGet</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * "up" object DoGet</tt></blockquote>
+Questa definizione avr&agrave; come risultato qualcosa tipo
+<blockquote><tt>>pick up box</tt>
+<br><tt>You haven't seen any "up box", nor are you likely to in</tt>
+<br><tt>the near future even if such a thing exists.</tt></blockquote>
+(partendo dal presupposto che "<tt>up</tt>" sia stato definito da qualche
+altra parte come parte di un altro nome di oggetto, come in <tt>OBJLIB.H</tt>),
+visto che il processore processa la sintassi
+<blockquote><tt>* object</tt></blockquote>
+e determina che un nome di oggetto non valido viene usato; non arriva mai
+a
+<blockquote><tt>* "up" object</tt></blockquote>
+La definizione corretta del verbo deve essere ordinata come
+<blockquote><tt>verb "pick"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * "up" object DoGet</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * object&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DoGet</tt></blockquote>
+cos&igrave; che "<tt>pick &lt;oggetto></tt>" e "<tt>pick up &lt;oggetto></tt>"
+sono comandi validi.
+<p>Per definire una nuova condizione grammaticale che abbia la precedenza
+rispetto ad una gi&agrave; esistente -- come in <tt>VERBLIB.G</tt> -- basta
+definire la nuova condizione prima (ad esempio prima di includere <tt>VERBLIB.G</tt>).
+<p><i>NOTA</i>: Come regola generale, a meno che si abbia la necessit&agrave;
+di anticipare il normale processo della grammatica della libreria, la nuova
+grammatica va inserita dopo l'inclusione dei file della libreria. (La ragione
+di questo &egrave; che la grammatica della libreria &egrave; stata messa
+punto per gestire situazioni come quelle esposte pi&ugrave; sopra).
+<p>Un oggetto singolo pu&ograve; essere specificato come l'unico oggetto
+valido per una particolare sintassi:
+<blockquote><tt>verb "sfrega"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * (lampada_magica) DoSfregaLampadaMagica</tt></blockquote>
+che produrr&agrave; un errore "<tt>You can't do that with...</tt>" per
+ogni oggetto diverso dall'oggetto <tt>lampada_magica</tt>.
+<p>Usare un nome di routine per specificare un oggetto &egrave; leggermente
+pi&ugrave; complicato: l'interpete chiama la routine indicata passandole
+l'oggetto specificato nell'input come argomento; se la routine restituisce
+<i>true</i>
+allora l'oggetto &egrave; valido, altrimenti un errore di interpretazione
+deve essere stampato dalla routine. Se due nomi di routine vengono usati
+in una determinata sintassi, come in
+<blockquote><tt>* (PrimaRoutine) "con" (SecondaRoutine)</tt></blockquote>
+allora <tt>PrimaRoutine</tt> viene usata per la validazione di <tt>object</tt>
+e <tt>SecondaRoutine</tt> per la validazione di <tt>xobject</tt>.
+<h3>
+<a NAME="IlParser"></a>VII.b. Il Parser</h3>
+Subito dopo che una riga in input &egrave; stata ricevuta, l'interprete
+chiama il parser, ed il primo passo consiste nell'identificare tutte le
+parole non valide, cio&egrave; le parole che non sono nella tabella del
+dizionario.
+<p><i>NOTA</i>: Nella riga di input &egrave; consentito inserire una parola
+o frase non compresa nel dizionario a patto che venga racchiusa tra virgolette
+(""). Se il comando viene interpretato correttamente, questa stringa viene
+passata a <tt>parse$</tt>. Non &egrave; possibile avere pi&ugrave; di una
+parola o frase non compresa nel dizionario (anche se le frasi addizionali
+vengono racchiuse tra virgolette).
+<p>Il passo successivo consiste nel suddividere la riga in parole singole.
+Le parole sono separate da spazi e simboli di punteggiatura (inclusi "<tt>!</tt>"
+e "<tt>?</tt>") che vengono rimossi. Tutti i caratteri della riga di input
+vengono convertiti in minuscolo.
+<p>Successivamente si tratta di processare i tre tipi di parole speciali
+che possono essere definiti nel codice sorgente.
+<p>I <b>REMOVAL</b> [rimuovibili] sono i pi&ugrave; semplici. Sono semplicemente
+parole che vengono automaticamente rimosse dalla riga in input, e sono
+fondamentalmente limitati a parole come "<tt>a</tt>" e "<tt>the</tt>",
+che renderebbero l'esame della grammatica pi&ugrave; complicato e difficile.
+<p>La sintassi per la definizione di un removal &egrave;:
+<blockquote><tt>removal "&lt;parola1>"[, "&lt;parola2>", "&lt;parola3>",...]</tt></blockquote>
+come in
+<blockquote><tt>removal "a", "an", "the"</tt></blockquote>
+Il <b>PUNCTUATION</b> [punteggiatura] &egrave; simile al removal, solo
+che specifica la rimozione di caratteri singoli invece di intere parole:
+<blockquote><tt>punctuation "&lt;carattere1>[&lt;carattere2>...]"</tt></blockquote>
+come in
+<blockquote><tt>punctuation "$%"</tt></blockquote>
+I <b>SYNONYM</b> [sinonimi] sono pi&ugrave; complicati. Sono parole che
+non verranno mai trovate nella riga di input interpretata; sono sostituiti
+dalla parola specificata per la quale sono sinonimi.
+<blockquote><tt>synonym "&lt;sinonimo>" for "&lt;parola>"</tt></blockquote>
+come in
+<blockquote><tt>synonym "myself" for "me"</tt></blockquote>
+L'esempio precedente sostituisce tutte le ricorrenze di "<tt>myself</tt>"
+nella riga di input con "<tt>me</tt>". L'uso dei sinonimi non deve essere
+molto esteso, visto che esiste la possibilit&agrave;, particolarmente nel
+caso dei nomi di oggetti e degli aggettivi, di specificare come sinonimi
+parole che vengono gi&agrave; trattate come distinte.
+<p>I <b>COMPOUND</b> [compositi] sono l'ultimo tipo di parole speciali,
+specificati con:
+<blockquote><tt>compound "&lt;parola1>", "&lt;parola2>"</tt></blockquote>
+come in
+<blockquote><tt>compound "out", "of"</tt></blockquote>
+cos&igrave; che la riga di input
+<blockquote><tt>get hat out of suitcase</tt></blockquote>
+venga interpretata come
+<blockquote><tt>get hat outof suitcase</tt></blockquote>
+A seconda della progettazione delle tabelle di grammatica per alcune sintassi,
+l'uso dei compound pu&ograve; rendere la definizione della grammatica pi&ugrave;
+semplice, cos&igrave; che usando il compound precedente,
+<blockquote><tt>verb "get"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * multinotheld "outof"/"offof"/"from" parent</tt></blockquote>
+&egrave; possibile, e preferibile a
+<blockquote><tt>verb "get"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * multinotheld "out"/"off" "of" parent</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; * multinotheld "from" parent</tt></blockquote>
+Quando il parser ha terminato di processare la riga di input, il risultato
+&egrave; un array definito (da Hugo Engine) in maniera speciale chiamato
+<tt>word</tt>,
+il cui numero di elementi validi &egrave; contenuto nella variabile globale
+<tt>words</tt>.
+<p>Perci&ograve; in
+<blockquote><tt>get the hat from the table</tt></blockquote>
+il parser -- usando i removal definiti in <tt>HUGOLIB.H</tt> -- produce
+i seguenti risultati:
+<blockquote><tt>word[1] = "get"</tt>
+<br><tt>word[2] = "hat"</tt>
+<br><tt>word[3] = "from"</tt>
+<br><tt>word[4] = "table"</tt>
+<p><tt>words = 4</tt></blockquote>
+<i>NOTA</i>: Le righe di comandi multipli sono consentite, purch&eacute;
+ogni comando venga separato da un punto ("<tt>.</tt>").
+<blockquote><tt>get hat. go n. go e.</tt></blockquote>
+diventa
+<blockquote><tt>word[1] = "get"</tt>
+<br><tt>word[2] = "hat"</tt>
+<br><tt>word[3] = ""</tt>
+<br><tt>word[4] = "go"</tt>
+<br><tt>word[5] = "n"</tt>
+<br><tt>word[6] = ""</tt>
+<br><tt>word[7] = "go"</tt>
+<br><tt>word[8] = "e"</tt>
+<br><tt>word[9] = ""</tt>
+<p><tt>words = 9</tt></blockquote>
+(Controllate la routine <tt>Parse</tt> in <tt>HUGOLIB.H</tt> per un esempio
+di come
+<blockquote><tt>get hat then go n</tt></blockquote>
+viene tradotto in:
+<blockquote><tt>word[1] = "get"</tt>
+<br><tt>word[2] = "hat"</tt>
+<br><tt>word[3] = ""</tt>
+<br><tt>word[4] = "go"</tt>
+<br><tt>word[5] = "n"</tt>)</blockquote>
+&Egrave; consentito un massimo di trentadue parole. Il punto viene in ogni
+caso convertito nella voce di dizionario <tt>null</tt> ("", indirizzo =
+0), che segnala all'interprete che l'analisi del comando corrente termina
+qui.
+<p><i>NOTA</i>: le routine di parsing e della grammatica riconoscono anche
+diverse parole di sistema, ognuna nel formato "<tt>~parola</tt>". Queste
+sono:
+<br>&nbsp;
+<center><table CELLSPACING=3 CELLPADDING=3 >
+<tr>
+<td><tt>~and</tt></td>
+
+<td>riferendosi a: oggetti multipli specifici</td>
+</tr>
+
+<tr>
+<td><tt>~all</tt></td>
+
+<td>riferendosi a: oggetti multipli in generale</td>
+</tr>
+
+<tr>
+<td><tt>~any</tt></td>
+
+<td>riferendosi a: uno qualunque in una lista di oggetti</td>
+</tr>
+
+<tr>
+<td><tt>~except</tt></td>
+
+<td>riferendosi a: un oggetto da escludere</td>
+</tr>
+
+<tr>
+<td><tt>~oops</tt></td>
+
+<td>per correggere un errore nella riga di input precedente</td>
+</tr>
+</table></center>
+
+<p>Per consentire ad una riga di input di accedere ad una di queste parole
+di sistema, bisogna definire un sinonimo come in
+<blockquote><tt>synonym "and" for "~and"</tt></blockquote>
+La libreria definisce diversi di questi sinonimi.
+<br>&nbsp;
+</FONT></FONT></FONT></P>
+<P ALIGN="CENTER"><IMG SRC="../Varie/Newgif/blurulr6.gif" NAME="Riga" ALIGN="BOTTOM" WIDTH="640" HEIGHT="2" BORDER="0"><BR><BR>
+<FONT SIZE="1" STYLE="font-size: 8pt"><A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A>
+<FONT SIZE="2">Torna alla Home Page</FONT> 
+<A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A></FONT>
+</P>
+<P ALIGN="CENTER"><FONT SIZE="1" STYLE="font-size: 8pt"><FONT COLOR="#000080">&copy;2000 Simone
+Zanella e &copy;2000 IF Italia. E' vietata la riproduzione.</FONT></FONT></P></BLOCKQUOTE>
+</BODY>
+</HTML>

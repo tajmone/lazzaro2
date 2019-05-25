@@ -11,9 +11,9 @@
 *.css      text
 *.css.map  text
 *.htm      text
-*.mht      text
 *.html     text
 *.js       text
+*.mht      text
 highlight.min.js  eol=lf
 
 ## ===============

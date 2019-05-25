@@ -1,0 +1,1188 @@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>IF Italia - Il sito italiano sull'Interactive Fiction
+</TITLE>
+      <LINK REV="made" HREF="mailto:dickdastardly@highway.it">
+	<META NAME="GENERATOR" CONTENT="NoteTab 4.82">
+	<META NAME="copyright" CONTENT="Tutto il materiale presente in questo sito è (c)Simone Zanella e (c)IF Italia ove non diversamente indicato. Tutti i diritti sono riservati. E' vietata la riproduzione non autorizzata del sito e di sue parti.">
+	<META name="keywords" content="if interactive fiction avventura avventure testuale testuali inform infocom tads ifitalia italia giochi gioco castello adventure text simone zanella monkey island gratis freeware download">
+	<META name="description" content="Il più vasto sito italiano sulle avventure testuali e sull'Interactive Fiction">	<STYLE>
+	<!--
+		P { border: none; padding: 0cm; font-family: "Verdana", sans-serif; font-size: 10pt }
+	-->
+	</STYLE>
+</HEAD>
+<BODY>
+<BLOCKQUOTE><DIV TYPE="HEADER">
+	<P ALIGN="CENTER" STYLE="border: 1px solid #000000; padding: 0.05cm"><FONT COLOR="#000080"><FONT FACE="Verdana, sans-serif">IF
+	ITALIA - Il sito Italiano sull'Interactive Fiction</FONT></FONT></P>
+</DIV>
+<P ALIGN="CENTER"><IMG SRC="../Varie/if3backup.jpg" NAME="Logosmall" ALIGN="MIDDLE" WIDTH="108" HEIGHT="104" BORDER="0"></P>
+<P><FONT SIZE="2" STYLE="font-size: 10pt"><FONT FACE="Verdana, sans-serif"><FONT COLOR="#000080">
+
+<h2>
+III. OGGETTI</h2>
+
+<p><br>Gli oggetti sono i mattoni per la costruzione di ogni programma
+Hugo. Qualunque cosa debba essere usata da un giocatore durante il gioco
+-- comprese le stanze, gli oggetti, altri personaggi, ed anche le direzioni
+-- debbono essere definiti come oggetti.
+<p>La definizione base di un oggetto appare come:
+<br>&nbsp;
+<blockquote><tt>object &lt;nomeoggetto> "nome oggetto"</tt>
+<br><tt>{</tt>
+<br><tt>...</tt>
+<br><tt>}</tt></blockquote>
+
+<p><br>Ad esempio un oggetto <tt>valigia</tt> potrebbe essere definito
+come segue:
+<br>&nbsp;
+<blockquote><tt>object valigia "valigia"</tt>
+<br><tt>{}</tt></blockquote>
+
+<p><br>Le parentesi graffe sono necessarie anche se la definizione dell'oggetto
+non ha un corpo. Gli unici dati assegnati all'oggetto <tt>valigia</tt>
+sono -- da destra a sinistra -- un nome, un identificatore, e l'appartenenza
+alla classe base <tt>object</tt>.
+<p>Il compilatore assegna all'oggetto identificato da <tt>&lt;nomeoggetto></tt>
+il prossimo numero sequenziale disponibile. Cio&egrave;, se il primo oggetto
+definito &egrave; l'oggetto "<tt>nothing</tt>" [niente] (oggetto 0), allora
+al successivo oggetto che verr&agrave; definito, qualunque esso sia, viene
+assegnato il numero 1; quello che seguir&agrave; sar&agrave; il 2, ecc.
+Tutto questo &egrave; accademia, comunque, visto che un programmatore non
+avr&agrave; mai bisogno di sapere che numero di oggetto ha un particolare
+oggetto -- tranne che in alcune situazioni di debug -- e si pu&ograve;
+sempre riferire ad un oggetto tramite la sua etichetta
+<tt>&lt;nomeoggetto></tt>.
+<p>Se nessuno esplicito "<tt>name</tt>" (la propriet&agrave; nome) &egrave;
+fornito, il compilatore gli assegna automaticamente il nome "<tt>(&lt;nomeoggetto>)</tt>",
+cio&egrave; <tt>&lt;nomeoggetto></tt> tra parentesi.
+<p>(Il compilatore crea automaticamente un oggetto chiamato "<tt>display</tt>"
+[schermo] come ultimo oggetto definito. L'oggetto display pu&ograve; essere
+usato per ottenere informazioni riguardanti la visualizzazione dell'interprete.
+Consultate la sezione sull'oggetto display pi&ugrave; avanti in "Funzionalit&agrave;
+Avanzate".)
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+<a NAME="AlberoOggetti"></a>III.a. L'albero degli oggetti</h3>
+
+<p><br>Gli oggetti per avere una posizione all'interno del gioco, ad esempio,
+essere in una stanza o contenuti in un altro oggetto o accanto ad un altro
+oggetto, devono occupare una posizione nell'albero degli oggetti. L'albero
+degli oggetti &egrave; una mappa che rappresenta le relazioni che ci sono
+tra gli oggetti nel gioco. Il numero totale di oggetti si trova nella variabile
+globale <tt>objects</tt>.
+<p>L'oggetto <tt>nothing</tt> [niente] viene definito dalla libreria come
+oggetto 0. Questo &egrave; la radice dell'albero degli oggetti, sul quale
+tutti gli oggetti si basano.
+<p>Quando si riferisce ai numeri degli oggetti, questo manuale si riferisce
+generalmente al nome dato all'oggetto nel codice sorgente: ed esempio,
+<tt>&lt;nomeoggetto></tt>.
+Il compilatore assegna automaticamente ad ogni oggetto un numero di oggetto,
+e si riferisce a quello ogni volta che uno specifico <tt>&lt;nomeoggetto></tt>
+viene incontrato.
+<p>(<i>NOTA</i>: Quando si usano le routine standard della libreria, assicuratevi
+che nessun oggetto (o classe, che verr&agrave; discussa in seguito) sia
+definito prima dell'inclusione di <tt>HUGOLIB.H</tt>. Potrebbero sorgere
+dei problemi se il primo oggetto definito -- l'oggetto 0 -- non &egrave;
+l'oggetto "<tt>nothing</tt>").
+<p>Questo &egrave; un esempio di albero degli oggetti:
+<br>&nbsp;
+<blockquote><tt>Nothing</tt>
+<br><tt>|</tt>
+<br><tt>Room</tt>
+<br><tt>|</tt>
+<br><tt>Table------Chair------Book------Player</tt>
+<br><tt>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>Bowl&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Bookmark</tt>
+<br><tt>|</tt>
+<br><tt>Spoon</tt></blockquote>
+
+<p><br>Una serie di funzioni pu&ograve; essere usata per leggere l'albero
+degli oggetti.
+<br>&nbsp;
+<blockquote><tt>parent</tt> [genitore]
+<br><tt>sibling</tt> [fratello]
+<br><tt>child</tt> [figlio]
+<br><tt>youngest</tt> [minore]
+<br><tt>elder</tt> [maggiore]
+<br><tt>eldest</tt> (uguale a <tt>child</tt>)
+<br><tt>younger</tt> (uguale a <tt>sibling</tt>)</blockquote>
+
+<p><br>e
+<br>&nbsp;
+<blockquote><tt>children</tt> [figli]</blockquote>
+
+<p><br>Ogni funzione accetta un oggetto singolo come argomento, cos&igrave;
+che
+<br>&nbsp;
+<blockquote><tt>parent(Table) = Room</tt>
+<br><tt>parent(Bookmark) = Book</tt>
+<br><tt>parent(Player) = Room</tt>
+<br><tt>child(Bowl) = Spoon</tt>
+<br><tt>child(Room) = Table</tt>
+<br><tt>child(Chair) = 0 (Nothing)</tt>
+<br><tt>sibling(Table) = Chair</tt></blockquote>
+
+<blockquote><tt>sibling(Player) = 0 (Nothing)</tt>
+<br><tt>youngest(Room) = Player</tt>
+<br><tt>youngest(Spoon) = 0 (Nothing)</tt>
+<br><tt>elder(Chair) = Table</tt>
+<br><tt>elder(Table) = 0 (Nothing)</tt></blockquote>
+
+<p><br>e
+<br>&nbsp;
+<blockquote><tt>children(Room) = 4</tt>
+<br><tt>children(Table) = 1</tt>
+<br><tt>children(Chair) = 0</tt></blockquote>
+
+<p><br>(Ritornando alla spiegazione precedente riguardante i numeri degli
+oggetti e <tt>&lt;nomeoggetto></tt>, le funzioni del primo insieme in realt&agrave;
+restituiscono un numero intero che si riferisce ad un particolare <tt>&lt;nomeoggetto></tt>).
+<p>Per capire meglio come l'albero degli oggetti rappresenti il mondo fisico,
+il tavolo (<tt>table</tt>), la sedia (<tt>chair</tt>), il libro (<tt>book</tt>),
+ed il giocatore (<tt>player</tt>) sono tutti nella stanza (<tt>room</tt>).
+Il segnalibro (<tt>bookmark</tt>) &egrave; nel libro (<tt>book</tt>). La
+scodella (<tt>bowl</tt>) &egrave; sul tavolo (<tt>table</tt>), ed il cucchiaio
+(<tt>spoon</tt>) &egrave; sulla scodella (<tt>bowl</tt>). La libreria di
+Hugo cosiderer&agrave; l'oggetto giocatore dell'esempio come se stesse
+in piedi; se il giocatore fosse stato seduto, l'albero degli oggetti sarebbe
+apparso come:
+<br>&nbsp;
+<blockquote><tt>Nothing</tt>
+<br><tt>|</tt>
+<br><tt>Room</tt>
+<br><tt>|</tt>
+<br><tt>Table------Chair-----Book</tt>
+<br><tt>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Player&nbsp;&nbsp;&nbsp;
+...</tt></blockquote>
+
+<p><br>e
+<br>&nbsp;
+<blockquote><tt>child(Chair) = Player</tt>
+<br><tt>parent(Player) = Chair</tt>
+<br><tt>children(Chair) = 1</tt></blockquote>
+
+<p><br>(Provate a compilare <tt>SAMPLE.HUG</tt> con l'opzione <tt>-o</tt>
+per vedere l'albero degli oggetti per il gioco di esempio. Oppure, se il
+flag <tt>DEBUG</tt> &egrave; stato impostato durante la compilazione, usate
+il comando HugoFix "<b><tt>$ot</tt></b>" o "<b><tt>$ot &lt;oggetto></tt></b>"
+durante il gioco per vedere lo stato attuale dell'albero degli oggetti
+e vedere come cambia nel corso del gioco. Compilando con l'opzione <tt>-d</tt>
+viene generata una versione per il debug (<tt>.HDX</tt>) del file -- l'albero
+degli oggetti pu&ograve; essere visto direttamente dal debugger).
+<p>I test logici possono essere valutati per quel che riguarda gli oggetti
+ed i figli. La struttura
+<br>&nbsp;
+<blockquote><tt>&lt;oggetto> [not] in &lt;genitore></tt></blockquote>
+
+<p><br>restituir&agrave; <tt>true</tt> (vero) se <tt>&lt;oggetto></tt>
+si trova in <tt>&lt;genitore></tt> (o <tt>false</tt> (falso) se viene usato
+'<tt>not</tt>' (non)).
+<p>Per posizionare inizialmente un oggetto nell'albero degli oggetti si
+usa
+<br>&nbsp;
+<blockquote><tt>in &lt;genitore></tt></blockquote>
+
+<p><br>nella definizione dell'oggetto, o, in alternativa
+<br>&nbsp;
+<blockquote><tt>nearby &lt;oggetto></tt></blockquote>
+
+<p><br>o, pi&ugrave; semplicemente
+<br>&nbsp;
+<blockquote><tt>nearby</tt></blockquote>
+
+<p><br>per dare all'oggetto lo stesso genitore di <tt>&lt;oggetto></tt>
+o, se <tt>&lt;oggetto></tt> non viene specificato, lo stesso genitore dell'ultimo
+oggetto definito.
+<p>Se questa indicazione non viene fornita, l'oggetto genitore assume automaticamente
+il valore 0 -- l'oggetto <tt>nothing</tt> cos&igrave; come definito nella
+libreria. Tutti i normali oggetti <tt>room</tt> (stanza) hanno 0 definito
+come genitore.
+<p>Quindi la versione espansa della definizione di un oggetto &egrave;
+<br>&nbsp;
+<blockquote><tt>object &lt;nomeoggetto> "nome oggetto"</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; in &lt;oggetto genitore></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>}</tt></blockquote>
+
+<p><br>(Assicuratevi che la parentesi graffa aperta '<tt>{</tt>' non si
+trovi sulla stessa riga dello speficificatore '<tt>object</tt>'.
+<br>&nbsp;
+<blockquote><tt>object &lt;nomeoggetto> "nome oggetto" {...</tt></blockquote>
+
+<p><br>non &egrave; permesso).
+<p>Il tavolo (<tt>table</tt>) dell'esempio probabilmente aveva una definizione
+come
+<br>&nbsp;
+<blockquote><tt>object table "table"</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; in room</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>}</tt></blockquote>
+
+<p><br>Per mettere l'oggetto <tt>suitcase</tt> (valigia) definito prima
+nella stanza vuota (<tt>emptyroom</tt>) in <tt>SHELL.HUG</tt>:
+<br>&nbsp;
+<blockquote><tt>object suitcase "suitcase"</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; in emptyroom</tt>
+<br><tt>}</tt></blockquote>
+
+<p><br>Gli oggetti possono poi essere mossi all'interno dell'albero degli
+oggetti tramite il comando '<tt>move</tt>' (muovi) come in
+<br>&nbsp;
+<blockquote><tt>move &lt;oggetto> to &lt;nuovo genitore></tt></blockquote>
+
+<p><br>Che, praticamente, rimuove <tt>&lt;oggetto></tt> dal vecchio genitore,
+rende il fratello di <tt>&lt;oggetto></tt> il fratello del maggiore di
+<tt>&lt;oggetto></tt>,
+e sposta <tt>&lt;oggetto></tt> (con tutto quello che gli appartiene) dal
+nuovo genitore.
+<p>Perci&ograve; nell'esempio di prima, il comando
+<br>&nbsp;
+<blockquote><tt>move bowl to player</tt></blockquote>
+
+<p><br>avrebbe modificato l'albero degli oggetti come segue:
+<br>&nbsp;
+<blockquote><tt>Nothing</tt>
+<br><tt>|</tt>
+<br><tt>Room</tt>
+<br><tt>|</tt>
+<br><tt>Table------Chair-----Book------Player</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Bookmark&nbsp; Bowl</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Spoon</tt></blockquote>
+
+<p><br>Esiste anche un comando per rimuovere un oggetto dalla sua posizione
+nell'albero:
+<br>&nbsp;
+<blockquote><tt>remove &lt;oggetto></tt></blockquote>
+
+<p><br>che &egrave; lo stesso di
+<br>&nbsp;
+<blockquote><tt>move &lt;oggetto> to 0</tt></blockquote>
+
+<p><br>L'oggetto pu&ograve;, in seguito, essere spostato in qualsiasi posizione.
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+<a NAME="Attributi"></a>III.b Attributi</h3>
+
+<p><br>Gli attributi rappresentano sostanzialmente le qualit&agrave; che
+un oggetto pu&ograve; o non pu&ograve; avere. Sono utili per qualificare
+o meno gli oggetti da prendere in considerazione in ogni situazione.
+<p>Un attributo viene definito come segue
+<br>&nbsp;
+<blockquote><tt>attribute &lt;nome attributo></tt></blockquote>
+
+<p><br>Possono essere definiti fino a 128 attributi. Quelli definiti in
+<tt>HUGOLIB.H</tt>
+comprendono:
+<table CELLSPACING=3 CELLPADDING=3 >
+<tr>
+<td><tt>known</tt></td>
+
+<td>se un oggetto &egrave; conosciuto dal giocatore</td>
+</tr>
+
+<tr>
+<td><tt>moved</tt></td>
+
+<td>se un oggetto &egrave; stato spostato</td>
+</tr>
+
+<tr>
+<td><tt>visited</tt></td>
+
+<td>se una stanza &egrave; stata visitata</td>
+</tr>
+
+<tr>
+<td><tt>static</tt></td>
+
+<td>se un oggetto non pu&ograve; essere preso</td>
+</tr>
+
+<tr>
+<td><tt>plural</tt></td>
+
+<td>per oggetti al plurale (ad es., <tt>some hats</tt> [alcuni cappelli])</td>
+</tr>
+
+<tr>
+<td><tt>living</tt></td>
+
+<td>se l'oggetto &egrave; un personaggio</td>
+</tr>
+
+<tr>
+<td><tt>female</tt></td>
+
+<td>se il personaggio &egrave; femminile</td>
+</tr>
+
+<tr>
+<td><tt>unfriendly</tt></td>
+
+<td>se un personaggio non &egrave; amichevole</td>
+</tr>
+
+<tr>
+<td><tt>openable</tt></td>
+
+<td>se un oggetto pu&ograve; essere aperto</td>
+</tr>
+
+<tr>
+<td><tt>open</tt></td>
+
+<td>se &egrave; aperto</td>
+</tr>
+
+<tr>
+<td><tt>lockable</tt></td>
+
+<td>se un oggetto pu&ograve; essere chiuso a chiave</td>
+</tr>
+
+<tr>
+<td><tt>locked</tt></td>
+
+<td>se &egrave; chiuso a chiave</td>
+</tr>
+
+<tr>
+<td><tt>light</tt></td>
+
+<td>se un oggetto fornisce luce</td>
+</tr>
+
+<tr>
+<td><tt>readable</tt></td>
+
+<td>se un oggetto pu&ograve; essere letto</td>
+</tr>
+
+<tr>
+<td><tt>switchable</tt></td>
+
+<td>se un oggetto pu&ograve; essere acceso o spento</td>
+</tr>
+
+<tr>
+<td><tt>switchedon</tt></td>
+
+<td>se un oggetto &egrave; acceso</td>
+</tr>
+
+<tr>
+<td><tt>clothing</tt></td>
+
+<td>per oggetti che possono essere indossati</td>
+</tr>
+
+<tr>
+<td><tt>worn</tt></td>
+
+<td>se l'oggetto &egrave; indossato</td>
+</tr>
+
+<tr>
+<td><tt>mobile</tt></td>
+
+<td>se l'oggetto pu&ograve; essere spinto, ecc.</td>
+</tr>
+
+<tr>
+<td><tt>enterable</tt></td>
+
+<td>se &egrave; possibile entrare nell'oggetto</td>
+</tr>
+
+<tr>
+<td><tt>container</tt></td>
+
+<td>se l'oggetto pu&ograve; contenere altri oggetti</td>
+</tr>
+
+<tr>
+<td><tt>platform</tt></td>
+
+<td>se si possono posare oggetti sull'oggetto (<i>NOTA</i>: <tt>container</tt>
+e <tt>platform</tt> sono mutualmente esclusivi)</td>
+</tr>
+
+<tr>
+<td><tt>hidden</tt></td>
+
+<td>se l'oggetto non deve essere indicato</td>
+</tr>
+
+<tr>
+<td><tt>quiet</tt></td>
+
+<td>se il <tt>container</tt> o il <tt>platform</tt> sono quieti (cio&egrave;,
+se l'indicazione iniziale degli oggetti che contengono non deve essere
+prodotta)</td>
+</tr>
+
+<tr>
+<td><tt>transparent</tt></td>
+
+<td>se l'oggetto non &egrave; opaco</td>
+</tr>
+
+<tr>
+<td><tt>already_listed</tt></td>
+
+<td>se l'oggetto &egrave; gi&agrave; stato indicato (cio&egrave;, prima
+di un listato <tt>WhatsIn</tt>)</td>
+</tr>
+
+<tr>
+<td><tt>workflag</tt></td>
+
+<td>usato dal sistema</td>
+</tr>
+
+<tr>
+<td><tt>special</tt></td>
+
+<td>per varii usi</td>
+</tr>
+</table>
+
+<p>Alcuni di questi attributi sono in realt&agrave; lo stesso attributo
+con un nome differente. Questo viene ottenuto tramite
+<br>&nbsp;
+<blockquote><tt>attribute &lt;attributo2> alias &lt;attributo1></tt></blockquote>
+
+<p><br>dove <tt>&lt;attributo1></tt> &egrave; gi&agrave; stato definito.
+Ad esempio, la libreria equipara <tt>visited</tt> (visitato) a <tt>moved</tt>
+(mosso) (visto che, probabilmente, non si applicheranno mai allo stesso
+oggetto), cos&igrave;:
+<br>&nbsp;
+<blockquote><tt>attribute visited alias moved</tt></blockquote>
+
+<p><br>In questo caso un oggetto che &egrave; stato visitato (<tt>visited</tt>)
+risulta anche mosso (<tt>moved</tt>). Ci si aspetta che gli attributi che
+sono <i>alias</i> di altri non avranno mai bisogno di essere usati con
+gli originali nella stessa circostanza.
+<p>Gli attributi vengono assegnati ad un oggetto durante la sua definizione
+come segue:
+<br>&nbsp;
+<blockquote><tt>object &lt;nomeoggetto> "nome oggetto"</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; is [not] &lt;attributo1>, [not] &lt;attributo2>,
+...</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>}</tt></blockquote>
+
+<p><br><i>NOTA</i>: La parola chiave '<tt>not</tt>' (non) nella definizione
+di un oggetto &egrave; importante quando si usa una classe invece della
+definizione base di un oggetto (<tt>object</tt>), visto che la classe pu&ograve;
+avere alcuni attributi predefiniti che non sono utili all'oggetto corrente.
+<p>Anche se ad un oggetto non &egrave; stato dato un particolare attributo
+durante la definizione dello stesso, &egrave; possibile assegnargli l'attributo
+in qualunque punto seguente nel programma con il comando
+<br>&nbsp;
+<blockquote><tt>&lt;oggetto> is [not] &lt;attributo></tt></blockquote>
+
+<p><br>dove la parola chiave '<tt>not</tt>' rimuove l'attributo invece
+di impostarlo.
+<p>Gli attributi possono anche essere letti usando le strutture '<tt>is</tt>'
+(&egrave;) e '<tt>is not</tt>' (non &egrave;). Come una funzione,
+<br>&nbsp;
+<blockquote><tt>&lt;oggetto> is [not] &lt;attributo></tt></blockquote>
+
+<p><br>ritorna <tt>true</tt> (1) se l'<tt>&lt;oggetto></tt> &egrave; (o
+non &egrave;, se viene indicato '<tt>not</tt>') <tt>&lt;attributo></tt>.
+Altrimenti ritorna <tt>false</tt> (0).
+<p>Per fornire all'oggetto <tt>suitcase</tt> (valigia) gli attributi appropriati,
+si espande la definizione dell'oggetto per includere
+<br>&nbsp;
+<blockquote><tt>object suitcase "suitcase"</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; in emptyroom</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; is openable, not open</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>}</tt></blockquote>
+
+<p><br>Adesso le equzioni che seguono restituiscono <tt>true</tt> (vero):
+<br>&nbsp;
+<blockquote><tt>suitcase is openable = 1</tt>
+<br><tt>suitcase is open = 0</tt>
+<br><tt>suitcase is locked = 0</tt></blockquote>
+
+<br>&nbsp;
+<h3>
+<a NAME="Proprieta"></a>III.c Propriet&agrave;</h3>
+
+<p><br>Le propriet&agrave; sono decisamente pi&ugrave; complesse degli
+attributi. Prima di tutto, non tutti gli oggetti possono avere delle propriet&agrave;;
+per fare in modo che un oggetto abbia delle propriet&agrave; deve essere
+specificato nella definizione dello stesso
+<p>In pi&ugrave; le propriet&agrave; non sono dei semplici flag s&igrave;/no.
+Sono un insieme di dati validi associati ad un oggetto, i cui valori possono
+rappresentare quasi ogni cosa, compresi i numeri degli oggetti, indirizzi
+del dizionario, valori interi, ed indirizzi di codice eseguibile. Il numero
+massimo di valori associabili non &egrave; definito, ma manegevolezza ed
+efficienza suggeriscono un numero di otto o meno.
+<p>Queste sono alcune delle propriet&agrave; che potrebbero essere presenti
+nella definizione di un oggetto (usando i nomi di propriet&agrave; definiti
+in <tt>HUGOLIB.H</tt>):
+<br>&nbsp;
+<blockquote><tt>nouns "albero", "cespuglio", "arbusto", "pianta"</tt>
+<p><tt>size 20</tt>
+<p><tt>found_in tinello, ingresso</tt>
+<p><tt>long_desc</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {"Ci sono delle uscite a nord ed ovest. Nel
+muro a</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; sudest c'&egrave; una porta."}</tt>
+<p><tt>short_desc</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; "C'&egrave; una scatola. Ed &egrave; ";</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; if self is open</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print "aperta";</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; else</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print "chiusa";</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print "."</tt>
+<br><tt>}</tt>
+<p><tt>before</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; object DoGet</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if Acquire(player, self)</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{"Raccogli ";</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+print Art(self); "."}</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return false</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>}</tt></blockquote>
+
+<p><br>La propriet&agrave; <tt>nouns</tt> (nomi) contiene 4 indirizzi del
+dizionario; la propriet&agrave; <tt>size</tt> (dimensione) &egrave; un
+valore intero; la propriet&agrave; <tt>found_in</tt> (trovato_in) contiene
+due numeri di oggetti; e le propriet&agrave; <tt>long_desc</tt> (descrizione_estesa)
+e <tt>short_desc</tt> (descrizione_corta) sono entrambi dei valori che
+rappresentano gli indirizzi delle routine associate.
+<p>La propriet&agrave; <tt>before</tt> (prima) &egrave; un caso speciale.
+Questa propriet&agrave; complessa viene definita dal compilatore e viene
+trattata differentemente dall'interprete rispetto alle altre propriet&agrave;.
+In questo caso, il valore della propriet&agrave; rappresentante l'indirizzo
+della routine viene restituito solo se le varabili globali object e verbroutine
+contengono, rispettivamente, l'oggetto in questione e l'indirizzo della
+routine <tt>DoGet</tt>. (C'&egrave; anche una routine <tt>after</tt> [dopo],
+che viene controllata dopo che la routine del verbo &egrave; stata chiamata).
+<p>(<i>Nota per chiarificare</i>: la routine <tt>Art</tt> di <tt>HUGOLIB.H</tt>
+stampa l'articolo corretto, se presente, seguito dal nome dell'oggetto.
+La routine <tt>Acquire</tt> restituisce <tt>true</tt> solo se la propriet&agrave;
+<tt>holding</tt>
+[quanto contiene] del primo oggetto pi&ugrave; la propriet&agrave;
+<tt>size</tt>
+[dimensione] del secondo oggetto non eccedono la propriet&agrave;
+<tt>capacity</tt>
+[capacit&agrave;] del primo oggetto).
+<p>Tutto questo pu&ograve; apparire poco chiaro per il momento. Pi&ugrave;
+avanti si parler&agrave; ancora delle routine propriet&agrave;. Per adesso
+pensate ad una propriet&agrave; come se contenesse semplicemente un valore
+(od un insieme di valori).
+<p>Una propriet&agrave; viene definita in maniera simile ad un attributo
+<br>&nbsp;
+<blockquote><tt>property &lt;nome propriet&agrave;></tt></blockquote>
+
+<p><br>Un valore di default pu&ograve; essere definito per la propriet&agrave;
+usando
+<br>&nbsp;
+<blockquote><tt>property &lt;nome propriet&agrave;> &lt;valore di default></tt></blockquote>
+
+<p><br>dove <tt>&lt;valore di default></tt> pu&ograve; essere una costante
+od una parola del dizionario. Per gli oggetti senza una determinata propriet&agrave;,
+cercando di trovare quella propriet&agrave; di otterr&agrave; il valore
+di default. Se il valore di default non viene dichiarato esplicitamente
+viene impostato a 0.
+<p>La lista delle propriet&agrave; definita in <tt>HUGOLIB.H</tt> &egrave;:
+<table CELLSPACING=3 CELLPADDING=3 >
+<tr>
+<td><tt>name</tt></td>
+
+<td>il nome base dell'oggetto</td>
+</tr>
+
+<tr>
+<td><tt>before</tt></td>
+
+<td>prima delle routine verbo</td>
+</tr>
+
+<tr>
+<td><tt>after</tt></td>
+
+<td>dopo le routine verbo</td>
+</tr>
+
+<tr>
+<td><tt>noun</tt></td>
+
+<td>il nome od i nomi con cui riferirsi all'oggetto</td>
+</tr>
+
+<tr>
+<td><tt>adjective</tt></td>
+
+<td>l'aggettivo o gli aggettivi che descrivono l'oggetto</td>
+</tr>
+
+<tr>
+<td><tt>article</tt></td>
+
+<td>"a" "an" "the" "some" ecc.</td>
+</tr>
+
+<tr>
+<td><tt>preposition</tt></td>
+
+<td>"in" "inside" "outside of" ecc.</td>
+</tr>
+
+<tr>
+<td><tt>pronoun</tt></td>
+
+<td>pronome appropriato per l'oggetto in questione</td>
+</tr>
+
+<tr>
+<td><tt>short_desc</tt></td>
+
+<td>descrizione base tipo "X &egrave; qui"</td>
+</tr>
+
+<tr>
+<td><tt>initial_desc</tt></td>
+
+<td>sostituisce <tt>short_desc</tt> (o <tt>long_desc</tt> per le locazioni)</td>
+</tr>
+
+<tr>
+<td><tt>long_desc</tt></td>
+
+<td>descrizione dettagliata</td>
+</tr>
+
+<tr>
+<td><tt>found_in</tt></td>
+
+<td>in caso di locazioni multiple (oggetti genitore virtuali, <b>NON</b>
+fisici)</td>
+</tr>
+
+<tr>
+<td><tt>type</tt></td>
+
+<td>per identificare il tipo di un oggetto</td>
+</tr>
+
+<tr>
+<td><tt>n_to</tt></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>ne_to</tt></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>e_to</tt></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>se_to</tt></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>s_to</tt></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>sw_to</tt></td>
+
+<td>(solo per le stanze indicano dove conducono le uscite)</td>
+</tr>
+
+<tr>
+<td><tt>w_to</tt></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>nw_to</tt></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>u_to</tt></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>d_to</tt></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>in_to</tt></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>out_to</tt></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>cant_go</tt></td>
+
+<td>messaggio se una direzione non &egrave; valida</td>
+</tr>
+
+<tr>
+<td><tt>size</tt></td>
+
+<td>dimensione per l'inventario o la capacit&agrave; di oggetti contenitore</td>
+</tr>
+
+<tr>
+<td><tt>capacity</tt></td>
+
+<td>la capacit&agrave; di un oggetto contenitore</td>
+</tr>
+
+<tr>
+<td><tt>holding</tt></td>
+
+<td>quanto un oggetto contenitore possiede</td>
+</tr>
+
+<tr>
+<td><tt>reach</tt></td>
+
+<td>per limitare l'accessibilit&agrave; degli oggettti</td>
+</tr>
+
+<tr>
+<td><tt>list_contents</tt></td>
+
+<td>per sostituire il listato normale</td>
+</tr>
+
+<tr>
+<td><tt>door_to</tt></td>
+
+<td>per consentire "Enter &lt;oggetto>"</td>
+</tr>
+
+<tr>
+<td><tt>key_object</tt></td>
+
+<td>se l'oggetto &egrave; <tt>lockable</tt> (chiudibile), la chiave giusta</td>
+</tr>
+
+<tr>
+<td><tt>when_open</tt></td>
+
+<td>quando aperto sostituisce <tt>short_desc</tt></td>
+</tr>
+
+<tr>
+<td><tt>when_close</tt></td>
+
+<td>quando chiuso sostituisce <tt>short_desc</tt></td>
+</tr>
+
+<tr>
+<td><tt>ignore_response</tt></td>
+
+<td>per i personaggi</td>
+</tr>
+
+<tr>
+<td><tt>order_response</tt></td>
+
+<td>per i personaggi</td>
+</tr>
+
+<tr>
+<td><tt>contanins_desc</tt></td>
+
+<td>invece di "inside X are..."</td>
+</tr>
+
+<tr>
+<td><tt>inv_desc</tt></td>
+
+<td>per descrizioni speciali nell'inventario</td>
+</tr>
+
+<tr>
+<td><tt>desc_detail</tt></td>
+
+<td>descrizione dettagliata per il listing dell'oggetto</td>
+</tr>
+
+<tr>
+<td><tt>parse_rank</tt></td>
+
+<td>per la differenziazion degli oggetti con nomi simili</td>
+</tr>
+
+<tr>
+<td><tt>exclude_from_all</tt></td>
+
+<td>per l'interpretazione di "all" (tutto) nell'input</td>
+</tr>
+
+<tr>
+<td><tt>misc</tt></td>
+
+<td>per usi diversi</td>
+</tr>
+</table>
+
+<p>(Per una descrizione dettagliata di come ogni propriet&agrave; viene
+usata, consultate l'Appendice B: La libreria).
+<p>(Le seguenti propriet&agrave; sono inoltre definite ed usate esclusivamente
+dall'oggetto <tt>display</tt>:
+<table CELLSPACING=3 CELLPADDING=3 >
+<tr>
+<td><tt>screenwidth</tt></td>
+
+<td>larghezza dello schermo, in caratteri</td>
+</tr>
+
+<tr>
+<td><tt>screenheight</tt></td>
+
+<td>altezza dello schermo, in caratteri</td>
+</tr>
+
+<tr>
+<td><tt>linelength</tt></td>
+
+<td>larghezza della finestra di testo corrente</td>
+</tr>
+
+<tr>
+<td><tt>windowlines</tt></td>
+
+<td>altezza della finestra di testo corrente</td>
+</tr>
+
+<tr>
+<td><tt>cursor_column</tt></td>
+
+<td>posizione orizzontale e verticale del</td>
+</tr>
+
+<tr>
+<td><tt>cursor_row</tt></td>
+
+<td>cursore nella finestra di testo corrente</td>
+</tr>
+
+<tr>
+<td><tt>hasgraphics</tt></td>
+
+<td><tt>true</tt> (vero) se lo schermo &egrave; in grado di visualizzare
+la grafica</td>
+</tr>
+
+<tr>
+<td><tt>title_caption</tt></td>
+
+<td>voce del dizionario che fornisce il nome esatto del programma (opzionale)</td>
+</tr>
+
+<tr>
+<td><tt>statusline_height</tt></td>
+
+<td>altezza dell'ultima riga di stato visualizzata</td>
+</tr>
+</table>
+
+<p>Notate che mentre alcune di queste, da <tt>screenwidth</tt> a <tt>title_caption</tt>,
+sono definite come costanti nella libreria, possono essere comunque usate
+come indicatori di propriet&agrave;, visto che sia i numeri di propriet&agrave;
+che le costanti sono semplici interi).
+<p>Anche i nomi di propriet&agrave; possono avere degli <i>alias</i> tramite
+<br>&nbsp;
+<blockquote><tt>property &lt;propriet&agrave;2> alias &lt;propriet&agrave;1></tt></blockquote>
+
+<p><br>dove <tt>&lt;propriet&agrave;1></tt> &egrave; stata definita in
+precedenza.
+<p>La libreria definisce i seguenti <i>alias</i> (tra gli altri):
+<br>&nbsp;
+<blockquote><tt>nouns alias noun</tt>
+<br><tt>adjectives alias adjective</tt>
+<br><tt>prep alias preposition</tt>
+<br><tt>pronouns alias pronoun</tt></blockquote>
+
+<p><br>Una propriet&agrave; viene espressa tramite
+<br>&nbsp;
+<blockquote><tt>&lt;oggetto>.&lt;propriet&agrave;></tt></blockquote>
+
+<p><br>Il numero di elementi che possiede una propriet&agrave; che ha pi&ugrave;
+di un valore singolo possono essere trovati con
+<br>&nbsp;
+<blockquote><tt>&lt;oggetto>.#&lt;propriet&agrave;></tt></blockquote>
+
+<p><br>ed un singolo elemento viene espresso tramite
+<br>&nbsp;
+<blockquote><tt>&lt;oggetto>.&lt;propriet&agrave;> #&lt;numero elemento></tt></blockquote>
+
+<p><br><i>NOTA</i>: "<tt>&lt;oggetto>.&lt;propriet&agrave;></tt>" &egrave;
+semplicemente la versione ridotta di "<tt>&lt;oggetto>.&lt;propriet&agrave;>
+#1</tt>".
+<p>Per aggiungere qualche propriet&agrave; all'oggetto <tt>suitcase</tt>
+(valigia) &egrave; necessario espandere la definizione dell'oggetto con
+<br>&nbsp;
+<blockquote><tt>object suitcase "big green suitcase"</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; in emptyroom ! fatto prima</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; is openable, not open !</tt><tt></tt>
+<p><tt>&nbsp;&nbsp;&nbsp; nouns "suitcase", "case", "luggage"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; adjective "big", "green", "suit"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; article "a"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; size 25</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; capacity 100</tt>
+<br><tt>}</tt></blockquote>
+
+<p><br>Basandosi sulle regole dell'interprete per l'identificazione degli
+oggetti, il giocatore si pu&ograve; riferire all'oggetto valigia come "<tt>big
+green suitcase</tt>" (grande valigia verde), "<tt>big case</tt>" (grande
+valigia), o "<tt>green suitcase</tt>" (valigia verde) tra le varie combinazioni.
+Anche "<tt>big green</tt>" (grande verde) e "<tt>suit</tt>" possono essere
+valide, garantendo che queste espressioni non si riferiscano anche ad altri
+oggetti disponibili come "<tt>a big green apple</tt>" (una grande mela
+verde) o "<tt>your suit jacket</tt>" (la giacca del tuo vestito).
+<p>(<i>NOTA</i>: il formato base di identificazione del parser &egrave;
+<br>&nbsp;
+<blockquote><tt>&lt;aggettivo 1> &lt;agg. 2> &lt;agg. 3>...&lt;agg. n>
+&lt;nome></tt></blockquote>
+
+<p><br>dove ogni sottoinsieme di questi elementi &egrave; consentito. Comunque
+il nome deve apparire per ultimo e solo un nome viene riconosciuto, cos&igrave;
+che
+<br>&nbsp;
+<blockquote><tt>&lt;nome> &lt;nome> and &lt;nome> &lt;aggettivo></tt></blockquote>
+
+<p><br>come in
+<br>&nbsp;
+<blockquote><tt>"luggage case" e "suitcase green"</tt></blockquote>
+
+<p><br>non vengono riconosciuti).
+<p>Una sorgente occasionale di codice stupido che non si comporta nel modo
+che il programmatore intendeva &egrave; quando non viene riservato abbastanza
+spazio per una propriet&agrave; di un determinato oggetto. Cio&egrave;
+se l'oggetto &egrave; stato originariamente definito con la propriet&agrave;
+<br>&nbsp;
+<blockquote><tt>found_in kitchen</tt></blockquote>
+
+<p><br>e poi il programma cerca di impostare
+<br>&nbsp;
+<blockquote><tt>&lt;oggetto>.found_in #2 = livingroom</tt></blockquote>
+
+<p><br>non avr&agrave; nessun effetto evidente. In pratica non ci sar&agrave;
+dello spazio nella tabella delle propriet&agrave; di <tt>&lt;oggetto></tt>
+per un secondo valore di <tt>found_in</tt>. Cercando di leggere <tt>&lt;oggetto>.found_in
+#2</tt> si avr&agrave; un valore di ritorno pari a 0 -- una propriet&agrave;
+non esistente -- non il numero dell'oggetto <tt>livingroom</tt>. (Eseguendo
+il debugger con gli avvertimenti a runtime [runtime warnings] abilitati
+aiuta ad individuare situazioni come questa).
+<p>Per ovviare a ci&ograve;, se si prevede che probabilmente un secondo
+(o terzo, o quarto, o nono) valore andr&agrave; impostato -- anche se solo
+un valore viene definito -- usate
+<br>&nbsp;
+<blockquote><tt>found_in kitchen, 0[, 0, 0,...]</tt></blockquote>
+
+<p><br>nella definizione dell'oggetto.
+<p>(Una scorciatoia utile per inizializzare una serie di valori a 0 &egrave;
+quella di usare
+<br>&nbsp;
+<blockquote><tt>found_in #4</tt></blockquote>
+
+<p><br>invece di
+<br>&nbsp;
+<blockquote><tt>found_in 0, 0, 0, 0</tt></blockquote>
+
+<p><br>nella definizione dell'oggetto).
+<p>Come ci si potrebbe aspettare le combinazioni di propriet&agrave; sono
+lette da sinistra a destra, cos&igrave; che
+<br>&nbsp;
+<blockquote><tt>location.n_to.name</tt></blockquote>
+
+<p><br>viene interpretata come
+<br>&nbsp;
+<blockquote><tt>(location.n_to).name</tt></blockquote>
+
+<h3>
+<a NAME="Classi"></a>III.d Classi</h3>
+
+<p><br>Le classi sono sostanzialmente degli oggetti che servono come prototipi
+per uno o pi&ugrave; oggetti simili.
+<br>Una classe viene definita come segue:
+<br>&nbsp;
+<blockquote><tt>class &lt;nomeclasse> ["&lt;nome opzionale>"]</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>}</tt></blockquote>
+
+<p><br>con il corpo della definizione che &egrave; simile a quello usato
+per la definizione di un oggetto, dove le propriet&agrave; e gli attributi
+definiti valgono per tutti i membri della classe.
+<p>Ad esempio:
+<br>&nbsp;
+<blockquote><tt>class scatola</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; noun "scatola"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; long_desc</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Sembra una normale
+vecchia scatola."</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; is openable, not open</tt>
+<br><tt>}</tt><tt></tt>
+<p><tt>scatola scatolagrande "scatola grande"</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; article "una"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; adjectives "grande", "larga"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; is open</tt>
+<br><tt>}</tt><tt></tt>
+<p><tt>scatola scatolaverde "scatola verde"</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; article "una"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; adjective "verde"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; long_desc</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Sembra una normale
+vecchia scatola, solo verde."</tt>
+<br><tt>}</tt></blockquote>
+
+<p><br>(Cominciando la routine della propriet&agrave; <tt>long_desc</tt>
+sulla riga sotto il nome della propriet&agrave;, questa viene interpretata
+dal compilatore come:
+<br>&nbsp;
+<blockquote><tt>long_desc</tt>
+<br><tt>{</tt>
+<br><tt>"Sembra una normale vecchia scatola, solo verde."</tt>
+<br><tt>}</tt></blockquote>
+
+<p><br>Visto che la propriet&agrave; &egrave; lunga solo una riga -- un
+comando di stampa -- le parentesi graffe non sono necessarie).
+<p>La definizione di un oggetto di una certa classe comincia con il nome
+dell'oggetto prototipo invece di "<tt>object</tt>". Tutte le propriet&agrave;
+e gli attributi della classe vengono ereditati (tranne la posizione all'interno
+dell'albero degli oggetti), a meno che essi siano esplicitamente definiti
+nel nuovo oggetto.
+<p>In pratica, sebbene la classe scatola sia stata definita senza l'attributo
+<tt>open</tt> (aperto), l'oggetto <tt>scatolagrande</tt> comincier&agrave;
+il gioco aperta (<tt>open</tt>), visto che cos&igrave; &egrave; stata impostata
+nella definzione di <tt>scatolagrande</tt>. Comincier&agrave; il gioco
+comunque apribile (<tt>openable</tt>) visto che questo attributo &egrave;
+stato ereditato dalla classe <tt>scatola</tt>.
+<p>Mentre l'oggetto <tt>scatolagrande</tt> avr&agrave; la propriet&agrave;
+<tt>long_desc</tt> della classe <tt>scatola</tt>, l'oggetto <tt>scatolaverde</tt>
+sostituisce la descrizione di default con una nuova descrizione. (Un'eccezione
+a questo &egrave; la propriet&agrave; "<tt>$additive</tt>", spiegata in
+seguito, dove nuove propriet&agrave; vengono aggiunte a quelle delle classi
+precedenti).
+<p>Poich&eacute; una classe &egrave; fondamentalmente un oggetto, &egrave;
+possibile definire un oggetto usando un oggetto precedente come classe
+anche se l'oggetto precedente non &egrave; stato esplicitamente definito
+come classe.
+<br>Perci&ograve;
+<br>&nbsp;
+<blockquote><tt>scatolagrande scatolagranderossa "scatola grande rossa"</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; adjectives "grande", "larga", "rossa"</tt>
+<br><tt>}</tt></blockquote>
+
+<p><br>&egrave; perfettamente valido.
+<p>Occasionalmente pu&ograve; essere necessario avere un oggetto o una
+classe che ereditano da pi&ugrave; di una classe definita in precedenza.
+Questo pu&ograve; essere ottenuto usando l'istruzione "<tt>inherits</tt>"
+(eredita).
+<br>&nbsp;
+<blockquote><tt>&lt;classe1> &lt;nomeoggetto> "nome"</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; inherits &lt;classe2>[, &lt;classe3>,...]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>}</tt></blockquote>
+
+<p><br>o anche
+<br>&nbsp;
+<blockquote><tt>object &lt;nomeoggetto> "nome"</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; inherits &lt;classe1>, &lt;classe2>[, &lt;classe3>,...]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>}</tt></blockquote>
+
+<p><br>La precedenza dell'ereditariet&agrave; &egrave; in ordine di definizione.
+Negli esempi precedenti, l'oggetto eredita prima da <tt>&lt;classe1></tt>,
+poi da <tt>&lt;classe2></tt>, e cos&igrave; via (o anche <tt>&lt;oggetto1></tt>,
+<tt>&lt;oggetto2></tt>, ecc.).
+<p>La libreria degli oggetti di Hugo (<tt>OBJLIB.H</tt>) contiene una serie
+di definizioni di classi utili per cose come stanze, personaggi, scenario,
+veicoli, ecc. Alcune volte, comunque, pu&ograve; essere utile usare una
+definizione differente per, ad esempio, la classe <tt>room</tt> (stanza)
+mantenendo tutte le altre della libreria degli oggetti.
+<p>Invece di modificare il file <tt>OBJLIB.H</tt> si usa:
+<br>&nbsp;
+<blockquote><tt>replace &lt;classe> ["&lt;nome opzionale>"]</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; (...nuova definizione dell'oggetto...)</tt>
+<br><tt>}</tt></blockquote>
+
+<p><br>dove <tt>&lt;classe></tt> &egrave; il nome di un oggetto o di una
+classe definiti in precedenza, come "<tt>room</tt>" (stanza). Tutti i riferimenti
+seguenti a <tt>&lt;classe></tt> useranno questo oggetto invece di quello
+definito precedentemente.
+<br>(Questo significa che la sostituzione [<tt>replace</tt>] deve avvenire
+<b>PRIMA</b> dell'uso della classe dagli altri oggetti).
+<br>&nbsp;
+</FONT></FONT></FONT></P>
+<P ALIGN="CENTER"><IMG SRC="../Varie/Newgif/blurulr6.gif" NAME="Riga" ALIGN="BOTTOM" WIDTH="640" HEIGHT="2" BORDER="0"><BR><BR>
+<FONT SIZE="1" STYLE="font-size: 8pt"><A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A>
+<FONT SIZE="2">Torna alla Home Page</FONT> 
+<A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A></FONT>
+</P>
+<P ALIGN="CENTER"><FONT SIZE="1" STYLE="font-size: 8pt"><FONT COLOR="#000080">&copy;2000 Simone
+Zanella e &copy;2000 IF Italia. E' vietata la riproduzione.</FONT></FONT></P></BLOCKQUOTE>
+</BODY>
+</HTML>

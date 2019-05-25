@@ -1,0 +1,153 @@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>IF Italia - Il sito italiano sull'Interactive Fiction
+</TITLE>
+      <LINK REV="made" HREF="mailto:dickdastardly@highway.it">
+	<META NAME="GENERATOR" CONTENT="NoteTab 4.82">
+	<META NAME="copyright" CONTENT="Tutto il materiale presente in questo sito è (c)Simone Zanella e (c)IF Italia ove non diversamente indicato. Tutti i diritti sono riservati. E' vietata la riproduzione non autorizzata del sito e di sue parti.">
+	<META name="keywords" content="if interactive fiction avventura avventure testuale testuali inform infocom tads ifitalia italia giochi gioco castello adventure text simone zanella monkey island gratis freeware download">
+	<META name="description" content="Il più vasto sito italiano sulle avventure testuali e sull'Interactive Fiction">	<STYLE>
+	<!--
+		P { border: none; padding: 0cm; font-family: "Verdana", sans-serif; font-size: 10pt }
+	-->
+	</STYLE>
+</HEAD>
+<BODY>
+<BLOCKQUOTE><DIV TYPE="HEADER">
+	<P ALIGN="CENTER" STYLE="border: 1px solid #000000; padding: 0.05cm"><FONT COLOR="#000080"><FONT FACE="Verdana, sans-serif">IF
+	ITALIA - Il sito Italiano sull'Interactive Fiction</FONT></FONT></P>
+</DIV>
+<P ALIGN="CENTER"><IMG SRC="../Varie/if3backup.jpg" NAME="Logosmall" ALIGN="MIDDLE" WIDTH="108" HEIGHT="104" BORDER="0"></P>
+<P><FONT SIZE="2" STYLE="font-size: 10pt"><FONT FACE="Verdana, sans-serif"><FONT COLOR="#000080">
+
+<center>
+<h2>
+HUGO v2.5 - An Interactive Fiction Design System</h2></center>
+
+<center><i>MANUALE DEL PROGRAMMATORE</i></center>
+
+<center>
+<h4>
+Copyright (c) 1995-1999 by Kent Tessman</h4></center>
+
+<center>
+<p><br><i>(Revisionato il 25 Febbraio 1999)</i></center>
+<p><br><b><a href="hugomchp1.htm">I. INTRODUZIONE</a></b>
+<blockquote><a href="hugomchp1.htm#NoteLegali">I.a. Note legali</a>
+<br><a href="hugomchp1.htm#MenoLegali">I.b. (Note meno legali)</a>
+<br><a href="hugomchp1.htm#Nomi">I.c. Nomi e ringraziamenti</a>
+<br><a href="hugomchp1.htm#Contenuto">I.d. Contenuto della distribuzione</a>
+<br><a href="hugomchp1.htm#Convenzioni">I.e. Convenzioni adottate nel manuale</a>
+<br><a href="hugomchp1.htm#PerCominciare">I.f. Per cominciare</a>
+<br><a href="hugomchp1.htm#Opzioni">I.g. Opzioni del compilatore</a>
+<br><a href="hugomchp1.htm#Limiti">I.h. Impostazione dei limiti</a>
+<br><a href="hugomchp1.htm#Directory">I.i. Directory</a>
+<br><a href="hugomchp1.htm#Engine">I.j. Hugo Engine</a></blockquote>
+
+<p><br><b><a href="hugomchp2.htm">II. UNA PRIMA OCCHIATA A HUGO</a></b>
+<blockquote><a href="hugomchp2.htm#HelloSailor">II.a. Hello, Sailor!</a>
+<br><a href="hugomchp2.htm#TipiDiDati">II.b. Tipi di dati</a>
+<br><a href="hugomchp2.htm#RigheMultiple">II.c. Righe multiple</a>
+<br><a href="hugomchp2.htm#Commenti">II.d. Commenti</a>
+<br><a href="hugomchp2.htm#Errori">II.e. Errori del compilatore</a>
+<br><a href="hugomchp2.htm#Direttive">II.f. Direttive di compilazione</a>
+<blockquote><a href="hugomchp2.htm#EsCompilazione">Esempio: Compilazione
+dalla linea di comando</a></blockquote>
+</blockquote>
+
+<p><br><b><a href="hugomchp3.htm">III. OGGETTI</a></b>
+<blockquote><a href="hugomchp3.htm#AlberoOggetti">III.a. L'albero degli
+oggetti</a>
+<br><a href="hugomchp3.htm#Attributi">III.b. Attributi</a>
+<br><a href="hugomchp3.htm#Proprieta">III.c. Propriet&agrave;</a>
+<br><a href="hugomchp3.htm#Classi">III.d. Classi</a></blockquote>
+
+<p><br><b><a href="hugomchp4.htm">IV. LA PROGRAMMAZIONE DI HUGO</a></b>
+<blockquote><a href="hugomchp4.htm#Variabili">IV.a. Variabili</a>
+<br><a href="hugomchp4.htm#Costanti">IV.b. Costanti</a>
+<br><a href="hugomchp4.htm#ScrivereIlTesto">IV.c. Scrivere il testo</a>
+<br><a href="hugomchp4.htm#AltriCaratteri">IV.d. Altri caratteri di controllo</a>
+<blockquote><a href="hugomchp4.htm#EsMischiareStili">Esempio: Mischiare
+gli stili del testo</a></blockquote>
+<a href="hugomchp4.htm#OperatoriAssegnazioni">IV.e Operatori ed assegnazioni</a>
+<br><a href="hugomchp4.htm#OperatoriEffic">IV.f. Operatori efficienti</a>
+<br><a href="hugomchp4.htm#ArrayEStringhe">IV.g. Array e stringhe</a>
+<blockquote><a href="hugomchp4.htm#EsUsareStringhe">Esempio: Usare le stringhe</a></blockquote>
+<a href="hugomchp4.htm#CompilazioneCond">IV.h. Compilazione condizionale
+e flusso del programma</a></blockquote>
+
+<p><br><b><a href="hugomchp5.htm">V. ROUTINE ED EVENTI</a></b>
+<blockquote><a href="hugomchp5.htm#Routine">V.a. Routine</a>
+<br><a href="hugomchp5.htm#RoutineProp">V.b. Routine propriet&agrave;</a>
+<blockquote><a href="hugomchp5.htm#EsPrendereAPrestito">Esempio: "Prendere
+a prestito" le Routine Propriet&agrave;</a></blockquote>
+<a href="hugomchp5.htm#BeforeEAfter">V.c. Le routine Before e After</a>
+<blockquote><a href="hugomchp5.htm#EsOggettoComplesso">Esempio: Costruzione
+di un oggetto complesso</a></blockquote>
+<a href="hugomchp5.htm#InitEMain">V.d. Init e Main</a>
+<br><a href="hugomchp5.htm#Eventi">V.e. Eventi</a>
+<blockquote><a href="hugomchp5.htm#EsOggettoOrologio">Esempio: Costruzione
+di un evento orologio</a></blockquote>
+</blockquote>
+
+<p><br><b><a href="hugomchp6.htm">VI. MICCE, DEMONI E SCRIPT</a></b>
+<blockquote><a href="hugomchp6.htm#MicceEDemoni">VI.a. Micce e Demoni</a>
+<blockquote><a href="hugomchp6.htm#EsUnSempliceDaemon">Esempio: Un semplice
+Daemon ed un ancor pi&ugrave; semplice Fuse</a></blockquote>
+<a href="hugomchp6.htm#Script">VI.b. Script</a>
+<br><a href="hugomchp6.htm#UnaNota">VI.c. Una nota sulla globale event_flag</a></blockquote>
+
+<p><br><b><a href="hugomchp7.htm">VII. GRAMMATICA E PARSING</a></b>
+<blockquote><a href="hugomchp7.htm#DefGrammar">VII.a. Definizione della
+grammatica</a>
+<br><a href="hugomchp7.htm#IlParser">VII.b. Il parser</a></blockquote>
+
+<p><br><b><a href="hugomchp8.htm">VIII. ROUTINE DI CONGIUNZIONE</a></b>
+<blockquote><a href="hugomchp8.htm#Parse">VIII.a. Parse</a>
+<br><a href="hugomchp8.htm#ParseError">VIII.b. ParseError</a>
+<br><a href="hugomchp8.htm#EndGame">VIII.c. EndGame</a>
+<br><a href="hugomchp8.htm#FindObject">VIII.d. FindObject</a>
+<br><a href="hugomchp8.htm#SpeakTo">VIII.e. SpeakTo</a>
+<br><a href="hugomchp8.htm#Perform">VIII.f. Perform</a></blockquote>
+
+<p><br><b><a href="hugomchp9.htm">IX. IL CICLO DEL GIOCO</a></b>
+<p><b><a href="hugomchp10.htm">X. FUNZIONALIT&Agrave; AVANZATE</a></b>
+<blockquote><a href="hugomchp10.htm#OggettoDisplay">X.a. L'oggetto Display</a>
+<br><a href="hugomchp10.htm#Finestre">X.b. Finestre</a>
+<br><a href="hugomchp10.htm#File">X.c. Leggere e scrivere i file</a></blockquote>
+
+<p><br><b><a href="hugomchp11.htm">XI. RISORSE</a></b>
+<blockquote><a href="hugomchp11.htm#Immagini">XI.a. Immagini</a>
+<br><a href="hugomchp11.htm#SuonoMusica">XI.b. Suono e musica</a></blockquote>
+
+<p><br><b>APPENDICE A: SOMMARIO DEI COMANDI E DELLE PAROLE CHIAVE</b>
+<p><b>APPENDICE B: LA LIBRERIA (HUGOLIB.H)</b>
+<blockquote>ATTRIBUTI
+<br>GLOBALI, COSTANTI E ARRAY
+<br>PROPRIET&Agrave;
+<br>ROUTINE</blockquote>
+<b>APPENDICE C: IMPOSTAZIONE DEI LIMITI</b>
+<p><b>APPENDICE D: HEADER PRECOMPILATI</b>
+<p><b>APPENDICE E: IL DEBUGGER DI HUGO</b>
+<p>
+<hr WIDTH="100%">
+<br>Hugo Compiler, Engine, Debugger, Library, and the Hugo Manual
+<br>Copyright (c) 1995-1998 by Kent Tessman
+<br>&nbsp;
+<address>
+<a href="mailto:generalcoffee@geocities.com">&lt;generalcoffee@geocities.com></a></address>
+
+<br><a href="http://www.geocities.com/hollywood/academy/5976/hugo.html">http://www.geocities.com/hollywood/academy/5976/hugo.html</a>
+<br>
+<hr WIDTH="100%">
+</FONT></FONT></FONT></P>
+<P ALIGN="CENTER"><IMG SRC="../Varie/Newgif/blurulr6.gif" NAME="Riga" ALIGN="BOTTOM" WIDTH="640" HEIGHT="2" BORDER="0"><BR><BR>
+<FONT SIZE="1" STYLE="font-size: 8pt"><A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A>
+<FONT SIZE="2">Torna alla Home Page</FONT> 
+<A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A></FONT>
+</P>
+<P ALIGN="CENTER"><FONT SIZE="1" STYLE="font-size: 8pt"><FONT COLOR="#000080">&copy;2000 Simone
+Zanella e &copy;2000 IF Italia. E' vietata la riproduzione.</FONT></FONT></P></BLOCKQUOTE>
+</BODY>
+</HTML>

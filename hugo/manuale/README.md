@@ -6,20 +6,28 @@ Curatore ristampa: [Tristano Ajmone].
 
 # File del progetto
 
+- [`/original-html/`][original] — file HTML originale della guida, recuperato da un backup di IF Italia.
 - [`/salvaged-mht/`][salvaged] — file [MHTML] del manuale, recuperati dal mio hard disk. 
 
 # Origine del documento
 
+Ho recuperato sul mio vecchio hard disk una copia del _Manuale del Programmatore_ di [Hugo], tradotto in italiano e pubblicato in HTML sul [vecchio sito IF Italia][man WBM] (ma [non presente su quello attuale]). Scaricai il manuale nel 2009 dal mirror di IF Italia su interfree.it:
+
 - [http://plovec.interfree.it/IFItalia/Traduhugo/index.htm](https://web.archive.org/web/20050221002205/http://plovec.interfree.it/IFItalia/Traduhugo/index.htm) (WaybackMachine)
 
-Ho recuperato sul mio vecchio hard disk una copia del _Manuale del Programmatore_ di [Hugo], tradotto in italiano e pubblicato in HTML sul [vecchio sito IF Italia][man WBM] (ma [non presente su quello attuale]).
+Avevo salvato il manuale in formato [MHTML], per cui ciascun file (capitolo) racchiude tutte le risorse dell'originale oltre a metadati utili riguardo la fonte originale. A scanso di equivoci, ho reso disponibili nella cartella [`/salvaged-mht/`][salvaged] copie inalterate dei file rinvenuti. 
 
-Nel 2009, avevo salvato il manuale in formato [MHTML], per cui ciascun file (capitolo) racchiude tutte le risorse dell'originale oltre a metadati utili riguardo la fonte originale. A scanso di equivoci, ho reso disponibili nella cartella [`/salvaged-mht/`][salvaged] copie inalterate dei file rinvenuti. 
+In seguito alla mia conversione in AsciiDoc dei file MHTML, Paolo Vece mi ha dato accesso ai file HTML originali del manuale, che ho reso disponibilii nella cartella [`/original-html/`][original]. Ho laciato comunque copia dei file MHTML nel progetto, per scrupolo, dato che sono quelli che ho usato per la conversione, anche se i contenuti dovrebbero essere identici.
 
-Su [WaybackMachine][man WBM] è stato archiviato solo l'indice del libro ma non i restanti capitoli; perciò aver recuperato una copia completa del documento è una circostanza abbastanza fortunata ed il documento merita di essere archiviato.
+Su [WaybackMachine][man WBM] è stato archiviato solo l'indice del libro ma non i restanti capitoli.
+
+In seguito alla nascita del progetto __Lazzaro II__, Paolo Vece ha nuovamente reso disponibile online il mirror di IF Italia, cosicché il manuale originale può essere ora visionato online: 
+
+- http://www.pvece.it/if/IFItalia/hugoindex.html
+
+# Permesso di ristampa
 
 Ho contattato sia l'autore, Ken Tessman, che il traduttore, Paolo Vece, ed entrambi hanno fornito il consenso al lavoro di riproduzione e archiviazione.
-
 
 <!-----------------------------------------------------------------------------
                                REFERENCE LINKS                                
@@ -38,6 +46,7 @@ Ho contattato sia l'autore, Ken Tessman, che il traduttore, Paolo Vece, ed entra
 <!-- file e cartelle -->
 
 [salvaged]: ./salvaged-mht "Vai alla cartella"
+[original]: ./original-html "Vai alla cartella"
 
 <!-- persone -->
 

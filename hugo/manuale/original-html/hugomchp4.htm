@@ -1,0 +1,1299 @@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>IF Italia - Il sito italiano sull'Interactive Fiction
+</TITLE>
+      <LINK REV="made" HREF="mailto:dickdastardly@highway.it">
+	<META NAME="GENERATOR" CONTENT="NoteTab 4.82">
+	<META NAME="copyright" CONTENT="Tutto il materiale presente in questo sito è (c)Simone Zanella e (c)IF Italia ove non diversamente indicato. Tutti i diritti sono riservati. E' vietata la riproduzione non autorizzata del sito e di sue parti.">
+	<META name="keywords" content="if interactive fiction avventura avventure testuale testuali inform infocom tads ifitalia italia giochi gioco castello adventure text simone zanella monkey island gratis freeware download">
+	<META name="description" content="Il più vasto sito italiano sulle avventure testuali e sull'Interactive Fiction">	<STYLE>
+	<!--
+		P { border: none; padding: 0cm; font-family: "Verdana", sans-serif; font-size: 10pt }
+	-->
+	</STYLE>
+</HEAD>
+<BODY>
+<BLOCKQUOTE><DIV TYPE="HEADER">
+	<P ALIGN="CENTER" STYLE="border: 1px solid #000000; padding: 0.05cm"><FONT COLOR="#000080"><FONT FACE="Verdana, sans-serif">IF
+	ITALIA - Il sito Italiano sull'Interactive Fiction</FONT></FONT></P>
+</DIV>
+<P ALIGN="CENTER"><IMG SRC="../Varie/if3backup.jpg" NAME="Logosmall" ALIGN="MIDDLE" WIDTH="108" HEIGHT="104" BORDER="0"></P>
+<P><FONT SIZE="2" STYLE="font-size: 10pt"><FONT FACE="Verdana, sans-serif"><FONT COLOR="#000080">
+
+<h2>
+IV. LA PROGRAMMAZIONE DI HUGO</h2>
+
+<h3>
+<a NAME="Variabili"></a>IV.a. Variabili</h3>
+Hugo supporta due tipi di variabili: globali e locali. Entrambi i tipi
+contengono un intero a 16 bit, cos&igrave; una variabile pu&ograve; memorizzare
+un valore semplice, il numero di un oggetto, un indirizzo del dizionario,
+un indirizzo di una routine, o qualunque altro tipo di dati standard di
+Hugo tramite un'assegnazione come:
+<blockquote><tt>a = 1</tt>
+<br><tt>nextobj = parent(obj)</tt>
+<br><tt>temp_word = "the"</tt></blockquote>
+Le variabili globali sono visibili per tutto il programma. Debbono essere
+definite in maniera simile a quanto viene fatto per le propriet&agrave;
+e gli attributi come in
+<blockquote><tt>global &lt;nome variabile globale>[ = &lt;valore iniziale>]</tt></blockquote>
+Le variabili locali, d'altra parte, sono riconosciute solo all'interno
+della routine in cui sono state definite. Vengono definite usando
+<blockquote><tt>local &lt;nome variabile locale>[ = &lt;valore iniziale>]</tt></blockquote>
+Le variabili globali devono avere un nome univoco, diverso da quello usato
+per altri oggetti: le variabili locali, invece, possono usare lo stesso
+nome usato per altre variabili locali in altre routine.
+<p>In entrambi i casi, globali o locali, il valore iniziale di default
+&egrave; 0 se nessun valore viene fornito. Ad esempio,
+<blockquote><tt>global time_of_day = 1100</tt></blockquote>
+&egrave; uguale a 1100 quando il programma viene eseguito, ed &egrave;
+visibile in ogni punto del programma ad ogni oggetto o routine. D'altra
+parte le variabili
+<blockquote><tt>local a, max = 100, t</tt></blockquote>
+sono visibili solo nel blocco di codice in cui sono state definite, e sono
+inizializzate, rispettivamente, a 0, 100 e 0, ogni volta che quella sezione
+di codice (che sia una routine, una routine propriet&agrave;, un evento,
+ecc.) viene eseguita.
+<p>Il compilatore definisce una serie di globali dell'interprete (engine
+globals): varibili globali referenziate direttamente dall'interprete, ma
+che possono essere utilizzate come ogni altra variabile globale. Sono:
+<blockquote><tt><b>object</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+oggetto a cui si riferisce un'azione</tt>
+<br><tt><b>xobject</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; l'oggetto indiretto</tt>
+<br><tt><b>self</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+l'oggetto che punta a se stesso</tt>
+<br><tt><b>words</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; numero
+di parole nel comando</tt>
+<br><tt><b>player</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; l'oggetto
+giocatore</tt>
+<br><tt><b>actor</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; il
+giocatore, od un personaggio (per gli script)</tt>
+<br><tt><b>verbroutine</b>&nbsp;&nbsp; la routine specificata dal comando</tt>
+<br><tt><b>endflag</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; se non &egrave;
+falso (0), esegue la routine EndGame</tt>
+<br><tt><b>prompt</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; per l'input;
+il default &egrave; ">"</tt>
+<br><tt><b>objects</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; il numero totale
+di oggetti</tt>
+<br><tt><b>system_status</b> dopo certe operazioni</tt></blockquote>
+Le globali <tt>object</tt> e <tt>xobject</tt> vengono impostate dall'interprete
+in base al comando digitato dal giocatore. La globale <tt>self</tt> &egrave;
+indefinita a meno che un oggetto sia stato referenziato (in una routine
+propriet&agrave;). In questo caso viene impostata con il numero dell'oggetto.
+La variabile <tt>player</tt> contiene il numero dell'oggetto che il giocatore
+sta controllando; la variabile <tt>verbroutine</tt> contiene l'indirizzo
+della routine specificata nella tavola della grammatica e corrispondente
+al comando inserito; la varibile <tt>endflag</tt> deve essere 0 a meno
+che non accada qualcosa che faccia terminare il gioco; e la variabile <tt>prompt</tt>
+contiene la parola del dizionario che appare all'inzio della riga di input.
+<p>La variabile <tt>objects</tt> pu&ograve; essere impostata dal giocatore,
+ma senza alcun effetto utile. L'interprete la reimposter&agrave; al valore
+"vero" ogni volta che verr&agrave; referenziata. (Tutti i numeri di oggetto
+variano da 0 al valore di <tt>objects</tt>). La variabile <tt>system_status</tt>
+pu&ograve; essere letta (dopo un'operazione riguardante una risorsa o una
+chiamata di 'sistema'; controllate le sezioni corrispondenti per una spiegazione
+di queste funzioni) per controllare se si &egrave; verificato un errore.
+Consultate la sezione riguardante le "Risorse" per i possibili valori di
+ritorno.
+<p>(<i>NOTA</i>: Impostando <tt>endflag</tt> ad un valore diverso da 0
+forza un'interruzione <b>IMMEDIATA</b> del ciclo di gioco. Le istruzioni
+che seguono l'assegnazione del valore ad <tt>endflag</tt>, anche se nella
+stessa funzione, non verranno eseguite; il controllo passa direttamente
+all'interprete che chiama la routine <tt>EndGame</tt>).
+<h3>
+<a NAME="Costanti"></a>IV.b Costanti</h3>
+Le costanti sono semplicemente delle etichette che identificano un valore
+non modificabile.
+<blockquote><tt>constant NOME "John"</tt>
+<br><tt>constant COGNOME "Smith"</tt></blockquote>
+(Fate caso alla mancanza di un segno di '<tt>=</tt>' tra, ad esempio,
+<tt>NOME</tt>
+e <tt>"John"</tt>)
+<blockquote><tt>print COGNOME; ", "; NOME</tt></blockquote>
+visualizza:
+<blockquote><tt>Smith, John</tt></blockquote>
+Le costanti possono essere, come ogni altro tipo di dato in Hugo, interi,
+voci del dizionario, numeri di oggetti, ecc.
+<p>(Non &egrave; necessario assegnare un valore definito ad una costante
+se le costanti devono essere usate come una specie di flag o indicatore.
+Perci&ograve;,
+<blockquote><tt>constant QUESTO_RISULTATO</tt>
+<br><tt>constant QUEL_RISULTATO</tt></blockquote>
+avranno un valore differente tra di loro, cos&igrave; come da ogni altra
+costante definita senza uno specifico valore).
+<p>A volte pu&ograve; essere utile numerare una serie di costanti in sequenza.
+Invece di definirle individualmente &egrave; possibile usare:
+<blockquote><tt>enumerate start = 1</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; LUNEDI, MARTEDI, MERCOLEDI, GIOVEDI, VENERDI</tt>
+<br><tt>}</tt></blockquote>
+che assegna:
+<blockquote><tt>LUNEDI = 1, MARTEDI = 2, MERCOLEDI = 3, GIOVEDI = 4, VENERDI
+= 5</tt></blockquote>
+Il valore <tt>start</tt> [inizio] &egrave; opzionale. Se viene omesso si
+assume 0. Inoltre &egrave; possible cambiare il valore corrente in ogni
+punto (questo riguarder&agrave; anche i valori seguenti).
+<blockquote><tt>enumerate</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; A, B, C = 5, D, E</tt>
+<br><tt>}</tt></blockquote>
+imposta: <tt>A = 0, B = 1, C = 5, D = 6, E = 7</tt>.
+<p>Infine &egrave; possibile modificare il passo della numerazione usando
+la parola chiave "<tt>step</tt>" seguita da "<tt>+x</tt>", "<tt>-x</tt>",
+"<tt>*x</tt>" o "<tt>/x</tt>", dove <tt>x</tt> &egrave; un valore intero.
+Per contare per due:
+<blockquote><tt>enumerate step *2</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; A = 1, B, C, D</tt>
+<br><tt>}</tt></blockquote>
+imposta: <tt>A = 1, B = 2, C = 4, D = 8</tt>.
+<p><i>NOTA</i>: la numerazione delle variabili globali &egrave; possibile
+usando lo specificatore '<tt>globals</tt>', come in:
+<blockquote><tt>enumerate globals</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; &lt;globale1>, &lt;globale2>...</tt>
+<br><tt>}</tt></blockquote>
+Altrimenti lo specificatore "<tt>constants</tt>" viene considerato di default.
+<h3>
+<a NAME="ScrivereIlTesto"></a>IV.c. Scrivere il testo</h3>
+Il testo pu&ograve; essere stampato usando due metodi differenti. Il primo
+&egrave; l'utilizzo del comando '<tt>print</tt>', la cui forma pi&ugrave;
+semplice &egrave;
+<blockquote><tt>print "&lt;stringa>"</tt></blockquote>
+dove <tt>&lt;stringa></tt> rappresenta una serie di caratteri alfanumerici
+e simboli di punteggiatura.
+<p>Il carattere di controllo barra inversa ("<tt>\</tt>") viene gestito
+in maniera speciale. Modifica il modo in cui il carattere che lo segue
+nella stringa viene trattato.
+<center><table CELLSPACING=3 CELLPADDING=3 >
+<tr>
+<td><tt>\"</tt></td>
+
+<td>inserisce le doppie virgolette</td>
+</tr>
+
+<tr>
+<td><tt>\\</tt></td>
+
+<td>inserisce il carattere di barra inversa</td>
+</tr>
+
+<tr>
+<td><tt>\_</tt></td>
+
+<td>inserisce uno spazio, ignorando la giustificazione a sinistra per il
+resto della stringa</td>
+</tr>
+
+<tr>
+<td><tt>\n</tt></td>
+
+<td>inserisce un carattere di nuova riga</td>
+</tr>
+</table></center>
+
+<p>Come normale, un singolo "<tt>\</tt>" alla fine di una riga segnala
+che la riga continua sulla successiva.
+<p>Esempi:
+<blockquote><tt>print "\"Salve!\""</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; "Salve!"</tt>
+<p><tt>print "Stampa una...\n...riga nuova"</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; Stampa una...</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...riga nuova</tt>
+<p><tt>print "Uno\\Due\\Tre"</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; Uno\Due\Tre</tt>
+<p><tt>print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Giustificato a sinistra"</tt>
+<br><tt>print "\_&nbsp;&nbsp;&nbsp; Non giustificato a sinistra"</tt>
+<p><tt>Giustificato a sinistra</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp; Non giustificato a sinistra</tt>
+<p><tt>print "Questa &egrave; una \</tt>
+<br><tt>riga singola."</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; Questa &egrave; una riga singola.</tt></blockquote>
+(Sebbene
+<blockquote><tt>print "Questa &egrave; una</tt>
+<br><tt>riga singola."</tt></blockquote>
+produca lo stesso risultato, visto che l'interruzione di riga avviene tra
+doppi apici).
+<p><i>NOTA</i>: queste combinazioni di caratteri di controllo sono valide
+solo in stampa; non vengono trattate in maniera letterale, come, ad esempio,
+le espressioni che coinvolgono le voci del dizionario.
+<p>Dopo ognuno dei comandi <tt>print</tt> indicati sopra, viene stampata
+una riga nuova. Per evitarlo &egrave; necessario aggiungere un punto e
+virgola (<tt>;</tt>) alla fine dell'istruzione <tt>print</tt>.
+<blockquote><tt>print "Questa &egrave; una ";</tt>
+<br><tt>print "singola riga."</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; Questa &egrave; una singola riga.</tt></blockquote>
+Le istruzioni <tt>print</tt> possono anche contenere dei tipi di dato,
+o una combinazione di tipi di dato e stringhe. Il comando
+<blockquote><tt>print "La "; object.name; " &egrave; chiusa."</tt></blockquote>
+stamper&agrave; la parola che si trova all'indirizzo del dizionario specificato
+da <tt>object.name</tt>, cos&igrave; se <tt>object.name</tt> punta alla
+parola "<tt>scatola</tt>", l'output risultante sar&agrave;:
+<blockquote><tt>La scatola &egrave; chiusa.</tt></blockquote>
+Per rendere maiuscola la prima lettera della parola specificata, si usa
+il modificatore '<tt>capital</tt>'.
+<blockquote><tt>print "La "; capital object.name; " &egrave; chiusa."</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; La Scatola &egrave; chiusa.</tt></blockquote>
+Per stampare il dato come un valore invece di indirizzare una voce di dizionario,
+si usa il modificatore '<tt>number</tt>'. Ad esempio, se la variabile <tt>tempo</tt>
+contiene il numero 5,
+<blockquote><tt>print "Restano ancora "; number tempo; " secondi."</tt>
+<p><tt>Restano ancora 5 secondi.</tt></blockquote>
+Se non fosse stato usato '<tt>number</tt>', l'interprete avrebbe cercato
+di trovare una parola all'indirizzo 5 del dizionario, ed il risultato sarebbe
+stato una stampa errata.
+<p><i>NOTA</i>: Soprattutto per gli scopi del debug, il modificatore '<tt>hex</tt>'
+stampa il dato come un numero esadecimale invece di un numero decimale.
+Se la variabile <tt>val</tt> contiene 127,
+<blockquote><tt>print number val; " &egrave; "; hex val; " in esadecimale."</tt>
+<p><tt>127 &egrave; 7F in esadecimale.</tt></blockquote>
+Un secondo modo per stampare il testo &egrave; quello di prenderlo dalla
+memoria del testo (text bank), da dove -- se non c'&egrave; abbastanza
+memoria -- le sezioni di testo sono caricate dal disco solo quando &egrave;
+richiesto dal programma. Questo metodo &egrave; stato adottato cos&igrave;
+che lunghi blocchi di testo -- come le descrizioni e la narrazione -- non
+consumano spazio prezioso se la memoria &egrave; limitata. Il comando consiste
+semplicemente in una stringa tra doppi apici senza nessuna istruzione che
+la precede.
+<blockquote><tt>"Questa stringa verr&agrave; scritta sul disco."</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; Questa stringa verr&agrave; scritta sul disco.</tt></blockquote>
+o
+<blockquote><tt>"Cos&igrave; questa ";</tt>
+<br><tt>"ed anche questa."</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; Cos&igrave; questa ed anche questa.</tt></blockquote>
+Fate caso al fatto che un punto e virgola alla fine dell'istruzione continua
+ad evitare la stampa su una nuova riga. I caratteri di controllo nella
+stringa sono ancora utilizzabili con queste istruzioni di stampa, ma visto
+che ogni comando &egrave; una singola riga, i tipi di dato e gli altri
+modificatori non possono essere composti. Per questo
+<blockquote><tt>"\"Salve,\"" disse."</tt></blockquote>
+scriver&agrave;
+<blockquote><tt>"Salve," disse.</tt></blockquote>
+Nella memoria di testo del file <tt>.HEX</tt>, ma
+<blockquote><tt>"Restano ancora "; number tempo_rimasto; " secondi."</tt></blockquote>
+&egrave; illegale.
+<p>Il colore del testo pu&ograve; essere cambiato usando il comando '<tt>color</tt>'
+(usabile anche secondo la sintassi Inglese "<tt>colour</tt>"). Il formato
+&egrave;
+<blockquote><tt>color &lt;primopiano>[, &lt;sfondo>[, &lt;colore dell'input>]]</tt></blockquote>
+dove il colore di sfondo non &egrave; obbligatorio. Se nessun colore di
+sfondo viene specificato, verr&agrave; usato quello corrente).
+<p>Anche il colore dell'input non &egrave; obbligatorio -- specifica il
+colore usato per stampare i comandi del giocatore.
+<p>Il set standard di colori con i valori corrispondenti ed i nomi delle
+costanti &egrave;:
+<center><table BORDER CELLSPACING=3 CELLPADDING=3 >
+<tr>
+<td><b>COLORE</b></td>
+
+<td><b>VALORE</b></td>
+
+<td><b>COSTANTE</b></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>Nero</td>
+
+<td>0</td>
+
+<td><tt>BLACK</tt></td>
+</tr>
+
+<tr>
+<td>Blu</td>
+
+<td>1</td>
+
+<td><tt>BLUE</tt></td>
+</tr>
+
+<tr>
+<td>Verde</td>
+
+<td>2</td>
+
+<td><tt>GREEN</tt></td>
+</tr>
+
+<tr>
+<td>Ciano</td>
+
+<td>3</td>
+
+<td><tt>CYAN</tt></td>
+</tr>
+
+<tr>
+<td>Rosso</td>
+
+<td>4</td>
+
+<td><tt>RED</tt></td>
+</tr>
+
+<tr>
+<td>Magenta</td>
+
+<td>5</td>
+
+<td><tt>MAGENTA</tt></td>
+</tr>
+
+<tr>
+<td>Marrone</td>
+
+<td>6</td>
+
+<td><tt>BROWN</tt></td>
+</tr>
+
+<tr>
+<td>Bianco</td>
+
+<td>7</td>
+
+<td><tt>WHITE</tt></td>
+</tr>
+
+<tr>
+<td>Grigio scuro</td>
+
+<td>8</td>
+
+<td><tt>DARK_GRAY</tt></td>
+</tr>
+
+<tr>
+<td>Blu chiaro</td>
+
+<td>9</td>
+
+<td><tt>LIGHT_BLUE</tt></td>
+</tr>
+
+<tr>
+<td>Verde chiaro</td>
+
+<td>10</td>
+
+<td><tt>LIGHT_GREEN</tt></td>
+</tr>
+
+<tr>
+<td>Ciano chiaro</td>
+
+<td>11</td>
+
+<td><tt>LIGHT_CYAN</tt></td>
+</tr>
+
+<tr>
+<td>Rosso chiaro</td>
+
+<td>12</td>
+
+<td><tt>LIGHT_RED</tt></td>
+</tr>
+
+<tr>
+<td>Magenta chiaro</td>
+
+<td>13</td>
+
+<td><tt>LIGHT_MAGENTA</tt></td>
+</tr>
+
+<tr>
+<td>Giallo</td>
+
+<td>14</td>
+
+<td><tt>YELLOW</tt></td>
+</tr>
+
+<tr>
+<td>Bianco brill.</td>
+
+<td>15</td>
+
+<td><tt>BRIGHT_WHITE</tt></td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td>Primo piano default</td>
+
+<td>16</td>
+
+<td><tt>DEF_FOREGROUND</tt></td>
+</tr>
+
+<tr>
+<td>Sfondo default</td>
+
+<td>17</td>
+
+<td><tt>DEF_BACKGROUND</tt></td>
+</tr>
+
+<tr>
+<td>Primo piano statusline default</td>
+
+<td>18</td>
+
+<td><tt>DEF_SL_FOREGROUND</tt></td>
+</tr>
+
+<tr>
+<td>Sfondo statusline default</td>
+
+<td>19</td>
+
+<td><tt>DEF_SL_BACKGROUND</tt></td>
+</tr>
+
+<tr>
+<td>Primo piano corr.</td>
+
+<td>20</td>
+
+<td><tt>MATCH_FOREGROUND</tt></td>
+</tr>
+</table></center>
+
+<p>(Le costanti sono definite in <tt>HUGOLIB.H</tt>; quando si usa la libreria
+non &egrave; necessario riferirsi ai colori usando il loro valore numerico).
+<p>Ci si aspetta che, a parte il sistema, ogni colore venga stampato differentemente
+dagli altri. Comunque la pratica suggerisce che il bianco (talvolta il
+bianco brillante) venga usato per la stampa del testo. Blu e nero vengono
+di solito usati per lo sfondo.
+<p>Un testo magenta su uno sfondo ciano si ottiene con
+<blockquote><tt>color MAGENTA, CYAN</tt></blockquote>
+o
+<blockquote><tt>color 5, 3 !Se non si usa HUGOLIB.H</tt></blockquote>
+Una riga corrente pu&ograve; essere riempita -- con spazi bianchi del colore
+corrente -- fino ad una specifica colonna (sostanzialmente un tabulatore)
+usando la struttura "<tt>print to...</tt>" come segue:
+<blockquote><tt>print "Ora:"; to 40; "Data:"</tt></blockquote>
+dove il valore che segue il '<tt>to</tt>' non deve essere superiore alla
+lunghezza massima della riga indicata dalla variabile globale dell'interprete
+<tt>linelength</tt>.
+<p>L'output risultante &egrave; qualcosa del tipo:
+<blockquote><tt>Ora:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Data:</tt></blockquote>
+Il testo pu&ograve; essere posizionato usando il comando '<tt>locate</tt>'
+<blockquote><tt>locate &lt;colonna>, &lt;riga></tt></blockquote>
+dove
+<blockquote><tt>locate 1, 1</tt></blockquote>
+posiziona il testo in output all'angolo in alto a sinistra della finestra
+di testo corrente. N&eacute; <tt>&lt;colonna></tt> n&eacute; <tt>&lt;riga></tt>
+devono superare i bordi della finestra corrente -- l'interprete le riduce
+automaticamente se necessario.
+<h3>
+<a NAME="AltriCaratteri"></a>IV.d. Altri caratteri di controllo</h3>
+Come indicato prima quelli che seguono sono dei caratteri di controllo
+validi che possono essere racchiusi in una stringa:
+<center><table CELLSPACING=3 CELLPADDING=3 >
+<tr>
+<td><tt>\"</tt></td>
+
+<td>doppi apici</td>
+</tr>
+
+<tr>
+<td><tt>\\</tt></td>
+
+<td>una barra inversa</td>
+</tr>
+
+<tr>
+<td><tt>\_</tt></td>
+
+<td>uno spazio forzato, ignorando l giustificazione a sinistra per il resto
+della stringa</td>
+</tr>
+
+<tr>
+<td><tt>\n</tt></td>
+
+<td>riga nuova</td>
+</tr>
+</table></center>
+
+<p>Il prossimo insieme di caratteri definisce l'aspetto del testo impostando
+il grassetto, il corsivo, il proporzionale ed il sottolineato. Non tutti
+i computer e sistemi operativi sono in grado di fornire tutti i tipi di
+output; comunque l'interprete si occuper&agrave; di formattare in maniera
+corretta tutti i testi -- ad esempio, il testo stampato in maniera proporzionale
+apparir&agrave; corretto anche su un sistema con solo caratteri a spaziatura
+fissa, come l'MS-DOS (sebbene non verr&agrave; stampato con la spaziatura
+porporzionale).
+<center><table CELLSPACING=3 CELLPADDING=3 >
+<tr>
+<td><tt>\B</tt></td>
+
+<td>attiva il grassetto (<b>Bold</b>)</td>
+</tr>
+
+<tr>
+<td><tt>\b</tt></td>
+
+<td>disattiva il grassetto</td>
+</tr>
+
+<tr>
+<td><tt>\I</tt></td>
+
+<td>attiva il corsivo (<i>Italic</i>)</td>
+</tr>
+
+<tr>
+<td><tt>\i</tt></td>
+
+<td>disattiva il corsivo</td>
+</tr>
+
+<tr>
+<td><tt>\P</tt></td>
+
+<td>attiva la stampa proporzionale</td>
+</tr>
+
+<tr>
+<td><tt>\p</tt></td>
+
+<td>disattiva la stampa proporzionale</td>
+</tr>
+
+<tr>
+<td><tt>\U</tt></td>
+
+<td>attiva il sottolineato (<u>Underline</u>)</td>
+</tr>
+
+<tr>
+<td><tt>\u</tt></td>
+
+<td>disattiva il sottolineato</td>
+</tr>
+</table></center>
+
+<p>(Lo stile della stampa pu&ograve; anche essere modificato usando la
+routine <tt>Font</tt> di <tt>HUGOLIB.H</tt>. Le costanti di modifica dei
+caratteri possono essere combinate:
+<blockquote><tt>Font(BOLD_ON | ITALICS_ON | PROP_OFF)</tt></blockquote>
+dove le costanti valide sono <tt>BOLD_ON, BOLD_OFF, ITALICS_ON, ITALICS_OFF,
+UNDERLINE_ON, UNDERLINE_OFF, PROP_ON,</tt> e <tt>PROP_OFF</tt>).
+<p>I caratteri speciali possono essere stampati attraverso i caratteri
+di controllo. Questi caratteri sono quelli compresi nel set di caratteri
+<i>Latin-1</i>; se un sistema non &egrave; in grado di visualizzarli, stamper&agrave;
+gli equivalenti ASCII.
+<br>(Gli esempi seguenti, tra parentesi, possono non essere visualizzati
+correttamente su tutti i computer e stampanti).
+<blockquote><tt>\`&nbsp;&nbsp;&nbsp;&nbsp; accento grave seguito da una
+lettera</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; es. "\`a" stampa una 'a' con accento grave (&agrave;)</tt><tt></tt>
+<p><tt>\'&nbsp;&nbsp;&nbsp;&nbsp; accento acuto seguito da una lettera</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; es. "\'E" stampa una 'E' con accento acuto (&Eacute;)</tt><tt></tt>
+<p><tt>\~&nbsp;&nbsp;&nbsp;&nbsp; tilde seguita da una lettera</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; es. "\~n" stampa una 'n' con una tilde (&ntilde;)</tt><tt></tt>
+<p><tt>\^&nbsp;&nbsp;&nbsp;&nbsp; accento circonflesso seguito da una lettera</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; es. "\^i" stampa una 'i' con accento circonflesso
+(&icirc;)</tt><tt></tt>
+<p><tt>\:&nbsp;&nbsp;&nbsp;&nbsp; umlaut seguito da una lettera</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; es. "\:u" stampa una 'u' con umlaut (&uuml;)</tt><tt></tt>
+<p><tt>\,&nbsp;&nbsp;&nbsp;&nbsp; cedilla seguito da c o C</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; es. "\,c" stampa una 'c' con cedilla (&ccedil;)</tt><tt></tt>
+<p><tt>\&lt; o \>&nbsp;&nbsp;&nbsp; virgolette (&laquo; &raquo;)</tt>
+<br><tt>\!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; punto esclamativo
+inverso (&iexcl;)</tt>
+<br><tt>\?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; punto interrogativo
+inverso (&iquest;)</tt>
+<br><tt>\ae&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ae legate (&aelig;)</tt>
+<br><tt>\AE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AE legate (&AElig;)</tt>
+<br><tt>\c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; simbolo del
+centesimo (&cent;)</tt>
+<br><tt>\L&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; simbolo della
+lira (&pound;)</tt>
+<br><tt>\Y&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yen Giapponese
+(&yen;)</tt>
+<br><tt>\-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; linea (-)</tt><tt></tt>
+<p><tt>\#xxx&nbsp;&nbsp;&nbsp;&nbsp; un qualunque carattere ASCII dove
+xxx &egrave; il codice ASCII a tre cifre del carattere che deve essere
+stampato</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; es. "\#065" stampa una 'A' (ASCII 65).</tt></blockquote>
+
+<h3>
+<a NAME="EsMischiareStili"></a>Esempio: Mischiare gli stili del testo</h3>
+
+<blockquote><tt>! Routine di esempio che stampa diversi stili e colori</tt><tt></tt>
+<p><tt>#include "hugolib.h"</tt><tt></tt>
+<p><tt>routine PrintingSample</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print "Il testo pu\`o essere stampato</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; in \Bgrassetto\b, \Icorsivo\i,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \Usottolineato\u, o</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \Pproporzionale\p."</tt><tt></tt>
+<p><tt>&nbsp;&nbsp;&nbsp; color RED ! o color 4</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print "\nPronti. ";</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; color YELLOW ! color 14</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print "Partenza. ";</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; color GREEN ! color 2</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print "Via!"</tt>
+<br><tt>}</tt></blockquote>
+L'output sar&agrave;:
+<blockquote><tt>Il testo pu&ograve; essere stampato in <b>grassetto</b>,
+<i>corsivo</i>, <u>sottolineato</u> o </tt>proporzionale<tt>.</tt><tt></tt>
+<p><tt><font color="#CC0000">Pronti.</font> <font color="#FFCC00">Partenza.</font>
+<font color="#009900">Via!</font></tt></blockquote>
+con "grassetto", "corsivo", "sottolineato" e "proporzionale" stampati nel
+rispettivo stile. "Pronti", "Partenza" e "Via!" appariranno sulla stessa
+riga in tre colori differenti.
+<p>Non tutti i computer sono in grado di stampare tutti gli stili. Le versioni
+base MS-DOS, ad esempio, usano i colori invece dei cambi di stile e non
+supportano la stampa proporzionale.
+<h3>
+<a NAME="OperatoriAssegnazioni"></a>IV.e. Operatori ed assegnazioni</h3>
+Hugo consente l'uso degli operatori matematici standard:
+<blockquote><tt>+</tt>&nbsp;&nbsp;&nbsp;&nbsp; addizione
+<br><tt>-</tt>&nbsp;&nbsp;&nbsp;&nbsp; sottrazione
+<br><tt>*</tt>&nbsp;&nbsp;&nbsp;&nbsp; moltiplicazione
+<br><tt>/</tt>&nbsp;&nbsp;&nbsp;&nbsp; divisione intera</blockquote>
+I confronti sono operatori validi, restituendo vero o falso booleano (1
+o 0) cos&igrave; che
+<blockquote><tt>2 + (x = 1)</tt>
+<br><tt>5 - (x > 1)</tt></blockquote>
+valgono rispettivamente 3 e 5 se <tt>x</tt> &egrave; 1, e 2 e 4 se <tt>x</tt>
+&egrave; 2 o superiore.
+<p>Operatori relazionali validi sono
+<blockquote><tt>=</tt>&nbsp;&nbsp;&nbsp;&nbsp; uguale a
+<br><tt>~=</tt>&nbsp;&nbsp; diverso
+<br><tt>&lt;</tt>&nbsp;&nbsp;&nbsp;&nbsp; minore di
+<br><tt>></tt>&nbsp;&nbsp;&nbsp;&nbsp; maggiore di
+<br><tt>&lt;=</tt>&nbsp;&nbsp; minore o uguale
+<br><tt>>=</tt>&nbsp;&nbsp; maggiore o uguale</blockquote>
+Sono consentiti anche gli operatori logici ('<tt>and</tt>', '<tt>or</tt>'
+e '<tt>not</tt>').
+<blockquote><tt>(x and y) or (a and b)</tt>
+<br><tt>(j + 5) and not ObjectIsLight(k)</tt></blockquote>
+Usando '<tt>and</tt>' si ha <i>true</i> (1) se entrambi i valori sono diversi
+da zero.
+<br>Usando '<tt>or</tt>' si ha <i>true</i> se uno dei due non &egrave;
+zero. '<tt>not</tt>' vale <i>true</i> solo se il valore seguente &egrave;
+zero.
+<blockquote><tt>1 and 1 = 1</tt>
+<br><tt>1 and 0 = 0</tt>
+<br><tt>5 and 3 = 1</tt>
+<br><tt>0 and 9 = 0</tt>
+<br><tt>0 and 169 and 1 = 0</tt>
+<br><tt>1 and 12 and 1233 = 1</tt><tt></tt>
+<p><tt>1 or 1 = 1</tt>
+<br><tt>35 or 0 = 1</tt>
+<br><tt>0 or 0 = 0</tt><tt></tt>
+<p><tt>not 0 = 1</tt>
+<br><tt>not 1 = 0</tt>
+<br><tt>not 8 = 0</tt><tt></tt>
+<p><tt>1 and 7 or (14 and not 0) = 1</tt>
+<br><tt>(0 or not 1) and 3 = 0</tt></blockquote>
+Inoltre sono forniti anche gli operatori binari:
+<blockquote><tt>1 &amp; 1 = 1</tt> (<tt>and</tt> binario)
+<br><tt>1 &amp; 0 = 0</tt>
+<br><tt>1 | 0 = 1</tt> (<tt>or</tt> binario)
+<br><tt>1 | 1 = 1</tt>
+<br><tt>~0 = -1</tt> (<tt>not</tt>/inversione binaria)</blockquote>
+(Una spiegazione dettagliata degli operatori binari &egrave; un po' oltre
+lo scopo di questo manuale; i programmatori potranno usare l'operatore
+'<tt>|</tt>' per combinare i parametri a mascheratura di bit per alcune
+funzioni della libreria come <tt>font</tt> e <tt>list-formats</tt>, ma
+solo gli utenti avanzati saranno in grado di usare gli operatori binari
+con ottimi risultati nella programmazione pratica).
+<p>Qualunque tipo di dato di Hugo pu&ograve; comparire in una espressione,
+comprese le routine, attributi, propriet&agrave;, costanti e variabili.
+Nella valutazione delle espressioni vengono applicate le regole matematiche
+standard di precedenza negli operatori cos&igrave; che le espressioni tra
+parentesi vengono valutate prima, seguite da moltiplicazioni e divisioni,
+seguite da addizioni e sottrazioni.
+<p>Alcune combinazioni di esempio sono:
+<blockquote><tt>10 + object.size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+! costante intera e propriet&agrave;</tt>
+<br><tt>object is openable + 1&nbsp;&nbsp; ! test su un attributo e costante</tt>
+<br><tt>FindLight(location) +a&nbsp;&nbsp; ! valore di ritorno e variabile</tt>
+<br><tt>1 and object is light&nbsp;&nbsp;&nbsp; ! costante, test logico
+e attributo</tt></blockquote>
+Le espressioni possono essere valutate e assegnate sia ad una variabile
+che ad una propriet&agrave;.
+<blockquote><tt>&lt;variabile> = &lt;espressione></tt><tt></tt>
+<p><tt>&lt;oggetto>.&lt;propriet&agrave;> [#&lt;elemento>] = &lt;espressione></tt></blockquote>
+In alcuni casi il compilatore pu&ograve; consentire l'uso di un'istruzione
+la cui parte sinistra dell'assegnazione non &egrave; modificabile. Ad esempio
+<blockquote><tt>Funzione() = &lt;espressione></tt></blockquote>
+o
+<blockquote><tt>&lt;oggetto>.#&lt;propriet&agrave;> = &lt;espressione></tt></blockquote>
+possono essere compilate, ma queste istruzioni generanno un errore di run-time
+nell'interprete.
+<h3>
+<a NAME="OperatoriEffic"></a>IV.f. Operatori efficienti</h3>
+
+<blockquote><tt>numero_di_oggetti = numero_di_oggetti + 1</tt>
+<br><tt>if numero_di_oggetti > 10</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print "Troppi oggetti!"</tt>
+<br><tt>}</tt></blockquote>
+pu&ograve; essere codificato in maniera pi&ugrave; semplice
+<blockquote><tt>if ++numero_di_oggetti > 10</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print "Troppi oggetti!"</tt>
+<br><tt>}</tt></blockquote>
+L'operatore '<tt>++</tt>' incrementa il valore della variabile seguente
+di uno prima di restituire il valore della stessa. Allo stesso modo si
+pu&ograve; far precedere una variabile da '<tt>--</tt>' per decrementarne
+il valore di uno prima di resituire il valore. Poich&eacute; questi operatori
+agiscono prima che il valore venga restituito vengono chiamati operatori
+di "pre incremento" e "pre decremento".
+<p>Se '<tt>++</tt>' o '<tt>--</tt>' vengono DOPO una variabile, il valore
+della variabile viene restituito e poi il valore viene incrementato o decrementato.
+In questo caso si parla di operatori di "post incremento" e "post decremento".
+<p>Ad esempio,
+<blockquote><tt>while ++i &lt; 5 ! pre incremento</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print number i; " ";</tt>
+<br><tt>}</tt></blockquote>
+stamper&agrave;:
+<blockquote><tt>1 2 3 4</tt></blockquote>
+Ma
+<blockquote><tt>while i++ &lt; 5 ! post incremento</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print number i; " ";</tt>
+<br><tt>}</tt></blockquote>
+stamper&agrave;:
+<blockquote><tt>1 2 3 4 5</tt></blockquote>
+Visto che nel primo esempio la variabile viene incrementata prima di leggerne
+il valore, mentre nel secondo &egrave; incrementata dopo la lettura.
+<p>&Egrave; anche possibile usare gli operatori '<tt>+=</tt>', '<tt>-=</tt>',
+'<tt>*=</tt>', '<tt>/=</tt>', '<tt>&amp;=</tt>' e '<tt>|=</tt>'. Possono
+essere usati anche per modificare una variabile mentre il suo valore viene
+controllato. Questi operatori, comunque, agiscono prima che il valore venga
+restituito.
+<blockquote><tt>x = 5</tt>
+<br><tt>y = 10</tt>
+<br><tt>print "x = "; number x*=y; ", y = "; number y</tt></blockquote>
+Risultato:
+<blockquote><tt>x = 50, y = 10</tt></blockquote>
+Quando il compilatore interpreta una delle righe pi&ugrave; sopra gli operatori
+efficienti hanno la precedenza rispetto a quelli normali (quelli a carattere
+singolo).
+<p>Ad esempio,
+<blockquote><tt>x = y + ++zz</tt></blockquote>
+viene compilato in
+<blockquote><tt>x = y++ + z</tt></blockquote>
+visto che '<tt>++</tt>' viene interpretato prima. Per codificare correttamente
+questa riga con un pre incremento della variabile <tt>z</tt> invece di
+un post incremento di <tt>y</tt>:
+<blockquote><tt>x = y + (++z)</tt></blockquote>
+
+<h3>
+<a NAME="ArrayEStringhe"></a>IV.g. Array e stringhe</h3>
+Prima di questo paragrafo non si &egrave; parlato molto degli array.
+<br>Gli array sono un insieme di valori che condividono un nome comune,
+e dove gli elementi sono indicati tramite un numero. Gli array si definiscono
+con
+<blockquote><tt>array &lt;nomearray> [&lt;dimensione array>]</tt></blockquote>
+dove <tt>&lt;dimensione array></tt> deve essere una costante numerica.
+<p>Una definizione di array riserva un blocco di memoria di <tt>&lt;dimensione
+array></tt> parole a 16 bit, cos&igrave; che, ad esempio:
+<blockquote><tt>array prova_array[10]</tt></blockquote>
+inizializza dieci parole a 16 bit per l'array.
+<p>Bisogna tener presente che <tt>&lt;dimensione array></tt> determina
+la dimensione dell'array, <b>NON</b> il numero massimo di elementi. Il
+conteggio degli elementi comincia da 0, perci&ograve; <tt>array_prova</tt>,
+con 10 elementi, ha i membri numerati da 0 a 9. Cercando di accedere a
+<tt>array_prova[10]</tt> o superiore viene restituito un valore senza senso.
+(Cercando di assegnargli un valore si potrebbe avere la sovrascrittura
+di qualcosa di importante, come il successivo array).
+<p>Per prevenire queste letture/scritture fuori dai limiti dell'array &egrave;
+possibile leggere la lunghezza di un array con:
+<blockquote><tt>array[]</tt></blockquote>
+senza nessun elemento specificato. Usando l'esempio di prima,
+<blockquote><tt>print number array_prova[]</tt></blockquote>
+ritorna "10".
+<p>Gli elementi di un array possono essere assegnati pi&ugrave; di uno
+alla volta, come in
+<blockquote><tt>&lt;nomearray> = &lt;elemento1>, &lt;elemento2>, ...</tt></blockquote>
+dove <tt>&lt;elemento1></tt> e <tt>&lt;elemento2></tt> possono essere espressioni
+o valori singoli.
+<p>Gli elementi non devono essere tutti dello stesso tipo, cos&igrave;
+che
+<blockquote><tt>array_prova[0] = (19+5)*x, "Salve!", FindLight(location)</tt></blockquote>
+&egrave; perfettamente legale (sebbene non sia, probabilmente, molto utile).
+<br>Pi&ugrave; comune &egrave; un uso del tipo
+<blockquote><tt>nomi[0] = "Ned", "Sue", "Bob", "Maria"</tt></blockquote>
+o
+<blockquote><tt>array_prova[2]) = 5, 4, 3, 2, 1</tt></blockquote>
+L'array pu&ograve; essere usato con
+<blockquote><tt>print nomi[0]; " e "; nomi[3]</tt><tt></tt>
+<p><tt>&nbsp;&nbsp;&nbsp; Ned e Maria</tt></blockquote>
+o
+<blockquote><tt>b = array_prova[3] + array_prova[5]</tt></blockquote>
+che imposta a variabile <tt>b</tt> a 4 + 2, o 6.
+<p>Visto che lo spazio degli array viene allocato staticamente dal compilatore,
+tutti gli array vanno dichiarati a livello globale. Gli array locali sono
+illegali, cos&igrave; come lo sono array interi passati come paramentri.
+Comunque gli elementi singoli di un array sono parametri validi.
+<p>&Egrave; possibile passare l'indirizzo di un array come parametro, cos&igrave;
+che la routine possa accedere agli elementi dell'array tramire il modificatore
+'<tt>array</tt>'. Ad esempio, se elementi &egrave; un array che contiene:
+<blockquote><tt>elementi[0] = "mele"</tt>
+<br><tt>elementi[1] = "arance"</tt>
+<br><tt>elementi[2] = "calzini"</tt></blockquote>
+La routine:
+<blockquote><tt>routine Test(v)</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print array v[2]</tt>
+<br><tt>}</tt></blockquote>
+pu&ograve; essere chiamata usando
+<blockquote><tt>Test(elementi)</tt></blockquote>
+per produrre in output "<tt>calzini</tt>", sebbene <tt>v</tt> sia un parametro
+(cio&egrave; una variabile locale), e non un array. La riga "<tt>print
+array v[2]</tt>" dice all'inteprete di considerare <tt>v</tt> come un indirizzo
+di un array, non come un valore in s&eacute;.
+<p>&Egrave; possibile usare anche gli array di stringhe, e Hugo prevede
+un modo per memorizzare una voce di dizionario in un array come una serie
+di caratteri usando il comando '<tt>string</tt>':
+<blockquote><tt>string(&lt;indirizzo array>, &lt;voce diz.>, &lt;max lungh.>)</tt></blockquote>
+(<tt>&lt;max lungh.></tt> &egrave; necessario perch&eacute; l'inteprete
+non ha modo di sapere quali sono i limiti dell'array).
+<p>Ad esempio,
+<blockquote><tt>string(a, word[1], 10)</tt></blockquote>
+memorizzer&agrave; fino a 10 caratteri da <tt>word[1]</tt> in <tt>a</tt>.
+<p><i>NOTA</i>: Nell'esempio precedente ci si aspetta che a abbia almeno
+11 elementi, visto che '<tt>string</tt>' memorizza un terminatore a 0 o
+carattere nullo dopo la stringa.
+<p>Ad esempio,
+<blockquote><tt>x = string(a, word[1], 10)</tt></blockquote>
+memorizza fino a 10 caratteri di <tt>word[1]</tt> nell'array <tt>a</tt>,
+e restituisce la lunghezza della stringa memorizzata nella variabile <tt>x</tt>.
+<p>(Le variabili dell'interprete '<tt>parse$</tt>' e '<tt>serial$</tt>'
+possono essere usate al posto delle voci di dizionario; vedere la sezione
+pi&ugrave; avanti sulle "ROUTINE DI CONGIUNZIONE: ParseError" per una descrizione).
+<p>Nella libreria sono definite le funzioni <tt>StringCopy</tt>, <tt>StringEqual</tt>,
+<tt>StringLength</tt> e <tt>StringPrint</tt>, che sono estremamente utili
+quando si usano gli array di stringhe.
+<p><tt>StringCopy </tt>copia un array di stringhe in un altro array.
+<blockquote><tt>StringCopy(&lt;nuovo array>, &lt;vecchio array>[, &lt;lungh.>])</tt></blockquote>
+Ad esempio,
+<blockquote><tt>StringCopy(a, b)</tt></blockquote>
+copia il contenuto di <tt>b</tt> in <tt>a</tt>, mentre
+<blockquote><tt>StringCopy(a, b, 5)</tt></blockquote>
+copia solo fino a 5 caratteri di <tt>b</tt> in <tt>a</tt>.
+<blockquote><tt>x = StringEqual(&lt;stringa1>, &lt;stringa2>)</tt>
+<br><tt>x = StringCompare(&lt;stringa1>, &lt;stringa2>)</tt></blockquote>
+<tt>StringEqual</tt> restituisce <i>true</i> solo se i due array di stringhe
+indicati sono identici. <tt>StringCompare</tt> restituisce 1 se <tt>&lt;stringa1></tt>
+&egrave; alfabeticamente pi&ugrave; grande di <tt>&lt;stringa2></tt>, -1
+se <tt>&lt;stringa1></tt> &egrave; inferiore di <tt>&lt;stringa2></tt>,
+e 0 se le due stringhe sono identiche.
+<p><tt>StringLength</tt> restituisce la lunghezza di un array di stringhe,
+come in:
+<blockquote><tt>lungh = StringLength(a)</tt></blockquote>
+e <tt>StringPrint</tt> stampa un array di stringhe (od una parte).
+<blockquote><tt>StringPrint(&lt;ind. array>[, &lt;inizio>, &lt;fine>])</tt></blockquote>
+Ad esempio, se contiene "<tt>presto</tt>",
+<blockquote><tt>StringPrint(a)</tt></blockquote>
+stampa "<tt>presto</tt>", ma
+<blockquote><tt>StringPrint(a, 1, 4)</tt></blockquote>
+stampa "<tt>res</tt>". (Il parametro <tt>&lt;inizio></tt> del primo esempio
+ha come valore predefinito 0, non 1 -- il primo elemento in un array &egrave;
+numerato 0).
+<p>Un effetto collaterale interessante della possibilit&agrave; di passare
+gli indirizzi degli array come parametri &egrave; che &egrave; possibile
+barare con l'indirizzo, cos&igrave; che, ad esempio,
+<blockquote><tt>StringCopy(a, b+2)</tt></blockquote>
+copia <tt>b</tt> in <tt>a</tt>, cominciando dalla terza lettera di <tt>b</tt>
+(visto che la prima lettera di <tt>b</tt> &egrave; <tt>b[0]</tt>).
+<p>Bisogna tenere a mente che gli array di stringhe e le voci del dizionario
+sono due animali completamente separati, e che confrontarli direttamente
+con <tt>StringCompare</tt> non &egrave; possibile. Cio&egrave;, mentre
+una voce di dizionario &egrave; un valore che rappresenta un indirizzo,
+un array di stringhe &egrave; una serie di valori ognuno dei quali rappresentante
+un carattere della stringa.
+<p>La libreria fornisce la funzione seguente per risolvere:
+<blockquote><tt>StringDictCompare(&lt;array>, &lt;voce dizionario>)</tt></blockquote>
+che restituisce gli stessi valori (1, -1, 0) di <tt>StringCompare</tt>,
+a seconda del fatto che l'array di stringhe sia alfabeticamente superiore,
+inferiore o uguale alla voce di dizionario.
+<p>(C'&egrave; un comando complementare a '<tt>string</tt>', la funzione
+'<tt>dict</tt>', che crea dinamicamente a runtime una nuova voce di dizionario.
+La sintassi &egrave;:
+<blockquote><tt>x = dict(&lt;array>, &lt;max lungh.>)</tt>
+<br><tt>x = dict(parse$, &lt;max lungh.>)</tt></blockquote>
+dove i contenuti di <tt>&lt;array></tt> o <tt>parse$</tt> vengono scritti
+nel dizionario, per un massimo di <tt>&lt;max lungh.> </tt>caratteri, e
+l'indirizzo della nuova parola viene restituito.
+<p>Comunque visto che questo richiede di estendere la lunghezza della tabella
+del dizionario nel file del gioco, &egrave; necessario prevederlo durante
+la compilazione. Inserendo
+<blockquote><tt>$MAXDICTEXTEND=&lt;numero></tt></blockquote>
+all'inizio del codice sorgente scriver&agrave; un buffer di <tt>&lt;numero></tt>
+byte vuoti alla fine del dizionario.
+<br>(<tt>MAXDICTEXTEND</tt> &egrave; 0 per default).
+<p>L'estensione dinamica del dizionario &egrave; usata, soprattutto, in
+situazioni dove il giocatore deve essere in grado di, ad esempio, dare
+un nome ad un oggetto, e poi riferirsi a quell'oggetto con il nuovo nome.
+In questo caso, le nuove parole devono esistere nel dizionario, e devono
+essere scritte usando '<tt>dict</tt>'. Comunque, una linea guida per i
+programmatori &egrave; che dovrebbe esserci un limite al numero di nuove
+parole che il giocatore pu&ograve; creare, in modo che la lunghezza totale
+delle nuove voci non superi mai <tt>&lt;numero></tt>, tenendo a mente che
+la lunghezza di una voce di dizionario &egrave; pari al numero di caratteri
+pi&ugrave; uno (il byte che rappresenta la lunghezza). In pratica la parola
+"<tt>test</tt>" richiede 5 byte.)
+<h3>
+<a NAME="EsUsareStringhe"></a>Esempio: Usare le stringhe</h3>
+
+<blockquote><tt>#include "hugolib.h"</tt><tt></tt>
+<p><tt>array s1[32]</tt>
+<br><tt>array s2[10]</tt>
+<br><tt>array s3[10]</tt><tt></tt>
+<p><tt>routine ProvaStringhe</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; local a, lungh</tt><tt></tt>
+<p><tt>&nbsp;&nbsp;&nbsp; a = "Questa &egrave; una stringa di prova."</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; lungh = string(s1, a, 35)</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; string(s2, "Mela", 9)</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; string(s3, "Pomodoro", 9)</tt><tt></tt>
+<p><tt>&nbsp;&nbsp;&nbsp; print "a = \""; a; "\""</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print "(Indirizzo dizionario: "; number a; ")"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print "s1 contiene \""; StringPrint(s1); "\""</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print "(Indirizzo array: "; number s1;</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print ", lungh. = "; number lungh; ")"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print "s2 \`e \""; StringPrint(s2);</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print "\", s3 \`e \""; StringPrint(s3); "\""</tt><tt></tt>
+<p><tt>&nbsp;&nbsp;&nbsp; "\nStringCompare(s1, s2) = ";</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print number StringCompare(s1, s2)</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; "StringCompare(s1, s3) = ";</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print number StringCompare(s1, s2)</tt>
+<br><tt>}</tt></blockquote>
+Il cui output sar&agrave;:
+<blockquote><tt>a = "Questa &egrave; una stringa di prova."</tt>
+<br><tt>(Indirizzo dizionario: 1005)</tt>
+<br><tt>s1 contiene "Questa &egrave; una stringa di prova."</tt>
+<br><tt>(Indirizzo array: 1637, lungh. = 30)</tt>
+<br><tt>s2 "Mela", s3 "Sedano"</tt><tt></tt>
+<p><tt>StringCompare(s1, s2) = 1</tt>
+<br><tt>StringCompare(s1, s3) = -1</tt></blockquote>
+Come &egrave; evidente una voce di dizionario non deve necessariamente
+essere una parola singola; qualunque parte di un testo che pu&ograve; essere
+trattata come valore pu&ograve; essere inserita nella tabella del dizionario.
+<p>L'argomento 35 nella prima chiamata alla funzione '<tt>string</tt>'
+consente di copiare fino a 35 caratteri di <tt>a</tt> in <tt>s1</tt>, ma
+visto che la lunghezza di <tt>a</tt> &egrave; di soli 30 caratteri, solo
+31 valori (compreso lo 0 terminale) vengono copiati, e la lunghezza della
+stringa <tt>s1</tt> &egrave; restituita in <tt>lungh</tt>.
+<p>Visto che "<tt>M(ela)</tt>" &egrave; alfabeticamente inferiore di "<tt>Q(esta...)</tt>",
+confrontando le due si ottiene -1. Come "<tt>S(edano)</tt>" &egrave; alfabeticamente
+superiore di "<tt>Q(esta...)</tt>" e <tt>StringCompare</tt> restituisce
+1.
+<h3>
+<a NAME="CompilazioneCond"></a>IV.h. Compilazione condizionale e flusso
+del programma</h3>
+Il flusso del programma pu&ograve; essere controllato usando una variet&agrave;
+di costrutti, ognuno dei quali &egrave; costruito attorno ad un'espressione
+che valuta il falso [false] (zero) ed il non-falso (non-zero).
+<p>La pi&ugrave; semplice tra questi &egrave; l'istruzione '<tt>if</tt>'
+[se].
+<blockquote><tt>if &lt;espressione></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {...blocco di codice condizionale...}</tt></blockquote>
+<i>NOTA</i>: Le parentesi graffe non sono necessarie se il blocco di codice
+&egrave; una riga singola. Inoltre il blocco di codice condizionale pu&ograve;
+cominciare (ed anche finire) sulla stessa riga dell'istruzione '<tt>if</tt>'
+a condizione che vengano usate le parentesi graffe.
+<blockquote><tt>if &lt;espressione></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...riga singola...</tt><tt></tt>
+<p><tt>if &lt;espressione> {...blocco di codice condizionale...}</tt></blockquote>
+Se le parentesi non venogno usate per una riga singola, il compilatore
+le inserisce automaticamente, sebbene una cura speciale deve essere tenuta
+quando si costruiscono blocchi di codice che nidificano diverse condizioni
+su singola riga.
+<p>Mentre
+<blockquote><tt>if &lt;espressione1></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; if &lt;espressione2></tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...blocco di codice
+condizionale...</tt></blockquote>
+pu&ograve; essere interpretata in maniera corretta,
+<blockquote><tt>if &lt;espressione1></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; for (...&lt;espressione2>...)</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if &lt;espressione3></tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+...blocco di codice condizionale...</tt></blockquote>
+non lo sar&agrave;.
+<p>(Tecnicamente parlando, il compilatore sbaglier&agrave; nell'individuazione
+della fine del ciclo del costrutto '<tt>for</tt>' visto che il blocco di
+codice condizionale al suo interno si aspetta di finire con l'espressione
+'<tt>for</tt>'. Ad ogni ciclo l'espressione '<tt>for</tt>' non differenzia
+correttamente la fine del ciclo condizionale. Il risultato potrebbe essere
+un overflow dello stack dell'interprete perch&eacute; l'interprete nidificher&agrave;
+continuamente l'esecuzione di cicli '<tt>for</tt>' ricorsivi fino a che
+non finir&agrave; lo spazio sullo stack).
+<p>Il modo corretto di strutturare la stessa sezione di codice dovrebbe
+essere:
+<blockquote><tt>if &lt;espressione1></tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; for (...&lt;espressione2>...)</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if &lt;espressione3></tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+...blocco di codice condizionale...</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>}</tt></blockquote>
+<i>NOTA</i>: Il consiglio &egrave; quello di usare le parentesi graffe
+per chiarificare la struttura del codice ogni volta che si usano costrutti
+cos&igrave; complessi. Questo deve essere applicato in maniera particolare
+quando si mischiano espressioni '<tt>if</tt>', '<tt>for</tt>', '<tt>while</tt>'
+e '<tt>do-while</tt>', specialmente quando sono coinvolte chiamate ricorsive
+a funzioni. Sebbene il risultato possa apparire come voluto, il metodo
+per ottenerlo &egrave; scorretto, ed ogni esecuzione di tale costrutto
+potrebbe mandare in errore lo stack.
+<p>Usi pi&ugrave; elaborati di '<tt>if</tt>' coinvolgono l'uso di '<tt>elseif</tt>'
+[altrimenti-se] ed '<tt>else</tt>' [altrimenti].
+<blockquote><tt>if &lt;espressione1></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...primo blocco di codice condizionale...</tt>
+<br><tt>elseif &lt;espressione2></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...secondo blocco di codice condizionale...</tt>
+<br><tt>elseif &lt;espressione2></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...terzo blocco di codice condizionale...</tt>
+<br><tt>...</tt>
+<br><tt>else</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...blocco di codice di default...</tt></blockquote>
+In questo caso l'interprete valuta ciascuna espressione fino a che trova
+quella vera ed allora la esegue. Poi il controllo passa alla prossima istruzione
+non <tt>if</tt>/<tt>elseif</tt>/<tt>else</tt> che segue il costrutto condizionale.
+Se nessuna espressione vera &egrave; stata trovata, il blocco di codice
+di default viene eseguito. Se, ad esempio, <tt>&lt;espressione1></tt> genera
+un valore non falso, allora nessuna delle espressioni seguenti viene valutata.
+<p>Naturalmente, non tutte e tre ('<tt>if</tt>', '<tt>elseif</tt>' e '<tt>else</tt>')
+devono essere usate tutte le volte, e combinazioni semplici di "<tt>if-elseif</tt>"
+e "<tt>if-else</tt>" sono perfettamente valide.
+<p>In alcuni casi, l'istruzione '<tt>if</tt>' potrebbe non andar bene per
+la chiarezza, ed il costrutto "<tt>select-case</tt>" [seleziona-caso] potrebbe
+essere pi&ugrave; appropriato. La forma generale &egrave;:
+<blockquote><tt>select &lt;var></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; case &lt;valore1>[, &lt;valore2>, ...]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...primo blocco di codice
+condizionale...</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; case &lt;valore3>[, &lt;valore4>, ...]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...secondo blocco di
+codice condizionale...</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; case else</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...blocco di codice
+di default...</tt></blockquote>
+In questo caso l'interprete esegue rapidamente una valutazione che &egrave;,
+essenzialmente
+<blockquote><tt>if &lt;var> = &lt;valore1> [or &lt;var> = &lt;valore2>
+...]</tt></blockquote>
+Non ci sono limiti al numero di valori (separati da virgole) che possono
+apparire su una riga che segue il '<tt>case</tt>'. Si applicano le stesse
+regole della '<tt>if</tt>' per racchiudere i blocchi di codice su pi&ugrave;
+righe tra parentesi graffe (cos&igrave; per tutti gli altri tipi di blocchi
+condizionali).
+<p><i>NOTA</i>: I <tt>case</tt> non proseguono al successivo <tt>case</tt>.
+Bisogna pensare ai <tt>case</tt> che seguono il primo come a delle '<tt>elseif</tt>'
+piuttosto che delle '<tt>if</tt>'; una volta che un <tt>case</tt> a vero
+viene trovato, i seguenti sono ignorati.
+<p>I cicli possono essere codificati usando '<tt>while</tt>' [mentre] e
+"<tt>do-while</tt>" [fai-mentre].
+<blockquote><tt>while &lt;espressione></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...blocco di codice condizionale...</tt><tt></tt>
+<p><tt>do</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...blocco di codice condizionale...</tt>
+<br><tt>while &lt;espressione></tt></blockquote>
+Entrambi eseguono il blocco di codice condizionale mentre <tt>&lt;espressione></tt>
+&egrave; vera (<i>true</i>). Si presume che in qualche modo il blocco di
+codice alteri l'<tt>&lt;espressione></tt> cos&igrave; che ad un certo punto
+diventa falsa (<i>false</i>); altrimenti il ciclo viene eseguito senza
+fine.
+<blockquote><tt>while x &lt;= 10</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; x = x + 1</tt><tt></tt>
+<p><tt>do</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {x = x + 1</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print "x vale "; number x}</tt>
+<br><tt>while x &lt;= 10</tt></blockquote>
+L'unica differenza tra i due &egrave; che se <tt>&lt;espressione></tt>
+&egrave; falsa dall'esterno, il blocco di codice '<tt>while</tt>' non viene
+eseguito. Il blocco di codice "<tt>do-while</tt>" viene eseguito almeno
+una volta anche se <tt>&lt;espressione></tt> &egrave; falsa dall'esterno.
+<p>Il ciclo pi&ugrave; complesso usa l'istruzione '<tt>for</tt>' [per].
+<blockquote><tt>for (&lt;assegnazione>; &lt;espressione>; &lt;modificatore>)</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...blocco di codice condizionale...</tt></blockquote>
+Ad esempio:
+<blockquote><tt>for (i=1; i&lt;=15; i=i+1)</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print "i vale"; number i</tt></blockquote>
+Prima di tutto l'interprete esegue l'assegnazione "<tt>i = 1</tt>".
+<br>Poi esegue l'istruzione <tt>print</tt>. Successivamente controlla se
+l'espressione vale <i>true</i> [vero] (se <tt>i</tt> &egrave; minore od
+uguale a 15). In questo caso esegue l'istruzione <tt>print</tt> e l'assegnazione
+del modificatore che incrementa <tt>i</tt>. Continua il ciclo fino a quando
+l'espressione vale <i>false</i> [falso].
+<p>Non tutti gli elementi del costrutto '<tt>for</tt>' sono necessari.
+Ad esempio l'assegnazione pu&ograve; essere omessa, come in
+<blockquote><tt>for (; i&lt;=15; i=i+1)</tt></blockquote>
+e l'interprete user&agrave; il valore esistente di <tt>i</tt>.
+<p>Con
+<blockquote><tt>for (i=1;;i=i+1)</tt></blockquote>
+Il ciclo viene eseguito senza fine, a meno che qualche altro mezzo di uscita
+viene fornito.
+<p>L'espressione del modificatore non deve per forza essere un'espressione.
+<br>Potrebbe essere, ad esempio, una routine che modifica una variabile
+globale, che viene controllata nel ciclo '<tt>for</tt>'.
+<p>(Un secondo formato del ciclo '<tt>for</tt>' &egrave;:
+<blockquote><tt>for &lt;var> in &lt;oggetto></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...blocco di codice condizionale...</tt></blockquote>
+che cicla attraverso tutti i figli di <tt>&lt;oggetto></tt> (se ne ha),
+impostando la variabile <tt>&lt;var></tt> con il numero dell'oggetto di
+ogni figlio in sequenza, cos&igrave; che
+<blockquote><tt>for i in valigia</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print i.name</tt></blockquote>
+stampa i nomi di tutti gli oggetti presenti nell'oggetto <tt>valigia</tt>).
+<p>Il modo pi&ugrave; semplice di visualizzare la prima forma di un ciclo
+'<tt>for</tt>' di Hugo, &egrave; che
+<blockquote><tt>for (&lt;assegnazione>; &lt;espressione>; &lt;modificatore>)</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...blocco di codice condizionale...</tt></blockquote>
+si traduce nell'equivalente di
+<blockquote><tt>&lt;assegnazione></tt>
+<br><tt>[while] &lt;espressione></tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...blocco di codice condizionale...</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; &lt;modificatore></tt>
+<br><tt>}</tt></blockquote>
+che a turno si traduce nell'equivalente di
+<blockquote><tt>&lt;assegnazione></tt>
+<br><tt>:&lt;etichetta1></tt>
+<br><tt>[if] &lt;espressione></tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...blocco di codice condizionale...</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; &lt;modificatore></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; jump &lt;etichetta1></tt>
+<br><tt>}</tt></blockquote>
+(D'altra parte questo non &egrave; un modo particolarmente facile di visualizzare
+qualunque cosa, e nella sua debolezza, forse giustifica l'esistenza di
+cicli '<tt>while</tt>', "<tt>do-while</tt>" e '<tt>for</tt>' non minacciosi).
+<p>La conoscenza di come Hugo spezzi in una serie di nodi '<tt>if</tt>'
+e '<tt>jump</tt>' le istruzioni di ciclo comporta una facilit&agrave; nell'analisi
+del flusso del programma usando Hugo Debugger (si veda l'Appendice E).
+<p>Come risulta ovvio dall'illustrazione fatta sopra (forse confusamente),
+Hugo supporta i comandi '<tt>jump</tt>' [salta] e le etichette. Un'etichetta
+&egrave; semplicemente un identificatore specificato dall'utente preceduto
+dai due punti ('<tt>:</tt>') all'inizio di una riga. Il nome dell'etichetta
+deve avere un identificatore univoco all'interno del programma. (Bisogna
+avere una certa cura nell'utilizzo dell'istruzione '<tt>jump</tt>' -- generalmente
+&egrave; molto meglio usare delle alternative, visto che esiste la possibilit&agrave;
+di sovraccaricare lo stack dell'interprete quando non si usano costruttori
+di clici standard).
+<p>&Egrave; anche importante riconoscere -- particolarmente con le istruzioni
+'<tt>select</tt>' e '<tt>while</tt>' o "<tt>do-while</tt>" -- che l'espressione
+viene valutata tutte le volte che il ciclo viene eseguito, o, nel caso
+dell'istruzione '<tt>select</tt>', per ogni case corrispondente. Il significato
+di questo &egrave; evidente nell'esempio seguente
+<blockquote><tt>select test.prop_routine</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; case 1</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {...}</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; case 2</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {...}</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; case 3</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {...}</tt></blockquote>
+dove <tt>prop_routine</tt> restituisce un valore da 1 a 3. La routine propriet&agrave;
+verr&agrave; eseguita per 3 volte distinte, una per ogni istruzione '<tt>case</tt>'.
+Se <tt>prop_routine</tt> ha qualche altro effetto, come la modifica di
+una variabile globale o la stampa di un output, allora questo avverr&agrave;
+per 3 volte.
+<p>Se questo effetto non &egrave; accettabile si pu&ograve; provare con
+<blockquote><tt>local test_val ! imposta una variabile locale</tt>
+<br><tt>test_val = test.prop_routine ! e le assegna un valore</tt>
+<br><tt>select test_val</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; case 1</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {...}</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt></blockquote>
+cos&igrave; che <tt>test.prop_routine</tt> viene chiamata una sola volta.
+<p>Un caso simile potrebbe essere
+<blockquote><tt>select random(3)</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; case 1: {...}</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; case 2: {...}</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; case 3: {...}</tt></blockquote>
+si potrebbe avere qualcosa tipo:
+<blockquote><tt>if random(3) = 1: {...}</tt>
+<br><tt>elseif random(3) = 2: {...}</tt>
+<br><tt>elseif random(3) = 3: {...}</tt></blockquote>
+In altre parole un valore casuale differente potrebbe essere valutato tutte
+le volte. Una scelta migliore sarebbe
+<blockquote><tt>local b</tt>
+<br><tt>b = random(3)</tt>
+<br><tt>select b</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; case 1: {...}</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt></blockquote>
+Una parola chiave finale &egrave; importante nel flusso di un programma,
+e questa &egrave; '<tt>break</tt>'. In qualunque punto di un ciclo potrebbe
+essere necessario uscirne immediatamente (e forse prematuramente). '<tt>break</tt>'
+passa il controllo all'istruzione che segue il ciclo attuale.
+<p>Nell'esempio
+<blockquote><tt>do</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; while &lt;espressione2></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if &lt;espressione3></tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+break</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>}</tt>
+<br><tt>while &lt;espressione1></tt></blockquote>
+l'istruzione '<tt>break</tt>' causa la terminazione del ciclo '<tt>while</tt>'
+<tt>&lt;espressione2></tt>, anche se <tt>&lt;espressione2></tt> &egrave;
+vera. Comunque il ciclo "<tt>do-while</tt>" <tt>&lt;espressione1></tt>
+continua ad essere eseguito.
+<p>&Egrave; stato detto prima che le righe che terminano con '<tt>and</tt>'
+o '<tt>or</tt>' continuano alla riga successiva nel caso di lunghe espressioni
+condizionali. Una seconda utile funzionalit&agrave; &egrave; la capacit&agrave;
+di usare una virgola per separare le opzioni in una espressione condizionale.
+Con il risultato che
+<blockquote><tt>if parola[1] = "uno", "due", "tre"</tt>
+<br><tt>while oggetto is open, not locked</tt>
+<br><tt>if scatola not in salotto, garage</tt>
+<br><tt>if a~=1, 2, 3</tt></blockquote>
+sono tradotte in
+<blockquote><tt>if parola[1]="uno" or parola[1]="due" or parola[1]="tre"</tt>
+<br><tt>while oggetto is open and oggetto is not locked</tt>
+<br><tt>if scatola not in salotto and scatola non in garage</tt>
+<br><tt>if a ~= 1 and a ~= 2 and a ~= 3</tt></blockquote>
+Fate caso al fatto che con confronto '<tt>=</tt>' o '<tt>in</tt>', una
+virgola corrisponde ad un confronto in '<tt>or</tt>'. Con '<tt>~=</tt>'
+od un confronto di un attributo, il risultato &egrave; un confronto in
+'<tt>and</tt>'.
+<br>&nbsp;
+</FONT></FONT></FONT></P>
+<P ALIGN="CENTER"><IMG SRC="../Varie/Newgif/blurulr6.gif" NAME="Riga" ALIGN="BOTTOM" WIDTH="640" HEIGHT="2" BORDER="0"><BR><BR>
+<FONT SIZE="1" STYLE="font-size: 8pt"><A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A>
+<FONT SIZE="2">Torna alla Home Page</FONT> 
+<A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A></FONT>
+</P>
+<P ALIGN="CENTER"><FONT SIZE="1" STYLE="font-size: 8pt"><FONT COLOR="#000080">&copy;2000 Simone
+Zanella e &copy;2000 IF Italia. E' vietata la riproduzione.</FONT></FONT></P></BLOCKQUOTE>
+</BODY>
+</HTML>

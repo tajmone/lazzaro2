@@ -5,6 +5,32 @@
 
 * text=auto
 
+## =================
+## WEB-RELATED FILES
+## =================
+*.css      text
+*.css.map  text
+*.htm      text
+*.html     text
+*.js       text
+*.mht      text
+highlight.min.js  eol=lf
+
+## ===============
+## SASS/SCSS FILES
+## ===============
+*.scss     text
+
+## ==================
+## MISC. DATA FORMATS
+## ==================
+*.haml     text
+*.json     text
+*.xhtml    text
+*.xml      text
+*.yaml     text
+*.yml      text
+
 ## ===================
 ## Documentation files
 ## ===================

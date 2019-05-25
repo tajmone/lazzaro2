@@ -1,0 +1,169 @@
+= HUGO PER GIOCARE
+Paolo Vece <pvece@mclink.it>
+2003-02-25
+:lang: it
+// TOC Settings:
+:toclevels: 1
+// GitLab setting to show TOC after Preamble
+:toc: macro
+// TOC ... HTML Backend Hack to show TOC on the Left
+ifdef::backend-html5[]
+:toc: left
+endif::[]
+// TOC ... GitHub Hack to show TOC after Preamble (required)
+ifdef::env-github[]
+:toc: macro
+endif::[]
+// Sections Numbering:
+:sectnums!:
+// Misc Settings:
+:experimental: true
+:icons: font
+:linkattrs: true
+:reproducible: true
+:sectanchors:
+// Italian i18n:
+:toc-title: Contenuti
+// Custom CSS
+:docinfo: shared
+
+
+== Cosa è Hugo?
+
+Hugo è un sistema completo per lo sviluppo e l'esecuzione di avventure testuali (corredate di grafica e commento sonoro) disponibile per diverse piattaforme hardware tra le quali Windows, Unix e Amiga.
+Viene distribuito sotto forma di pacchetti che contengono tutto il necessario, ma qui vogliamo scoprire come si fa a _giocare_ con una avventura prodotta con Hugo.
+
+
+== Dove si trova?
+
+Per prima cosa è necessario scegliere su quale macchina (e sistema operativo) far girare il prodotto.
+Per il solo mondo Windows/MS-DOS ne esistono tre versioni: abbiamo la versione a 16 bit adatta alle macchine con il solo MS-DOS e che montano un processore di classe inferiore rispetto ad un 386 e che è possibile scaricare all'indirizzo:
+
+* link:https://www.ifarchive.org/if-archive/programming/hugo/executables/hugov31_dos16bit.zip[ftp://ftp.gmd.de/if-archive/programming/hugo/executables/hugov25_16bit.zip,title="Questo link sarà reindirizzato all'URL attuale della versione più recente del file (Hugo v3.1, 2006)"]
+
+C'è una versione a 32 bit che funziona sempre sotto MS-DOS, ma con macchine di classe 386 o superiore scaricabile all'indirizzo:
+
+* link:https://www.ifarchive.org/if-archive/programming/hugo/executables/hugov31_dos32bit.zip[ftp://ftp.gmd.de/if-archive/programming/hugo/executables/hugov25_32bit.zip,title="Questo link sarà reindirizzato all'URL attuale della versione più recente del file (Hugo v3.1, 2006)"]
+
+Infine esiste una versione per Windows a 32 bit (Windows 95, 98 e NT) che consente di poter girare in una finestra Windows standard; questa versione è scaricabile all'indirizzo
+
+* link:https://www.ifarchive.org/if-archive/programming/hugo/executables/hugov31_win32.exe[ftp://ftp.gmd.de/if-archive/programming/hugo/executables/hugov25_win32.zip,title="Questo link sarà reindirizzato all'URL attuale della versione più recente del file (Hugo v3.1, 2006)"]
+
+Una volta scaricato il pacchetto è necessario scompattarlo tramite un normale programma di compressione compatibile con il formato _ZIP_ (sia esso `PKUNZIP`, `WINZIP` o simili).
+
+Il contenuto dei tre pacchetti è simile per tutte le versioni e comprende il compilatore, il debugger e l'interprete.
+Quello che ci interessa in questa sede è l'ultimo.
+
+
+== L'interprete
+
+I giochi prodotti con Hugo sono memorizzati in un formato indipendente dall'architettura della macchina in cui tale gioco si troverà a girare, perciò per funzionare avrà bisogno di una macchina virtuale (termine molto in voga ultimamente) che si occuperà di interpretare il contenuto del file.
+Questa macchina virtuale prende il nome di _Hugo Engine_ (il Motore di Hugo), i file prodotti da Hugo si chiamano _Hugo Executables_ (Eseguibili Hugo) ed hanno estensione `.HEX`.
+
+Nelle versioni a 16 e 32 bit di Hugo (escludendo la versione Win32) l'interprete è presente in due versioni: abbiamo la versione solo testo che non consente di vedere l'eventuale grafica presente nel gioco ed una versione grafica.
+La prima è il programma `HE.EXE`, mentre la seconda è `HEGR.EXE`.
+Per poter avviare un gioco con una di queste versioni è sufficiente scrivere dal prompt del DOS il nome dell'interprete seguito dal nome del gioco.
+Supponendo di voler giocare a Guilty Bastards (un gioco scritto dal creatore di Hugo, completo di grafica e colonna sonora) con la versione solo testo ed ipotizzando di aver scompattato il pacchetto di Hugo nella directory `C:\HUGO` basta scrivere:
+
+[literal, role="cmd"]
+................................................................................
+C:\HUGO>HE GTESSAY
+................................................................................
+
+Il file di Guilty Bastards si chiama `GTESSAY.HEX` e nell'esempio sopra deve essere presente nella stessa directory in cui si trova l'interprete.
+La versione grafica dell'interprete funziona allo stesso modo (basta indicare `HEGR` invece di `HE`), solo che è possibile indicare una serie di opzioni per personalizzare la visualizzazione.
+Se, ad esempio, volessi giocare a Guilty Bastards senza il commento sonoro dovrei semplicemente scrivere:
+
+[literal, role="cmd"]
+................................................................................
+C:\HUGO>HEGR -X GTESSAY
+................................................................................
+
+L'elenco delle opzioni è il seguente:
+
+
+[horizontal]
+`-h` :: per l'alta risoluzione
+`-{wj}hnnnn` :: per impostare una particolare risoluzione (con _nnnn_ che varia tra 1024, 800 o 600 pixel)
+`-l` :: per la bassa risoluzione
+`-t` :: per la visualizzazione solo testo
+`-m` :: per impostare una visualizzazione a milioni di colori (lo scrolling risulta un po`' rallentato, ma le immagini vengono visualizzate con tutti i colori)
+`-16` :: per i colori a 16 bit (65000 colori)
+`-p` :: per il modo palette (che è quello predefinito) e visualizza 256 colori
+`-b` :: per il modo grafico in "`Bianco e Nero`"
+`-s` :: per visualizzare i caratteri con una dimensione inferiore (vale solo per i modi alta risoluzione e solo testo)
+`-r` :: per la riduzione della qualità delle immagini (diminuisce il tempo di caricamento delle immagini)
+`-x` :: per disabilitare il suono e la musica
+
+
+Per poter visualizzare le immagini e suonare la musica il gioco viene accompagnato da quello che si chiama file delle risorse ed è individuato dal fatto che ha lo stesso nome del gioco, solo è senza estensione.
+Se il file delle risorse non è presente le immagini non vengono visualizzate, ma è sempre possibile giocare.
+
+
+== La versione Win32
+
+La versione per Win32 si chiama `HEWIN` e, una volta lanciata dal prompt del DOS o da Gestione Risorse, presenta una finestra in cui è possibile inserire il nome del gioco da eseguire (magari selezionandolo tramite il pulsante Browse).
+In questa finestra è anche possibile selezionare le opzioni di disabilitazione della grafica e del sonoro.
+Questa è, probabilmente, la versione più facile da usare visto che si presenta come una applicazione standard Windows, corredata di menu a tendina che consentono di scegliere le varie opzioni.
+Quella che segue è una spiegazione sommaria delle varie voci di menu:
+
+* *File*
+** *Open new story...* -- visualizza la finestrella iniziale in cui è possibile immettere il nome del gioco da attivare.
+Viene creata una nuova sessione di gioco senza peredere la precedente (abbiamo, in pratica, un altro interprete in esecuzione)
+** *Exit* -- serve a chiudere l'interprete e la sessione corrente del gioco.
+Chiede conferma prima di chiudere.
+Ricordarsi, comunque, di salvare prima di uscire, altrimenti tutti i progressi fatti vanno persi.
+* *Story*
+** *Restart Current story* -- dopo aver chiesto conferma, termina la sessione di gioco corrente e ricomincia da capo.
+Ancora, se non volete perdere i progressi fatti ricordatevi di salvare prima di scegliere il menu.
+** *Restore Story* -- apre una finestra di dialogo in cui è possibile scegliere il nome del file di salvataggio da ripristinare.
+** *Save Story* -- salva lo stato corrente del gioco in un file il cui nome viene indicato nella finestra di dialogo che compare a video.
+** *Undo Last Turn* -- torna indietro di una mossa, come se l'ultima mossa non fosse mai stata effettuata.
+* *Options*
+** *Fonts*
+*** *Fixed Width...* -- serve a scegliere il font da usare per le visualizzazioni con i caratteri a larghezza fissa (come la barra di stato).
+*** *Proportional...* -- serve a scegliere il font da usare per le visualizzazioni con i caratteri a larghezza variabile (come il testo del gioco).
+** *Colors*
+*** *Foreground* -- serve per scegliere il colore di primo piano dei caratteri da una lista di colori predefinita.
+*** *Background* -- serve per scegliere il colore dello sfondo da una lista di colori predefinita.
+*** *Statusline Foreground* -- serve per scegliere il colore di primo piano dei caratteri usati nella barra di stato.
+*** *Statusline Background* -- serve per scegliere il colore dello sfondo della barra di stato.
+*** *Restore Default Colors* -- ripristina i colori predefiniti.
+** *Fast Scrolling* -- se selezionato, il testo viene visualizzato con uno scorrimento molto rapido.
+** *Display Graphics* -- se selezionato, visualizza l'eventuale grafica associata al gioco.
+** *Play Sounds/Music* -- se selezionato, serve ad abilitare la riproduzione dell'eventuale colonna sonora e degli eventuali effetti sonori associati al gioco.
+** *Reset Display* -- è utile da usare in caso di modifica dei parametri relativi ai caratteri ed ai colori.
+** *Show Compass Rose* -- visualizza una finestra in cui è possibile scegliere (tramite il mouse) la direzione da prendere.
+** *Show Scrollback Window* -- apre una finestra in cui è presente tutto il testo che è stato visualizzato dall'inizio della sessione di gioco (utile per rivedere una descrizione che si riteneva perduta).
+* *Help*
+** *About...* -- visualizza le informazioni sull'interprete.
+
+[right]#_Paolo Vece <pvece@mclink.it>_#
+
+
+
+ifdef::backend-html5[]
+++++
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Questo documento è stato ristampato da Tristano Ajmone nel maggio del 2019 con
+l'esplicito consenso dell'autore, nell'ambito del progetto Lazzaro II per la
+preservazione del patrimonio dell'Interactive Fiction italiano:
+
+    https://github.com/tajmone/lazzaro2
+
+La guida originale fu pubblicata nel 2003, nella sezione "AIUTI & GUIDE" del
+portale IF Italia (www.ifitalia.info):
+
+    https://web.archive.org/web/20030713105704/http://www.ifitalia.info/portale/modules/nsections/index.php?op=listarticles&secid=5
+
+L'unica copia del documento originale archiviata da WaybackMachine è quella del
+mirror di IF Italia creato da Paolo Vece (plovec.interfree.it) quando IF Italia
+chiuse i battenti:
+
+    https://web.archive.org/web/20050221195514/http://plovec.interfree.it/IFItalia/guidauso.html
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+++++
+endif::[]
+
+// EOF //

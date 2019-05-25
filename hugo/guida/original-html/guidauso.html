@@ -1,0 +1,273 @@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>IF Italia - Il sito italiano sull'Interactive Fiction
+</TITLE>
+      <LINK REV="made" HREF="mailto:dickdastardly@highway.it">
+	<META NAME="GENERATOR" CONTENT="NoteTab 4.82">
+	<META NAME="copyright" CONTENT="Tutto il materiale presente in questo sito è (c)Simone Zanella e (c)IF Italia ove non diversamente indicato. Tutti i diritti sono riservati. E' vietata la riproduzione non autorizzata del sito e di sue parti.">
+	<META name="keywords" content="if interactive fiction avventura avventure testuale testuali inform infocom tads ifitalia italia giochi gioco castello adventure text simone zanella monkey island gratis freeware download">
+	<META name="description" content="Il più vasto sito italiano sulle avventure testuali e sull'Interactive Fiction">	<STYLE>
+	<!--
+		P { border: none; padding: 0cm; font-family: "Verdana", sans-serif; font-size: 10pt }
+	-->
+	</STYLE>
+</HEAD>
+<BODY>
+<BLOCKQUOTE><DIV TYPE="HEADER">
+	<P ALIGN="CENTER" STYLE="border: 1px solid #000000; padding: 0.05cm"><FONT COLOR="#000080"><FONT FACE="Verdana, sans-serif">IF
+	ITALIA - Il sito Italiano sull'Interactive Fiction</FONT></FONT></P>
+</DIV>
+<P ALIGN="CENTER"><IMG SRC="Varie/if3backup.jpg" NAME="Logosmall" ALIGN="MIDDLE" WIDTH="108" HEIGHT="104" BORDER="0"></P>
+<P ALIGN="CENTER">
+<FONT SIZE="5" STYLE="font-size: 20pt"><FONT FACE="Verdana, sans-serif"><FONT COLOR="#000080">
+
+HUGO PER GIOCARE
+</FONT></FONT></FONT>
+</P>
+<P><FONT SIZE="2" STYLE="font-size: 10pt"><FONT FACE="Verdana, sans-serif"><FONT COLOR="#000080">
+<b>Contenuti</b>
+<blockquote><a href="#Cosa">Cosa &egrave; Hugo?</a>
+<br><a href="#Dove">Dove si trova?</a>
+<br><a href="#Interprete">L'interprete</a>
+<br><a href="#Win32">La versione Win32</a>
+<br><b></b>&nbsp;</blockquote>
+<a NAME="Cosa"></a><b>Cosa &egrave; Hugo?</b>
+<br>Hugo &egrave; un sistema completo per lo sviluppo e l'esecuzione di
+avventure testuali (corredate di grafica e commento sonoro) disponibile
+per diverse piattaforme hardware tra le quali Windows, Unix e Amiga.
+<br>Viene distribuito sotto forma di pacchetti che contengono tutto il
+necessario, ma qui vogliamo scoprire come si fa a <i>giocare</i> con una
+avventura prodotta con Hugo.
+<p><a NAME="Dove"></a><b>Dove si trova?</b>
+<br>Per prima cosa &egrave; necessario scegliere su quale macchina (e sistema
+operativo) far girare il prodotto. Per il solo mondo Windows/MS-DOS ne
+esistono tre versioni: abbiamo la versione a 16 bit adatta alle macchine
+con il solo MS-DOS e che montano un processore di classe inferiore rispetto
+ad un 386 e che &egrave; possibile scaricare all'indirizzo <a href="ftp://ftp.gmd.de/if-archive/programming/hugo/executables/hugov25_16bit.zip">ftp://ftp.gmd.de/if-archive/programming/hugo/executables/hugov25_16bit.zip</a>.
+C'&egrave; una versione a 32 bit che funziona sempre sotto MS-DOS, ma con
+macchine di classe 386 o superiore scaricabile all'indirizzo <a href="ftp://ftp.gmd.de/if-archive/programming/hugo/executables/hugov25_32bit.zip">ftp://ftp.gmd.de/if-archive/programming/hugo/executables/hugov25_32bit.zip</a>.
+Infine esiste una versione per Windows a 32 bit (Windows 95, 98 e NT) che
+consente di poter girare in una finestra Windows standard; questa versione
+&egrave; scaricabile all'indirizzo <a href="ftp://ftp.gmd.de/if-archive/programming/hugo/executables/hugov25_win32.zip">ftp://ftp.gmd.de/if-archive/programming/hugo/executables/hugov25_win32.zip</a>.
+<p>Una volta scaricato il pacchetto &egrave; necessario scompattarlo tramite
+un normale programma di compressione compatibile con il formato <i>ZIP</i>
+(sia esso <tt>PKUNZIP</tt>, <tt>WINZIP</tt> o simili).
+<p>Il contenuto dei tre pacchetti &egrave; simile per tutte le versioni
+e comprende il compilatore, il debugger e l'interprete. Quello che ci interessa
+in questa sede &egrave; l'ultimo.
+<p><a NAME="Interprete"></a><b>L'interprete</b>
+<br>I giochi prodotti con Hugo sono memorizzati in un formato indipendente
+dall'architettura della macchina in cui tale gioco si trover&agrave; a
+girare, perci&ograve; per funzionare avr&agrave; bisogno di una macchina
+virtuale (termine molto in voga ultimamente) che si occuper&agrave; di
+interpretare il contenuto del file. Questa macchina virtuale prende il
+nome di <i>Hugo Engine</i> (il Motore di Hugo), i file prodotti da Hugo
+si chiamano <i>Hugo Executables</i> (Eseguibili Hugo) ed hanno estensione
+.<tt>HEX</tt>.
+<p>Nelle versioni a 16 e 32 bit di Hugo (escludendo la versione Win32)
+l'interprete &egrave; presente in due versioni: abbiamo la versione solo
+testo che non consente di vedere l'eventuale grafica presente nel gioco
+ed una versione grafica. La prima &egrave; il programma <tt>HE.EXE</tt>,
+mentre la seconda &egrave; <tt>HEGR.EXE</tt>.
+<br>Per poter avviare un gioco con una di queste versioni &egrave; sufficiente
+scrivere dal prompt del DOS il nome dell'interprete seguito dal nome del
+gioco.
+<br>Supponendo di voler giocare a Guilty Bastards (un gioco scritto dal
+creatore di Hugo, completo di grafica e colonna sonora) con la versione
+solo testo ed ipotizzando di aver scompattato il pacchetto di Hugo nella
+directory <tt>C:\HUGO</tt> basta scrivere:
+<blockquote><tt>C:\HUGO>HE GTESSAY</tt></blockquote>
+Il file di Guilty Bastards si chiama <tt>GTESSAY.HEX</tt> e nell'esempio
+sopra deve essere presente nella stessa directory in cui si trova l'interprete.
+<br>La versione grafica dell'interprete funziona allo stesso modo (basta
+indicare <tt>HEGR</tt> invece di <tt>HE</tt>), solo che &egrave; possibile
+indicare una serie di opzioni per personalizzare la visualizzazione. Se,
+ad esempio, volessi giocare a Guilty Bastards senza il commento sonoro
+dovrei semplicemente scrivere:
+<blockquote><tt>C:\HUGO>HEGR -X GTESSAY</tt></blockquote>
+L'elenco delle opzioni &egrave; il seguente:
+<ul>
+<li>
+<b>-h</b> per l'alta risoluzione</li>
+
+<li>
+<b>-hnnnn</b> per impostare una particolare risoluzione (con nnnn che varia
+tra 1024, 800 o 600 pixel)</li>
+
+<li>
+<b>-l</b> per la bassa risoluzione</li>
+
+<li>
+<b>-t</b> per la visualizzazione solo testo</li>
+
+<li>
+<b>-m</b> per impostare una visualizzazione a milioni di colori (lo scrolling
+risulta un po' rallentato, ma le immagini vengono visualizzate con tutti
+i colori)</li>
+
+<li>
+<b>-16</b> per i colori a 16 bit (65000 colori)</li>
+
+<li>
+<b>-p</b> per il modo palette (che &egrave; quello predefinito) e visualizza
+256 colori</li>
+
+<li>
+<b>-b</b> per il modo grafico in "Bianco e Nero"</li>
+
+<li>
+<b>-s</b> per visualizzare i caratteri con una dimensione inferiore (vale
+solo per i modi alta risoluzione e solo testo)</li>
+
+<li>
+<b>-r</b> per la riduzione della qualit&agrave; delle immagini (diminuisce
+il tempo di caricamento delle immagini)</li>
+
+<li>
+<b>-x</b> per disabilitare il suono e la musica</li>
+</ul>
+Per poter visualizzare le immagini e suonare la musica il gioco viene accompagnato
+da quello che si chiama file delle risorse ed &egrave; individuato dal
+fatto che ha lo stesso nome del gioco, solo &egrave; senza estensione.
+Se il file delle risorse non &egrave; presente le immagini non vengono
+visualizzate, ma &egrave; sempre possibile giocare.
+<p><a NAME="Win32"></a><b>La versione Win32</b>
+<br>La versione per Win32 si chiama <tt>HEWIN</tt> e, una volta lanciata
+dal prompt del DOS o da Gestione Risorse, presenta una finestra in cui
+&egrave; possibile inserire il nome del gioco da eseguire (magari selezionandolo
+tramite il pulsante Browse). In questa finestra &egrave; anche possibile
+selezionare le opzioni di disabilitazione della grafica e del sonoro.
+<br>Questa &egrave;, probabilmente, la versione pi&ugrave; facile da usare
+visto che si presenta come una applicazione standard Windows, corredata
+di menu a tendina che consentono di scegliere le varie opzioni.
+<br>Quella che segue &egrave; una spiegazione sommaria delle varie voci
+di menu:
+<ul>
+<li>
+<b>File</b></li>
+
+<ul>
+<li>
+<b>Open new story...</b>: visualizza la finestrella iniziale in cui &egrave;
+possibile immettere il nome del gioco da attivare. Viene creata una nuova
+sessione di gioco senza peredere la precedente (abbiamo, in pratica, un
+altro interprete in esecuzione)</li>
+
+<li>
+<b>Exit</b>: serve a chiudere l'interprete e la sessione corrente del gioco.
+Chiede conferma prima di chiudere. Ricordarsi, comunque, di salvare prima
+di uscire, altrimenti tutti i progressi fatti vanno persi.</li>
+</ul>
+
+<li>
+<b>Story</b></li>
+
+<ul>
+<li>
+<b>Restart Current story</b>: dopo aver chiesto conferma, termina la sessione
+di gioco corrente e ricomincia da capo. Ancora, se non volete perdere i
+progressi fatti ricordatevi di salvare prima di scegliere il menu.</li>
+
+<li>
+<b>Restore Story</b>: apre una finestra di dialogo in cui &egrave; possibile
+scegliere il nome del file di salvataggio da ripristinare.</li>
+
+<li>
+<b>Save Story</b>: salva lo stato corrente del gioco in un file il cui
+nome viene indicato nella finestra di dialogo che compare a video.</li>
+
+<li>
+<b>Undo Last Turn</b>: torna indietro di una mossa, come se l'ultima mossa
+non fosse mai stata effettuata.</li>
+</ul>
+
+<li>
+<b>Options</b></li>
+
+<ul>
+<li>
+<b>Fonts</b></li>
+
+<ul>
+<li>
+<b>Fixed Width...</b>: serve a scegliere il font da usare per le visualizzazioni
+con i caratteri a larghezza fissa (come la barra di stato).</li>
+
+<li>
+<b>Proportional...</b>: serve a scegliere il font da usare per le visualizzazioni
+con i caratteri a larghezza variabile (come il testo del gioco).</li>
+</ul>
+
+<li>
+<b>Colors</b></li>
+
+<ul>
+<li>
+<b>Foreground</b>: serve per scegliere il colore di primo piano dei caratteri
+da una lista di colori predefinita.</li>
+
+<li>
+<b>Background</b>: serve per scegliere il colore dello sfondo da una lista
+di colori predefinita.</li>
+
+<li>
+<b>Statusline Foreground</b>: serve per scegliere il colore di primo piano
+dei caratteri usati nella barra di stato.</li>
+
+<li>
+<b>Statusline Background</b>: serve per scegliere il colore dello sfondo
+della barra di stato.</li>
+
+<li>
+<b>Restore Default Colors</b>: ripristina i colori predefiniti.</li>
+</ul>
+
+<li>
+<b>Fast Scrolling</b>: se selezionato, il testo viene visualizzato con
+uno scorrimento molto rapido.</li>
+
+<li>
+<b>Display Graphics</b>: se selezionato, visualizza l'eventuale grafica
+associata al gioco.</li>
+
+<li>
+<b>Play Sounds/Music</b>: se selezionato, serve ad abilitare la riproduzione
+dell'eventuale colonna sonora e degli eventuali effetti sonori associati
+al gioco.</li>
+
+<li>
+<b>Reset Display</b>: &egrave; utile da usare in caso di modifica dei parametri
+relativi ai caratteri ed ai colori.</li>
+
+<li>
+<b>Show Compass Rose</b>: visualizza una finestra in cui &egrave; possibile
+scegliere (tramite il mouse) la direzione da prendere.</li>
+
+<li>
+<b>Show Scrollback Window</b>: apre una finestra in cui &egrave; presente
+tutto il testo che &egrave; stato visualizzato dall'inizio della sessione
+di gioco (utile per rivedere una descrizione che si riteneva perduta).</li>
+</ul>
+
+<li>
+<b>Help</b></li>
+
+<ul>
+<li>
+<b>About...</b>: visualizza le informazioni sull'interprete.</li>
+</ul>
+</ul>
+
+<div align=right><i>Paolo Vece <a href="mailto:pvece@mclink.it">pvece@mclink.it</a></i></div>
+
+</FONT></FONT></FONT></P>
+<P ALIGN="CENTER"><IMG SRC="Varie/Newgif/blurulr6.gif" NAME="Riga" ALIGN="BOTTOM" WIDTH="640" HEIGHT="2" BORDER="0"><BR><BR>
+<FONT SIZE="1" STYLE="font-size: 10pt"><A HREF="indice.html"><IMG SRC="Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A>
+Torna alla Home Page 
+<A HREF="indice.html"><IMG SRC="Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A></FONT>
+</P>
+<P ALIGN="CENTER"><FONT SIZE="1" STYLE="font-size: 10pt"><FONT COLOR="#000080">&copy;2000 Simone
+Zanella e &copy;2000 IF Italia. E' vietata la riproduzione.</FONT></FONT></P></BLOCKQUOTE>
+</BODY>
+</HTML>

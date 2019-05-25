@@ -1,0 +1,474 @@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>IF Italia - Il sito italiano sull'Interactive Fiction
+</TITLE>
+      <LINK REV="made" HREF="mailto:dickdastardly@highway.it">
+	<META NAME="GENERATOR" CONTENT="NoteTab 4.82">
+	<META NAME="copyright" CONTENT="Tutto il materiale presente in questo sito è (c)Simone Zanella e (c)IF Italia ove non diversamente indicato. Tutti i diritti sono riservati. E' vietata la riproduzione non autorizzata del sito e di sue parti.">
+	<META name="keywords" content="if interactive fiction avventura avventure testuale testuali inform infocom tads ifitalia italia giochi gioco castello adventure text simone zanella monkey island gratis freeware download">
+	<META name="description" content="Il più vasto sito italiano sulle avventure testuali e sull'Interactive Fiction">	<STYLE>
+	<!--
+		P { border: none; padding: 0cm; font-family: "Verdana", sans-serif; font-size: 10pt }
+	-->
+	</STYLE>
+</HEAD>
+<BODY>
+<BLOCKQUOTE><DIV TYPE="HEADER">
+	<P ALIGN="CENTER" STYLE="border: 1px solid #000000; padding: 0.05cm"><FONT COLOR="#000080"><FONT FACE="Verdana, sans-serif">IF
+	ITALIA - Il sito Italiano sull'Interactive Fiction</FONT></FONT></P>
+</DIV>
+<P ALIGN="CENTER"><IMG SRC="../Varie/if3backup.jpg" NAME="Logosmall" ALIGN="MIDDLE" WIDTH="108" HEIGHT="104" BORDER="0"></P>
+<P><FONT SIZE="2" STYLE="font-size: 10pt"><FONT FACE="Verdana, sans-serif"><FONT COLOR="#000080">
+<h2>
+II. UNA PRIMA OCCHIATA A HUGO</h2>
+
+<p><br>Ci sono un paio di concetti base da capire prima di poter cominciare
+a lavorare con Hugo.
+<p>Prima di tutto, la maggior parte del lavoro di programmazione in Hugo
+riguarder&agrave; la creazione di quelli che chiamiamo "oggetti". Letteralmente
+questi rappresentano gli "oggetti" o elementi dell'universo del gioco:
+persone, luoghi e cose.
+<p>Il grosso del rimanente di un programma Hugo &egrave; composto dalle
+"routine". Queste sono le sezioni di codice fatte di comandi o istruzioni
+che guidano il reale comportamento del programma a punti differenti nella
+storia. Le routine vengono chiamate meno frequentemente (o pi&ugrave; frequentemente
+in altri linguaggi) "funzioni" -- vanno pensate come l'esecuzione di un'operazione
+o una serie di operazioni, per poi restituire qualche tipo di valore come
+risultato.
+<p>(Il concetto dei valori di ritorno &egrave; importante e, sebbene sembri
+complicato ai meno esperti, &egrave; in realt&agrave; piuttosto semplice.
+Spesso una particolare funzione verr&agrave; indicata come "restituisce
+vero" o "restituisce falso" -- il che significa che restituir&agrave; un
+valore non a zero (di solito 1) o un valore a zero, la maggior parte delle
+volte indicanti un successo od un fallimento. Un programma controller&agrave;
+constantemente i valori di ritorno di un insieme di routine e comandi per
+determinare se una particolare operazione ha avuto successo, in maniera
+da decidere che cosa fare dopo.
+<br>Naturalmente un valore di ritorno pu&ograve; essere qualunque valore
+intero; una routine che somma tra loro i due valori indicati, a e b, potrebbe
+restituire la somma di a+b.)
+<p>Per quelli che hanno familiarit&agrave; con i pi&ugrave; comuni linguaggi
+di programmazione C e BASIC, Hugo somiglia fortemente ad un ibrido tra
+i due.
+<br>Oggetti individuali e routine -- cos&igrave; come i blocchi condizionali
+-- sono racchiusi tra parentesi graffe come in C, ma a differenza del C
+(e come il BASIC), un punto e virgola non &egrave; richiesto alla fine
+di ogni riga, ed il linguaggio stesso &egrave; considerevolmente meno criptitco.
+<br>Istruzioni, varibili, routine e nomi di oggetti, e altre parole chiave
+non sono case-sensitive (possono essere scritte indifferentemente in maiuscolo
+e minuscolo).
+<p>L'obiettivo nella progettazione di Hugo &egrave; stato quello di fare
+in modo che la programmazione fosse il pi&ugrave; intuitiva possibile per
+facilitare sia lo sviluppo iniziale che il debug seguente.
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+<a NAME="HelloSailor"></a>II.a. Hello, Sailor!</h3>
+
+<p><br>La grandiosa tradizione dei testi di programmazione ha un'introduzione
+al nuovo linguaggio di programmazione che dettaglia il modo di stampare
+l'ottimistica frase "Salve, mondo" come esempio della forma e sostanza
+particolare del linguaggio.
+<p>Nell'ugualmente grandiosa tradizione dell'interactive fiction, cominceremo
+con il richiamo "Hello, Sailor!". Non vi preoccupate troppo della sintassi
+che segue; serve solo per familiarizzare con l'aspetto di Hugo.
+<br>&nbsp;
+<blockquote><tt>routine main</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print "Hello, Sailor!"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; return</tt>
+<br><tt>}</tt></blockquote>
+
+<p><br>Tutto il programma &egrave; composto da una sola routine. (Normalmente
+sono necessarie due routine per ogni programma Hugo, l'altra &egrave; la
+routine <tt>Init</tt>, che &egrave; stata omessa in questo esempio visto
+che non &egrave; richiesto nulla in fase di inizializzazione).
+<p>La routine <tt>Main</tt> viene chiamata automaticamente dall'interprete.
+&Egrave; da qui che il comportamento centrale di ogni programma Hugo viene
+controllato. In questo caso il compito &egrave; quello di stampare "Hello,
+Sailor!", seguito da un ordine di ritornare (<tt>return</tt>) dalla routine
+(uscire dalla stessa) cos&igrave; da non bloccare il programma per attendere
+un input, che &egrave; il compito normale di Hugo.
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+<a NAME="TipiDiDati"></a>II.b. Tipi di dati</h3>
+
+<p><br>Tutti i dati in Hugo sono rappresentati in termini di interi a 16
+bit, sia con segno (-32768 a 32767) che senza segno (0 a 65535) come richiesto.
+Il nome di ciascun tipo di dato pu&ograve; contenere fino a 32 caratteri
+alfanumerici (cos&igrave; come il carattere di sottolineato '_').
+<p>Quelli che seguono sono tipi di dato validi:
+<br>&nbsp;
+<blockquote><i>Valori interi</i> <tt>0,</tt> <tt>-10</tt>, <tt>16800</tt>,
+<tt>-25005</tt>
+<br>(valori costanti che compaiono nel codice sorgente di Hugo come numeri)
+<p><i>Caratteri ASCII</i> <tt>'A'</tt>, <tt>'z'</tt>, <tt>'7'</tt>
+<br>(valori costanti corrispondenti al valore ASCII di ciascun carattere,
+ad es. 65 per <tt>'A'</tt>)
+<p><i>Oggetti</i> <tt>borsa</tt>, <tt>stanzavuota</tt>, <tt>giocatore</tt>
+<br>(valori costanti rappresentanti il numero dell'oggetto indicato)
+<p><i>Variabili</i> <tt>a</tt>, <tt>b</tt>, <tt>score</tt>, <tt>TEXTCOLOR</tt>
+<br>(contenitori di valori modificabili che posso essere impostati uguali
+ad un'altra variabile o ad un valore costante)
+<p><i>Costanti</i> <tt>true</tt>, <tt>false</tt>, <tt>BANNER</tt>
+<br>(valori costanti che hanno un nome simile ad una variabile, ma che
+non sono modificabili)
+<p><i>Voci di dizionario</i> <tt>"a"</tt>, <tt>"the"</tt>, <tt>"basketball"</tt>
+<br>(l'indicazione di <tt>"the"</tt> in una riga di codice in realt&agrave;
+si riferisce alla posizione nella tabella del dizionario in cui <tt>"the"</tt>
+&egrave; memorizzata).
+<p><i>Elementi di matrici</i> <tt>posizione[1]</tt>
+<br>(una serie di uno o pi&ugrave; valori modificabili che possono essere
+indicati a partire da un punto iniziale comune)
+<p><i>Indirizzi di matrici</i> <tt>posizione</tt>
+<br>(il punto iniziale -- vedi sopra)
+<p><i>Propriet&agrave;</i> <tt>nouns</tt>, <tt>short_desc</tt>, <tt>found_in</tt>
+<br>(allegati varibili di dati relativi ad oggetti specifici)
+<p><i>Attributi</i> <tt>open</tt>, <tt>light</tt>, <tt>transparent</tt>
+<br>(allegati meno complessi di dati che descrivono un oggetto, con i quali
+si pu&ograve; specificare se un oggetto ha o meno l'attributo indicato)</blockquote>
+
+<p><br>La maggior parte di questi tipi sono relativamente semplici, rappresentando
+in molti casi un valore singolo. Le voci di dizionario indirizzano la tabella
+del dizionario, con la stringa nulla "" avente il valore 0. Gli indirizzi
+di matrici (al contrario degli elementi di matrici) rappresentano l'indirizzo
+a cui inizia la matrice nella tabella delle matrici. Le propriet&agrave;
+e gli attributi considerati come valori discreti rappresentano il numero
+di quella propriet&agrave; o quell'attributo, assegnato in maniera sequenziale
+quando la singola propriet&agrave; o il singolo attributo vengono definiti.
+<p>Come indicato le routine possono anche restituire dei valori, come le
+funzioni dell'interprete, cos&igrave; che
+<br>&nbsp;
+<blockquote><tt>FindLight(room)</tt></blockquote>
+
+<p><br>e
+<br>&nbsp;
+<blockquote><tt>parent(object)</tt></blockquote>
+
+<p><br>rappresentanto dei valori interi validi.
+<p>Anche gli indirizzi delle routine sono memorizzati come interi a 16
+bit.
+<br>Comunque, quelli portati a questi calcoli possono notare che un valore
+simile, trattato come un indirizzo assoluto possa indicare un limite di
+indirizzamento di 64k di dimensioni. Comunque non &egrave; questo il caso,
+visto che l'indirizzo della routine &egrave; in realt&agrave; una rappresentazione
+indicizzata dell'indirizzo assoluto.
+<p><i>NOTA:</i> l'indirizzo in formato a 16 bit di una routine (o l'indirizzo
+di una routine propriet&agrave;, come verr&agrave; indicato pi&ugrave;
+sotto), pu&ograve; essere ottenuto tramite l'operatore indirizzo '<tt>&amp;</tt>',
+come in:
+<br>&nbsp;
+<blockquote><tt>x = &amp;Routine</tt>
+<br><tt>x = &amp;object.property</tt></blockquote>
+
+<p><br>(dove <tt>x</tt> &egrave; una variabile).
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+<a NAME="RigheMultiple"></a>II.c Righe multiple</h3>
+
+<p><br>Se un singolo comando &egrave; troppo lungo per entrare in una riga,
+pu&ograve; essere suddiviso su diverse righe terminando ciascuna di esse
+tranne l'ultima con il carattere di controllo '<tt>\</tt>'.
+<br>&nbsp;
+<blockquote><tt>"Questa &egrave; una stringa di esempio."</tt></blockquote>
+
+<p><br>e
+<br>&nbsp;
+<blockquote><tt>x = 5 + 6 * higher(a, b)</tt></blockquote>
+
+<p><br>hanno lo stesso significato di
+<br>&nbsp;
+<blockquote><tt>"Questa &egrave; una riga \</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; di esempio."</tt></blockquote>
+
+<p><br>e
+<br>&nbsp;
+<blockquote><tt>x = 5 + 6 * \</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; higher(a, b)</tt></blockquote>
+
+<p><br>Lo spazio vuoto alla fine della prima riga &egrave; necessario perch&eacute;
+il compilatore elimina automaticamente gli spazi iniziali dalla seconda
+riga.
+<p>Le costanti stringa, come nell'esempio di stampa precedente, sono un'eccezione
+in quanto non richiedono il carattere '<tt>\</tt>' alla fine di ogni riga.
+<br>&nbsp;
+<blockquote><tt>print "L'interprete stamper&agrave; correttemente</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; questo testo, aggiungendo uno spazio</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; singolo alla fine di ogni</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; riga."</tt></blockquote>
+
+<p><br>verr&agrave; visualizzato come:
+<br>&nbsp;
+<blockquote><tt>L'interprete stamper&agrave; correttente questo testo,
+aggiungendo uno spazio singolo alla fine di ogni riga.</tt></blockquote>
+
+<p><br>Bisogna fare attenzione al fatto, comunque, che le virgolette di
+chiusura non vengano dimenticate nella costante stringa. Dimenticandosene,
+il compilatore potrebbe generare un errore "Closing brace missing" quando
+oltrepassa i limiti dell'oggetto/routine/evento cercando una soluzione
+al numero errato di virgolette.
+<p>Inoltre, molte delle righe che terminano con una virgola, '<tt>and</tt>',
+o '<tt>or</tt>' continuano automaticamente alla riga successiva (se capitano
+in una riga di codice). In altre parole,
+<br>&nbsp;
+<blockquote><tt>x[0] = 1, 2, 3, ! assegnazione array da x[0] a x[4]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; 4, 5</tt></blockquote>
+
+<p><br>e
+<br>&nbsp;
+<blockquote><tt>if a = 5 and</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; b = "alto"</tt></blockquote>
+
+<p><br>vengono convertite in
+<br>&nbsp;
+<blockquote><tt>x[0] = 1, 2, 3, 4, 5</tt></blockquote>
+
+<p><br>e
+<br>&nbsp;
+<blockquote><tt>if a = 5 and b = "alto"</tt></blockquote>
+
+<p><br>Questa funzionalit&agrave; &egrave; presente principalmente perch&eacute;
+le righe lunghe e le espressioni complesse non eccedano dal limite destro
+dello schermo durante l'editing, e che non sia continuamente necessario
+estendere le righe usano '<tt>\</tt>' alla fine di ogni riga.
+<p>(<i>NOTA:</i> Le righe multiple che non sono esplicitamente codice,
+come le assegnazioni alle propriet&agrave; nelle definizioni degli oggetti
+-- che verranno illustrate -- devono ancora essere unite usando '<tt>\</tt>',
+come in
+<br>&nbsp;
+<blockquote><tt>nouns "pianta", "fiore", "calendola", \</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; "fauna", "fogliame"</tt></blockquote>
+
+<p><br>e casi simili, anche se terminano con una virgola).
+<p>Esiste un carattere di controllo complementare a '<tt>\</tt>': il carattere
+'<tt>:</tt>' consente di mettere le righe multiple su una riga singola,
+ad esempio:
+<br>&nbsp;
+<blockquote><tt>x = 5 : Y = 1</tt></blockquote>
+
+<p><br>o
+<br>&nbsp;
+<blockquote><tt>if i = 1 : print "Inferiore a tre."</tt></blockquote>
+
+<p><br>che il compilatore trasforma in
+<br>&nbsp;
+<blockquote><tt>x = 5</tt>
+<br><tt>y = 1</tt></blockquote>
+
+<p><br>e
+<blockquote><tt>if i = 1</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {print "Inferiore a tre."}</tt></blockquote>
+
+<p><br>(Consultate le sezioni che seguono sulla formattazione del codice
+per capire esattamente che cosa rappresentano questi costrutti)
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+<a NAME="Commenti"></a>II.d Commenti</h3>
+
+<p><br>Ci sono due tipi di commenti. I commenti su una singola riga cominciano
+con '<tt>!</tt>'. Tutto quello che segue sulla riga viene ignorato. I commenti
+a riga multipla iniziano con '<tt>!\</tt>' e terminano con '<tt>\!</tt>'.
+<br>&nbsp;
+<blockquote><tt>! Un commento su una singola riga</tt><tt></tt>
+<p><tt>!\ Un commento a</tt>
+<br><tt>&nbsp;&nbsp; riga multipla \!</tt></blockquote>
+
+<p><br>La combinazione '<tt>!\</tt>' deve cominciare all'inizio di una
+riga per essere significativa; non pu&ograve; essere preceduta da nessun'altra
+istruzione o commento. Allo stesso modo la combinazione '<tt>\!</tt>' deve
+trovarsi alla fine di una riga.
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+<a NAME="Errori"></a>II.e. Errori del compilatore</h3>
+
+<p><br>Un errore del compilatore &egrave; generalmente di due tipi. Un
+errore fatale (grave) somiglia a:
+<br>&nbsp;
+<blockquote><tt>Fatal error: &lt;messaggio></tt></blockquote>
+
+<p><br>e termina l'esecuzione del compilatore.
+<p>Un errore non fatale di solito appare come:
+<br>&nbsp;
+<blockquote><tt>&lt;nomefile>(&lt;riga>): Error: &lt;messaggio></tt></blockquote>
+
+<p><br>Inoltre, il compilatore pu&ograve; produrre avvertimenti nella forma:
+<br>&nbsp;
+<blockquote><tt>&lt;nomefile>(&lt;riga>): Warning: &lt;messaggio></tt></blockquote>
+
+<p><br>La compilazione continua, ma questa &egrave; un'indicazione che
+il compilatore sospetta esista in problema a tempo di compilazione.
+<p>Se l'opzione <tt>-e</tt> &egrave; stata impostata durante l'esecuzione
+per generare gli errori in formato esteso, gli errori verranno visualizzati
+come:
+<br>&nbsp;
+<blockquote><tt>&lt;NOMEFILE>: &lt;POSIZIONE></tt>
+<br><tt>(Riga che ha causato l'errore)</tt>
+<br><tt>"ERROR: &lt;messaggio di errore>"</tt></blockquote>
+
+<p><br>Stampa la sezione di codice che ha causato l'errore, seguita da
+una spiegazione del problema. Generalmente la compilazione continua a meno
+che sia stata selezionata l'opzione <tt>-a</tt>.
+<p><i>NOTA:</i> La sezione di codice errato potrebbe non essere stampata
+esattamente come compare nel sorgente, visto che il compilatore spesso
+risistema e ricostruisce il codice sorgente in un formato pi&ugrave; rigido
+prima di costruire la riga.
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+<a NAME="Direttive"></a>II.f. Direttive di compilazione</h3>
+
+<p><br>Una serie di comandi speciali pu&ograve; essere usata per determinare
+a.) come il codice sorgente viene letto dal compilatore, o b.) quale output
+speciale verr&agrave; generato a tempo di compilazione.
+<p>Per impostare le opzioni all'interno del codice sorgente cos&igrave;
+che non sia necessario specificarle tutte le volte che viene eseguito il
+compilatore per quel particolare programma, la riga
+<br>&nbsp;
+<blockquote><tt>#switches -&lt;sequenza></tt></blockquote>
+
+<p><br>imposter&agrave; le opzioni specificate da <tt>&lt;sequenza></tt>,
+dove <tt>&lt;sequenza></tt> &egrave; una stringa di caratteri rappresentante
+delle opzioni valide, senza nessun separatore tra i caratteri.
+<p>Molti programmatori possono trovare utile fare di
+<br>&nbsp;
+<blockquote><tt>#switches -ils</tt></blockquote>
+
+<p><br>la prima riga di ogni nuovo programma, che automaticamente stamper&agrave;
+le informazioni di debug, un elenco di statistiche, e tutti gli errori
+nel file list <tt>.LST</tt>.
+<p>Usando
+<br>&nbsp;
+<blockquote><tt>#version &lt;versione>[.&lt;revisione>]</tt></blockquote>
+
+<p><br>&egrave; possibile specificare che il file deve essere usato con
+la versione <tt>&lt;versione>.&lt;revisione></tt> del compilatore. Se le
+versioni del file e del compilatore non coincidono, viene generato un avvertimento.
+<p>Per inserire il contenuto di un altro file al punto specificato nella
+riga corrente, usate
+<br>&nbsp;
+<blockquote><tt>#include "&lt;nomefile>"</tt></blockquote>
+
+<p><br>dove <tt>&lt;nomefile></tt> &egrave; il nome completo di percorso
+del file che deve essere letto. Quando <tt>&lt;nomefile></tt> &egrave;
+stato letto completamente, il compilatore prosegue con l'istruzione immediatamente
+successiva al comando <tt>#include</tt>.
+<p>(Un file od un insieme di file pu&ograve; essere compilato in un header
+precompilato usando l'opzione <tt>-h</tt>, e poi linkato usando <tt>#link</tt>
+al posto di <tt>#include</tt>. Consultate l'Appendice D sugli Header Precompilati).
+<p>Uno strumento molto utile per la gestione del codice sorgente Hugo &egrave;
+la capacit&agrave; di usare i flag del compilatore per la compilazione
+condizionale. Un flag del compilatore &egrave; semplicemente un segnale
+definito dall'utente che serve a controllare quali sezioni del codice sorgente
+vanno compilate. In questo modo, un programmatore pu&ograve; sviluppare
+aggiunte ad un programma che possono essere incluse o escluse a volont&agrave;.
+Ad esempio, i file della libreria <tt>HUGOLIB.H</tt>, <tt>VERBLIB.H</tt>,
+e <tt>VERBLIB.G</tt> verificano se un flag chiamato <tt>DEBUG</tt> &egrave;
+stato precedentemente impostato (come in <tt>SAMPLE.HUG</tt>). In questo
+caso includono i file <tt>HUGOFIX.H</tt> e <tt>HUGOFIX.G</tt>.
+<p>Per impostare e pulire i flag usate
+<br>&nbsp;
+<blockquote><tt>#set &lt;nomeflag></tt></blockquote>
+
+<p><br>e
+<br>&nbsp;
+<blockquote><tt>#clear &lt;nomeflag></tt></blockquote>
+
+<p><br>Poi &egrave; possibile verificare se un flag &egrave; impostato
+o meno (e includere o escludere il blocco di codice sorgente specificato)
+usando
+<br>&nbsp;
+<blockquote><tt>#ifset &lt;nomeflag></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...blocco di codice condizionale...</tt>
+<br><tt>#endif</tt></blockquote>
+
+<p><br>o
+<br>&nbsp;
+<blockquote><tt>#ifclear &lt;nomeflag></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...blocco di codice condizionale...</tt>
+<br><tt>#endif</tt></blockquote>
+
+<p><br>I costrutti di compilazione condizionale possono essere nidificati
+fino ad una profondit&agrave; di 32 livelli.
+<p>(&Egrave; anche possibile specificare i flag del compilatore dalla riga
+di comando quando si esegue il compilatore con <tt>#&lt;nomeflag></tt>):
+<p>"<tt>#if set</tt>" e "<tt>#if clear</tt>" sono le forme estese di "<tt>#ifset</tt>"
+e "<tt>#ifclear</tt>", che consentono l'uso di "<tt>#elseif</tt>" per il
+codice come in:
+<br>&nbsp;
+<blockquote><tt>#set QUESTO_FLAG</tt>
+<br><tt>#set QUEL_FLAG</tt><tt></tt>
+<p><tt>#if clear QUESTO_FLAG</tt>
+<br><tt>#messagge "Questo non viene mai stampato."</tt>
+<br><tt>#elseif set QUEL_FLAG</tt>
+<br><tt>#message "Questo viene sempre stampato."</tt>
+<br><tt>#else</tt>
+<br><tt>#message "Questo no se QUEL_FLAG &egrave; impostato."</tt>
+<br><tt>#endif</tt></blockquote>
+
+<p><br>Usate "<tt>#if defined &lt;flag></tt>" e "<tt>#if undefined &lt;flag></tt>"
+per verificare se oggetti, propriet&agrave;, routine, ecc. sono state definite
+in precedenza.
+<p>Come si &egrave; visto pi&ugrave; sopra la direttiva <tt>#message</tt>
+pu&ograve; essere usata come
+<br>&nbsp;
+<blockquote><tt>#message "&lt;testo>"</tt></blockquote>
+
+<p><br>per visualizzare <tt>&lt;testo></tt> quando (o se) quell'istruzione
+viene interpretata durante il primo passo della compilazione.
+<p>Includendo "<tt>error</tt>" o "<tt>warning</tt>" prima di "<tt>&lt;testo></tt>"
+come in
+<br>&nbsp;
+<blockquote><tt>#message error "&lt;testo>"</tt></blockquote>
+
+<p><br>o
+<br>&nbsp;
+<blockquote><tt>#message warning "&lt;testo>"</tt></blockquote>
+
+<p><br>si forzer&agrave; il compilatore a generare, rispettivamente, un
+errore od un avvertimento quando dovr&agrave; stampare "<tt>&lt;testo></tt>".
+<p>&Egrave; anche possibile includere l'impostazione dei limiti nel codice,
+come in
+<br>&nbsp;
+<blockquote><tt>$&lt;impostazione>=&lt;limite></tt></blockquote>
+
+<p><br>allo stesso modo della riga di comando. Comunque un errore verr&agrave;
+genenerato se, ad esempio, si tenta di reimpostare <tt>MAXOBJECTS</tt>
+quando uno o pi&ugrave; oggetti sono stati definiti.
+<br>&nbsp;
+<br>&nbsp;
+<h3>
+<a NAME="EsCompilazione"></a>Esempio: Compilazione dalla linea di comando</h3>
+
+<p><br>Sulla macchina dell'autore, che gira sotto MS-DOS, l'eseguibile
+del compilatore <tt>HC.EXE</tt> &egrave; in una directory chiamata <tt>C:\HUGO</tt>.
+I file della libreria sono in <tt>C:\HUGO\LIB</tt>, ed il codice sorgente
+per il gioco Spur &egrave; in <tt>C:\HUGO\SPUR</tt>.
+<p>&Egrave; possibile chiamare il compilatore per compilare Spur con una
+serie di opzioni differenti, inclusa l'impostazione dei flag del compilatore
+per includere la libreria di debug HugoFix e le routine dei verbi addizionali
+(che potrebbe essere ottenuto diversamente con "<tt>#set DEBUG</tt>" e
+"<tt>#set VERBSTUBS</tt>" nel sorgente), e stampare tutte le informazioni
+di debug, l'albero degli oggetti, e le statistiche in un file. (Assumendo
+che la directory corrente &egrave; <tt>C:\HUGO</tt> e che nessuna delle
+opzioni o flag del compilatore sono impostati nel sorgente.)
+<br>&nbsp;
+<blockquote><tt>hc -iols #debug #verbstubs @source=spur @lib=lib spur</tt></blockquote>
+
+<p><br>Questa riga mostra l'uso di tutti i tipi di opzione della riga di
+comando possibili, comprese le opzioni multiple, l'impostazione dei flag,
+e l'indicazione delle directory.
+</FONT></FONT></FONT></P>
+<P ALIGN="CENTER"><IMG SRC="../Varie/Newgif/blurulr6.gif" NAME="Riga" ALIGN="BOTTOM" WIDTH="640" HEIGHT="2" BORDER="0"><BR><BR>
+<FONT SIZE="1" STYLE="font-size: 8pt"><A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A>
+<FONT SIZE="2">Torna alla Home Page</FONT> 
+<A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A></FONT>
+</P>
+<P ALIGN="CENTER"><FONT SIZE="1" STYLE="font-size: 8pt"><FONT COLOR="#000080">&copy;2000 Simone
+Zanella e &copy;2000 IF Italia. E' vietata la riproduzione.</FONT></FONT></P></BLOCKQUOTE>
+</BODY>
+</HTML>

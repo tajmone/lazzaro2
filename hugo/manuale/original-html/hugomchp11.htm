@@ -1,0 +1,192 @@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>IF Italia - Il sito italiano sull'Interactive Fiction
+</TITLE>
+      <LINK REV="made" HREF="mailto:dickdastardly@highway.it">
+	<META NAME="GENERATOR" CONTENT="NoteTab 4.82">
+	<META NAME="copyright" CONTENT="Tutto il materiale presente in questo sito è (c)Simone Zanella e (c)IF Italia ove non diversamente indicato. Tutti i diritti sono riservati. E' vietata la riproduzione non autorizzata del sito e di sue parti.">
+	<META name="keywords" content="if interactive fiction avventura avventure testuale testuali inform infocom tads ifitalia italia giochi gioco castello adventure text simone zanella monkey island gratis freeware download">
+	<META name="description" content="Il più vasto sito italiano sulle avventure testuali e sull'Interactive Fiction">	<STYLE>
+	<!--
+		P { border: none; padding: 0cm; font-family: "Verdana", sans-serif; font-size: 10pt }
+	-->
+	</STYLE>
+</HEAD>
+<BODY>
+<BLOCKQUOTE><DIV TYPE="HEADER">
+	<P ALIGN="CENTER" STYLE="border: 1px solid #000000; padding: 0.05cm"><FONT COLOR="#000080"><FONT FACE="Verdana, sans-serif">IF
+	ITALIA - Il sito Italiano sull'Interactive Fiction</FONT></FONT></P>
+</DIV>
+<P ALIGN="CENTER"><IMG SRC="../Varie/if3backup.jpg" NAME="Logosmall" ALIGN="MIDDLE" WIDTH="108" HEIGHT="104" BORDER="0"></P>
+<P><FONT SIZE="2" STYLE="font-size: 10pt"><FONT FACE="Verdana, sans-serif"><FONT COLOR="#000080">
+
+<h2>
+XI. RISORSE</h2>
+L'interprete consente ad un programma Hugo di accedere a dei dati esterni
+(chiamati risorse) compilati in un file formattato in maniera speciale
+chiamato <i>resourcefile</i> [file delle risorse]. Un <i>resourcefile</i>
+viene creato usando:
+<blockquote><tt>resource "&lt;filerisorse>"</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; "&lt;risorsa1>"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; "&lt;risorsa2>"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>}</tt></blockquote>
+Il nome <tt>&lt;filerisorse></tt> deve essere di 8 caratteri (o meno) alfanumerici
+che vengono automaticamente convertiti in maiuscolo. (La ragione &egrave;
+quella di massimizzare la portabilit&agrave; attraverso le differenti piattaforme
+ed i differenti sistemi di nomenclatura dei file -- sfortunatamente non
+tutti seguono le stesse convenzioni, cos&igrave; questa restrizione vuole
+ridurre la nomenclatura dei file al minimo comun denominatore).
+<p>Attualmente la versione v2.5 supporta i file grafici JPEG, i campionamenti
+audio RIFF/WAV, e i moduli musicali MOD/S3M/XM come risorse.
+<p>Ad esempio, quello che segue &egrave; un file di risorse immaginario
+compilato su una piattaforma Windows 95/NT:
+<blockquote><tt>resource "gameres1"</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; "c:\hugo\graphics\logo.jpg"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; "h:\data\scenic panorama.jpg"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; "h:\data\background.jpg"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; "c:\music\intro_theme.s3m"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; "c:\music\theme2.xm"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; "c:\sounds\sample1.wav"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; "c:\sounds\sample2.wav"</tt>
+<br><tt>}</tt></blockquote>
+Non importa che la nomenclatura all'interno della definizione della risorsa
+non sia portabile. Nel precedente "<tt>gameres1</tt>", ad esempio, i nomi
+dei file sono specifici di Windows 95/NT, visto che &egrave; dove i file
+originali sono posizionati. Le risorse, comunque, vengono accedute solo
+per mezzo del nome del file come voci nell'indice del file delle risorse.
+Perci&ograve;, dopo che "<tt>gameres1</tt>" &egrave; stato creato, ci si
+riferisce alle tre immagini come "<tt>logo</tt>", "<tt>scenic panorama</tt>"
+e "<tt>background</tt>" all'interno del file delle risorse "<tt>gameres1</tt>".
+<br>(Notate come qualunque indicazione di disco/percorso o estensione di
+file siano stati rimossi e non inclusi nell'indice. Come risultato due
+risorse con lo stesso nome, ma con percorsi o estensioni differenti non
+possono essere inclusi nello stesso file delle risorse).
+<p>A causa della relativa non portabilit&agrave; dei <i>resourcefile</i>
+(pi&ugrave; il tempo aggiuntivo richiesto su macchine lente dall'indicizzazione
+ed il consolidamento di centinaia di kilobyte di dati ponteziali), si raccomanda
+di compilare le risorse da file sorgenti separati del resto del gioco Hugo.
+<p>L'estensione della libreria <tt>RESOURCE.H</tt> fornisce delle routine
+utili alla gestione delle risorse in un programma Hugo.
+<p>Definisce inoltre i seguenti valori potenziali per <tt>system_status</tt>,
+che pu&ograve; essere controllata dopo un'operazione sulle risorse. Se
+<tt>system_status</tt> ha un valore diverso da zero (indicante lo stato
+normale), pu&ograve; contenere uno dei seguenti valori:
+<br>&nbsp;
+<table CELLSPACING=3 CELLPADDING=3 >
+<tr>
+<td><tt>-1</tt></td>
+
+<td><tt>STAT_UNAVAILABLE</tt></td>
+</tr>
+
+<tr>
+<td><tt>101</tt></td>
+
+<td><tt>STAT_NOFILE</tt></td>
+</tr>
+
+<tr>
+<td><tt>102</tt></td>
+
+<td><tt>STAT_NORESOURCE</tt></td>
+</tr>
+
+<tr>
+<td><tt>103</tt></td>
+
+<td><tt>STAT_LOADERROR</tt></td>
+</tr>
+</table>
+
+<h3>
+<a NAME="Immagini"></a>XI.a. Immagini</h3>
+Un'immagine memorizzata in un <i>resourcefile</i> viene visualizzata mediante:
+<blockquote><tt>picture "&lt;resourcefile>", "&lt;immagine>"</tt></blockquote>
+Ad esempio,
+<blockquote><tt>picture "gameres1", "logo"</tt></blockquote>
+(&Egrave; possibile inserire il percorso diretto di un'immagine come in
+<blockquote><tt>picture "c:\hugo\graphics\logo.jpg"</tt></blockquote>
+ma visto che l'indicazione percorso/nomefile &egrave; specifica di un sistema
+operativo questa notazione deve essere usata solo per i test.
+<br>Se l'immagine indicata non viene trovata nel resourcefile specificato,
+l'interprete cercher&agrave; di leggere l'immagine come un file nel percorso
+di ricerca corrente).
+<p>L'immagine verr&agrave; visualizzata nella finestra di testo corrente.
+Se l'immagine &egrave; pi&ugrave; piccola della finestra verr&agrave; centrata.
+Se &egrave; pi&ugrave; larga, verr&agrave; ristretta per farla entrare.
+Se la versione di Hugo Engine che si sta usando non &egrave; abilitata
+alla grafica, allora '<tt>picture</tt>' non avr&agrave; effetto.
+<p>Se l'immagine non viene trovata o se un errore non bloccante viene incontrato
+durante la lettura, l'esecuzione dell'interprete prosegue normalemente.
+<p><tt>RESOURCE.H</tt> fornisce un paio di routine per la gestione della
+grafica:
+<blockquote><tt>LoadPicture("resourcefile", "immagine")</tt>
+<br><tt>LoadPicture("immagine")</tt><tt></tt>
+<p><tt>PictureInText("file", "immagine", larghezza, altezza, preserva)</tt>
+<br><tt>PictureInText("immagine", larghezza, altezza, preserva)</tt></blockquote>
+Sostanzialmente <tt>LoadPicture</tt> &egrave; un <i>wrapper</i> per l'istruzione
+'<tt>picture</tt>' che fornisce il servizio addizionale del controllo di
+<tt>display.hasgraphics</tt> per verificare che sia disponibile uno schermo
+grafico.
+<p><tt>PictureInText</tt> &egrave; leggermente pi&ugrave; complicata. Consente
+ad un'immagine di essere visualizzata nel normale flusso del testo della
+finestra principale.
+<br>Gli argomenti <tt>&lt;larghezza></tt> e <tt>&lt;altezza></tt> forniscono
+le dimensioni in caratteri a larghezza fissa dell'area dello schermo. (Visto
+che gli schermi differiscono nelle dimensioni dei caratteri, si raccomanda
+di calcolarle basandosi su <tt>display.screenwidth</tt> e <tt>display.screenheight</tt>
+invece di passare dei valori assoluti). Il parametro <tt>&lt;preserva></tt>,
+se fornito, assicura che una o pi&ugrave; righe all'inizio dello schermo
+vengano protette dallo scrolling (si evita che scorrano fuori dallo schermo).
+<p>(Sia <tt>LoadPicture</tt> che <tt>PictureInText</tt> possono essere
+chiamate solo con l'indicazione dell'immagine, senza indicare il <i>resourcefile</i>.
+In questo caso <tt>RESOURCE.H</tt> cerca di trovare la risorsa nell'ultimo
+<i>resourcefile</i> usato, memorizzato nella variabile globale <tt>last_resource_file</tt>.
+Vista la potenziale imprecizione di questo metodo, si raccomanda di specificare
+sempre il nome del <i>resourcefile</i>).
+<h3>
+<a NAME="SuonoMusica"></a>XI.b. Suono e musica</h3>
+I suoni e la musica vengono riprodotti usando le istruzioni Hugo:
+<blockquote><tt>sound [repeat] &lt;resourcefile>, &lt;risorsa>[, &lt;vol>]</tt>
+<br><tt>music [repeat] &lt;resourcefile>, &lt;risorsa>[, &lt;vol>]</tt></blockquote>
+La parola chiave <tt>repeat</tt> &egrave; opzionale; se fornita si forza
+l'interprete a ripetere in continuazione la riproduzione della risorsa
+suono/musica fino ad una notifica successiva (cio&egrave; fino a che non
+viene fermata o quando viene riprodotta un'altra risorsa suono/musica).
+L'argomento <tt>&lt;vol></tt> &egrave; opzionale. Se fornito indica una
+percentuale di volume (da 0 a 100) per la riproduzione.
+<p>Il suono o la musica che si stanno riproducendo possono essere interrotti
+usando:
+<blockquote><tt>sound 0</tt>
+<br><tt>music 0</tt></blockquote>
+<tt>RESOURCE.H</tt> fornisce un paio di funzioni <i>wrapper</i> per la
+gestione delle risorse audio:
+<blockquote><tt>PlaySound(resourcefile, campione, ciclo, forza)</tt>
+<br><tt>PlayMusic(resourcefile, canzone, ciclo, forza)</tt></blockquote>
+In entrambi i casi se <tt>&lt;ciclo></tt> &egrave; <i>true</i> ha lo stesso
+effetto di usare <tt>repeat</tt> nelle istruzioni '<tt>sound</tt>' e '<tt>music</tt>'.
+Se <tt>&lt;forza></tt> &egrave; <i>true</i>, il campione o la musica ripartono
+anche se quel campione o quella musica sono gi&agrave; in riproduzione
+(altrimenti le chiamate a <tt>PlaySound</tt> o <tt>PlayMusic</tt> non hanno
+effetti sostanziali).
+<p>Per fermare la riproduzione di un campione o di una musica attraverso
+l'interfaccia della libreria si usa:
+<blockquote><tt>PlaySound(SOUND_STOP)</tt>
+<br><tt>PlayMusic(MUSIC_STOP)</tt></blockquote>
+(dove <tt>SOUND_STOP</tt> e <tt>MUSIC_STOP</tt> sono costanti definite
+in <tt>RESOURCE.H</tt>).
+<br>&nbsp;
+</FONT></FONT></FONT></P>
+<P ALIGN="CENTER"><IMG SRC="../Varie/Newgif/blurulr6.gif" NAME="Riga" ALIGN="BOTTOM" WIDTH="640" HEIGHT="2" BORDER="0"><BR><BR>
+<FONT SIZE="1" STYLE="font-size: 8pt"><A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A>
+<FONT SIZE="2">Torna alla Home Page</FONT> 
+<A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A></FONT>
+</P>
+<P ALIGN="CENTER"><FONT SIZE="1" STYLE="font-size: 8pt"><FONT COLOR="#000080">&copy;2000 Simone
+Zanella e &copy;2000 IF Italia. E' vietata la riproduzione.</FONT></FONT></P></BLOCKQUOTE>
+</BODY>
+</HTML>

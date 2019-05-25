@@ -1,0 +1,730 @@
+From: <Salvato da Windows Internet Explorer 7>
+Subject: IF Italia - Il sito italiano sull'Interactive Fiction
+Date: Mon, 13 Apr 2009 23:11:19 +0200
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----=_NextPart_000_0016_01C9BC8D.27585200"
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0016_01C9BC8D.27585200
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://plovec.interfree.it/IFItalia/Traduhugo/hugomchp8.htm
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>IF Italia - Il sito italiano sull'Interactive =
+Fiction</TITLE>
+<META http-equiv=3DCONTENT-TYPE content=3D"text/html; =
+charset=3Diso-8859-1"><LINK=20
+rev=3Dmade href=3D"mailto:dickdastardly@highway.it">
+<META content=3D"MSHTML 6.00.6000.16809" name=3DGENERATOR>
+<META=20
+content=3D"Tutto il materiale presente in questo sito =E8 (c)Simone =
+Zanella e (c)IF Italia ove non diversamente indicato. Tutti i diritti =
+sono riservati. E' vietata la riproduzione non autorizzata del sito e di =
+sue parti."=20
+name=3Dcopyright>
+<META=20
+content=3D"if interactive fiction avventura avventure testuale testuali =
+inform infocom tads ifitalia italia giochi gioco castello adventure text =
+simone zanella monkey island gratis freeware download"=20
+name=3Dkeywords>
+<META=20
+content=3D"Il pi=F9 vasto sito italiano sulle avventure testuali e =
+sull'Interactive Fiction"=20
+name=3Ddescription>
+<STYLE>P {
+	BORDER-RIGHT: medium none; PADDING-RIGHT: 0cm; BORDER-TOP: medium none; =
+PADDING-LEFT: 0cm; FONT-SIZE: 10pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: =
+medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: medium none; FONT-FAMILY: =
+"Verdana", sans-serif
+}
+</STYLE>
+</HEAD>
+<BODY>
+<BLOCKQUOTE>
+  <DIV TYPE=3D"HEADER">
+  <P=20
+  style=3D"BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 0.05cm; =
+BORDER-TOP: #000000 1px solid; PADDING-LEFT: 0.05cm; PADDING-BOTTOM: =
+0.05cm; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 0.05cm; =
+BORDER-BOTTOM: #000000 1px solid"=20
+  align=3Dcenter><FONT color=3D#000080><FONT face=3D"Verdana, =
+sans-serif">IF ITALIA -=20
+  Il sito Italiano sull'Interactive Fiction</FONT></FONT></P></DIV>
+  <P align=3Dcenter><IMG height=3D104=20
+  src=3D"http://plovec.interfree.it/IFItalia/Varie/if3backup.jpg" =
+width=3D108=20
+  align=3Dmiddle border=3D0 name=3DLogosmall></P>
+  <P><FONT style=3D"FONT-SIZE: 10pt" size=3D2><FONT face=3D"Verdana, =
+sans-serif"><FONT=20
+  color=3D#000080>
+  <H2>VIII. ROUTINE DI CONGIUNZIONE</H2>Visto che, per dirla semplice,=20
+  l'interprete non conosce cose tipo attributi, propriet=E0 ed oggetti =
+se non nel=20
+  senso tecnico, sono state fornite una serie di routine che servono a=20
+  facilitare la comunicazione tra l'interprete ed il programma.=20
+  <P>Insieme a queste routine di congiunzione ci sono una serie di =
+variabili=20
+  globali e propriet=E0 che sono predefinite dal compilatore ed a cui =
+accede=20
+  l'interprete. Queste sono:=20
+  <P><B>GLOBALI:</B>=20
+  <TABLE cellSpacing=3D3 cellPadding=3D3>
+    <TBODY>
+    <TR>
+      <TD><TT>object</TT></TD>
+      <TD>l'oggetto diretto di un verbo</TD></TR>
+    <TR>
+      <TD><TT>xobject</TT></TD>
+      <TD>l'oggetto indiretto</TD></TR>
+    <TR>
+      <TD><TT>self</TT></TD>
+      <TD>l'oggetto che si riferisce a se stesso</TD></TR>
+    <TR>
+      <TD><TT>words</TT></TD>
+      <TD>numero totale di parole</TD></TR>
+    <TR>
+      <TD><TT>player</TT></TD>
+      <TD>l'oggetto giocatore</TD></TR>
+    <TR>
+      <TD><TT>location</TT></TD>
+      <TD>la posizione del giocatore</TD></TR>
+    <TR>
+      <TD><TT>verbroutine</TT></TD>
+      <TD>l'indirizzo della routine verbo</TD></TR>
+    <TR>
+      <TD><TT>endflag</TT></TD>
+      <TD>se non =E8 <I>false</I> (0) chiama <TT>EndGame</TT></TD></TR>
+    <TR>
+      <TD><TT>prompt</TT></TD>
+      <TD>per la riga di input</TD></TR>
+    <TR>
+      <TD><TT>objects</TT></TD>
+      <TD>numero totale di oggetti</TD></TR>
+    <TR>
+      <TD><TT>system_status</TT></TD>
+      <TD>dopo determinate operazioni</TD></TR></TBODY></TABLE>
+  <P><B>PROPRIET=C0:</B>=20
+  <TABLE cellSpacing=3D3 cellPadding=3D3>
+    <TBODY>
+    <TR>
+      <TD><TT>name</TT></TD>
+      <TD>nome dell'oggetto</TD></TR>
+    <TR>
+      <TD><TT>before</TT></TD>
+      <TD>routine pre verbo</TD></TR>
+    <TR>
+      <TD><TT>after</TT></TD>
+      <TD>routine post verbo</TD></TR>
+    <TR>
+      <TD><TT>noun</TT></TD>
+      <TD>nome(i) con cui riferirsi all'oggetto</TD></TR>
+    <TR>
+      <TD><TT>adjective</TT></TD>
+      <TD>aggettivo(i) con cui riferirsi all'oggetto</TD></TR>
+    <TR>
+      <TD><TT>article</TT></TD>
+      <TD>"a", "an", "the", "some", ecc.</TD></TR></TBODY></TABLE>
+  <P>(Insieme agli alias <TT>nouns</TT> e <TT>adjectives</TT> per =
+<TT>noun</TT>=20
+  e <TT>adjective</TT> definiti dalla libreria).=20
+  <P>Le routine di congiunzione non sono necessarie. L'interprete =
+possiede delle=20
+  routine di default gi=E0 pronte, sebbene queste potrebbero essere non =
+molto=20
+  utili per la maggior parte dei programmatori. Per questo =
+<TT>HUGOLIB.H</TT>=20
+  contiene le routine seguenti che implementano tutte le funzionalit=E0 =
+della=20
+  libreria. Se si vuole usare una routine differente al posto di quella =
+fornita,=20
+  la routine deve essere sostituita usando '<TT>replace</TT>'.=20
+  <H3><A name=3DParse></A>VIII.a. Parse</H3>La routine <TT>Parse</TT>, =
+se esiste,=20
+  viene chiamata dal parser dell'interprete. Qui il programma pu=F2 =
+modificare la=20
+  riga di input prima che venga controllata la grammatica. Quello che =
+accade =E8:=20
+  <P>1. La riga di input =E8 suddivisa in parole (dall'interprete). =
+<BR>2. La=20
+  routine <TT>Parse</TT>, se esiste, viene chiamata. <BR>3. Il controllo =
+ritorna=20
+  all'interprete per l'esame della grammatica.=20
+  <P>Ad esempio, la routine <TT>Parse</TT> in <TT>HUGOLIB.H</TT> si =
+occupa di=20
+  cose come i pronomi ("he", "she", "it", "them") e la ripetizione =
+dell'ultimo=20
+  comando valido (con "again" o "g").=20
+  <P>La restituzione di <I>true</I> da parte della routine =
+<TT>Parse</TT>=20
+  comporta una nuova chiamata al parser dell'interprete; se si =
+restituisce=20
+  <I>false</I> l'elaborazione prosegue normalmente. Questa cosa =E8 =
+utile nel caso=20
+  la routine <TT>Parse</TT> abbia cambiato la riga di input in maniera=20
+  sostanziale, richiedendo una riconfigurazione delle parole gi=E0 =
+suddivise.=20
+  <P><I>NOTA</I>: Visto che la routine <TT>Parse</TT> della libreria =E8 =
+piuttosto=20
+  grande, =E8 stata fornita una routine <TT>PreParse</TT> -- che nella =
+libreria =E8=20
+  stata definita vuota -- che pu=F2 essere sostituita pi=F9 facilmente =
+per un=20
+  parsing addizionale.=20
+  <H3><A name=3DParseError></A>VIII.b. ParseError</H3>La routine=20
+  <TT>ParseError</TT> viene chiamata tutte le volte che un comando non =
+=E8 valido.=20
+  <TT>ParseError</TT> viene chiamata nella forma=20
+  <BLOCKQUOTE><TT>ParseError(&lt;numeroerrore&gt;,=20
+  &lt;oggetto&gt;)</TT></BLOCKQUOTE>dove <TT>&lt;oggetto&gt;</TT> =E8 il =
+numero=20
+  dell'oggetto (se presente) dell'oggetto coinvolto nell'errore.=20
+  <P><I>NOTA</I>: L'interprete imposta anche una variabile speciale =
+chiamata=20
+  '<TT>parse$</TT>', usabile solo in un'istruzione <TT>print</TT> (o =
+insieme a=20
+  '<TT>string</TT>'), che rappresenta il componente illegale di una riga =
+di=20
+  input, che sia il verbo, un nome di oggetto, un nome parziale di =
+oggetto, od=20
+  ogni altra combinazione di parole. Ad esempio:=20
+  <BLOCKQUOTE><TT>print "La parola illegale era: "; parse$;=20
+  "."</TT></BLOCKQUOTE>Le risposte di default fornite dalla routine di =
+errore=20
+  del parser dell'interprete sono:=20
+  <TABLE cellSpacing=3D3 cellPadding=3D3>
+    <TBODY>
+    <TR>
+      <TD><B>NUMERO</B> <BR><B>ERRORE</B></TD>
+      <TD><B>RISPOSTA</B></TD></TR>
+    <TR>
+      <TD>0</TD>
+      <TD>"What?"</TD></TR>
+    <TR>
+      <TD>1</TD>
+      <TD>"You can't use the word &lt;parse$&gt;."</TD></TR>
+    <TR>
+      <TD>2</TD>
+      <TD>"Better start with a verb."</TD></TR>
+    <TR>
+      <TD>3</TD>
+      <TD>"You can't &lt;parse$&gt; multiple objects."</TD></TR>
+    <TR>
+      <TD>4</TD>
+      <TD>"Can't do that."</TD></TR>
+    <TR>
+      <TD>5</TD>
+      <TD>"You haven't seen any &lt;parse$&gt;, nor are you likely to in =
+the=20
+        near future even if such a thing exists."</TD></TR>
+    <TR>
+      <TD>6</TD>
+      <TD>"That doesn't make any sense."</TD></TR>
+    <TR>
+      <TD>7</TD>
+      <TD>"You can't use multiple objects like that."</TD></TR>
+    <TR>
+      <TD>8</TD>
+      <TD>"Which &lt;parse$&gt; do you mean,...?"</TD></TR>
+    <TR>
+      <TD>9</TD>
+      <TD>"Nothing to &lt;parse$&gt;."</TD></TR>
+    <TR>
+      <TD>10</TD>
+      <TD>"You haven't seen anything like that."</TD></TR>
+    <TR>
+      <TD>11</TD>
+      <TD>"You don't see that."</TD></TR>
+    <TR>
+      <TD>12</TD>
+      <TD>"You can't do that with the &lt;parse$&gt;."</TD></TR>
+    <TR>
+      <TD>13</TD>
+      <TD>"You'll have to be a little more specific."</TD></TR>
+    <TR>
+      <TD>14</TD>
+      <TD>"You don't see that there."</TD></TR>
+    <TR>
+      <TD>15</TD>
+      <TD>"You don't have that."</TD></TR>
+    <TR>
+      <TD>16</TD>
+      <TD>"You'll have to make a mistake first."</TD></TR>
+    <TR>
+      <TD>17</TD>
+      <TD>"You can only correct one word at a =
+time."</TD></TR></TBODY></TABLE>
+  <P>La routine <TT>ParseError</TT> in <TT>HUGOLIB.H</TT> fornisce =
+risposte su=20
+  misura che tengono conto di cose come, ad esempio, il giocatore =E8 in =
+prima o=20
+  seconda persona, un oggetto =E8 un personaggio o meno, e se =E8 =
+maschio o femmina.=20
+
+  <P>Se la routine <TT>ParseError</TT> non fornisce una risposta per un=20
+  particolare <TT>&lt;numeroerrore&gt;</TT> deve restituire =
+<I>false</I>. La=20
+  restituzione di <I>false</I> =E8 un segnale che indica all'interprete =
+di=20
+  continuare con il messaggio predefinito. La restituizione di 2 indica =
+che=20
+  bisogna reinterpretare l'intera riga (utile nel caso in cui una =
+particolare=20
+  sintassi sia stata intercettata come un errore, cambiata, e debba =
+essere=20
+  reinterpretata).=20
+  <P><I>NOTA</I>: Se si vogliono usare dei messaggi di errore =
+personalizzati per=20
+  le routine di parsing dell'utente, bisogna sostiture =
+(<TT>replace</TT>) la=20
+  routine <TT>CustomError</TT> con una nuova routine (chiamata con gli =
+stessi=20
+  parametri di <TT>ParseError</TT>), assicurandosi che=20
+  <TT>&lt;numeroerrore&gt;</TT> sia maggiore od uguale a 100.=20
+  <H3><A name=3DEndGame></A>VIII.c. EndGame</H3>La routine =
+<TT>EndGame</TT> viene=20
+  chiamata immediatamente tutte le volte che la variabile globale=20
+  <TT>EndFlag</TT> =E8 diversa da 0, senza curarsi del fatto che la =
+funzione=20
+  corrente sia o meno terminata.=20
+  <P>La routine <TT>EndGame</TT> di <TT>HUGOLIB.H</TT> reagisce in =
+maniera=20
+  differente a seconda di come sia stata impostata <TT>endflag</TT>:=20
+  <TABLE cellSpacing=3D3 cellPadding=3D3 width=3D"69%">
+    <TBODY>
+    <TR>
+      <TD><TT>endflag</TT></TD>
+      <TD>RISULTATO</TD></TR>
+    <TR>
+      <TD></TD>
+      <TD></TD></TR>
+    <TR>
+      <TD><TT>1</TT></TD>
+      <TD>Il giocatore vince</TD></TR>
+    <TR>
+      <TD><TT>2</TT></TD>
+      <TD>Il giocatore muore</TD></TR>
+    <TR>
+      <TD>(<TT>3</TT></TD>
+      <TD>Altra fine non fornita di default dalla routine=20
+        <TT>PrintEndGame</TT>)</TD></TR></TBODY></TABLE>
+  <P>Restituire <I>false</I> da <TT>EndGame</TT> comporta il termine del =
+gioco;=20
+  un valore non falso ricomincia da capo.=20
+  <P><I>NOTA</I>: Per modificare solo il messaggio visualizzato alla =
+fine del=20
+  gioco (default: "<TT>*** YOU'VE WON THE GAME! ***</TT>" e "<TT>*** YOU =
+ARE=20
+  DEAD ***</TT>") bisogna sostituire la routine <TT>PrintEndGame</TT>. =
+Oltre che=20
+  ad essere non falsi i vari valori di <TT>endflag</TT> non hanno =
+significato,=20
+  tranne per <TT>PrintEndGame.</TT>=20
+  <H3><A name=3DFindObject></A>VIII.d. FindObject</H3>La routine si =
+occupa di=20
+  controllare tutte le propriet=E0 necessarie, gli attributi e la =
+gerarchia degli=20
+  oggetti per determinare se un particolare oggetto =E8 disponibile o =
+meno. Ad=20
+  esempio il <I>child</I> [figlio] di un oggetto <I>parent</I> [padre] =
+potrebbe=20
+  essere disponibile se il padre =E8 un <I>platform</I> [piattaforma], =
+ma non=20
+  disponibile se il <I>parent</I> =E8 un <I>container</I> [contenitore] =
+(e chiuso)=20
+  -- sebbene internamente la gerarchia degli oggetti sia la stessa.=20
+  <P><TT>FindObject</TT> viene chiamata con:=20
+  <BLOCKQUOTE><TT>FindObject(&lt;oggetto&gt;,=20
+  &lt;locazione&gt;)</TT></BLOCKQUOTE>dove <TT>&lt;oggetto&gt;</TT> =E8 =
+l'oggetto=20
+  in questione e <TT>&lt;locazione&gt;</TT> =E8 l'oggetto dove la =
+disponibilit=E0=20
+  deve essere controllata. (Di solito <TT>&lt;locazione&gt;</TT> =E8 una =
+stanza, a=20
+  meno che un <I>parent</I> differente sia stato specificato nella riga =
+di=20
+  input).=20
+  <P><TT>FindObject</TT> restituisce <I>true</I> (1) se l'oggetto =E8 =
+disponibile,=20
+  <I>false</I> (0) altrimenti. Restituisce 2 se l'oggetto =E8 visibile, =
+ma non=20
+  raggiungibile fisicamente.=20
+  <P>La routine <TT>FindObject</TT> in <TT>HUGOLIB.H</TT> considera non =
+solo la=20
+  posizione di <TT>&lt;oggetto&gt;</TT> nell'albero degli oggetti, ma =
+controlla=20
+  anche gli attributi del <I>parent</I> per vedere se =E8 aperto o =
+chiuso. Inoltre=20
+  controlla la propriet=E0 <TT>found_in</TT> [trovato_in], nel caso in =
+cui=20
+  <TT>&lt;oggetto&gt;</TT> sia assegnato a locazioni multiple invece di =
+un=20
+  determinato <I>parent</I>, e poi controlla la propriet=E0 =
+<TT>in_scope</TT>=20
+  [a_portata] dell'oggetto (se esiste).=20
+  <P>Infine il comportamento predefinito di <TT>FindObject</TT> richiede =
+che il=20
+  giocatore abbia incontrato l'oggetto per renderlo valido in un'azione, =
+deve=20
+  avere l'attributo <TT>known</TT> [conosciuto] impostato. Per evitarlo =
+bisogna=20
+  sostituire la routine <TT>ObjectIsKnown</TT> con una routine che =
+restituisce=20
+  un valore <I>true</I> incondizionatamente.=20
+  <P>Esiste un caso speciale in cui l'interprete si aspetta che la =
+routine=20
+  <TT>FindObject</TT> sia utile: ed =E8 quando la routine viene chiamata =
+con=20
+  <TT>&lt;locazione&gt;</TT> uguale a 0. Questo avviene tutte le volte =
+che=20
+  l'interprete ha bisogno di sapere se un oggetto =E8 disponibile -- =
+ignorando le=20
+  regole che normalemente governano la disponibilit=E0 degli oggetti -- =
+come=20
+  quando un'istruzione grammaticale '<TT>anything</TT>' [qualunque cosa] =
+viene=20
+  incontrata, o quando l'interprete ha bisogno di distinguere tra due o =
+pi=F9=20
+  oggetti apparentemente identici.=20
+  <P>(Inoltre <TT>FindObject</TT> pu=F2 essere chiamata dall'interprete =
+con=20
+  <TT>&lt;oggetto&gt; </TT>e <TT>&lt;locazione&gt;</TT> entrambi a 0 per =
+
+  ripristinare una distinzione di oggetti operata dalla libreria).=20
+  <H3><A name=3DSpeakTo></A>VIII.e. SpeakTo</H3>La routine =
+<TT>SpeakTo</TT> viene=20
+  chiamata tutte le volte che una riga di input comincia con un nome di =
+un=20
+  oggetto valido invece di un verbo. In questo modo il giocatore pu=F2 =
+indirizzare=20
+  i comandi ai personaggi (di solito) nel gioco. Ad esempio:=20
+  <BLOCKQUOTE><TT>Professor Plum, drop the lead =
+pipe</TT></BLOCKQUOTE>=C8 compito=20
+  della routine <TT>SpeakTo</TT> interpretare correttamente =
+l'istruzione.=20
+  <P><TT>SpeakTo</TT> viene chiamata con:=20
+  <BLOCKQUOTE><TT>SpeakTo(&lt;personaggio&gt;)</TT></BLOCKQUOTE>dove=20
+  <TT>&lt;personaggio&gt;</TT> nell'esempio precedente dovrebbe essere =
+l'oggetto=20
+  <TT>Professor Plum</TT>.=20
+  <P>Le variabili globali <TT>object</TT>, <TT>xobject</TT> e=20
+  <TT>verbroutine</TT> vengono impostate normalmente. Nell'esempio =
+precedente i=20
+  valori sarebbero=20
+  <BLOCKQUOTE><TT>object&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; leadpipe</TT>=20
+    <BR><TT>xobject&nbsp;&nbsp;&nbsp;&nbsp; nothing</TT> =
+<BR><TT>verbroutine=20
+    &amp;DoDrop</TT></BLOCKQUOTE>quando <TT>SpeakTo</TT> viene chiamata. =
+
+  <P>La routine <TT>SpeakTo</TT> di <TT>HUGOLIB.H</TT> fornisce=20
+  un'interpretazione base delle domande, cos=EC che=20
+  <BLOCKQUOTE><TT>Professor Plum, what about the lead=20
+  pipe?</TT></BLOCKQUOTE>viene indirizzata alla routine verbo =
+appropriata, come=20
+  se il giocatore avesse scritto:=20
+  <BLOCKQUOTE><TT>ask Professor Plum about the lead =
+pipe</TT></BLOCKQUOTE>I=20
+  comandi imperativi, come=20
+  <BLOCKQUOTE><TT>Colonel Mustard, stand up</TT></BLOCKQUOTE>vengono =
+prima=20
+  indirizzati alla propriet=E0 <TT>order_response</TT> dell'oggetto =
+personaggio in=20
+  questione. A questo punto =E8 compito di=20
+  <TT>&lt;personaggio&gt;.order_response</TT> analizzare =
+<TT>verbroutine</TT>=20
+  (cos=EC come <TT>object</TT> e <TT>xobject</TT> se necessario) per =
+vedere se la=20
+  richiesta =E8 valida. Se non =E8 prevista nessuna risposta,=20
+  <TT>order_response</TT> deve restituire <I>false</I>.=20
+  <BLOCKQUOTE><TT>order_response</TT> <BR><TT>{</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; if verbroutine =3D &amp;DoGet</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Vorrei, ma la =
+mia=20
+    schiena mi fa troppo male."</TT> <BR><TT>&nbsp;&nbsp;&nbsp; =
+else</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return false</TT> =
+
+    <BR><TT>}</TT></BLOCKQUOTE>
+  <H3><A name=3DPerform></A>VIII.f. Perform</H3>La routine =
+<TT>Perform</TT> =E8=20
+  quella che viene chiamata dall'interprete per eseguire la =
+<TT>verbroutine</TT>=20
+  appropriata, con gli oggetti diretti e indiritti forniti. =C8 compito =
+di=20
+  <TT>Perform</TT> eseguire i controlli alle routine <TT>before</TT> per =
+
+  determinare se l'esecuzione corrisponde a <TT>verbroutine</TT>.=20
+  <P><TT>Perform</TT> viene chiamata con:=20
+  <BLOCKQUOTE><TT>Perform(&lt;verbroutine&gt;, &lt;object&gt;,=20
+    &lt;xobject&gt;, &lt;accoda&gt;)</TT></BLOCKQUOTE>I primi tre =
+argomenti sono=20
+  il verbo (sempre), l'oggetto (se fornito) e l'oggetto indiretto, =
+cio=E8=20
+  l'<TT>xobject</TT> (se fornito). Il parametro <TT>&lt;accoda&gt;</TT> =
+=E8 0 a=20
+  meno che la routine verbo debba essere chiamata pi=F9 di una volta per =
+oggetti=20
+  multipli. (Come caso speciale <TT>&lt;accoda&gt;</TT> =E8 -1 se =
+<TT>object</TT>=20
+  o <TT>xobject</TT> sono un numero fornito in input come una o pi=F9 =
+cifre, in=20
+  modo da indicare a <TT>Perform</TT> di non effettuare le normali =
+chiamate alle=20
+  routine <TT>before/after</TT>).=20
+  <P>Ad esempio i vari comandi del giocatore potrebbero =
+(approssimativamente, a=20
+  seconda delle routine verbo e degli oggetti) generare le chiamate:=20
+  <BLOCKQUOTE><TT>&gt;i</TT> <BR><TT>Perform(&amp;doInventory, 0, 0,=20
+    0)</TT><TT></TT>=20
+    <P><TT>&gt;get key</TT> <BR><TT>Perform(&amp;DoGet, key_object, 0,=20
+    0)</TT><TT></TT>=20
+    <P><TT>&gt;put the key on the table</TT> =
+<BR><TT>Perform(&amp;DoPutIn,=20
+    key_object, table_object, 0)</TT><TT></TT>=20
+    <P><TT>&gt;turn the dial to 127</TT> <BR><TT>Perform(&amp;DoTurn, =
+dial, 127,=20
+    -1)</TT><TT></TT>=20
+    <P><TT>&gt;get key and banana</TT> <BR><TT>Perform(&amp;DoGet, =
+key_object,=20
+    0, 1)</TT> <BR><TT>Perform(&amp;DoGet, banana, 0, =
+2)</TT></P></BLOCKQUOTE>(Se=20
+  non esiste una routine <TT>Perform</TT>, l'interprete esegue la =
+chiamata di=20
+  default a <TT>player.before</TT>, <TT>location.before</TT>,=20
+  <TT>xobject.before</TT> e <TT>object.before</TT>, infine =
+<TT>verbroutine</TT>=20
+  se nessuno di questi restituisce <I>true</I>). <BR>&nbsp;=20
+</FONT></FONT></FONT>
+  <P></P>
+  <P align=3Dcenter><IMG height=3D2=20
+  src=3D"http://plovec.interfree.it/IFItalia/Varie/Newgif/blurulr6.gif" =
+width=3D640=20
+  align=3Dbottom border=3D0 name=3DRiga><BR><BR><FONT =
+style=3D"FONT-SIZE: 8pt" size=3D1><A=20
+  href=3D"http://plovec.interfree.it/IFItalia/indice.html"><IMG =
+height=3D32=20
+  alt=3D"Torna alla pagina iniziale"=20
+  src=3D"http://plovec.interfree.it/IFItalia/Varie/Newgif/home.gif" =
+width=3D32=20
+  align=3Dmiddle border=3D0></A> <FONT size=3D2>Torna alla Home =
+Page</FONT> <A=20
+  href=3D"http://plovec.interfree.it/IFItalia/indice.html"><IMG =
+height=3D32=20
+  alt=3D"Torna alla pagina iniziale"=20
+  src=3D"http://plovec.interfree.it/IFItalia/Varie/Newgif/home.gif" =
+width=3D32=20
+  align=3Dmiddle border=3D0></A></FONT> </P>
+  <P align=3Dcenter><FONT style=3D"FONT-SIZE: 8pt" size=3D1><FONT =
+color=3D#000080>=A92000=20
+  Simone Zanella e =A92000 IF Italia. E' vietata la=20
+riproduzione.</FONT></FONT></P></BLOCKQUOTE>
+<SCRIPT type=3Dtext/javascript>=0A=
+	var gaJsHost =3D (("https:" =3D=3D document.location.protocol) ? =
+"https://ssl." : "http://www.");=0A=
+	document.write(unescape("%3Cscript src=3D'" + gaJsHost + =
+"google-analytics.com/ga.js' type=3D'text/javascript'%3E%3C/script%3E"));=0A=
+    </SCRIPT>
+
+<SCRIPT src=3D"http://club.interfree.it/js/analytics_user.js"=20
+type=3Dtext/javascript>=0A=
+    </SCRIPT>
+</BODY></HTML>
+
+------=_NextPart_000_0016_01C9BC8D.27585200
+Content-Type: image/jpeg
+Content-Transfer-Encoding: base64
+Content-Location: http://plovec.interfree.it/IFItalia/Varie/if3backup.jpg
+
+/9j/4AAQSkZJRgABAQEAZABkAAD/2wBDAAYEBQUFBAYFBQUHBgYHCQ8KCQgICRMNDgsPFhMXFxYT
+FRUYGyMeGBohGhUVHikfISQlJygnGB0rLismLiMmJyb/2wBDAQYHBwkICRIKChImGRUZJiYmJiYm
+JiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJib/wAARCADcAOUDAREA
+AhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQA
+AAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3
+ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWm
+p6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEA
+AwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSEx
+BhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElK
+U1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3
+uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD6poAK
+ACgAoAKACgCOeeG3iaWeVIo1GSzsAB+NAHn3iT4y/D/QWaOXWkvJ1/5ZWY805+o4/WgDzvVv2mbB
+WZdI8NXE47PcShP0ANAHPTftIeK5GJtvD+nRr2Dl2P8AMUAIn7RHjcnnRNKI9kk/+KoA0rH9ovX1
+YfbvDFrIvfyZWT+eaAOv0X9oTw1clU1TS77TmPVgBIo/Ln9KAPSPDvjXwt4iUf2TrVtcOf8Allv2
+v/3yeaAOioAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAiu7m3tLeS5upo4IY1LPJIwV
+VHqSaAPBviL+0RpWmPLp/hG3XVLpcqbuTIhU+w6t+g+tAHz94l8YeMPGVwX1jVrieMnIgU7Y1+ij
+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
+33NABgUALQAUAFABQAUAFABQAUAFABQB/9k=
+
+------=_NextPart_000_0016_01C9BC8D.27585200
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://plovec.interfree.it/IFItalia/Varie/Newgif/blurulr6.gif
+
+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
+
+------=_NextPart_000_0016_01C9BC8D.27585200
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://plovec.interfree.it/IFItalia/Varie/Newgif/home.gif
+
+R0lGODlhIAAgAKL/AFVNfysnQIiAssTA2cDAwP///wAAAAAAACH5BAEAAAQALAAAAAAgACAAQAO+
+SLrc/lCIUaQFJddsJRBO52lkyYkB4ACBgJmwZ6jQIt7uB9b4C2s3AG0hvJyAnZMlVSOyUoFowJAa
+NiO460NCwfV224nIZwpaCWaheq3GMRVBZXJT6bCsbddRLpDPmnc6Xi5TZ1qHiImKDT2CixYDgx4f
+Wlw4e3ZgIT0/Yy2bYz98hJpxoiRjQjY3p6goQ6aSo29ognp1Ihx8UXiCLxJIFnIAfw1Ft624hTWB
+bM6CxVdPeRcsM4aHa1Wqi90PCQA7
+
+------=_NextPart_000_0016_01C9BC8D.27585200
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://club.interfree.it/js/analytics_user.js
+
+try {=0A=
+     var pageTracker =3D _gat._getTracker("UA-4500417-4");=0A=
+     pageTracker._trackPageview();=0A=
+} catch(err) {}=0A=
+
+------=_NextPart_000_0016_01C9BC8D.27585200--

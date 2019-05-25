@@ -1,0 +1,492 @@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>IF Italia - Il sito italiano sull'Interactive Fiction
+</TITLE>
+      <LINK REV="made" HREF="mailto:dickdastardly@highway.it">
+	<META NAME="GENERATOR" CONTENT="NoteTab 4.82">
+	<META NAME="copyright" CONTENT="Tutto il materiale presente in questo sito è (c)Simone Zanella e (c)IF Italia ove non diversamente indicato. Tutti i diritti sono riservati. E' vietata la riproduzione non autorizzata del sito e di sue parti.">
+	<META name="keywords" content="if interactive fiction avventura avventure testuale testuali inform infocom tads ifitalia italia giochi gioco castello adventure text simone zanella monkey island gratis freeware download">
+	<META name="description" content="Il più vasto sito italiano sulle avventure testuali e sull'Interactive Fiction">	<STYLE>
+	<!--
+		P { border: none; padding: 0cm; font-family: "Verdana", sans-serif; font-size: 10pt }
+	-->
+	</STYLE>
+</HEAD>
+<BODY>
+<BLOCKQUOTE><DIV TYPE="HEADER">
+	<P ALIGN="CENTER" STYLE="border: 1px solid #000000; padding: 0.05cm"><FONT COLOR="#000080"><FONT FACE="Verdana, sans-serif">IF
+	ITALIA - Il sito Italiano sull'Interactive Fiction</FONT></FONT></P>
+</DIV>
+<P ALIGN="CENTER"><IMG SRC="../Varie/if3backup.jpg" NAME="Logosmall" ALIGN="MIDDLE" WIDTH="108" HEIGHT="104" BORDER="0"></P>
+<P><FONT SIZE="2" STYLE="font-size: 10pt"><FONT FACE="Verdana, sans-serif"><FONT COLOR="#000080">
+
+<h2>
+VIII. ROUTINE DI CONGIUNZIONE</h2>
+Visto che, per dirla semplice, l'interprete non conosce cose tipo attributi,
+propriet&agrave; ed oggetti se non nel senso tecnico, sono state fornite
+una serie di routine che servono a facilitare la comunicazione tra l'interprete
+ed il programma.
+<p>Insieme a queste routine di congiunzione ci sono una serie di variabili
+globali e propriet&agrave; che sono predefinite dal compilatore ed a cui
+accede l'interprete. Queste sono:
+<p><b>GLOBALI:</b>
+<table CELLSPACING=3 CELLPADDING=3 >
+<tr>
+<td><tt>object</tt></td>
+
+<td>l'oggetto diretto di un verbo</td>
+</tr>
+
+<tr>
+<td><tt>xobject</tt></td>
+
+<td>l'oggetto indiretto</td>
+</tr>
+
+<tr>
+<td><tt>self</tt></td>
+
+<td>l'oggetto che si riferisce a se stesso</td>
+</tr>
+
+<tr>
+<td><tt>words</tt></td>
+
+<td>numero totale di parole</td>
+</tr>
+
+<tr>
+<td><tt>player</tt></td>
+
+<td>l'oggetto giocatore</td>
+</tr>
+
+<tr>
+<td><tt>location</tt></td>
+
+<td>la posizione del giocatore</td>
+</tr>
+
+<tr>
+<td><tt>verbroutine</tt></td>
+
+<td>l'indirizzo della routine verbo</td>
+</tr>
+
+<tr>
+<td><tt>endflag</tt></td>
+
+<td>se non &egrave; <i>false</i> (0) chiama <tt>EndGame</tt></td>
+</tr>
+
+<tr>
+<td><tt>prompt</tt></td>
+
+<td>per la riga di input</td>
+</tr>
+
+<tr>
+<td><tt>objects</tt></td>
+
+<td>numero totale di oggetti</td>
+</tr>
+
+<tr>
+<td><tt>system_status</tt></td>
+
+<td>dopo determinate operazioni</td>
+</tr>
+</table>
+
+<p><b>PROPRIET&Agrave;:</b>
+<table CELLSPACING=3 CELLPADDING=3 >
+<tr>
+<td><tt>name</tt></td>
+
+<td>nome dell'oggetto</td>
+</tr>
+
+<tr>
+<td><tt>before</tt></td>
+
+<td>routine pre verbo</td>
+</tr>
+
+<tr>
+<td><tt>after</tt></td>
+
+<td>routine post verbo</td>
+</tr>
+
+<tr>
+<td><tt>noun</tt></td>
+
+<td>nome(i) con cui riferirsi all'oggetto</td>
+</tr>
+
+<tr>
+<td><tt>adjective</tt></td>
+
+<td>aggettivo(i) con cui riferirsi all'oggetto</td>
+</tr>
+
+<tr>
+<td><tt>article</tt></td>
+
+<td>"a", "an", "the", "some", ecc.</td>
+</tr>
+</table>
+
+<p>(Insieme agli alias <tt>nouns</tt> e <tt>adjectives</tt> per <tt>noun</tt>
+e <tt>adjective</tt> definiti dalla libreria).
+<p>Le routine di congiunzione non sono necessarie. L'interprete possiede
+delle routine di default gi&agrave; pronte, sebbene queste potrebbero essere
+non molto utili per la maggior parte dei programmatori. Per questo <tt>HUGOLIB.H</tt>
+contiene le routine seguenti che implementano tutte le funzionalit&agrave;
+della libreria. Se si vuole usare una routine differente al posto di quella
+fornita, la routine deve essere sostituita usando '<tt>replace</tt>'.
+<h3>
+<a NAME="Parse"></a>VIII.a. Parse</h3>
+La routine <tt>Parse</tt>, se esiste, viene chiamata dal parser dell'interprete.
+Qui il programma pu&ograve; modificare la riga di input prima che venga
+controllata la grammatica. Quello che accade &egrave;:
+<p>1. La riga di input &egrave; suddivisa in parole (dall'interprete).
+<br>2. La routine <tt>Parse</tt>, se esiste, viene chiamata.
+<br>3. Il controllo ritorna all'interprete per l'esame della grammatica.
+<p>Ad esempio, la routine <tt>Parse</tt> in <tt>HUGOLIB.H</tt> si occupa
+di cose come i pronomi ("he", "she", "it", "them") e la ripetizione dell'ultimo
+comando valido (con "again" o "g").
+<p>La restituzione di <i>true</i> da parte della routine <tt>Parse</tt>
+comporta una nuova chiamata al parser dell'interprete; se si restituisce
+<i>false</i>
+l'elaborazione prosegue normalmente. Questa cosa &egrave; utile nel caso
+la routine <tt>Parse</tt> abbia cambiato la riga di input in maniera sostanziale,
+richiedendo una riconfigurazione delle parole gi&agrave; suddivise.
+<p><i>NOTA</i>: Visto che la routine <tt>Parse</tt> della libreria &egrave;
+piuttosto grande, &egrave; stata fornita una routine <tt>PreParse</tt>
+-- che nella libreria &egrave; stata definita vuota -- che pu&ograve; essere
+sostituita pi&ugrave; facilmente per un parsing addizionale.
+<h3>
+<a NAME="ParseError"></a>VIII.b. ParseError</h3>
+La routine <tt>ParseError</tt> viene chiamata tutte le volte che un comando
+non &egrave; valido. <tt>ParseError</tt> viene chiamata nella forma
+<blockquote><tt>ParseError(&lt;numeroerrore>, &lt;oggetto>)</tt></blockquote>
+dove <tt>&lt;oggetto></tt> &egrave; il numero dell'oggetto (se presente)
+dell'oggetto coinvolto nell'errore.
+<p><i>NOTA</i>: L'interprete imposta anche una variabile speciale chiamata
+'<tt>parse$</tt>', usabile solo in un'istruzione <tt>print</tt> (o insieme
+a '<tt>string</tt>'), che rappresenta il componente illegale di una riga
+di input, che sia il verbo, un nome di oggetto, un nome parziale di oggetto,
+od ogni altra combinazione di parole. Ad esempio:
+<blockquote><tt>print "La parola illegale era: "; parse$; "."</tt></blockquote>
+Le risposte di default fornite dalla routine di errore del parser dell'interprete
+sono:
+<table CELLSPACING=3 CELLPADDING=3 >
+<tr>
+<td><b>NUMERO</b>
+<br><b>ERRORE</b></td>
+
+<td><b>RISPOSTA</b></td>
+</tr>
+
+<tr>
+<td>0</td>
+
+<td>"What?"</td>
+</tr>
+
+<tr>
+<td>1</td>
+
+<td>"You can't use the word &lt;parse$>."</td>
+</tr>
+
+<tr>
+<td>2</td>
+
+<td>"Better start with a verb."</td>
+</tr>
+
+<tr>
+<td>3</td>
+
+<td>"You can't &lt;parse$> multiple objects."</td>
+</tr>
+
+<tr>
+<td>4</td>
+
+<td>"Can't do that."</td>
+</tr>
+
+<tr>
+<td>5</td>
+
+<td>"You haven't seen any &lt;parse$>, nor are you likely to in the near
+future even if such a thing exists."</td>
+</tr>
+
+<tr>
+<td>6</td>
+
+<td>"That doesn't make any sense."</td>
+</tr>
+
+<tr>
+<td>7</td>
+
+<td>"You can't use multiple objects like that."</td>
+</tr>
+
+<tr>
+<td>8</td>
+
+<td>"Which &lt;parse$> do you mean,...?"</td>
+</tr>
+
+<tr>
+<td>9</td>
+
+<td>"Nothing to &lt;parse$>."</td>
+</tr>
+
+<tr>
+<td>10</td>
+
+<td>"You haven't seen anything like that."</td>
+</tr>
+
+<tr>
+<td>11</td>
+
+<td>"You don't see that."</td>
+</tr>
+
+<tr>
+<td>12</td>
+
+<td>"You can't do that with the &lt;parse$>."</td>
+</tr>
+
+<tr>
+<td>13</td>
+
+<td>"You'll have to be a little more specific."</td>
+</tr>
+
+<tr>
+<td>14</td>
+
+<td>"You don't see that there."</td>
+</tr>
+
+<tr>
+<td>15</td>
+
+<td>"You don't have that."</td>
+</tr>
+
+<tr>
+<td>16</td>
+
+<td>"You'll have to make a mistake first."</td>
+</tr>
+
+<tr>
+<td>17</td>
+
+<td>"You can only correct one word at a time."</td>
+</tr>
+</table>
+
+<p>La routine <tt>ParseError</tt> in <tt>HUGOLIB.H</tt> fornisce risposte
+su misura che tengono conto di cose come, ad esempio, il giocatore &egrave;
+in prima o seconda persona, un oggetto &egrave; un personaggio o meno,
+e se &egrave; maschio o femmina.
+<p>Se la routine <tt>ParseError</tt> non fornisce una risposta per un particolare
+<tt>&lt;numeroerrore></tt>
+deve restituire <i>false</i>. La restituzione di <i>false</i> &egrave;
+un segnale che indica all'interprete di continuare con il messaggio predefinito.
+La restituizione di 2 indica che bisogna reinterpretare l'intera riga (utile
+nel caso in cui una particolare sintassi sia stata intercettata come un
+errore, cambiata, e debba essere reinterpretata).
+<p><i>NOTA</i>: Se si vogliono usare dei messaggi di errore personalizzati
+per le routine di parsing dell'utente, bisogna sostiture (<tt>replace</tt>)
+la routine <tt>CustomError</tt> con una nuova routine (chiamata con gli
+stessi parametri di <tt>ParseError</tt>), assicurandosi che <tt>&lt;numeroerrore></tt>
+sia maggiore od uguale a 100.
+<h3>
+<a NAME="EndGame"></a>VIII.c. EndGame</h3>
+La routine <tt>EndGame</tt> viene chiamata immediatamente tutte le volte
+che la variabile globale <tt>EndFlag</tt> &egrave; diversa da 0, senza
+curarsi del fatto che la funzione corrente sia o meno terminata.
+<p>La routine <tt>EndGame</tt> di <tt>HUGOLIB.H</tt> reagisce in maniera
+differente a seconda di come sia stata impostata <tt>endflag</tt>:
+<table CELLSPACING=3 CELLPADDING=3 WIDTH="69%" >
+<tr>
+<td><tt>endflag</tt></td>
+
+<td>RISULTATO</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>1</tt></td>
+
+<td>Il giocatore vince</td>
+</tr>
+
+<tr>
+<td><tt>2</tt></td>
+
+<td>Il giocatore muore</td>
+</tr>
+
+<tr>
+<td>(<tt>3</tt></td>
+
+<td>Altra fine non fornita di default dalla routine <tt>PrintEndGame</tt>)</td>
+</tr>
+</table>
+
+<p>Restituire <i>false</i> da <tt>EndGame</tt> comporta il termine del
+gioco; un valore non falso ricomincia da capo.
+<p><i>NOTA</i>: Per modificare solo il messaggio visualizzato alla fine
+del gioco (default: "<tt>*** YOU'VE WON THE GAME! ***</tt>" e "<tt>***
+YOU ARE DEAD ***</tt>") bisogna sostituire la routine <tt>PrintEndGame</tt>.
+Oltre che ad essere non falsi i vari valori di <tt>endflag</tt> non hanno
+significato, tranne per <tt>PrintEndGame.</tt>
+<h3>
+<a NAME="FindObject"></a>VIII.d. FindObject</h3>
+La routine si occupa di controllare tutte le propriet&agrave; necessarie,
+gli attributi e la gerarchia degli oggetti per determinare se un particolare
+oggetto &egrave; disponibile o meno. Ad esempio il <i>child</i> [figlio]
+di un oggetto <i>parent</i> [padre] potrebbe essere disponibile se il padre
+&egrave; un <i>platform</i> [piattaforma], ma non disponibile se il <i>parent</i>
+&egrave; un <i>container</i> [contenitore] (e chiuso) -- sebbene internamente
+la gerarchia degli oggetti sia la stessa.
+<p><tt>FindObject</tt> viene chiamata con:
+<blockquote><tt>FindObject(&lt;oggetto>, &lt;locazione>)</tt></blockquote>
+dove <tt>&lt;oggetto></tt> &egrave; l'oggetto in questione e <tt>&lt;locazione></tt>
+&egrave; l'oggetto dove la disponibilit&agrave; deve essere controllata.
+(Di solito <tt>&lt;locazione></tt> &egrave; una stanza, a meno che un <i>parent</i>
+differente sia stato specificato nella riga di input).
+<p><tt>FindObject</tt> restituisce <i>true</i> (1) se l'oggetto &egrave;
+disponibile, <i>false</i> (0) altrimenti. Restituisce 2 se l'oggetto &egrave;
+visibile, ma non raggiungibile fisicamente.
+<p>La routine <tt>FindObject</tt> in <tt>HUGOLIB.H</tt> considera non solo
+la posizione di <tt>&lt;oggetto></tt> nell'albero degli oggetti, ma controlla
+anche gli attributi del <i>parent</i> per vedere se &egrave; aperto o chiuso.
+Inoltre controlla la propriet&agrave; <tt>found_in</tt> [trovato_in], nel
+caso in cui <tt>&lt;oggetto></tt> sia assegnato a locazioni multiple invece
+di un determinato <i>parent</i>, e poi controlla la propriet&agrave; <tt>in_scope</tt>
+[a_portata] dell'oggetto (se esiste).
+<p>Infine il comportamento predefinito di <tt>FindObject</tt> richiede
+che il giocatore abbia incontrato l'oggetto per renderlo valido in un'azione,
+deve avere l'attributo <tt>known</tt> [conosciuto] impostato. Per evitarlo
+bisogna sostituire la routine <tt>ObjectIsKnown</tt> con una routine che
+restituisce un valore <i>true</i> incondizionatamente.
+<p>Esiste un caso speciale in cui l'interprete si aspetta che la routine
+<tt>FindObject</tt> sia utile: ed &egrave; quando la routine viene chiamata
+con <tt>&lt;locazione></tt> uguale a 0. Questo avviene tutte le volte che
+l'interprete ha bisogno di sapere se un oggetto &egrave; disponibile --
+ignorando le regole che normalemente governano la disponibilit&agrave;
+degli oggetti -- come quando un'istruzione grammaticale '<tt>anything</tt>'
+[qualunque cosa] viene incontrata, o quando l'interprete ha bisogno di
+distinguere tra due o pi&ugrave; oggetti apparentemente identici.
+<p>(Inoltre <tt>FindObject</tt> pu&ograve; essere chiamata dall'interprete
+con <tt>&lt;oggetto> </tt>e <tt>&lt;locazione></tt> entrambi a 0 per ripristinare
+una distinzione di oggetti operata dalla libreria).
+<h3>
+<a NAME="SpeakTo"></a>VIII.e. SpeakTo</h3>
+La routine <tt>SpeakTo</tt> viene chiamata tutte le volte che una riga
+di input comincia con un nome di un oggetto valido invece di un verbo.
+In questo modo il giocatore pu&ograve; indirizzare i comandi ai personaggi
+(di solito) nel gioco. Ad esempio:
+<blockquote><tt>Professor Plum, drop the lead pipe</tt></blockquote>
+&Egrave; compito della routine <tt>SpeakTo</tt> interpretare correttamente
+l'istruzione.
+<p><tt>SpeakTo</tt> viene chiamata con:
+<blockquote><tt>SpeakTo(&lt;personaggio>)</tt></blockquote>
+dove <tt>&lt;personaggio></tt> nell'esempio precedente dovrebbe essere
+l'oggetto <tt>Professor Plum</tt>.
+<p>Le variabili globali <tt>object</tt>, <tt>xobject</tt> e <tt>verbroutine</tt>
+vengono impostate normalmente. Nell'esempio precedente i valori sarebbero
+<blockquote><tt>object&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; leadpipe</tt>
+<br><tt>xobject&nbsp;&nbsp;&nbsp;&nbsp; nothing</tt>
+<br><tt>verbroutine &amp;DoDrop</tt></blockquote>
+quando <tt>SpeakTo</tt> viene chiamata.
+<p>La routine <tt>SpeakTo</tt> di <tt>HUGOLIB.H</tt> fornisce un'interpretazione
+base delle domande, cos&igrave; che
+<blockquote><tt>Professor Plum, what about the lead pipe?</tt></blockquote>
+viene indirizzata alla routine verbo appropriata, come se il giocatore
+avesse scritto:
+<blockquote><tt>ask Professor Plum about the lead pipe</tt></blockquote>
+I comandi imperativi, come
+<blockquote><tt>Colonel Mustard, stand up</tt></blockquote>
+vengono prima indirizzati alla propriet&agrave; <tt>order_response</tt>
+dell'oggetto personaggio in questione. A questo punto &egrave; compito
+di <tt>&lt;personaggio>.order_response</tt> analizzare <tt>verbroutine</tt>
+(cos&igrave; come <tt>object</tt> e <tt>xobject</tt> se necessario) per
+vedere se la richiesta &egrave; valida. Se non &egrave; prevista nessuna
+risposta, <tt>order_response</tt> deve restituire <i>false</i>.
+<blockquote><tt>order_response</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; if verbroutine = &amp;DoGet</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Vorrei, ma la mia schiena
+mi fa troppo male."</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; else</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return false</tt>
+<br><tt>}</tt></blockquote>
+
+<h3>
+<a NAME="Perform"></a>VIII.f. Perform</h3>
+La routine <tt>Perform</tt> &egrave; quella che viene chiamata dall'interprete
+per eseguire la <tt>verbroutine</tt> appropriata, con gli oggetti diretti
+e indiritti forniti. &Egrave; compito di <tt>Perform</tt> eseguire i controlli
+alle routine <tt>before</tt> per determinare se l'esecuzione corrisponde
+a <tt>verbroutine</tt>.
+<p><tt>Perform</tt> viene chiamata con:
+<blockquote><tt>Perform(&lt;verbroutine>, &lt;object>, &lt;xobject>, &lt;accoda>)</tt></blockquote>
+I primi tre argomenti sono il verbo (sempre), l'oggetto (se fornito) e
+l'oggetto indiretto, cio&egrave; l'<tt>xobject</tt> (se fornito). Il parametro
+<tt>&lt;accoda></tt> &egrave; 0 a meno che la routine verbo debba essere
+chiamata pi&ugrave; di una volta per oggetti multipli. (Come caso speciale
+<tt>&lt;accoda></tt> &egrave; -1 se <tt>object</tt> o <tt>xobject</tt>
+sono un numero fornito in input come una o pi&ugrave; cifre, in modo da
+indicare a <tt>Perform</tt> di non effettuare le normali chiamate alle
+routine <tt>before/after</tt>).
+<p>Ad esempio i vari comandi del giocatore potrebbero (approssimativamente,
+a seconda delle routine verbo e degli oggetti) generare le chiamate:
+<blockquote><tt>>i</tt>
+<br><tt>Perform(&amp;doInventory, 0, 0, 0)</tt><tt></tt>
+<p><tt>>get key</tt>
+<br><tt>Perform(&amp;DoGet, key_object, 0, 0)</tt><tt></tt>
+<p><tt>>put the key on the table</tt>
+<br><tt>Perform(&amp;DoPutIn, key_object, table_object, 0)</tt><tt></tt>
+<p><tt>>turn the dial to 127</tt>
+<br><tt>Perform(&amp;DoTurn, dial, 127, -1)</tt><tt></tt>
+<p><tt>>get key and banana</tt>
+<br><tt>Perform(&amp;DoGet, key_object, 0, 1)</tt>
+<br><tt>Perform(&amp;DoGet, banana, 0, 2)</tt></blockquote>
+(Se non esiste una routine <tt>Perform</tt>, l'interprete esegue la chiamata
+di default a <tt>player.before</tt>, <tt>location.before</tt>, <tt>xobject.before</tt>
+e <tt>object.before</tt>, infine <tt>verbroutine</tt> se nessuno di questi
+restituisce <i>true</i>).
+<br>&nbsp;
+</FONT></FONT></FONT></P>
+<P ALIGN="CENTER"><IMG SRC="../Varie/Newgif/blurulr6.gif" NAME="Riga" ALIGN="BOTTOM" WIDTH="640" HEIGHT="2" BORDER="0"><BR><BR>
+<FONT SIZE="1" STYLE="font-size: 8pt"><A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A>
+<FONT SIZE="2">Torna alla Home Page</FONT> 
+<A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A></FONT>
+</P>
+<P ALIGN="CENTER"><FONT SIZE="1" STYLE="font-size: 8pt"><FONT COLOR="#000080">&copy;2000 Simone
+Zanella e &copy;2000 IF Italia. E' vietata la riproduzione.</FONT></FONT></P></BLOCKQUOTE>
+</BODY>
+</HTML>

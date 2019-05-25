@@ -1,0 +1,264 @@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>IF Italia - Il sito italiano sull'Interactive Fiction
+</TITLE>
+      <LINK REV="made" HREF="mailto:dickdastardly@highway.it">
+	<META NAME="GENERATOR" CONTENT="NoteTab 4.82">
+	<META NAME="copyright" CONTENT="Tutto il materiale presente in questo sito è (c)Simone Zanella e (c)IF Italia ove non diversamente indicato. Tutti i diritti sono riservati. E' vietata la riproduzione non autorizzata del sito e di sue parti.">
+	<META name="keywords" content="if interactive fiction avventura avventure testuale testuali inform infocom tads ifitalia italia giochi gioco castello adventure text simone zanella monkey island gratis freeware download">
+	<META name="description" content="Il più vasto sito italiano sulle avventure testuali e sull'Interactive Fiction">	<STYLE>
+	<!--
+		P { border: none; padding: 0cm; font-family: "Verdana", sans-serif; font-size: 10pt }
+	-->
+	</STYLE>
+</HEAD>
+<BODY>
+<BLOCKQUOTE><DIV TYPE="HEADER">
+	<P ALIGN="CENTER" STYLE="border: 1px solid #000000; padding: 0.05cm"><FONT COLOR="#000080"><FONT FACE="Verdana, sans-serif">IF
+	ITALIA - Il sito Italiano sull'Interactive Fiction</FONT></FONT></P>
+</DIV>
+<P ALIGN="CENTER"><IMG SRC="../Varie/if3backup.jpg" NAME="Logosmall" ALIGN="MIDDLE" WIDTH="108" HEIGHT="104" BORDER="0"></P>
+<P><FONT SIZE="2" STYLE="font-size: 10pt"><FONT FACE="Verdana, sans-serif"><FONT COLOR="#000080">
+
+<h2>
+X. FUNZIONALIT&Agrave; AVANZATE</h2>
+
+<h3>
+<a NAME="OggettoDisplay"></a>X.a. L'oggetto Display</h3>
+L'interprete fornisce un accesso alle seguenti propriet&agrave; di sola
+lettura (sebbene i nomi siano definiti in <tt>HUGOLIB.H</tt>):
+<br>&nbsp;
+<table CELLSPACING=3 CELLPADDING=3 >
+<tr>
+<td><tt>screenwidth</tt></td>
+
+<td>la larghezza dello schermo, in caratteri</td>
+</tr>
+
+<tr>
+<td><tt>screenheight</tt></td>
+
+<td>l'altezza dello schermo, in caratteri</td>
+</tr>
+
+<tr>
+<td><tt>linelength</tt></td>
+
+<td>la larghezza della finestra di testo corrente</td>
+</tr>
+
+<tr>
+<td><tt>windowlines</tt></td>
+
+<td>l'altezza della finestra di testo corrente</td>
+</tr>
+
+<tr>
+<td></td>
+
+<td></td>
+</tr>
+
+<tr>
+<td><tt>cursor_column</tt></td>
+
+<td>posizione orizzontale e verticale del cursore nella</td>
+</tr>
+
+<tr>
+<td><tt>cursor_row</tt></td>
+
+<td>finestra di testo corrente</td>
+</tr>
+</table>
+
+<p>La libreria di Hugo definisce anche la propriet&agrave; leggibile/scrivibile:
+<br>&nbsp;
+<table CELLSPACING=3 CELLPADDING=3 >
+<tr>
+<td><tt>statusline_height</tt></td>
+
+<td>altezza dell'ultima riga di stato stampata</td>
+</tr>
+</table>
+
+<p>Per consentire all'interprete di identificare correttamente l'oggetto
+<tt>display</tt>,
+viene selezionato l'oggetto (se presente) con il nome "<tt>(display)</tt>",
+cio&egrave; un oggetto che &egrave; definito come
+<blockquote><tt>object display</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>}</tt></blockquote>
+senza nessun nome indicato. Questo &egrave; il modo in cui la libreria
+definisce l'oggetto <tt>display</tt>, cos&igrave; che le varie propriet&agrave;
+dell'oggetto <tt>display</tt> siano leggibili come in <tt>display.screenheight</tt>,
+<tt>display.cursor_column</tt>,
+ecc.
+<h3>
+<a NAME="Finestre"></a>X.b. Finestre</h3>
+&Egrave; possibile creare una finestra all'interno dello schermo per l'output
+del testo. La posizione del cursore, il ritorno a capo delle righe, ecc.,
+vengono tarati ai limiti della finestra corrente. La posizione del cursore
+ed i limiti della finestra vengono sempre calcolati sulla dimensione dei
+caratteri a larghezza fissa. Le varie sintassi dell'istruzione '<tt>window</tt>'
+sono:
+<br>&nbsp;
+<table CELLSPACING=3 CELLPADDING=3 >
+<tr>
+<td><tt>window 0</tt></td>
+
+<td>Ripristina la visualizzazione a tutto schermo</td>
+</tr>
+
+<tr>
+<td><tt>window n</tt>
+<br><tt>{...}</tt></td>
+
+<td>Crea una finestra di <tt>n</tt> righe dimensionandola come l'intero
+schermo</td>
+</tr>
+
+<tr>
+<td><tt>window l, t, r, b {...}</tt></td>
+
+<td>Crea una finestra con angolo in alto a sinistra (<tt>l,t</tt>) ed un
+angolo in basso a destra (<tt>r, b</tt>), con queste coordinate indicate
+in coordinate di caratteri dell'intero schermo</td>
+</tr>
+
+<tr>
+<td><tt>window&nbsp;</tt>
+<br><tt>{...}</tt></td>
+
+<td>ridisegna l'ultima finestra definita</td>
+</tr>
+</table>
+
+<p>Ognuna di queste sintassi, tranne "<tt>window 0</tt>", &egrave; seguita
+da un blocco di codice durante il quale, normalmente, il testo viene inviato
+alla finestra.
+<p>La finestra (i suoi limiti) esiste per la durata del blocco "<tt>{...}</tt>".
+Quando finisce la sommit&agrave; della finestra di testo principale viene
+ridefinita come se cominciasse immediatamente sotto l'ultima finestra disegnata.
+Per cancellare la registrazione di qualunque finestra e ripristinare la
+finestra di testo principale allo schermo intero, si usa "<tt>window 0</tt>".
+<p>Il file di libreria per la gestione delle finestre si chiama <tt>WINDOW.H</tt>
+e definisce una classe finestra chiamata <tt>window_class</tt> con le propriet&agrave;
+associate, cos&igrave; che una finestra possa essere creata con:
+<blockquote><tt>window_class &lt;nome finestra> "titolo"</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; win_position&nbsp;&nbsp; &lt;colonna schermo>,
+&lt;riga schermo></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; win_size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;colonne>, &lt;righe></tt><tt></tt>
+<p><tt>&nbsp;&nbsp;&nbsp; win_textcolor&nbsp; &lt;colore del testo></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; win_backcolor&nbsp; &lt;colore dello sfondo></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; win_titlecolor &lt;colore del testo del titolo></tt>
+<br><tt>&nbsp;&nbsp;&nbsp; win_titleback&nbsp; &lt;colore dello sfondo
+del titolo></tt>
+<br><tt>}</tt></blockquote>
+La <tt>window_class</tt> incorpora anche le routine propriet&agrave; <tt>win_init</tt>,
+<tt>win_clear</tt> e <tt>win_end</tt>.
+<p><i>NOTA</i>: Pu&ograve; essere importante tenere a mente che le misure
+come <tt>display.screenwidth</tt> possono cambiare durante l'esecuzione,
+in particolar modo in un ambiente con un'interfaccia grafica a finestre
+che consente il ridimensionamento della finestra del programma Hugo.
+<br>Per questa ragione &egrave; prudente controllare <tt>display.&lt;propriet&agrave;></tt>
+ogni volta che una finestra deve essere disegnata, invece di basare le
+coordinate su, ad esempio, un insieme di limiti calcolati durante l'inizializzazione
+del programma.
+<h3>
+<a NAME="File"></a>X.c. Leggere e scrivere i file</h3>
+Ci possono essere delle occasioni in cui sia utile memorizzare dei dati
+in un file per una lettura successiva. Il modo pi&ugrave; semplice per
+farlo richiede
+<blockquote><tt>x = save</tt></blockquote>
+e
+<blockquote><tt>x = restore</tt></blockquote>
+dove le funzioni '<tt>save</tt>' e '<tt>restore</tt>' restituiscono il
+valore <i>true</i> a <tt>x</tt> se hanno avuto successo, o il valore <i>false</i>
+se per qualche ragione sono andate in errore. In ogni caso, tutto l'insieme
+dei dati di gioco -- comprese le posizioni degli oggetti, i valori delle
+variabili, gli array, gli attributi, ecc. -- vengono salvati o ripristinati.
+<p>Altre volte pu&ograve; essere preferibile salvare solo determinati valori.
+<br>Ad esempio, un determinato gioco pu&ograve; consentire al giocatore
+di creare alcune caratteristiche del personaggio o altri "dati da ricordare"
+che possono essere ripristinati nello stesso gioco od in altri giochi.
+<p>Per fare questo si usano le operazioni '<tt>writefile</tt>' e '<tt>readfile</tt>'.
+<p>La struttura
+<blockquote><tt>writefile &lt;nomefile></tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>}</tt></blockquote>
+aprir&agrave;, all'inizio del blocco <tt>writefile</tt>, il file <tt>&lt;nomefile></tt>
+per la scrittura e posizioner&agrave; <tt>&lt;nomefile></tt> all'inizio
+del file (vuoto). (Se il file esiste verr&agrave; pulito/cancellato). Alla
+fine del blocco il file verr&agrave; nuovamente chiuso.
+<p>All'interno di un blocco <tt>writefile</tt> si scrivono i valori usando
+<blockquote><tt>writeval &lt;valore1>[, &lt;valore2>, ...]</tt></blockquote>
+dove uno o pi&ugrave; valori possono essere specificati.
+<p>Per leggere il file si usa la struttura
+<blockquote><tt>readfile &lt;nomefile></tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>}</tt></blockquote>
+che conterr&agrave; le assegnazioni
+<blockquote><tt>x = readval</tt></blockquote>
+per ogni valore che deve essere letto, con <tt>x</tt> che rappresenta una
+variabile, o una propriet&agrave;, o un altro valore scrivibile.
+<p>Ad esempio,
+<blockquote><tt>local conta, test</tt><tt></tt>
+<p><tt>conta = 10</tt>
+<br><tt>writefile "filetest"</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; writeval count, "telefono", 10</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; test = FILE_CHECK</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; writeval test</tt>
+<br><tt>}</tt>
+<br><tt>if test ~= FILE_CHECK ! c'&egrave; stato un errore</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print "Errore durante la scrittura."</tt>
+<br><tt>}</tt></blockquote>
+scriver&agrave; la variabile <tt>conta</tt>, la voce di dizionario "<tt>telefono</tt>"
+ed il valore <tt>10</tt> in "<tt>filetest</tt>".
+<blockquote><tt>local a, b, c, test</tt><tt></tt>
+<p><tt>readfile "filetest"</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; a = readval</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; b = readval</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; c = readval</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; test = readval</tt>
+<br><tt>}</tt>
+<br><tt>if test ~= FILE_CHECK ! c'&egrave; stato un errore</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print "Errore durante la lettura."</tt>
+<br><tt>}</tt></blockquote>
+Se il blocco <tt>readfile</tt> viene eseguito con successo, <tt>a</tt>
+sar&agrave; uguale al precedente valore di <tt>conta</tt>, <tt>b</tt> conterr&agrave;
+"<tt>telefono</tt>" e <tt>c</tt> sar&agrave; uguale a <tt>10</tt>.
+<p>La costante <tt>FILE_CHECK</tt>, definita in <tt>HUGOLIB.H</tt>, &egrave;
+utile perch&eacute; <tt>writefile</tt> e <tt>readfile</tt> non forniscono
+nessun valore di ritorno esplicito per indicare un errore. <tt>FILE_CHECK</tt>
+&egrave; una sequenza di due byte univoca che pu&ograve; essere usata per
+verificare la correttezza delle operazioni.
+<p>Nel blocco <tt>writefile</tt>, se il blocco termina prematuramente a
+causa di un errore, la variabile <tt>test</tt> non viene impostata a <tt>FILE_CHECK</tt>.
+L'istruzione '<tt>if</tt>' che segue il blocco verifica proprio questo.
+<p>Nel blocco <tt>readfile</tt>, <tt>test</tt> viene impostata a <tt>FILE_CHECK</tt>
+sono se la sequenza di funzioni <tt>readval</tt> trova il numero corretto
+di valori in "<tt>filetest</tt>". Se ce ne sono troppi o troppo pochi,
+o se un errore causa un termine prematuro del blocco, <tt>test</tt> sar&agrave;
+uguale ad un valore diverso da <tt>FILE_CHECK</tt>.
+<br>&nbsp;
+</FONT></FONT></FONT></P>
+<P ALIGN="CENTER"><IMG SRC="../Varie/Newgif/blurulr6.gif" NAME="Riga" ALIGN="BOTTOM" WIDTH="640" HEIGHT="2" BORDER="0"><BR><BR>
+<FONT SIZE="1" STYLE="font-size: 8pt"><A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A>
+<FONT SIZE="2">Torna alla Home Page</FONT> 
+<A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A></FONT>
+</P>
+<P ALIGN="CENTER"><FONT SIZE="1" STYLE="font-size: 8pt"><FONT COLOR="#000080">&copy;2000 Simone
+Zanella e &copy;2000 IF Italia. E' vietata la riproduzione.</FONT></FONT></P></BLOCKQUOTE>
+</BODY>
+</HTML>

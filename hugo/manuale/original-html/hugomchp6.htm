@@ -1,0 +1,336 @@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>IF Italia - Il sito italiano sull'Interactive Fiction
+</TITLE>
+      <LINK REV="made" HREF="mailto:dickdastardly@highway.it">
+	<META NAME="GENERATOR" CONTENT="NoteTab 4.82">
+	<META NAME="copyright" CONTENT="Tutto il materiale presente in questo sito è (c)Simone Zanella e (c)IF Italia ove non diversamente indicato. Tutti i diritti sono riservati. E' vietata la riproduzione non autorizzata del sito e di sue parti.">
+	<META name="keywords" content="if interactive fiction avventura avventure testuale testuali inform infocom tads ifitalia italia giochi gioco castello adventure text simone zanella monkey island gratis freeware download">
+	<META name="description" content="Il più vasto sito italiano sulle avventure testuali e sull'Interactive Fiction">	<STYLE>
+	<!--
+		P { border: none; padding: 0cm; font-family: "Verdana", sans-serif; font-size: 10pt }
+	-->
+	</STYLE>
+</HEAD>
+<BODY>
+<BLOCKQUOTE><DIV TYPE="HEADER">
+	<P ALIGN="CENTER" STYLE="border: 1px solid #000000; padding: 0.05cm"><FONT COLOR="#000080"><FONT FACE="Verdana, sans-serif">IF
+	ITALIA - Il sito Italiano sull'Interactive Fiction</FONT></FONT></P>
+</DIV>
+<P ALIGN="CENTER"><IMG SRC="../Varie/if3backup.jpg" NAME="Logosmall" ALIGN="MIDDLE" WIDTH="108" HEIGHT="104" BORDER="0"></P>
+<P><FONT SIZE="2" STYLE="font-size: 10pt"><FONT FACE="Verdana, sans-serif"><FONT COLOR="#000080">
+
+
+<h2>
+VI. MICCE, DEMONI E SCRIPT</h2>
+
+<p><br>Mentre tutti gli elementi menzionati in precedenza sono programmati
+all'interno del codice dell'interprete, i mezzi per l'esecuzione delle
+micce [fuse], dei demoni e degli script sono scritti completamente in Hugo
+e si trovano nella libreria (<tt>HUGOLIB.H</tt>).
+<h3>
+<a NAME="MicceEDemoni"></a>VI.a. Micce e Demoni</h3>
+Daemon [demone] &egrave; un termine tradizionale che serve a definire un'attivit&agrave;
+ricorrente. Hugo gestisce i daemon come eventi speciali allegati ad oggetti
+che possono essere attivati o disattivati (cio&egrave; inseriti od estratti
+dall'area di visibilit&agrave; di <tt>runevents</tt>).
+<p>Visto che la classe <tt>daemon</tt> &egrave; definita nella libreria,
+per definire un daemon si usa
+<blockquote><tt>daemon &lt;nome></tt>
+<br><tt>{}</tt></blockquote>
+Il corpo della definizione del daemon &egrave; vuoto. &Egrave; necessaria
+solo per associare l'evento daemon, cos&igrave; che la definizione del
+daemon deve essere seguita da
+<blockquote><tt>event [in] &lt;nome></tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>}</tt></blockquote>
+Attivato da
+<blockquote><tt>Activate(&lt;nome>)</tt></blockquote>
+che muove l'oggetto daemon specificato nell'area di visibilit&agrave; del
+giocatore. In questo modo tutte le volte che un comando '<tt>runevents</tt>'
+viene eseguito (come dovrebbe essere nella routine <tt>Main</tt>), l'evento
+associato a <tt>&lt;nome></tt> viene eseguito.
+<p>Il daemon viene disattivato usando
+<blockquote><tt>Deactivate(&lt;nome>)</tt></blockquote>
+che rimuove l'oggetto daemon dalla visibilit&agrave;.
+<p>Si pu&ograve; vedere come un daemon sia in realt&agrave; uno speciale
+tipo di oggetto che che posto o meno nell'area di visibilit&agrave; di
+'<tt>runevents</tt>', e che &egrave; l'evento associato al daemon che contiene
+veramente il codice.
+<p>Un fuse [miccia] &egrave; il nome con il quale si indica un timer --
+cio&egrave; qualunque evento che debba accadere dopo uno specifico periodo
+di tempo. Il fuse &egrave; una versione un po' pi&ugrave; complessa di
+un oggetto daemon, contenendo due propriet&agrave; addizionali in aggiunta
+a <tt>in_scope</tt>:
+<br>&nbsp;
+<center><table CELLSPACING=3 CELLPADDING=3 WIDTH="84%" >
+<tr>
+<td><tt>timer</tt></td>
+
+<td>&nbsp;il numero di turni prima che l'evento del fuse venga eseguito</td>
+</tr>
+
+<tr>
+<td><tt>tick</tt></td>
+
+<td>una routine che decrementa il <tt>timer</tt> e restituisce il numerodi
+turni che restano (cio&egrave; il valore di <tt>timer</tt>)</td>
+</tr>
+</table></center>
+
+<p>Come per i daemon la definizione di un fuse viene fatta in due passi
+<blockquote><tt>fuse &lt;nome></tt>
+<br><tt>{}</tt>
+<p><tt>event [in] &lt;nome></tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; if not self.tick</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>}</tt></blockquote>
+e si accende e spegne con
+<blockquote><tt>Activate(&lt;nome>, &lt;impostazioni>)</tt></blockquote>
+o
+<blockquote><tt>Deactivate(&lt;nome>)</tt></blockquote>
+dove <tt>&lt;impostazioni></tt> &egrave; il valore iniziale della propriet&agrave;
+<tt>timer</tt>.
+<p>Notare che &egrave; compito dell'evento eseguire il timer e verificare
+la sua scadenza. La riga
+<blockquote><tt>if not self.tick</tt></blockquote>
+esegue la propriet&agrave; <tt>tick</tt> -- che decrementa il timer --
+ed esegue il blocco di codice condizionale seguente se <tt>self.timer</tt>
+&egrave; 0.
+<h3>
+<a NAME="EsUnSempliceDaemon"></a>Esempio: Un semplice Daemon ed un ancor
+pi&ugrave; semplice Fuse</h3>
+Il daemon pi&ugrave; semplice &egrave; qualcosa tipo un contatore di sonno,
+che misura quanto un giocatore pu&ograve; continuare a cominciare da un
+determinato momento di riposo.
+<p>Assumiamo che la quantit&agrave; di riposo del giocatore sia contenuta
+in una propriet&agrave; chiamata <tt>riposo</tt>, che si decrementa di
+2 ad ogni turno.
+<blockquote><tt>daemon affaticamento</tt>
+<br><tt>{}</tt>
+<p><tt>event in affaticamento</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; player.riposo = player.riposo - 2</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; if player.riposo &lt; 0</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; player.riposo = 0</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; select player.riposo</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 20</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+"Ti stai affaticando."</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 10</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+"Stai diventando \Imolto\i stanco."</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; case 0</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+"Ti sei addormentato!"</tt>
+<br><tt>}</tt></blockquote>
+Si avvia e si ferma il daemon con <tt>Activate(affaticamento)</tt> e <tt>Deactivate(affaticamento)</tt>.
+<p>Ora, per il fuse [miccia], perch&eacute; non costruire l'esempio pi&ugrave;
+ovvio: quello di una bomba ad orologeria? (Assumendo che esista un altro
+oggetto fisico <tt>bomba</tt>; <tt>bombaorologeria</tt> &egrave; solo il
+fuse per il conto alla rovescia).
+<blockquote><tt>fuse bombaorologeria</tt>
+<br><tt>{}</tt>
+<p><tt>event in bombaorologeria</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; if not self.tick</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if Contains(location,
+bomba)</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+"Scompari in un elegante KABOOM!"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+"Senti un KABOOM da qualche parte!"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; remove bomba</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>}</tt></blockquote>
+Si attiva (con un conto alla rovescia di 25 turni) e si ferma con <tt>Activate(bombaorologeria,
+25)</tt> e <tt>Deactivate(bombaorologeria)</tt>.
+<h3>
+<a NAME="Script"></a>VI.b. Script</h3>
+Gli script sono decisamente pi&ugrave; complessi dei fuse e dei daemon.
+Lo scopo di uno script (chiamato anche script del personaggio) &egrave;
+quello di consentire ad un oggetto -- di solito un personaggio -- di eseguire
+una sequenza di azioni in base ai turni del gioco e indipendentente dal
+giocatore.
+<p>Fino a 16 script possono essere eseguiti insieme. &Egrave; compito del
+programmatore preoccuparsi di non superare tale limite.
+<p>Uno script &egrave; rappresentato da due array: <tt>scriptdata</tt>
+e <tt>setscript</tt>. Il secondo &egrave; stato nominato per la chiarezza
+della programmazione piuttosto che per il suo contenuto. Ecco perch&eacute;:
+<p>Per definire uno script si usa la seguente notazione:
+<blockquote><tt>setscript[Script(&lt;ogg>, &lt;numero>)] = &amp;CharRoutine,
+ogg,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&amp;CharRoutine, ogg,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+...</tt></blockquote>
+(ricordandosi che una virgola alla fine di una riga dice al compilatore
+che la riga prosegue alla successiva).
+<p>Fare caso al fatto che "<tt>setscript</tt>" in realt&agrave; &egrave;
+un array, che prende il suo elemento iniziale dal valore di ritorno della
+routine <tt>Script</tt>, che ha <tt>&lt;oggetto></tt> e <tt>&lt;numero></tt>
+come argomenti.
+<p><tt>Script</tt> restituisce un puntatore all'interno del grande array
+"<tt>setscript</tt>" dove il <tt>&lt;numero></tt> di passi di uno script
+per <tt>&lt;oggetto></tt> si trovano. Un singolo script pu&ograve; avere
+fino a 32 passi. Un passo in uno script &egrave; composto da una routine
+ed un oggetto -- sono entrambi necessari anche se la routine non richiede
+un oggetto. (Si usa l'oggetto <tt>nothing</tt> (0); vedere la routine <tt>CharWait</tt>
+in <tt>HUGOLIB.H</tt> per le informazioni).
+<p>La consuetudine in <tt>HUGOLIB.H</tt> vuole che le routine di script
+del personaggio abbiano il prefisso "<tt>Char</tt>", sebbene questo non
+sia obbligatorio. Al momento le routine fornite comprendono:
+<br>&nbsp;
+<center><table CELLSPACING=3 CELLPADDING=3 WIDTH="77%" >
+<tr>
+<td><tt>CharMove</tt></td>
+
+<td>[Muovi]</td>
+
+<td>(richiede un oggetto direzione)</td>
+</tr>
+
+<tr>
+<td><tt>CharWait</tt></td>
+
+<td>[Attendi]</td>
+
+<td>(si usa l'oggetto nothing)</td>
+</tr>
+
+<tr>
+<td><tt>CharGet</tt></td>
+
+<td>[Prendi]</td>
+
+<td>(richiede un oggetto prendibile)</td>
+</tr>
+
+<tr>
+<td><tt>CharDrop</tt></td>
+
+<td>[Lascia]</td>
+
+<td>(richiede un oggetto in possesso del personaggio)</td>
+</tr>
+</table></center>
+
+<p>cos&igrave; come la routine speciale
+<br>&nbsp;
+<center><table CELLSPACING=3 CELLPADDING=3 >
+<tr>
+<td><tt>LoopScript</tt></td>
+
+<td>[RipetiScript]</td>
+
+<td>(si usa l'oggetto nothing)</td>
+</tr>
+</table></center>
+
+<p>che indica uno script che verr&agrave; eseguito in continuazione. (&Egrave;
+compito del programmatore assicurarsi che la posizione finale di un personaggio
+o di un oggetto sia adatta a ricominciare con lo script se <tt>LoopScript</tt>
+viene usato. Vale a dire che se lo script &egrave; composto da una complessa
+serie di direzioni, il personaggio deve sempre ritornare allo stesso punto
+di partenza.)
+<p>La sequenza di routine ed oggetti di ogni script &egrave; memorizzata
+nell'array <tt>setscript</tt>.
+<p>Gli script vengono eseguiti tramite la routine <tt>RunScripts</tt>,
+simile a <tt>runevents</tt>, da cui differisce per il fatto che <tt>runevents</tt>
+&egrave; un comando dell'interprete mentre <tt>RunScripts</tt> &egrave;
+contenuta in <tt>HUGOLIB.H</tt>.
+<p>La riga
+<blockquote><tt>RunScripts</tt></blockquote>
+eseguir&agrave; tutti gli script personaggio/oggetto attivi, un turno alla
+volta, liberando lo spazio usato da ognuno una volta che sono terminati.
+<p>Quello che segue &egrave; uno script di esempio per un personaggio di
+nome "Ned":
+<blockquote><tt>setscript[Script(ned, 4)] = &amp;CharMove, s_obj,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&amp;CharGet, palladicannone,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&amp;CharMove, n_obj,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&amp;CharWait, 0,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&amp;CharDrop, palladicannone</tt></blockquote>
+Ned andr&agrave; a sud, raccoglier&agrave; l'oggetto <tt>palladicannone</tt>,
+la porter&agrave; con s&eacute; a nord, attender&agrave; un turno e lascer&agrave;
+la <tt>palladicannone</tt>. (Le routine di script per i personaggi fornite
+dalla libreria sono relativamente elementari; ad esempio, <tt>CharGet</tt>
+assume che l'oggetto specificato sia presente quando il personaggio cerca
+di prenderlo).
+<p>Altre routine di gestione script in <tt>HUGOLIB.H</tt> comprendono:
+<br>&nbsp;
+<center><table CELLSPACING=3 CELLPADDING=3 WIDTH="89%" >
+<tr>
+<td><tt>CancelScript(ogg)</tt></td>
+
+<td>per terminare immediatamente l'esecuzione dello script per <tt>&lt;ogg></tt></td>
+</tr>
+
+<tr>
+<td><tt>PauseScript(ogg)</tt></td>
+
+<td>ferma temporaneamente l'esecuzione dello script per <tt>&lt;ogg></tt></td>
+</tr>
+
+<tr>
+<td><tt>ResumeScript(ogg)</tt></td>
+
+<td>riprende l'esecuzione di uno script fermato</td>
+</tr>
+
+<tr>
+<td><tt>SkipScript(ogg)</tt></td>
+
+<td>salta lo script per <tt>&lt;ogg></tt> per la successiva esecuzione
+di <tt>RunScripts</tt></td>
+</tr>
+</table></center>
+
+<p>La routine <tt>RunScripts</tt> controlla anche le propriet&agrave; <tt>before</tt>
+e <tt>after</tt>. Continua con l'azione predefinita -- la routine di azione
+del personaggio specificata nello script -- se trova un valore <i>false</i>.
+<p>Per ignorare una routine di azione predefinata per un personaggio si
+include una propriet&agrave; <tt>before</tt> per l'oggetto del personaggio
+usando la forma seguente:
+<blockquote><tt>before</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; actor CharRoutine</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>}</tt></blockquote>
+dove <tt>CharRoutine</tt> &egrave; <tt>CharWait</tt>, <tt>CharMove</tt>,
+<tt>CharGet</tt>, <tt>CharDrop</tt>, ecc.
+<h3>
+<a NAME="UnaNota"></a>VI.c. Una nota sulla globale event_flag</h3>
+Le routine della libreria -- in particolare le routine verbo <tt>DoWait...</tt>
+-- si aspettano che la variabile globale <tt>event_flag</tt> venga impostata
+con un valore non falso se qualcosa accade (in un evento o uno script)
+cos&igrave; che al giocatore venga notificato e venga data l'opportunita
+si smettere si aspettare. Ad esempio le routine di script dei personaggi
+in <tt>HUGOLIB.H</tt> impostano <tt>event_flag</tt> ogni volta che un personaggio
+fa qualcosa nella stessa locazione del giocatore.
+<p>Se si usa <tt>HUGOLIB.H</tt> deve essere seguita la regola di impostare
+<tt>event_flag</tt> dopo ogni evento significativo.
+<br>&nbsp;
+</FONT></FONT></FONT></P>
+<P ALIGN="CENTER"><IMG SRC="../Varie/Newgif/blurulr6.gif" NAME="Riga" ALIGN="BOTTOM" WIDTH="640" HEIGHT="2" BORDER="0"><BR><BR>
+<FONT SIZE="1" STYLE="font-size: 8pt"><A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A>
+<FONT SIZE="2">Torna alla Home Page</FONT> 
+<A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A></FONT>
+</P>
+<P ALIGN="CENTER"><FONT SIZE="1" STYLE="font-size: 8pt"><FONT COLOR="#000080">&copy;2000 Simone
+Zanella e &copy;2000 IF Italia. E' vietata la riproduzione.</FONT></FONT></P></BLOCKQUOTE>
+</BODY>
+</HTML>

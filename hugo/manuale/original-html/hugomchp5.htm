@@ -1,0 +1,593 @@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>IF Italia - Il sito italiano sull'Interactive Fiction
+</TITLE>
+      <LINK REV="made" HREF="mailto:dickdastardly@highway.it">
+	<META NAME="GENERATOR" CONTENT="NoteTab 4.82">
+	<META NAME="copyright" CONTENT="Tutto il materiale presente in questo sito è (c)Simone Zanella e (c)IF Italia ove non diversamente indicato. Tutti i diritti sono riservati. E' vietata la riproduzione non autorizzata del sito e di sue parti.">
+	<META name="keywords" content="if interactive fiction avventura avventure testuale testuali inform infocom tads ifitalia italia giochi gioco castello adventure text simone zanella monkey island gratis freeware download">
+	<META name="description" content="Il più vasto sito italiano sulle avventure testuali e sull'Interactive Fiction">	<STYLE>
+	<!--
+		P { border: none; padding: 0cm; font-family: "Verdana", sans-serif; font-size: 10pt }
+	-->
+	</STYLE>
+</HEAD>
+<BODY>
+<BLOCKQUOTE><DIV TYPE="HEADER">
+	<P ALIGN="CENTER" STYLE="border: 1px solid #000000; padding: 0.05cm"><FONT COLOR="#000080"><FONT FACE="Verdana, sans-serif">IF
+	ITALIA - Il sito Italiano sull'Interactive Fiction</FONT></FONT></P>
+</DIV>
+<P ALIGN="CENTER"><IMG SRC="../Varie/if3backup.jpg" NAME="Logosmall" ALIGN="MIDDLE" WIDTH="108" HEIGHT="104" BORDER="0"></P>
+<P><FONT SIZE="2" STYLE="font-size: 10pt"><FONT FACE="Verdana, sans-serif"><FONT COLOR="#000080">
+
+<h2>
+V. ROUTINE ED EVENTI</h2>
+
+<h3>
+<a NAME="Routine"></a>V.a. Routine</h3>
+Le routine sono dei blocchi di codice che possono essere chiamati in ogni
+punto del programma. Una routine pu&ograve;, o meno, restituire un valore,
+e pu&ograve;, o meno, richiedere una lista di parametri (o argomenti).
+<br>(Un certo numero di routine &egrave; stato incontrato negli esempi
+precedenti, ma qui c'&egrave; la spiegazione formale).
+<p>Una routine viene definita come
+<blockquote><tt>routine &lt;nomeroutine> [(&lt;argomento1>, &lt;argomento2>,
+...)]</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>}</tt></blockquote>
+ancora una volta &egrave; necessario assicurarsi del fatto che la parentesi
+graffa aperta ('<tt>{</tt>') compaia su una riga nuova dopo l'istruzione
+'<tt>routine</tt>'.
+<p>(<i>NOTA</i>: Per sostituire una vecchia routine con una nuova con lo
+stesso nome (come in un file di libreria), si definisce la nuova usando
+'<tt>replace</tt>' invece di '<tt>routine</tt>'.
+<blockquote><tt>replace &lt;nomeroutine> [(&lt;argomento1>, &lt;argomento2>,
+...)]</tt></blockquote>
+Ad esempio
+<blockquote><tt>routine RoutineProva(ogg)</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print "La "; ogg.name; " ha una dimensione di
+";</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print ogg.size; "."</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; return ogg.size</tt>
+<br><tt>}</tt></blockquote>
+prende un valore come argomento, lo assegna ad una variabile locale <tt>ogg</tt>,
+esegue una semplice sequenza di stampa e restituisce il valore della propriet&agrave;:
+<tt>ogg.size</tt>.
+La parola chiave '<tt>return</tt>' esce dalla routine corrente, e restituisce
+un valore se specificato.
+<p>Sia
+<blockquote><tt>return</tt></blockquote>
+che
+<blockquote><tt>return &lt;espressione></tt></blockquote>
+sono validi. Se non viene fornita nessuna espressione, la routine restituisce
+0. Se nessuna istruzione '<tt>return</tt>' viene incontrata, la routine
+prosegue l'esecuzione fino alla parentesi graffa chiusa ('<tt>}</tt>')
+e poi restituisce 0.
+<p><tt>RoutineProva</tt> pu&ograve; essere chiamata in diversi modi:
+<blockquote><tt>RoutineProva(valigia)</tt></blockquote>
+stamper&agrave; (assumendo che l'oggetto <tt>valigia</tt> sia stato definito
+come in precedenza)
+<blockquote><tt>"La grande valigia verde ha una dimensione di 25."</tt></blockquote>
+Il valore di ritorno verr&agrave; ignorato. D'altra parte,
+<blockquote><tt>x = RoutineProva(valigia)</tt></blockquote>
+stamper&agrave; lo stesso output, ma assegner&agrave; il valore di ritorno
+di <tt>RoutineProva</tt> alla variabile <tt>x</tt>.
+<p>Diversamente dal C e da linguaggi simili, Hugo non richiede che una
+routine segua un prototipo specifico. Perci&ograve; sia
+<blockquote><tt>RoutineProva</tt></blockquote>
+che
+<blockquote><tt>RoutineProva(valigia, 5)</tt></blockquote>
+sono chiamate valide per la routine.
+<p>Nel primo caso l'argomento <tt>ogg</tt> assume di default il valore
+0, visto che nessun valore &egrave; stato passato. Le parentesi non sono
+necessarie se non vengono passati dei parametri. Nel secondo caso il valore
+5 viene passato a <tt>RoutineProva</tt>, ma viene ignorato.
+<p>Gli argomenti sono sempre passati per valore, non per riferimento o
+indirizzo. Una variabile locale in una routine non pu&ograve; essere modificata
+da un'altra routine. Questo significa che, ad esempio, nelle routine seguenti:
+<blockquote><tt>routine RoutineProva</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; local a</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; a = 5</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; Raddoppia(a)</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print number a</tt>
+<br><tt>}</tt>
+<p><tt>routine Raddoppia(a)</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; a = a * 2</tt>
+<br><tt>}</tt></blockquote>
+Chiamando <tt>RoutineProva</tt> verr&agrave; stampato "<tt>5</tt>" e non
+"<tt>10</tt>" perch&eacute; la variabile locale <tt>a</tt> in <tt>Raddoppia</tt>
+&egrave; solo una copia della variabile che le &egrave; stata passata come
+argomento.
+<p>Queste due routine dovrebbero, d'altra parte, stampare "<tt>10</tt>":
+<blockquote><tt>routine RoutineProva</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; local a</tt>
+<p><tt>&nbsp;&nbsp;&nbsp; a = 5</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; a = Raddoppia(a)</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; print number a</tt>
+<br><tt>}</tt>
+<p><tt>routine Raddoppia(a)</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; return a * 2</tt>
+<br><tt>}</tt></blockquote>
+Alla variabile locale <tt>a</tt> di <tt>RoutineProva</tt> viene assegnato
+il valore di ritorno di <tt>Raddoppia</tt>.
+<p>Un effetto collaterale interessante di un valore di ritorno nullo (0)
+pu&ograve; essere visto usando il comando '<tt>print</tt>'. Considerando
+la routine <tt>The</tt> di <tt>HUGOLIB.H</tt>, che stampa l'articolo di
+un oggetto (ad es., "<tt>la</tt>" se appropriato), seguito dalla propriet&agrave;
+<tt>name</tt>
+[nome] dell'oggetto.
+<blockquote><tt>print "Apri "; The(oggetto); "."</tt></blockquote>
+potrebbe stampare
+<blockquote><tt>Apri la valigia.</tt></blockquote>
+Notate che il comando '<tt>print</tt>' stampa solo
+<blockquote><tt>"Apri "</tt></blockquote>
+e
+<blockquote><tt>"."</tt></blockquote>
+&Egrave; la routine <tt>The</tt> che stampa
+<blockquote><tt>la valigia</tt></blockquote>
+Visto che <tt>The</tt> restituisce 0 (la stringa nulla, o ""), il comando
+'<tt>print</tt>' in realt&agrave; visualizza
+<blockquote><tt>"Apri "</tt>, <tt>""</tt>, e <tt>"."</tt></blockquote>
+dove la stringa nulla ("") &egrave; preceduta sulla riga di output dalla
+stampa di <tt>"la "</tt> e del nome dell'oggetto da parte di <tt>The</tt>.
+<h3>
+<a NAME="RoutineProp"></a>V.b. Routine propriet&agrave;</h3>
+Le routine propriet&agrave; sono decisamente pi&ugrave; complicate di quelle
+descritte fino ad ora, ma seguono le stesse regole base. Normalmente una
+routine propriet&agrave; viene eseguita quando il programma cerca di leggere
+il valore di una propriet&agrave; che contiene una routine.
+<p>Cio&egrave;, invece di
+<blockquote><tt>size 10</tt></blockquote>
+un oggetto pu&ograve; contenere la propriet&agrave;
+<blockquote><tt>size</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; return x + 5</tt>
+<br><tt>}</tt></blockquote>
+Cercando di leggere <tt>oggetto.size</tt> in entrambi i casi restituir&agrave;
+un valore intero.
+<p>Ecco un altro esempio. Normalmente se <tt>&lt;oggetto></tt> &egrave;
+la stanza corrente, allora <tt>&lt;oggetto>.n_to</tt> dovrebbe contenere
+il numero della stanza a nord. La libreria controlla <tt>&lt;oggetto>.n_to</tt>
+per vedere se esiste un valore; se non ce ne sono, allora lo spostamento
+non &egrave; valido.
+<p>Considerate questo:
+<blockquote><tt>n_to ufficio</tt></blockquote>
+e
+<blockquote><tt>n_to</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {"La porta dell'ufficio &egrave; chiusa."}</tt></blockquote>
+o
+<blockquote><tt>n_to</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; "La porta dell'ufficio &egrave; chiusa. ";</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; return false</tt>
+<br><tt>}</tt></blockquote>
+Nel primo caso se il giocatore (<tt>player</tt>) cerca di andare a nord
+si avr&agrave; che <tt>parent(player)</tt> verr&agrave; cambiato con l'oggetto
+<tt>ufficio</tt>. Nel secondo caso un messaggio personalizzato di mossa
+non valida verr&agrave; visualizzato. Nel terzo caso, il messaggio personalizzato
+di mossa non valida verr&agrave; visualizzato, ma poi la libreria continuer&agrave;
+come se non avesse trovato una propriet&agrave; <tt>n_to</tt> per <tt>&lt;oggetto></tt>,
+e stamper&agrave; il messaggio standard di mossa non valida (senza andare
+a riga nuova, grazie al punto e virgola):
+<blockquote><tt>"La porta dell'ufficio &egrave; chiusa. You can't go that
+way."</tt></blockquote>
+<i>NOTA</i>: Mentre le routine normali resituiscono <i>false</i> (o 0)
+per default, le routine propriet&agrave; restituiscono <i>true</i> (o 1)
+per default.
+<p>(Per quelli che si stanno domandando come mai il valore di ritorno <i>true</i>
+nel secondo caso non cerchi di effettuare uno spostamento all'oggetto numero
+1, la routine <tt>DoGo</tt> della libreria assume che non ci sar&agrave;
+mai un oggetto stanza col numero uno.)
+<p>Le routine propriet&agrave; possono essere eseguite direttamente usando
+il comando '<tt>run</tt>' [esegui]:
+<blockquote><tt>run &lt;oggetto>.&lt;propriet&agrave;></tt></blockquote>
+Se <tt>&lt;oggetto></tt> non ha <tt>&lt;propriet&agrave;></tt>, o se <tt>&lt;oggetto>.&lt;propriet&agrave;></tt>
+non &egrave; una routine, allora non accade nulla.
+<br>Altrimenti la routine propriet&agrave; viene eseguita. Le routine propriet&agrave;
+non accettano argomenti.
+<p>Ricordate che in qualunque punto del programma, una propriet&agrave;
+pu&ograve; essere modificata usando
+<blockquote><tt>&lt;oggetto>.&lt;propriet&agrave;> = &lt;valore></tt></blockquote>
+Una routine propriet&agrave; pu&ograve; essere cambiata usando
+<blockquote><tt>&lt;oggetto>.&lt;propriet&agrave;> =</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>}</tt></blockquote>
+dove la nuova routine deve essere racchiusa tra parentesi graffe.
+<p>&Egrave; anche possibile cambiare quella che prima era una routine propriet&agrave;
+in un valore semplice, o vice versa, facendo in modo che lo spazio per
+la routine (ed il numero di elementi richiesti) venga fornito nella definizione
+originale dell'oggetto. Anche se una routine propriet&agrave; deve essere
+assegnata pi&ugrave; tardi nel programma, la propriet&agrave; in senso
+stretto deve essere definita per l'esterno nella definizione originale
+dell'oggetto. Un semplice
+<blockquote><tt>&lt;propriet&agrave;> 0</tt></blockquote>
+o
+<blockquote><tt>&lt;propriet&agrave;> {return false}</tt></blockquote>
+&egrave; sufficiente.
+<p>C'&egrave;, comunque, un problema in queste riassegnazioni di valori
+di propriet&agrave; a routine e vice versa. Ad una routine propriet&agrave;
+viene data una "<i>lunghezza</i>" di una parola a 16 bit, che &egrave;
+l'indirizzo della propriet&agrave;. Quando si assegna un valore, od un
+insieme di valori, ad una routine propriet&agrave;, l'interprete si comporta
+come se la propriet&agrave; fosse stata originariamente definita per questo
+oggetto con solo una parola di dati, visto che non ha modo di sapere la
+lunghezza originale dei dati della propriet&agrave;.
+<p>Ad esempio, se la specificazione originale della propriet&agrave; nella
+definizione dell'oggetto era:
+<blockquote><tt>found_in cameradaletto, salotto, garage</tt></blockquote>
+e ad un certo punto venisse eseguito:
+<blockquote><tt>found_in = {return scantinato}</tt></blockquote>
+allora l'istruzione seguente non potrebbe funzionare:
+<blockquote><tt>found_in #3 = attico</tt></blockquote>
+visto che l'interprete ora crede che <tt>&lt;oggetto>.found_in</tt> abbia
+solo una parola a 16 bit di dati -- un indirizzo di routine -- assegnata.
+<p>Infine tenete a mente che ogni volta che viene chiamata una routine
+propriet&agrave;, la variabile globale <tt>self</tt> viene normalmente
+impostata con il numero dell'oggetto. Per evitarlo, come quando si "<i>prende</i>"
+una propriet&agrave; da un altro oggetto dall'interno di un oggetto differente,
+bisogna referenziare la propriet&agrave; tramite
+<blockquote><tt>&lt;oggetto>..&lt;propriet&agrave;></tt></blockquote>
+usando '<tt>..</tt>' invece del normale operatore.
+<h3>
+<a NAME="EsPrendereAPrestito"></a>Esempio: "Prendere a prestito" le Routine
+Propriet&agrave;</h3>
+Consideriamo una situazione nella quale una classe fornisce una particolare
+routine propriet&agrave;. Normalmente quella routine viene ereditata da
+tutti gli oggetti definiti usando quella classe. Ma potrebbe presentarsi
+una situazione in cui uno di questi oggetti deve avere una variazione od
+un'espansione della routine originale.
+<blockquote><tt>class cibo</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; morsi_rimasti 5</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; mangiare</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.morsi_rimasti =
+self.morsi_rimasti - 1</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if self.morsi_rimasti
+= 0</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+remove self ! tutto mangiato</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>}</tt><tt></tt>
+<p><tt>cibo alimento_naturale</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; mangiare</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; actor.salute = actor.salute
++ 1</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; run cibo..mangiare</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>}</tt></blockquote>
+(Presupponendo che <tt>morsi_rimasti</tt>, <tt>mangiare</tt>, e <tt>salute</tt>
+siano definiti come propriet&agrave;, con <tt>mangiare</tt> che viene chiamata
+tutte le volte che un oggetto <tt>cibo</tt> viene mangiato).
+<p>In questo caso sarebbe stato scomodo dover riscrivere la routine <tt>cibo.mangiare</tt>
+per l'oggetto <tt>alimento_naturale</tt> solo perch&eacute; quest'ultimo
+deve anche incrementare <tt>actor.salute</tt>. Usando '<tt>..</tt>' si
+chiama <tt>cibo.mangiare</tt> con <tt>self</tt> impostata a <tt>alimento_naturale</tt>,
+non la classe <tt>cibo</tt>, cos&igrave; che <tt>cibo.mangiare</tt> riguarda
+<tt>alimento_naturale</tt>. Questo consente di apportare delle modifiche
+ad ogni propriet&agrave;, attributo, o routine propriet&agrave; in una
+classe, e quella modifica verr&agrave; ripetuta in tutti gli oggetti costruiti
+da quella classe.
+<h3>
+<a NAME="BeforeEAfter"></a>V.c. Le routine Before e After</h3>
+Il compilatore di Hugo ha due propriet&agrave; predefinite: <tt>before</tt>
+[prima] e <tt>after</tt> [dopo]. Sono uniche nel senso che non solo sono
+sempre routine, ma sono anche molto pi&ugrave; complesse (e versatili)
+di una routine propriet&agrave; standard.
+<p>Propriet&agrave; complesse come <tt>before</tt> e <tt>after</tt> vengono
+definite con
+<blockquote><tt>property &lt;nome propriet&agrave;> $complex &lt;valore
+default></tt></blockquote>
+come in:
+<blockquote><tt>property before $complex</tt>
+<br><tt>property after $complex</tt></blockquote>
+Questa &egrave; la sintassi della propriet&agrave; <tt>before</tt>:
+<blockquote><tt>before</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; &lt;uso1> &lt;routineverbo1>[, &lt;routineverbo2>,...]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; &lt;uso2> &lt;routineverbo3>[, &lt;routineverbo4>,...]</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>}</tt></blockquote>
+(La routine <tt>after</tt> &egrave; uguale, basta sostituire '<tt>after</tt>'
+a '<tt>before</tt>').
+<p>Lo specificatore <tt>&lt;uso></tt> &egrave; il valore con il quale l'oggetto
+specificato viene comparato. Pi&ugrave; comunemente, &egrave; "<tt>object</tt>",
+"<tt>xobject</tt>", "<tt>location</tt>", "<tt>actor</tt>", "<tt>parent(object)</tt>",
+ecc. La <tt>&lt;routineverbo></tt> &egrave; il nome della routine verbo
+a cui l'uso in questione viene applicato.
+<p>Se <tt>&lt;oggetto>.before</tt> viene controllata, con la variabile
+globale <tt>verbroutine</tt> impostata con una delle routine verbo specificate
+nella propriet&agrave; <tt>before</tt>, e <tt>&lt;uso></tt> in quell'instanza
+&egrave; "<tt>object</tt>", allora il blocco di codice seguente viene eseguito.
+Se non viene trovata nessuna corrispondenza, <tt>&lt;oggetto>.before</tt>
+restituisce <i>false</i> [falso].
+<p>Questo &egrave; un esempio pi&ugrave; chiaro che usa l'oggetto <tt>valigia</tt>
+che stiamo sviluppando:
+<blockquote><tt>before</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; object DoEat</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Non puoi mangiare la
+valigia!"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>}</tt><tt></tt>
+<p><tt>after</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; object DoGet</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Con grande sforzo raccogli
+la valigia."</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; xobject DoPutIn</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Hai messo ";</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The(object)</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; " nella valigia."</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>}</tt></blockquote>
+Ognuno di questi esempi restituisce <i>true</i>, scavalcando quindi l'operazione
+di default dell'interprete (controllate la sezione sul "Ciclo del gioco").
+Il modo di ingannare l'interprete per farlo continuare normalmente, come
+se non fossero state trovate propriet&agrave; <tt>before</tt> o <tt>after</tt>,
+&egrave; quello di restituire <i>false</i> dalla routine propriet&agrave;.
+<blockquote><tt>after</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; object DoGet</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {"Bene. ";</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; return false}</tt>
+<br><tt>}</tt></blockquote>
+avr&agrave; come risultato:
+<blockquote><tt>>get valigia</tt>
+<br><tt>Bene. Taken.</tt></blockquote>
+Visto che la routine <tt>after</tt> restituisce <i>false</i>, e che la
+risposta predefinita della libreria per una chiamata a <tt>DoGet</tt> che
+ha avuto successo &egrave; "<tt>Taken</tt>." [Preso].
+<p>&Egrave; importante ricordare che, a differenza delle altre routine,
+<tt>before</tt> e <tt>after</tt> sono routine "<i>aggiuntive</i>"; cio&egrave;,
+una routine <tt>before</tt> (o <tt>after</tt>) definita in una classe ereditata
+o un oggetto non viene sovrascritta da una nuova routine propriet&agrave;
+nel nuovo oggetto. Invece la definizione della nuova routine viene -- in
+sostanza -- aggiunta. Una propriet&agrave; aggiuntiva viene definita usando
+il qualificatore '<tt>$additive</tt>', come in:
+<blockquote><tt>property &lt;nome propriet&agrave;> $additive &lt;valore
+default></tt></blockquote>
+Tutte le subroutine <tt>before/after</tt> precedenti vengono sovrapposte.
+Il processo di esame di una propriet&agrave; <tt>before/after</tt> comincia
+con l'oggetto presente, andando indietro attraverso i parenti dell'oggetto
+fino a che viene trovata una combinazione <tt>uso/routineverbo</tt> valida;
+una volta che la corrispondenza &egrave; stata trovata, nessun'altra classe
+precedente nell'ereditariet&agrave; viene processata (a meno che la routine
+propriet&agrave; in questione restituisca <i>false</i>).
+<p><i>NOTA</i>: Per fare in modo che una routine propriet&agrave; <tt>before</tt>
+o <tt>after</tt> venga applicata ad <b>OGNI</b> routine verbo, non bisogna
+specificare una routine verbo.
+<p>Ad esempio,
+<blockquote><tt>before</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; xobject</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>}</tt></blockquote>
+La routine specificata viene eseguita ogni volta che l'oggetto in questione
+&egrave; l'<tt>xobject</tt> per <b>OGNI</b> input valido.
+<p>Se questo blocco non specifico capita prima di qualunque blocco che
+specifica routine verbo, allora i blocchi seguenti, se corrispondenti,
+verranno eseguiti a condizione che il blocco non restituisca <i>true</i>.
+Se il blocco non specifico viene dopo gli altri blocchi, allora verr&agrave;
+eseguito solo se nessuna altra combinazione <tt>object/routineverbo</tt>
+viene trovata.
+<p>Un difetto di questa non specificazione &egrave; che tutte le routine
+verbo vengono controllate -- sia <tt>verbs</tt> che <tt>xverbs</tt>. Questo
+pu&ograve; essere particolarmente sgradevole nel caso delle propriet&agrave;
+<tt>before/after</tt> per le locazioni, dove una risposta non specifica
+viene eseguita anche per '<tt>save</tt>', '<tt>restore</tt>', ecc.
+<p>Per evitarlo la libreria fornisce la funzione <tt>AnyVerb</tt> che come
+argomento accetta un oggetto e restituisce il numero di quell'oggetto se
+la routine <tt>verbroutine</tt> attuale non &egrave; nel gruppo degli <tt>xverb</tt>;
+altrimenti restituisce <i>false</i>. Perci&ograve; pu&ograve; essere usata
+tramite:
+<blockquote><tt>before</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; AnyVerb(location)</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>}</tt></blockquote>
+al posto di
+<blockquote><tt>before</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; location</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>}</tt></blockquote>
+La prima esegue il blocco di codice condizionale tutte le volte che la
+variabile globale <tt>location</tt> corrisponde all'oggetto corrente e
+la <tt>verbroutine</tt> attuale non &egrave; un <tt>xverb</tt>. La seconda
+(che non usa <tt>AnyVerb</tt>), viene eseguita per <tt>verb</tt> e <tt>xverb</tt>.
+(La ragione di questa cosa, per dirla in modo semplice, &egrave; che la
+variabile globale <tt>location</tt> &egrave; sempre uguale alla variabile
+globale <tt>location</tt> (!). Ma <tt>AnyVerb(location)</tt> sar&agrave;
+uguale alla variabile globale <tt>location</tt> solo se <tt>verbroutine</tt>
+non &egrave; un <tt>xverb</tt>).
+<h3>
+<a NAME="EsOggettoComplesso"></a>Esempio: Costruzione di un oggetto complesso</h3>
+A questo punto &egrave; stato coperto abbastanza materiale per sviluppare
+un esempio comprensivo di un oggetto funzionale che servir&agrave; da riepilogo
+dei concetti introdotti fino adesso, cos&igrave; come a fornire esempi
+di una serie di propriet&agrave; comuni di <tt>HUGOLIB.H</tt>.
+<blockquote><tt>object mobiledilegno "mobiletto di legno"</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; in empryroom</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; article "un"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; nouns "mobiletto", "scaffale", "mensole", \</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "mobilio", "sportelli",
+"sportello"</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; adjectives "legno", "fine", "mogano"</tt><tt></tt>
+<p><tt>&nbsp;&nbsp;&nbsp; short_desc ! descrizione sintetica</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Un mobiletto di legno
+&egrave; posto lungo una parete."</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; when_open ! quando aperto</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Un mobiletto di legno
+aperto &egrave; posto lungo una parete."</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; long_desc ! descrizione estesa</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Il mobiletto &egrave;
+fatto di fine legno di mogano,</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; costruito a mano da
+un falegname esperto. Nella parte</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; anteriore ci sono due
+sportelli (al momento ";</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if self is open</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+print "aperti";</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else: print "chiusi";</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print ")."</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>contains_desc ! descrizione del contenuto</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; "Dietro gli sportelli aperti del mobiletto</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; puoi vedere"; ! punto
+e virgola - niente riga nuova</tt><tt></tt>
+<p><tt>key_object chiave_mobiletto ! un oggetto chiave_mobiletto</tt>
+<br><tt>! deve essere creato</tt><tt></tt>
+<p><tt>holding 0 ! comincia vuoto</tt>
+<br><tt>capacity 100</tt><tt></tt>
+<p><tt>before</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; object DoLookUnder ! guarda sotto l'oggetto</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {"Niente tranne la polvere."}</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; object DoGet ! prendi l'oggetto</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {"L'armadietto &egrave;
+troppo pesante per</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+essere spostato!"}</tt>
+<br><tt>}</tt>
+<br><tt>after</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; object DoLock ! chiudi a chiave</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {"Con una girata di
+chiavi chiudi l'armadietto</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+per bene."}</tt>
+<br><tt>}</tt><tt></tt>
+<p><tt>! contenitore, apribile, non aperto</tt>
+<br><tt>is container, openable, not open</tt><tt></tt>
+<p><tt>! chiudibile a chiave, non spostabile</tt>
+<br><tt>is lockable, static</tt>
+<br><tt>}</tt></blockquote>
+Per esercizio: come pu&ograve; un armadietto essere convertito in un passaggio
+segreto per un'altra stanza?
+<p><i>RISPOSTA</i>: basta aggiungere una propriet&agrave; <tt>door_to</tt>,
+come in:
+<blockquote><tt>door_to secondroom ! un nuovo oggetto stanza</tt></blockquote>
+Ora si pu&ograve; entrare nell'armadietto con: "<tt>go armadietto</tt>",
+"<tt>get into armadietto</tt>", "<tt>enter armadietto</tt>", ecc.
+<h3>
+<a NAME="InitEMain"></a>V.d. Init e Main</h3>
+Almeno due routine fanno tipicamente parte di un programma Hugo: <tt>Init</tt>
+e <tt>Main</tt>. (La seconda &egrave; obbligatoria. Il compilatore generer&agrave;
+un errore se non trova nessuna routine <tt>Main</tt>).
+<p><tt>Init</tt>, se esiste, viene chiamata una sola volta all'inizio del
+programma (cos&igrave; come durante un comando '<tt>restart</tt>'). La
+routine dovrebbe configurare tutte le variabili, gli oggetti e gli array
+necessari a cominciare il gioco.
+<p><tt>Main</tt> viene chiamata ad ogni turno. Dovrebbe prendersi cura
+delle faccende generali del gioco come l'incremento del contatore, cos&igrave;
+come l'esecuzione di eventi e script.
+<h3>
+<a NAME="Eventi"></a>V.e. Eventi</h3>
+Gli eventi sono utili per rendere vivo un gioco, cos&igrave; che piccoli
+sotterfugi, comportamenti, e avvenimenti possono essere forniti con piccolo
+sforzo.
+<p>Gli eventi sono anche routine, ma la loro caratteristica speciale &egrave;
+che possono essere attaccati ad un particolare oggetto, e che sono eseguiti
+in gruppo dal comando '<tt>runevents</tt>'.
+<p>Gli eventi vengono definiti con
+<blockquote><tt>event</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>}</tt></blockquote>
+per gli eventi globali e
+<blockquote><tt>event [in] &lt;oggetto></tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>}</tt></blockquote>
+per gli eventi <i>allegati</i> ad un particolare oggetto. (La parola '<tt>in</tt>'
+&egrave; opzionale, ma &egrave; utile per favorire la leggibilit&agrave;).
+Se un evento &egrave; allegato ad un oggetto viene eseguito solo quando
+quell'oggetto ha lo stesso '<i>nonno</i>' dell'oggetto giocatore (dove
+con 'nonno' ci si riferisce all'ultimo oggetto prima di 0, l'oggetto <tt>nothing</tt>).
+<p><i>NOTA</i>: Se l'evento non &egrave; un evento globale, la variabile
+globale <tt>self</tt> &egrave; impostata con il numero dell'oggetto a cui
+l'evento &egrave; allegato.
+<h3>
+<a NAME="EsOggettoOrologio"></a>Esempio: Costruzione di un oggetto orologio</h3>
+Supponiamo che ci sia un oggetto <tt>orologio</tt> in una stanza. Questa
+&egrave; una possibile routine:
+<blockquote><tt>event in orologio</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; local minuti, ore</tt><tt></tt>
+<p><tt>&nbsp;&nbsp;&nbsp; ore = counter / 60</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; minuti = counter - (ore * 60)</tt><tt></tt>
+<p><tt>&nbsp;&nbsp;&nbsp; if minuti = 0</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; {</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print "L'orologio suona
+";</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; select ore</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+case 1: print "l'una";</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+case 2: print "le due";</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+case 3: print "le tre";</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+.</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+.</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+.</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+case 12: print "le dodici";</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print " in punto."</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; }</tt>
+<br><tt>}</tt></blockquote>
+Ogni volta che il giocatore e l'orologio sono nella stessa stanza (quando
+un comando <tt>runevents</tt> viene eseguito), l'evento viene eseguito.
+<p>Ora, supponiamo che l'orologio debba essere udito in tutta la casa --
+cio&egrave; in ogni parte della mappa del gioco. Basta cambiare la definizione
+dell'evento in
+<blockquote><tt>event ! nessun oggetto specificato</tt>
+<br><tt>{</tt>
+<br><tt>&nbsp;&nbsp;&nbsp; ...</tt>
+<br><tt>}</tt></blockquote>
+render&agrave; l'evento globale. (In questo caso la variabile globale <tt>self</tt>
+non viene modificata).
+<br>&nbsp;
+<br>&nbsp;
+</FONT></FONT></FONT></P>
+<P ALIGN="CENTER"><IMG SRC="../Varie/Newgif/blurulr6.gif" NAME="Riga" ALIGN="BOTTOM" WIDTH="640" HEIGHT="2" BORDER="0"><BR><BR>
+<FONT SIZE="1" STYLE="font-size: 8pt"><A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A>
+<FONT SIZE="2">Torna alla Home Page</FONT> 
+<A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A></FONT>
+</P>
+<P ALIGN="CENTER"><FONT SIZE="1" STYLE="font-size: 8pt"><FONT COLOR="#000080">&copy;2000 Simone
+Zanella e &copy;2000 IF Italia. E' vietata la riproduzione.</FONT></FONT></P></BLOCKQUOTE>
+</BODY>
+</HTML>

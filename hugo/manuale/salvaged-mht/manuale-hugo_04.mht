@@ -1,0 +1,1782 @@
+From: <Salvato da Windows Internet Explorer 7>
+Subject: IF Italia - Il sito italiano sull'Interactive Fiction
+Date: Mon, 13 Apr 2009 23:10:23 +0200
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----=_NextPart_000_004B_01C9BC8D.063C8550"
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_004B_01C9BC8D.063C8550
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://plovec.interfree.it/IFItalia/Traduhugo/hugomchp4.htm
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>IF Italia - Il sito italiano sull'Interactive =
+Fiction</TITLE>
+<META http-equiv=3DCONTENT-TYPE content=3D"text/html; =
+charset=3Diso-8859-1"><LINK=20
+rev=3Dmade href=3D"mailto:dickdastardly@highway.it">
+<META content=3D"MSHTML 6.00.6000.16809" name=3DGENERATOR>
+<META=20
+content=3D"Tutto il materiale presente in questo sito =E8 (c)Simone =
+Zanella e (c)IF Italia ove non diversamente indicato. Tutti i diritti =
+sono riservati. E' vietata la riproduzione non autorizzata del sito e di =
+sue parti."=20
+name=3Dcopyright>
+<META=20
+content=3D"if interactive fiction avventura avventure testuale testuali =
+inform infocom tads ifitalia italia giochi gioco castello adventure text =
+simone zanella monkey island gratis freeware download"=20
+name=3Dkeywords>
+<META=20
+content=3D"Il pi=F9 vasto sito italiano sulle avventure testuali e =
+sull'Interactive Fiction"=20
+name=3Ddescription>
+<STYLE>P {
+	BORDER-RIGHT: medium none; PADDING-RIGHT: 0cm; BORDER-TOP: medium none; =
+PADDING-LEFT: 0cm; FONT-SIZE: 10pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: =
+medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: medium none; FONT-FAMILY: =
+"Verdana", sans-serif
+}
+</STYLE>
+</HEAD>
+<BODY>
+<BLOCKQUOTE>
+  <DIV TYPE=3D"HEADER">
+  <P=20
+  style=3D"BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 0.05cm; =
+BORDER-TOP: #000000 1px solid; PADDING-LEFT: 0.05cm; PADDING-BOTTOM: =
+0.05cm; BORDER-LEFT: #000000 1px solid; PADDING-TOP: 0.05cm; =
+BORDER-BOTTOM: #000000 1px solid"=20
+  align=3Dcenter><FONT color=3D#000080><FONT face=3D"Verdana, =
+sans-serif">IF ITALIA -=20
+  Il sito Italiano sull'Interactive Fiction</FONT></FONT></P></DIV>
+  <P align=3Dcenter><IMG height=3D104=20
+  src=3D"http://plovec.interfree.it/IFItalia/Varie/if3backup.jpg" =
+width=3D108=20
+  align=3Dmiddle border=3D0 name=3DLogosmall></P>
+  <P><FONT style=3D"FONT-SIZE: 10pt" size=3D2><FONT face=3D"Verdana, =
+sans-serif"><FONT=20
+  color=3D#000080>
+  <H2>IV. LA PROGRAMMAZIONE DI HUGO</H2>
+  <H3><A name=3DVariabili></A>IV.a. Variabili</H3>Hugo supporta due tipi =
+di=20
+  variabili: globali e locali. Entrambi i tipi contengono un intero a 16 =
+bit,=20
+  cos=EC una variabile pu=F2 memorizzare un valore semplice, il numero =
+di un=20
+  oggetto, un indirizzo del dizionario, un indirizzo di una routine, o =
+qualunque=20
+  altro tipo di dati standard di Hugo tramite un'assegnazione come:=20
+  <BLOCKQUOTE><TT>a =3D 1</TT> <BR><TT>nextobj =3D parent(obj)</TT>=20
+    <BR><TT>temp_word =3D "the"</TT></BLOCKQUOTE>Le variabili globali =
+sono visibili=20
+  per tutto il programma. Debbono essere definite in maniera simile a =
+quanto=20
+  viene fatto per le propriet=E0 e gli attributi come in=20
+  <BLOCKQUOTE><TT>global &lt;nome variabile globale&gt;[ =3D &lt;valore=20
+    iniziale&gt;]</TT></BLOCKQUOTE>Le variabili locali, d'altra parte, =
+sono=20
+  riconosciute solo all'interno della routine in cui sono state =
+definite.=20
+  Vengono definite usando=20
+  <BLOCKQUOTE><TT>local &lt;nome variabile locale&gt;[ =3D &lt;valore=20
+    iniziale&gt;]</TT></BLOCKQUOTE>Le variabili globali devono avere un =
+nome=20
+  univoco, diverso da quello usato per altri oggetti: le variabili =
+locali,=20
+  invece, possono usare lo stesso nome usato per altre variabili locali =
+in altre=20
+  routine.=20
+  <P>In entrambi i casi, globali o locali, il valore iniziale di default =
+=E8 0 se=20
+  nessun valore viene fornito. Ad esempio,=20
+  <BLOCKQUOTE><TT>global time_of_day =3D 1100</TT></BLOCKQUOTE>=E8 =
+uguale a 1100=20
+  quando il programma viene eseguito, ed =E8 visibile in ogni punto del =
+programma=20
+  ad ogni oggetto o routine. D'altra parte le variabili=20
+  <BLOCKQUOTE><TT>local a, max =3D 100, t</TT></BLOCKQUOTE>sono visibili =
+solo nel=20
+  blocco di codice in cui sono state definite, e sono inizializzate,=20
+  rispettivamente, a 0, 100 e 0, ogni volta che quella sezione di codice =
+(che=20
+  sia una routine, una routine propriet=E0, un evento, ecc.) viene =
+eseguita.=20
+  <P>Il compilatore definisce una serie di globali dell'interprete =
+(engine=20
+  globals): varibili globali referenziate direttamente dall'interprete, =
+ma che=20
+  possono essere utilizzate come ogni altra variabile globale. Sono:=20
+  =
+<BLOCKQUOTE><TT><B>object</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+    oggetto a cui si riferisce un'azione</TT>=20
+    <BR><TT><B>xobject</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; l'oggetto =
+
+    indiretto</TT>=20
+    =
+<BR><TT><B>self</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+=20
+    l'oggetto che punta a se stesso</TT>=20
+    <BR><TT><B>words</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+numero=20
+    di parole nel comando</TT>=20
+    <BR><TT><B>player</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+l'oggetto=20
+    giocatore</TT>=20
+    <BR><TT><B>actor</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+il=20
+    giocatore, od un personaggio (per gli script)</TT>=20
+    <BR><TT><B>verbroutine</B>&nbsp;&nbsp; la routine specificata dal=20
+    comando</TT> =
+<BR><TT><B>endflag</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; se=20
+    non =E8 falso (0), esegue la routine EndGame</TT>=20
+    <BR><TT><B>prompt</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; per =
+l'input;=20
+    il default =E8 "&gt;"</TT>=20
+    <BR><TT><B>objects</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; il numero =
+totale=20
+    di oggetti</TT> <BR><TT><B>system_status</B> dopo certe=20
+  operazioni</TT></BLOCKQUOTE>Le globali <TT>object</TT> e =
+<TT>xobject</TT>=20
+  vengono impostate dall'interprete in base al comando digitato dal =
+giocatore.=20
+  La globale <TT>self</TT> =E8 indefinita a meno che un oggetto sia =
+stato=20
+  referenziato (in una routine propriet=E0). In questo caso viene =
+impostata con il=20
+  numero dell'oggetto. La variabile <TT>player</TT> contiene il numero=20
+  dell'oggetto che il giocatore sta controllando; la variabile=20
+  <TT>verbroutine</TT> contiene l'indirizzo della routine specificata =
+nella=20
+  tavola della grammatica e corrispondente al comando inserito; la =
+varibile=20
+  <TT>endflag</TT> deve essere 0 a meno che non accada qualcosa che =
+faccia=20
+  terminare il gioco; e la variabile <TT>prompt</TT> contiene la parola =
+del=20
+  dizionario che appare all'inzio della riga di input.=20
+  <P>La variabile <TT>objects</TT> pu=F2 essere impostata dal giocatore, =
+ma senza=20
+  alcun effetto utile. L'interprete la reimposter=E0 al valore "vero" =
+ogni volta=20
+  che verr=E0 referenziata. (Tutti i numeri di oggetto variano da 0 al =
+valore di=20
+  <TT>objects</TT>). La variabile <TT>system_status</TT> pu=F2 essere =
+letta (dopo=20
+  un'operazione riguardante una risorsa o una chiamata di 'sistema'; =
+controllate=20
+  le sezioni corrispondenti per una spiegazione di queste funzioni) per=20
+  controllare se si =E8 verificato un errore. Consultate la sezione =
+riguardante le=20
+  "Risorse" per i possibili valori di ritorno.=20
+  <P>(<I>NOTA</I>: Impostando <TT>endflag</TT> ad un valore diverso da 0 =
+forza=20
+  un'interruzione <B>IMMEDIATA</B> del ciclo di gioco. Le istruzioni che =
+seguono=20
+  l'assegnazione del valore ad <TT>endflag</TT>, anche se nella stessa =
+funzione,=20
+  non verranno eseguite; il controllo passa direttamente all'interprete =
+che=20
+  chiama la routine <TT>EndGame</TT>).=20
+  <H3><A name=3DCostanti></A>IV.b Costanti</H3>Le costanti sono =
+semplicemente=20
+  delle etichette che identificano un valore non modificabile.=20
+  <BLOCKQUOTE><TT>constant NOME "John"</TT> <BR><TT>constant COGNOME=20
+    "Smith"</TT></BLOCKQUOTE>(Fate caso alla mancanza di un segno di =
+'<TT>=3D</TT>'=20
+  tra, ad esempio, <TT>NOME</TT> e <TT>"John"</TT>)=20
+  <BLOCKQUOTE><TT>print COGNOME; ", "; NOME</TT></BLOCKQUOTE>visualizza: =
+
+  <BLOCKQUOTE><TT>Smith, John</TT></BLOCKQUOTE>Le costanti possono =
+essere, come=20
+  ogni altro tipo di dato in Hugo, interi, voci del dizionario, numeri =
+di=20
+  oggetti, ecc.=20
+  <P>(Non =E8 necessario assegnare un valore definito ad una costante se =
+le=20
+  costanti devono essere usate come una specie di flag o indicatore. =
+Perci=F2,=20
+  <BLOCKQUOTE><TT>constant QUESTO_RISULTATO</TT> <BR><TT>constant=20
+    QUEL_RISULTATO</TT></BLOCKQUOTE>avranno un valore differente tra di =
+loro, cos=EC=20
+  come da ogni altra costante definita senza uno specifico valore).=20
+  <P>A volte pu=F2 essere utile numerare una serie di costanti in =
+sequenza. Invece=20
+  di definirle individualmente =E8 possibile usare:=20
+  <BLOCKQUOTE><TT>enumerate start =3D 1</TT> <BR><TT>{</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; LUNEDI, MARTEDI, MERCOLEDI, GIOVEDI, =
+VENERDI</TT>=20
+    <BR><TT>}</TT></BLOCKQUOTE>che assegna:=20
+  <BLOCKQUOTE><TT>LUNEDI =3D 1, MARTEDI =3D 2, MERCOLEDI =3D 3, GIOVEDI =
+=3D 4, VENERDI=20
+    =3D 5</TT></BLOCKQUOTE>Il valore <TT>start</TT> [inizio] =E8 =
+opzionale. Se viene=20
+  omesso si assume 0. Inoltre =E8 possible cambiare il valore corrente =
+in ogni=20
+  punto (questo riguarder=E0 anche i valori seguenti).=20
+  <BLOCKQUOTE><TT>enumerate</TT> <BR><TT>{</TT> =
+<BR><TT>&nbsp;&nbsp;&nbsp; A,=20
+    B, C =3D 5, D, E</TT> <BR><TT>}</TT></BLOCKQUOTE>imposta: <TT>A =3D =
+0, B =3D 1, C =3D=20
+  5, D =3D 6, E =3D 7</TT>.=20
+  <P>Infine =E8 possibile modificare il passo della numerazione usando =
+la parola=20
+  chiave "<TT>step</TT>" seguita da "<TT>+x</TT>", "<TT>-x</TT>", =
+"<TT>*x</TT>"=20
+  o "<TT>/x</TT>", dove <TT>x</TT> =E8 un valore intero. Per contare per =
+due:=20
+  <BLOCKQUOTE><TT>enumerate step *2</TT> <BR><TT>{</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; A =3D 1, B, C, D</TT>=20
+  <BR><TT>}</TT></BLOCKQUOTE>imposta: <TT>A =3D 1, B =3D 2, C =3D 4, D =
+=3D 8</TT>.=20
+  <P><I>NOTA</I>: la numerazione delle variabili globali =E8 possibile =
+usando lo=20
+  specificatore '<TT>globals</TT>', come in:=20
+  <BLOCKQUOTE><TT>enumerate globals</TT> <BR><TT>{</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; &lt;globale1&gt;, =
+&lt;globale2&gt;...</TT>=20
+    <BR><TT>}</TT></BLOCKQUOTE>Altrimenti lo specificatore =
+"<TT>constants</TT>"=20
+  viene considerato di default.=20
+  <H3><A name=3DScrivereIlTesto></A>IV.c. Scrivere il testo</H3>Il testo =
+pu=F2=20
+  essere stampato usando due metodi differenti. Il primo =E8 l'utilizzo =
+del=20
+  comando '<TT>print</TT>', la cui forma pi=F9 semplice =E8=20
+  <BLOCKQUOTE><TT>print "&lt;stringa&gt;"</TT></BLOCKQUOTE>dove=20
+  <TT>&lt;stringa&gt;</TT> rappresenta una serie di caratteri =
+alfanumerici e=20
+  simboli di punteggiatura.=20
+  <P>Il carattere di controllo barra inversa ("<TT>\</TT>") viene =
+gestito in=20
+  maniera speciale. Modifica il modo in cui il carattere che lo segue =
+nella=20
+  stringa viene trattato.=20
+  <CENTER>
+  <TABLE cellSpacing=3D3 cellPadding=3D3>
+    <TBODY>
+    <TR>
+      <TD><TT>\"</TT></TD>
+      <TD>inserisce le doppie virgolette</TD></TR>
+    <TR>
+      <TD><TT>\\</TT></TD>
+      <TD>inserisce il carattere di barra inversa</TD></TR>
+    <TR>
+      <TD><TT>\_</TT></TD>
+      <TD>inserisce uno spazio, ignorando la giustificazione a sinistra =
+per il=20
+        resto della stringa</TD></TR>
+    <TR>
+      <TD><TT>\n</TT></TD>
+      <TD>inserisce un carattere di nuova =
+riga</TD></TR></TBODY></TABLE></CENTER>
+  <P>Come normale, un singolo "<TT>\</TT>" alla fine di una riga segnala =
+che la=20
+  riga continua sulla successiva.=20
+  <P>Esempi:=20
+  <BLOCKQUOTE><TT>print "\"Salve!\""</TT>=20
+    <P><TT>&nbsp;&nbsp;&nbsp; "Salve!"</TT>=20
+    <P><TT>print "Stampa una...\n...riga nuova"</TT>=20
+    <P><TT>&nbsp;&nbsp;&nbsp; Stampa una...</TT> =
+<BR><TT>&nbsp;&nbsp;&nbsp;=20
+    ...riga nuova</TT>=20
+    <P><TT>print "Uno\\Due\\Tre"</TT>=20
+    <P><TT>&nbsp;&nbsp;&nbsp; Uno\Due\Tre</TT>=20
+    <P><TT>print "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Giustificato a =
+sinistra"</TT>=20
+    <BR><TT>print "\_&nbsp;&nbsp;&nbsp; Non giustificato a =
+sinistra"</TT>=20
+    <P><TT>Giustificato a sinistra</TT> <BR><TT>&nbsp;&nbsp;&nbsp;&nbsp; =
+Non=20
+    giustificato a sinistra</TT>=20
+    <P><TT>print "Questa =E8 una \</TT> <BR><TT>riga singola."</TT>=20
+    <P><TT>&nbsp;&nbsp;&nbsp; Questa =E8 una riga=20
+  singola.</TT></P></BLOCKQUOTE>(Sebbene=20
+  <BLOCKQUOTE><TT>print "Questa =E8 una</TT> <BR><TT>riga=20
+  singola."</TT></BLOCKQUOTE>produca lo stesso risultato, visto che=20
+  l'interruzione di riga avviene tra doppi apici).=20
+  <P><I>NOTA</I>: queste combinazioni di caratteri di controllo sono =
+valide solo=20
+  in stampa; non vengono trattate in maniera letterale, come, ad =
+esempio, le=20
+  espressioni che coinvolgono le voci del dizionario.=20
+  <P>Dopo ognuno dei comandi <TT>print</TT> indicati sopra, viene =
+stampata una=20
+  riga nuova. Per evitarlo =E8 necessario aggiungere un punto e virgola=20
+  (<TT>;</TT>) alla fine dell'istruzione <TT>print</TT>.=20
+  <BLOCKQUOTE><TT>print "Questa =E8 una ";</TT> <BR><TT>print "singola=20
+    riga."</TT>=20
+    <P><TT>&nbsp;&nbsp;&nbsp; Questa =E8 una singola =
+riga.</TT></P></BLOCKQUOTE>Le=20
+  istruzioni <TT>print</TT> possono anche contenere dei tipi di dato, o =
+una=20
+  combinazione di tipi di dato e stringhe. Il comando=20
+  <BLOCKQUOTE><TT>print "La "; object.name; " =E8=20
+  chiusa."</TT></BLOCKQUOTE>stamper=E0 la parola che si trova =
+all'indirizzo del=20
+  dizionario specificato da <TT>object.name</TT>, cos=EC se =
+<TT>object.name</TT>=20
+  punta alla parola "<TT>scatola</TT>", l'output risultante sar=E0:=20
+  <BLOCKQUOTE><TT>La scatola =E8 chiusa.</TT></BLOCKQUOTE>Per rendere =
+maiuscola la=20
+  prima lettera della parola specificata, si usa il modificatore=20
+  '<TT>capital</TT>'.=20
+  <BLOCKQUOTE><TT>print "La "; capital object.name; " =E8 chiusa."</TT>=20
+    <P><TT>&nbsp;&nbsp;&nbsp; La Scatola =E8 =
+chiusa.</TT></P></BLOCKQUOTE>Per=20
+  stampare il dato come un valore invece di indirizzare una voce di =
+dizionario,=20
+  si usa il modificatore '<TT>number</TT>'. Ad esempio, se la variabile=20
+  <TT>tempo</TT> contiene il numero 5,=20
+  <BLOCKQUOTE><TT>print "Restano ancora "; number tempo; " =
+secondi."</TT>=20
+    <P><TT>Restano ancora 5 secondi.</TT></P></BLOCKQUOTE>Se non fosse =
+stato usato=20
+  '<TT>number</TT>', l'interprete avrebbe cercato di trovare una parola=20
+  all'indirizzo 5 del dizionario, ed il risultato sarebbe stato una =
+stampa=20
+  errata.=20
+  <P><I>NOTA</I>: Soprattutto per gli scopi del debug, il modificatore=20
+  '<TT>hex</TT>' stampa il dato come un numero esadecimale invece di un =
+numero=20
+  decimale. Se la variabile <TT>val</TT> contiene 127,=20
+  <BLOCKQUOTE><TT>print number val; " =E8 "; hex val; " in =
+esadecimale."</TT>=20
+    <P><TT>127 =E8 7F in esadecimale.</TT></P></BLOCKQUOTE>Un secondo =
+modo per=20
+  stampare il testo =E8 quello di prenderlo dalla memoria del testo =
+(text bank),=20
+  da dove -- se non c'=E8 abbastanza memoria -- le sezioni di testo sono =
+caricate=20
+  dal disco solo quando =E8 richiesto dal programma. Questo metodo =E8 =
+stato=20
+  adottato cos=EC che lunghi blocchi di testo -- come le descrizioni e =
+la=20
+  narrazione -- non consumano spazio prezioso se la memoria =E8 =
+limitata. Il=20
+  comando consiste semplicemente in una stringa tra doppi apici senza =
+nessuna=20
+  istruzione che la precede.=20
+  <BLOCKQUOTE><TT>"Questa stringa verr=E0 scritta sul disco."</TT>=20
+    <P><TT>&nbsp;&nbsp;&nbsp; Questa stringa verr=E0 scritta sul=20
+  disco.</TT></P></BLOCKQUOTE>o=20
+  <BLOCKQUOTE><TT>"Cos=EC questa ";</TT> <BR><TT>"ed anche questa."</TT> =
+
+    <P><TT>&nbsp;&nbsp;&nbsp; Cos=EC questa ed anche=20
+  questa.</TT></P></BLOCKQUOTE>Fate caso al fatto che un punto e virgola =
+alla=20
+  fine dell'istruzione continua ad evitare la stampa su una nuova riga. =
+I=20
+  caratteri di controllo nella stringa sono ancora utilizzabili con =
+queste=20
+  istruzioni di stampa, ma visto che ogni comando =E8 una singola riga, =
+i tipi di=20
+  dato e gli altri modificatori non possono essere composti. Per questo=20
+  <BLOCKQUOTE><TT>"\"Salve,\"" disse."</TT></BLOCKQUOTE>scriver=E0=20
+  <BLOCKQUOTE><TT>"Salve," disse.</TT></BLOCKQUOTE>Nella memoria di =
+testo del=20
+  file <TT>.HEX</TT>, ma=20
+  <BLOCKQUOTE><TT>"Restano ancora "; number tempo_rimasto; "=20
+  secondi."</TT></BLOCKQUOTE>=E8 illegale.=20
+  <P>Il colore del testo pu=F2 essere cambiato usando il comando =
+'<TT>color</TT>'=20
+  (usabile anche secondo la sintassi Inglese "<TT>colour</TT>"). Il =
+formato =E8=20
+  <BLOCKQUOTE><TT>color &lt;primopiano&gt;[, &lt;sfondo&gt;[, &lt;colore =
+
+    dell'input&gt;]]</TT></BLOCKQUOTE>dove il colore di sfondo non =E8 =
+obbligatorio.=20
+  Se nessun colore di sfondo viene specificato, verr=E0 usato quello =
+corrente).=20
+  <P>Anche il colore dell'input non =E8 obbligatorio -- specifica il =
+colore usato=20
+  per stampare i comandi del giocatore.=20
+  <P>Il set standard di colori con i valori corrispondenti ed i nomi =
+delle=20
+  costanti =E8:=20
+  <CENTER>
+  <TABLE cellSpacing=3D3 cellPadding=3D3 border=3D1>
+    <TBODY>
+    <TR>
+      <TD><B>COLORE</B></TD>
+      <TD><B>VALORE</B></TD>
+      <TD><B>COSTANTE</B></TD></TR>
+    <TR>
+      <TD></TD>
+      <TD></TD>
+      <TD></TD></TR>
+    <TR>
+      <TD>Nero</TD>
+      <TD>0</TD>
+      <TD><TT>BLACK</TT></TD></TR>
+    <TR>
+      <TD>Blu</TD>
+      <TD>1</TD>
+      <TD><TT>BLUE</TT></TD></TR>
+    <TR>
+      <TD>Verde</TD>
+      <TD>2</TD>
+      <TD><TT>GREEN</TT></TD></TR>
+    <TR>
+      <TD>Ciano</TD>
+      <TD>3</TD>
+      <TD><TT>CYAN</TT></TD></TR>
+    <TR>
+      <TD>Rosso</TD>
+      <TD>4</TD>
+      <TD><TT>RED</TT></TD></TR>
+    <TR>
+      <TD>Magenta</TD>
+      <TD>5</TD>
+      <TD><TT>MAGENTA</TT></TD></TR>
+    <TR>
+      <TD>Marrone</TD>
+      <TD>6</TD>
+      <TD><TT>BROWN</TT></TD></TR>
+    <TR>
+      <TD>Bianco</TD>
+      <TD>7</TD>
+      <TD><TT>WHITE</TT></TD></TR>
+    <TR>
+      <TD>Grigio scuro</TD>
+      <TD>8</TD>
+      <TD><TT>DARK_GRAY</TT></TD></TR>
+    <TR>
+      <TD>Blu chiaro</TD>
+      <TD>9</TD>
+      <TD><TT>LIGHT_BLUE</TT></TD></TR>
+    <TR>
+      <TD>Verde chiaro</TD>
+      <TD>10</TD>
+      <TD><TT>LIGHT_GREEN</TT></TD></TR>
+    <TR>
+      <TD>Ciano chiaro</TD>
+      <TD>11</TD>
+      <TD><TT>LIGHT_CYAN</TT></TD></TR>
+    <TR>
+      <TD>Rosso chiaro</TD>
+      <TD>12</TD>
+      <TD><TT>LIGHT_RED</TT></TD></TR>
+    <TR>
+      <TD>Magenta chiaro</TD>
+      <TD>13</TD>
+      <TD><TT>LIGHT_MAGENTA</TT></TD></TR>
+    <TR>
+      <TD>Giallo</TD>
+      <TD>14</TD>
+      <TD><TT>YELLOW</TT></TD></TR>
+    <TR>
+      <TD>Bianco brill.</TD>
+      <TD>15</TD>
+      <TD><TT>BRIGHT_WHITE</TT></TD></TR>
+    <TR>
+      <TD></TD>
+      <TD></TD>
+      <TD></TD></TR>
+    <TR>
+      <TD>Primo piano default</TD>
+      <TD>16</TD>
+      <TD><TT>DEF_FOREGROUND</TT></TD></TR>
+    <TR>
+      <TD>Sfondo default</TD>
+      <TD>17</TD>
+      <TD><TT>DEF_BACKGROUND</TT></TD></TR>
+    <TR>
+      <TD>Primo piano statusline default</TD>
+      <TD>18</TD>
+      <TD><TT>DEF_SL_FOREGROUND</TT></TD></TR>
+    <TR>
+      <TD>Sfondo statusline default</TD>
+      <TD>19</TD>
+      <TD><TT>DEF_SL_BACKGROUND</TT></TD></TR>
+    <TR>
+      <TD>Primo piano corr.</TD>
+      <TD>20</TD>
+      <TD><TT>MATCH_FOREGROUND</TT></TD></TR></TBODY></TABLE></CENTER>
+  <P>(Le costanti sono definite in <TT>HUGOLIB.H</TT>; quando si usa la =
+libreria=20
+  non =E8 necessario riferirsi ai colori usando il loro valore =
+numerico).=20
+  <P>Ci si aspetta che, a parte il sistema, ogni colore venga stampato=20
+  differentemente dagli altri. Comunque la pratica suggerisce che il =
+bianco=20
+  (talvolta il bianco brillante) venga usato per la stampa del testo. =
+Blu e nero=20
+  vengono di solito usati per lo sfondo.=20
+  <P>Un testo magenta su uno sfondo ciano si ottiene con=20
+  <BLOCKQUOTE><TT>color MAGENTA, CYAN</TT></BLOCKQUOTE>o=20
+  <BLOCKQUOTE><TT>color 5, 3 !Se non si usa =
+HUGOLIB.H</TT></BLOCKQUOTE>Una riga=20
+  corrente pu=F2 essere riempita -- con spazi bianchi del colore =
+corrente -- fino=20
+  ad una specifica colonna (sostanzialmente un tabulatore) usando la =
+struttura=20
+  "<TT>print to...</TT>" come segue:=20
+  <BLOCKQUOTE><TT>print "Ora:"; to 40; "Data:"</TT></BLOCKQUOTE>dove il =
+valore=20
+  che segue il '<TT>to</TT>' non deve essere superiore alla lunghezza =
+massima=20
+  della riga indicata dalla variabile globale dell'interprete=20
+  <TT>linelength</TT>.=20
+  <P>L'output risultante =E8 qualcosa del tipo:=20
+  =
+<BLOCKQUOTE><TT>Ora:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+    Data:</TT></BLOCKQUOTE>Il testo pu=F2 essere posizionato usando il =
+comando=20
+  '<TT>locate</TT>'=20
+  <BLOCKQUOTE><TT>locate &lt;colonna&gt;, =
+&lt;riga&gt;</TT></BLOCKQUOTE>dove=20
+  <BLOCKQUOTE><TT>locate 1, 1</TT></BLOCKQUOTE>posiziona il testo in =
+output=20
+  all'angolo in alto a sinistra della finestra di testo corrente. N=E9=20
+  <TT>&lt;colonna&gt;</TT> n=E9 <TT>&lt;riga&gt;</TT> devono superare i =
+bordi=20
+  della finestra corrente -- l'interprete le riduce automaticamente se=20
+  necessario.=20
+  <H3><A name=3DAltriCaratteri></A>IV.d. Altri caratteri di =
+controllo</H3>Come=20
+  indicato prima quelli che seguono sono dei caratteri di controllo =
+validi che=20
+  possono essere racchiusi in una stringa:=20
+  <CENTER>
+  <TABLE cellSpacing=3D3 cellPadding=3D3>
+    <TBODY>
+    <TR>
+      <TD><TT>\"</TT></TD>
+      <TD>doppi apici</TD></TR>
+    <TR>
+      <TD><TT>\\</TT></TD>
+      <TD>una barra inversa</TD></TR>
+    <TR>
+      <TD><TT>\_</TT></TD>
+      <TD>uno spazio forzato, ignorando l giustificazione a sinistra per =
+il=20
+        resto della stringa</TD></TR>
+    <TR>
+      <TD><TT>\n</TT></TD>
+      <TD>riga nuova</TD></TR></TBODY></TABLE></CENTER>
+  <P>Il prossimo insieme di caratteri definisce l'aspetto del testo =
+impostando=20
+  il grassetto, il corsivo, il proporzionale ed il sottolineato. Non =
+tutti i=20
+  computer e sistemi operativi sono in grado di fornire tutti i tipi di =
+output;=20
+  comunque l'interprete si occuper=E0 di formattare in maniera corretta =
+tutti i=20
+  testi -- ad esempio, il testo stampato in maniera proporzionale =
+apparir=E0=20
+  corretto anche su un sistema con solo caratteri a spaziatura fissa, =
+come=20
+  l'MS-DOS (sebbene non verr=E0 stampato con la spaziatura =
+porporzionale).=20
+  <CENTER>
+  <TABLE cellSpacing=3D3 cellPadding=3D3>
+    <TBODY>
+    <TR>
+      <TD><TT>\B</TT></TD>
+      <TD>attiva il grassetto (<B>Bold</B>)</TD></TR>
+    <TR>
+      <TD><TT>\b</TT></TD>
+      <TD>disattiva il grassetto</TD></TR>
+    <TR>
+      <TD><TT>\I</TT></TD>
+      <TD>attiva il corsivo (<I>Italic</I>)</TD></TR>
+    <TR>
+      <TD><TT>\i</TT></TD>
+      <TD>disattiva il corsivo</TD></TR>
+    <TR>
+      <TD><TT>\P</TT></TD>
+      <TD>attiva la stampa proporzionale</TD></TR>
+    <TR>
+      <TD><TT>\p</TT></TD>
+      <TD>disattiva la stampa proporzionale</TD></TR>
+    <TR>
+      <TD><TT>\U</TT></TD>
+      <TD>attiva il sottolineato (<U>Underline</U>)</TD></TR>
+    <TR>
+      <TD><TT>\u</TT></TD>
+      <TD>disattiva il sottolineato</TD></TR></TBODY></TABLE></CENTER>
+  <P>(Lo stile della stampa pu=F2 anche essere modificato usando la =
+routine=20
+  <TT>Font</TT> di <TT>HUGOLIB.H</TT>. Le costanti di modifica dei =
+caratteri=20
+  possono essere combinate:=20
+  <BLOCKQUOTE><TT>Font(BOLD_ON | ITALICS_ON | =
+PROP_OFF)</TT></BLOCKQUOTE>dove le=20
+  costanti valide sono <TT>BOLD_ON, BOLD_OFF, ITALICS_ON, ITALICS_OFF,=20
+  UNDERLINE_ON, UNDERLINE_OFF, PROP_ON,</TT> e <TT>PROP_OFF</TT>).=20
+  <P>I caratteri speciali possono essere stampati attraverso i caratteri =
+di=20
+  controllo. Questi caratteri sono quelli compresi nel set di caratteri=20
+  <I>Latin-1</I>; se un sistema non =E8 in grado di visualizzarli, =
+stamper=E0 gli=20
+  equivalenti ASCII. <BR>(Gli esempi seguenti, tra parentesi, possono =
+non essere=20
+  visualizzati correttamente su tutti i computer e stampanti).=20
+  <BLOCKQUOTE><TT>\`&nbsp;&nbsp;&nbsp;&nbsp; accento grave seguito da =
+una=20
+    lettera</TT> <BR><TT>&nbsp;&nbsp;&nbsp; es. "\`a" stampa una 'a' con =
+accento=20
+    grave (=E0)</TT><TT></TT>=20
+    <P><TT>\'&nbsp;&nbsp;&nbsp;&nbsp; accento acuto seguito da una =
+lettera</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; es. "\'E" stampa una 'E' con accento =
+acuto=20
+    (=C9)</TT><TT></TT>=20
+    <P><TT>\~&nbsp;&nbsp;&nbsp;&nbsp; tilde seguita da una lettera</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; es. "\~n" stampa una 'n' con una tilde=20
+    (=F1)</TT><TT></TT>=20
+    <P><TT>\^&nbsp;&nbsp;&nbsp;&nbsp; accento circonflesso seguito da =
+una=20
+    lettera</TT> <BR><TT>&nbsp;&nbsp;&nbsp; es. "\^i" stampa una 'i' con =
+accento=20
+    circonflesso (=EE)</TT><TT></TT>=20
+    <P><TT>\:&nbsp;&nbsp;&nbsp;&nbsp; umlaut seguito da una lettera</TT> =
+
+    <BR><TT>&nbsp;&nbsp;&nbsp; es. "\:u" stampa una 'u' con umlaut=20
+    (=FC)</TT><TT></TT>=20
+    <P><TT>\,&nbsp;&nbsp;&nbsp;&nbsp; cedilla seguito da c o C</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; es. "\,c" stampa una 'c' con cedilla=20
+    (=E7)</TT><TT></TT>=20
+    <P><TT>\&lt; o \&gt;&nbsp;&nbsp;&nbsp; virgolette (=AB =BB)</TT>=20
+    <BR><TT>\!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; punto =
+esclamativo=20
+    inverso (=A1)</TT> =
+<BR><TT>\?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+    punto interrogativo inverso (=BF)</TT>=20
+    <BR><TT>\ae&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ae legate =
+(=E6)</TT>=20
+    <BR><TT>\AE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AE legate =
+(=C6)</TT>=20
+    <BR><TT>\c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; simbolo =
+del=20
+    centesimo (=A2)</TT>=20
+    <BR><TT>\L&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; simbolo =
+della=20
+    lira (=A3)</TT> =
+<BR><TT>\Y&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Yen=20
+    Giapponese (=A5)</TT>=20
+    <BR><TT>\-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; linea=20
+    (-)</TT><TT></TT>=20
+    <P><TT>\#xxx&nbsp;&nbsp;&nbsp;&nbsp; un qualunque carattere ASCII =
+dove xxx =E8=20
+    il codice ASCII a tre cifre del carattere che deve essere =
+stampato</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; es. "\#065" stampa una 'A' (ASCII=20
+  65).</TT></P></BLOCKQUOTE>
+  <H3><A name=3DEsMischiareStili></A>Esempio: Mischiare gli stili del =
+testo</H3>
+  <BLOCKQUOTE><TT>! Routine di esempio che stampa diversi stili e=20
+    colori</TT><TT></TT>=20
+    <P><TT>#include "hugolib.h"</TT><TT></TT>=20
+    <P><TT>routine PrintingSample</TT> <BR><TT>{</TT> =
+<BR><TT>&nbsp;&nbsp;&nbsp;=20
+    print "Il testo pu\`o essere stampato</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; in \Bgrassetto\b, =
+
+    \Icorsivo\i,</TT> <BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+
+    \Usottolineato\u, o</TT> =
+<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+    \Pproporzionale\p."</TT><TT></TT>=20
+    <P><TT>&nbsp;&nbsp;&nbsp; color RED ! o color 4</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; print "\nPronti. ";</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; color YELLOW ! color 14</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; print "Partenza. ";</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; color GREEN ! color 2</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; print "Via!"</TT>=20
+  <BR><TT>}</TT></P></BLOCKQUOTE>L'output sar=E0:=20
+  <BLOCKQUOTE><TT>Il testo pu=F2 essere stampato in <B>grassetto</B>,=20
+    <I>corsivo</I>, <U>sottolineato</U> o =
+</TT>proporzionale<TT>.</TT><TT></TT>=20
+    <P><TT><FONT color=3D#cc0000>Pronti.</FONT> <FONT=20
+    color=3D#ffcc00>Partenza.</FONT> <FONT=20
+  color=3D#009900>Via!</FONT></TT></P></BLOCKQUOTE>con "grassetto", =
+"corsivo",=20
+  "sottolineato" e "proporzionale" stampati nel rispettivo stile. =
+"Pronti",=20
+  "Partenza" e "Via!" appariranno sulla stessa riga in tre colori =
+differenti.=20
+  <P>Non tutti i computer sono in grado di stampare tutti gli stili. Le =
+versioni=20
+  base MS-DOS, ad esempio, usano i colori invece dei cambi di stile e =
+non=20
+  supportano la stampa proporzionale.=20
+  <H3><A name=3DOperatoriAssegnazioni></A>IV.e. Operatori ed =
+assegnazioni</H3>Hugo=20
+  consente l'uso degli operatori matematici standard:=20
+  <BLOCKQUOTE><TT>+</TT>&nbsp;&nbsp;&nbsp;&nbsp; addizione=20
+    <BR><TT>-</TT>&nbsp;&nbsp;&nbsp;&nbsp; sottrazione=20
+    <BR><TT>*</TT>&nbsp;&nbsp;&nbsp;&nbsp; moltiplicazione=20
+    <BR><TT>/</TT>&nbsp;&nbsp;&nbsp;&nbsp; divisione =
+intera</BLOCKQUOTE>I=20
+  confronti sono operatori validi, restituendo vero o falso booleano (1 =
+o 0)=20
+  cos=EC che=20
+  <BLOCKQUOTE><TT>2 + (x =3D 1)</TT> <BR><TT>5 - (x &gt;=20
+  1)</TT></BLOCKQUOTE>valgono rispettivamente 3 e 5 se <TT>x</TT> =E8 1, =
+e 2 e 4=20
+  se <TT>x</TT> =E8 2 o superiore.=20
+  <P>Operatori relazionali validi sono=20
+  <BLOCKQUOTE><TT>=3D</TT>&nbsp;&nbsp;&nbsp;&nbsp; uguale a=20
+    <BR><TT>~=3D</TT>&nbsp;&nbsp; diverso=20
+    <BR><TT>&lt;</TT>&nbsp;&nbsp;&nbsp;&nbsp; minore di=20
+    <BR><TT>&gt;</TT>&nbsp;&nbsp;&nbsp;&nbsp; maggiore di=20
+    <BR><TT>&lt;=3D</TT>&nbsp;&nbsp; minore o uguale=20
+    <BR><TT>&gt;=3D</TT>&nbsp;&nbsp; maggiore o uguale</BLOCKQUOTE>Sono =
+consentiti=20
+  anche gli operatori logici ('<TT>and</TT>', '<TT>or</TT>' e =
+'<TT>not</TT>').=20
+  <BLOCKQUOTE><TT>(x and y) or (a and b)</TT> <BR><TT>(j + 5) and not=20
+    ObjectIsLight(k)</TT></BLOCKQUOTE>Usando '<TT>and</TT>' si ha =
+<I>true</I> (1)=20
+  se entrambi i valori sono diversi da zero. <BR>Usando '<TT>or</TT>' si =
+ha=20
+  <I>true</I> se uno dei due non =E8 zero. '<TT>not</TT>' vale =
+<I>true</I> solo se=20
+  il valore seguente =E8 zero.=20
+  <BLOCKQUOTE><TT>1 and 1 =3D 1</TT> <BR><TT>1 and 0 =3D 0</TT> =
+<BR><TT>5 and 3 =3D=20
+    1</TT> <BR><TT>0 and 9 =3D 0</TT> <BR><TT>0 and 169 and 1 =3D 0</TT> =
+<BR><TT>1=20
+    and 12 and 1233 =3D 1</TT><TT></TT>=20
+    <P><TT>1 or 1 =3D 1</TT> <BR><TT>35 or 0 =3D 1</TT> <BR><TT>0 or 0 =
+=3D=20
+    0</TT><TT></TT>=20
+    <P><TT>not 0 =3D 1</TT> <BR><TT>not 1 =3D 0</TT> <BR><TT>not 8 =3D =
+0</TT><TT></TT>=20
+
+    <P><TT>1 and 7 or (14 and not 0) =3D 1</TT> <BR><TT>(0 or not 1) and =
+3 =3D=20
+    0</TT></P></BLOCKQUOTE>Inoltre sono forniti anche gli operatori =
+binari:=20
+  <BLOCKQUOTE><TT>1 &amp; 1 =3D 1</TT> (<TT>and</TT> binario) <BR><TT>1 =
+&amp; 0=20
+    =3D 0</TT> <BR><TT>1 | 0 =3D 1</TT> (<TT>or</TT> binario) <BR><TT>1 =
+| 1 =3D 1</TT>=20
+    <BR><TT>~0 =3D -1</TT> (<TT>not</TT>/inversione =
+binaria)</BLOCKQUOTE>(Una=20
+  spiegazione dettagliata degli operatori binari =E8 un po' oltre lo =
+scopo di=20
+  questo manuale; i programmatori potranno usare l'operatore =
+'<TT>|</TT>' per=20
+  combinare i parametri a mascheratura di bit per alcune funzioni della =
+libreria=20
+  come <TT>font</TT> e <TT>list-formats</TT>, ma solo gli utenti =
+avanzati=20
+  saranno in grado di usare gli operatori binari con ottimi risultati =
+nella=20
+  programmazione pratica).=20
+  <P>Qualunque tipo di dato di Hugo pu=F2 comparire in una espressione, =
+comprese=20
+  le routine, attributi, propriet=E0, costanti e variabili. Nella =
+valutazione=20
+  delle espressioni vengono applicate le regole matematiche standard di=20
+  precedenza negli operatori cos=EC che le espressioni tra parentesi =
+vengono=20
+  valutate prima, seguite da moltiplicazioni e divisioni, seguite da =
+addizioni e=20
+  sottrazioni.=20
+  <P>Alcune combinazioni di esempio sono:=20
+  <BLOCKQUOTE><TT>10 +=20
+    object.size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ! =
+costante=20
+    intera e propriet=E0</TT> <BR><TT>object is openable + 1&nbsp;&nbsp; =
+! test su=20
+    un attributo e costante</TT> <BR><TT>FindLight(location) =
++a&nbsp;&nbsp; !=20
+    valore di ritorno e variabile</TT> <BR><TT>1 and object is=20
+    light&nbsp;&nbsp;&nbsp; ! costante, test logico e=20
+  attributo</TT></BLOCKQUOTE>Le espressioni possono essere valutate e =
+assegnate=20
+  sia ad una variabile che ad una propriet=E0.=20
+  <BLOCKQUOTE><TT>&lt;variabile&gt; =3D =
+&lt;espressione&gt;</TT><TT></TT>=20
+    <P><TT>&lt;oggetto&gt;.&lt;propriet=E0&gt; [#&lt;elemento&gt;] =3D=20
+    &lt;espressione&gt;</TT></P></BLOCKQUOTE>In alcuni casi il =
+compilatore pu=F2=20
+  consentire l'uso di un'istruzione la cui parte sinistra =
+dell'assegnazione non=20
+  =E8 modificabile. Ad esempio=20
+  <BLOCKQUOTE><TT>Funzione() =3D &lt;espressione&gt;</TT></BLOCKQUOTE>o=20
+  <BLOCKQUOTE><TT>&lt;oggetto&gt;.#&lt;propriet=E0&gt; =3D=20
+  &lt;espressione&gt;</TT></BLOCKQUOTE>possono essere compilate, ma =
+queste=20
+  istruzioni generanno un errore di run-time nell'interprete.=20
+  <H3><A name=3DOperatoriEffic></A>IV.f. Operatori efficienti</H3>
+  <BLOCKQUOTE><TT>numero_di_oggetti =3D numero_di_oggetti + 1</TT> =
+<BR><TT>if=20
+    numero_di_oggetti &gt; 10</TT> <BR><TT>{</TT> =
+<BR><TT>&nbsp;&nbsp;&nbsp;=20
+    print "Troppi oggetti!"</TT> <BR><TT>}</TT></BLOCKQUOTE>pu=F2 essere =
+codificato=20
+  in maniera pi=F9 semplice=20
+  <BLOCKQUOTE><TT>if ++numero_di_oggetti &gt; 10</TT> <BR><TT>{</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; print "Troppi oggetti!"</TT>=20
+  <BR><TT>}</TT></BLOCKQUOTE>L'operatore '<TT>++</TT>' incrementa il =
+valore=20
+  della variabile seguente di uno prima di restituire il valore della =
+stessa.=20
+  Allo stesso modo si pu=F2 far precedere una variabile da '<TT>--</TT>' =
+per=20
+  decrementarne il valore di uno prima di resituire il valore. Poich=E9 =
+questi=20
+  operatori agiscono prima che il valore venga restituito vengono =
+chiamati=20
+  operatori di "pre incremento" e "pre decremento".=20
+  <P>Se '<TT>++</TT>' o '<TT>--</TT>' vengono DOPO una variabile, il =
+valore=20
+  della variabile viene restituito e poi il valore viene incrementato o=20
+  decrementato. In questo caso si parla di operatori di "post =
+incremento" e=20
+  "post decremento".=20
+  <P>Ad esempio,=20
+  <BLOCKQUOTE><TT>while ++i &lt; 5 ! pre incremento</TT> <BR><TT>{</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; print number i; " ";</TT>=20
+  <BR><TT>}</TT></BLOCKQUOTE>stamper=E0:=20
+  <BLOCKQUOTE><TT>1 2 3 4</TT></BLOCKQUOTE>Ma=20
+  <BLOCKQUOTE><TT>while i++ &lt; 5 ! post incremento</TT> <BR><TT>{</TT> =
+
+    <BR><TT>&nbsp;&nbsp;&nbsp; print number i; " ";</TT>=20
+  <BR><TT>}</TT></BLOCKQUOTE>stamper=E0:=20
+  <BLOCKQUOTE><TT>1 2 3 4 5</TT></BLOCKQUOTE>Visto che nel primo esempio =
+la=20
+  variabile viene incrementata prima di leggerne il valore, mentre nel =
+secondo =E8=20
+  incrementata dopo la lettura.=20
+  <P>=C8 anche possibile usare gli operatori '<TT>+=3D</TT>', =
+'<TT>-=3D</TT>',=20
+  '<TT>*=3D</TT>', '<TT>/=3D</TT>', '<TT>&amp;=3D</TT>' e =
+'<TT>|=3D</TT>'. Possono=20
+  essere usati anche per modificare una variabile mentre il suo valore =
+viene=20
+  controllato. Questi operatori, comunque, agiscono prima che il valore =
+venga=20
+  restituito.=20
+  <BLOCKQUOTE><TT>x =3D 5</TT> <BR><TT>y =3D 10</TT> <BR><TT>print "x =
+=3D "; number=20
+    x*=3Dy; ", y =3D "; number y</TT></BLOCKQUOTE>Risultato:=20
+  <BLOCKQUOTE><TT>x =3D 50, y =3D 10</TT></BLOCKQUOTE>Quando il =
+compilatore=20
+  interpreta una delle righe pi=F9 sopra gli operatori efficienti hanno =
+la=20
+  precedenza rispetto a quelli normali (quelli a carattere singolo).=20
+  <P>Ad esempio,=20
+  <BLOCKQUOTE><TT>x =3D y + ++zz</TT></BLOCKQUOTE>viene compilato in=20
+  <BLOCKQUOTE><TT>x =3D y++ + z</TT></BLOCKQUOTE>visto che '<TT>++</TT>' =
+viene=20
+  interpretato prima. Per codificare correttamente questa riga con un =
+pre=20
+  incremento della variabile <TT>z</TT> invece di un post incremento di=20
+  <TT>y</TT>:=20
+  <BLOCKQUOTE><TT>x =3D y + (++z)</TT></BLOCKQUOTE>
+  <H3><A name=3DArrayEStringhe></A>IV.g. Array e stringhe</H3>Prima di =
+questo=20
+  paragrafo non si =E8 parlato molto degli array. <BR>Gli array sono un =
+insieme di=20
+  valori che condividono un nome comune, e dove gli elementi sono =
+indicati=20
+  tramite un numero. Gli array si definiscono con=20
+  <BLOCKQUOTE><TT>array &lt;nomearray&gt; [&lt;dimensione=20
+  array&gt;]</TT></BLOCKQUOTE>dove <TT>&lt;dimensione array&gt;</TT> =
+deve essere=20
+  una costante numerica.=20
+  <P>Una definizione di array riserva un blocco di memoria di =
+<TT>&lt;dimensione=20
+  array&gt;</TT> parole a 16 bit, cos=EC che, ad esempio:=20
+  <BLOCKQUOTE><TT>array prova_array[10]</TT></BLOCKQUOTE>inizializza =
+dieci=20
+  parole a 16 bit per l'array.=20
+  <P>Bisogna tener presente che <TT>&lt;dimensione array&gt;</TT> =
+determina la=20
+  dimensione dell'array, <B>NON</B> il numero massimo di elementi. Il =
+conteggio=20
+  degli elementi comincia da 0, perci=F2 <TT>array_prova</TT>, con 10 =
+elementi, ha=20
+  i membri numerati da 0 a 9. Cercando di accedere a =
+<TT>array_prova[10]</TT> o=20
+  superiore viene restituito un valore senza senso. (Cercando di =
+assegnargli un=20
+  valore si potrebbe avere la sovrascrittura di qualcosa di importante, =
+come il=20
+  successivo array).=20
+  <P>Per prevenire queste letture/scritture fuori dai limiti dell'array =
+=E8=20
+  possibile leggere la lunghezza di un array con:=20
+  <BLOCKQUOTE><TT>array[]</TT></BLOCKQUOTE>senza nessun elemento =
+specificato.=20
+  Usando l'esempio di prima,=20
+  <BLOCKQUOTE><TT>print number array_prova[]</TT></BLOCKQUOTE>ritorna =
+"10".=20
+  <P>Gli elementi di un array possono essere assegnati pi=F9 di uno alla =
+volta,=20
+  come in=20
+  <BLOCKQUOTE><TT>&lt;nomearray&gt; =3D &lt;elemento1&gt;, =
+&lt;elemento2&gt;,=20
+    ...</TT></BLOCKQUOTE>dove <TT>&lt;elemento1&gt;</TT> e=20
+  <TT>&lt;elemento2&gt;</TT> possono essere espressioni o valori =
+singoli.=20
+  <P>Gli elementi non devono essere tutti dello stesso tipo, cos=EC che=20
+  <BLOCKQUOTE><TT>array_prova[0] =3D (19+5)*x, "Salve!",=20
+  FindLight(location)</TT></BLOCKQUOTE>=E8 perfettamente legale (sebbene =
+non sia,=20
+  probabilmente, molto utile). <BR>Pi=F9 comune =E8 un uso del tipo=20
+  <BLOCKQUOTE><TT>nomi[0] =3D "Ned", "Sue", "Bob", =
+"Maria"</TT></BLOCKQUOTE>o=20
+  <BLOCKQUOTE><TT>array_prova[2]) =3D 5, 4, 3, 2, =
+1</TT></BLOCKQUOTE>L'array pu=F2=20
+  essere usato con=20
+  <BLOCKQUOTE><TT>print nomi[0]; " e "; nomi[3]</TT><TT></TT>=20
+    <P><TT>&nbsp;&nbsp;&nbsp; Ned e Maria</TT></P></BLOCKQUOTE>o=20
+  <BLOCKQUOTE><TT>b =3D array_prova[3] + =
+array_prova[5]</TT></BLOCKQUOTE>che=20
+  imposta a variabile <TT>b</TT> a 4 + 2, o 6.=20
+  <P>Visto che lo spazio degli array viene allocato staticamente dal=20
+  compilatore, tutti gli array vanno dichiarati a livello globale. Gli =
+array=20
+  locali sono illegali, cos=EC come lo sono array interi passati come =
+paramentri.=20
+  Comunque gli elementi singoli di un array sono parametri validi.=20
+  <P>=C8 possibile passare l'indirizzo di un array come parametro, =
+cos=EC che la=20
+  routine possa accedere agli elementi dell'array tramire il =
+modificatore=20
+  '<TT>array</TT>'. Ad esempio, se elementi =E8 un array che contiene:=20
+  <BLOCKQUOTE><TT>elementi[0] =3D "mele"</TT> <BR><TT>elementi[1] =3D=20
+    "arance"</TT> <BR><TT>elementi[2] =3D "calzini"</TT></BLOCKQUOTE>La =
+routine:=20
+  <BLOCKQUOTE><TT>routine Test(v)</TT> <BR><TT>{</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; print array v[2]</TT>=20
+  <BR><TT>}</TT></BLOCKQUOTE>pu=F2 essere chiamata usando=20
+  <BLOCKQUOTE><TT>Test(elementi)</TT></BLOCKQUOTE>per produrre in output =
+
+  "<TT>calzini</TT>", sebbene <TT>v</TT> sia un parametro (cio=E8 una =
+variabile=20
+  locale), e non un array. La riga "<TT>print array v[2]</TT>" dice=20
+  all'inteprete di considerare <TT>v</TT> come un indirizzo di un array, =
+non=20
+  come un valore in s=E9.=20
+  <P>=C8 possibile usare anche gli array di stringhe, e Hugo prevede un =
+modo per=20
+  memorizzare una voce di dizionario in un array come una serie di =
+caratteri=20
+  usando il comando '<TT>string</TT>':=20
+  <BLOCKQUOTE><TT>string(&lt;indirizzo array&gt;, &lt;voce diz.&gt;, =
+&lt;max=20
+    lungh.&gt;)</TT></BLOCKQUOTE>(<TT>&lt;max lungh.&gt;</TT> =E8 =
+necessario perch=E9=20
+  l'inteprete non ha modo di sapere quali sono i limiti dell'array).=20
+  <P>Ad esempio,=20
+  <BLOCKQUOTE><TT>string(a, word[1], 10)</TT></BLOCKQUOTE>memorizzer=E0 =
+fino a 10=20
+  caratteri da <TT>word[1]</TT> in <TT>a</TT>.=20
+  <P><I>NOTA</I>: Nell'esempio precedente ci si aspetta che a abbia =
+almeno 11=20
+  elementi, visto che '<TT>string</TT>' memorizza un terminatore a 0 o =
+carattere=20
+  nullo dopo la stringa.=20
+  <P>Ad esempio,=20
+  <BLOCKQUOTE><TT>x =3D string(a, word[1], =
+10)</TT></BLOCKQUOTE>memorizza fino a=20
+  10 caratteri di <TT>word[1]</TT> nell'array <TT>a</TT>, e restituisce =
+la=20
+  lunghezza della stringa memorizzata nella variabile <TT>x</TT>.=20
+  <P>(Le variabili dell'interprete '<TT>parse$</TT>' e =
+'<TT>serial$</TT>'=20
+  possono essere usate al posto delle voci di dizionario; vedere la =
+sezione pi=F9=20
+  avanti sulle "ROUTINE DI CONGIUNZIONE: ParseError" per una =
+descrizione).=20
+  <P>Nella libreria sono definite le funzioni <TT>StringCopy</TT>,=20
+  <TT>StringEqual</TT>, <TT>StringLength</TT> e <TT>StringPrint</TT>, =
+che sono=20
+  estremamente utili quando si usano gli array di stringhe.=20
+  <P><TT>StringCopy </TT>copia un array di stringhe in un altro array.=20
+  <BLOCKQUOTE><TT>StringCopy(&lt;nuovo array&gt;, &lt;vecchio =
+array&gt;[,=20
+    &lt;lungh.&gt;])</TT></BLOCKQUOTE>Ad esempio,=20
+  <BLOCKQUOTE><TT>StringCopy(a, b)</TT></BLOCKQUOTE>copia il contenuto =
+di=20
+  <TT>b</TT> in <TT>a</TT>, mentre=20
+  <BLOCKQUOTE><TT>StringCopy(a, b, 5)</TT></BLOCKQUOTE>copia solo fino a =
+5=20
+  caratteri di <TT>b</TT> in <TT>a</TT>.=20
+  <BLOCKQUOTE><TT>x =3D StringEqual(&lt;stringa1&gt;, =
+&lt;stringa2&gt;)</TT>=20
+    <BR><TT>x =3D StringCompare(&lt;stringa1&gt;,=20
+  &lt;stringa2&gt;)</TT></BLOCKQUOTE><TT>StringEqual</TT> restituisce=20
+  <I>true</I> solo se i due array di stringhe indicati sono identici.=20
+  <TT>StringCompare</TT> restituisce 1 se <TT>&lt;stringa1&gt;</TT> =E8=20
+  alfabeticamente pi=F9 grande di <TT>&lt;stringa2&gt;</TT>, -1 se=20
+  <TT>&lt;stringa1&gt;</TT> =E8 inferiore di <TT>&lt;stringa2&gt;</TT>, =
+e 0 se le=20
+  due stringhe sono identiche.=20
+  <P><TT>StringLength</TT> restituisce la lunghezza di un array di =
+stringhe,=20
+  come in:=20
+  <BLOCKQUOTE><TT>lungh =3D StringLength(a)</TT></BLOCKQUOTE>e=20
+  <TT>StringPrint</TT> stampa un array di stringhe (od una parte).=20
+  <BLOCKQUOTE><TT>StringPrint(&lt;ind. array&gt;[, &lt;inizio&gt;,=20
+    &lt;fine&gt;])</TT></BLOCKQUOTE>Ad esempio, se contiene =
+"<TT>presto</TT>",=20
+  <BLOCKQUOTE><TT>StringPrint(a)</TT></BLOCKQUOTE>stampa =
+"<TT>presto</TT>", ma=20
+  <BLOCKQUOTE><TT>StringPrint(a, 1, 4)</TT></BLOCKQUOTE>stampa =
+"<TT>res</TT>".=20
+  (Il parametro <TT>&lt;inizio&gt;</TT> del primo esempio ha come valore =
+
+  predefinito 0, non 1 -- il primo elemento in un array =E8 numerato 0). =
+
+  <P>Un effetto collaterale interessante della possibilit=E0 di passare =
+gli=20
+  indirizzi degli array come parametri =E8 che =E8 possibile barare con =
+l'indirizzo,=20
+  cos=EC che, ad esempio,=20
+  <BLOCKQUOTE><TT>StringCopy(a, b+2)</TT></BLOCKQUOTE>copia <TT>b</TT> =
+in=20
+  <TT>a</TT>, cominciando dalla terza lettera di <TT>b</TT> (visto che =
+la prima=20
+  lettera di <TT>b</TT> =E8 <TT>b[0]</TT>).=20
+  <P>Bisogna tenere a mente che gli array di stringhe e le voci del =
+dizionario=20
+  sono due animali completamente separati, e che confrontarli =
+direttamente con=20
+  <TT>StringCompare</TT> non =E8 possibile. Cio=E8, mentre una voce di =
+dizionario =E8=20
+  un valore che rappresenta un indirizzo, un array di stringhe =E8 una =
+serie di=20
+  valori ognuno dei quali rappresentante un carattere della stringa.=20
+  <P>La libreria fornisce la funzione seguente per risolvere:=20
+  <BLOCKQUOTE><TT>StringDictCompare(&lt;array&gt;, &lt;voce=20
+    dizionario&gt;)</TT></BLOCKQUOTE>che restituisce gli stessi valori =
+(1, -1, 0)=20
+  di <TT>StringCompare</TT>, a seconda del fatto che l'array di stringhe =
+sia=20
+  alfabeticamente superiore, inferiore o uguale alla voce di dizionario. =
+
+  <P>(C'=E8 un comando complementare a '<TT>string</TT>', la funzione=20
+  '<TT>dict</TT>', che crea dinamicamente a runtime una nuova voce di=20
+  dizionario. La sintassi =E8:=20
+  <BLOCKQUOTE><TT>x =3D dict(&lt;array&gt;, &lt;max lungh.&gt;)</TT> =
+<BR><TT>x =3D=20
+    dict(parse$, &lt;max lungh.&gt;)</TT></BLOCKQUOTE>dove i contenuti =
+di=20
+  <TT>&lt;array&gt;</TT> o <TT>parse$</TT> vengono scritti nel =
+dizionario, per=20
+  un massimo di <TT>&lt;max lungh.&gt; </TT>caratteri, e l'indirizzo =
+della nuova=20
+  parola viene restituito.=20
+  <P>Comunque visto che questo richiede di estendere la lunghezza della =
+tabella=20
+  del dizionario nel file del gioco, =E8 necessario prevederlo durante =
+la=20
+  compilazione. Inserendo=20
+  =
+<BLOCKQUOTE><TT>$MAXDICTEXTEND=3D&lt;numero&gt;</TT></BLOCKQUOTE>all'iniz=
+io del=20
+  codice sorgente scriver=E0 un buffer di <TT>&lt;numero&gt;</TT> byte =
+vuoti alla=20
+  fine del dizionario. <BR>(<TT>MAXDICTEXTEND</TT> =E8 0 per default).=20
+  <P>L'estensione dinamica del dizionario =E8 usata, soprattutto, in =
+situazioni=20
+  dove il giocatore deve essere in grado di, ad esempio, dare un nome ad =
+un=20
+  oggetto, e poi riferirsi a quell'oggetto con il nuovo nome. In questo =
+caso, le=20
+  nuove parole devono esistere nel dizionario, e devono essere scritte =
+usando=20
+  '<TT>dict</TT>'. Comunque, una linea guida per i programmatori =E8 che =
+dovrebbe=20
+  esserci un limite al numero di nuove parole che il giocatore pu=F2 =
+creare, in=20
+  modo che la lunghezza totale delle nuove voci non superi mai=20
+  <TT>&lt;numero&gt;</TT>, tenendo a mente che la lunghezza di una voce =
+di=20
+  dizionario =E8 pari al numero di caratteri pi=F9 uno (il byte che =
+rappresenta la=20
+  lunghezza). In pratica la parola "<TT>test</TT>" richiede 5 byte.)=20
+  <H3><A name=3DEsUsareStringhe></A>Esempio: Usare le stringhe</H3>
+  <BLOCKQUOTE><TT>#include "hugolib.h"</TT><TT></TT>=20
+    <P><TT>array s1[32]</TT> <BR><TT>array s2[10]</TT> <BR><TT>array=20
+    s3[10]</TT><TT></TT>=20
+    <P><TT>routine ProvaStringhe</TT> <BR><TT>{</TT> =
+<BR><TT>&nbsp;&nbsp;&nbsp;=20
+    local a, lungh</TT><TT></TT>=20
+    <P><TT>&nbsp;&nbsp;&nbsp; a =3D "Questa =E8 una stringa di =
+prova."</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; lungh =3D string(s1, a, 35)</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; string(s2, "Mela", 9)</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; string(s3, "Pomodoro", 9)</TT><TT></TT>=20
+    <P><TT>&nbsp;&nbsp;&nbsp; print "a =3D \""; a; "\""</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; print "(Indirizzo dizionario: "; number =
+a;=20
+    ")"</TT> <BR><TT>&nbsp;&nbsp;&nbsp; print "s1 contiene \""; =
+StringPrint(s1);=20
+    "\""</TT> <BR><TT>&nbsp;&nbsp;&nbsp; print "(Indirizzo array: "; =
+number=20
+    s1;</TT> <BR><TT>&nbsp;&nbsp;&nbsp; print ", lungh. =3D "; number =
+lungh;=20
+    ")"</TT> <BR><TT>&nbsp;&nbsp;&nbsp; print "s2 \`e \""; =
+StringPrint(s2);</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; print "\", s3 \`e \""; StringPrint(s3);=20
+    "\""</TT><TT></TT>=20
+    <P><TT>&nbsp;&nbsp;&nbsp; "\nStringCompare(s1, s2) =3D ";</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; print number StringCompare(s1, s2)</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; "StringCompare(s1, s3) =3D ";</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; print number StringCompare(s1, s2)</TT>=20
+    <BR><TT>}</TT></P></BLOCKQUOTE>Il cui output sar=E0:=20
+  <BLOCKQUOTE><TT>a =3D "Questa =E8 una stringa di prova."</TT> =
+<BR><TT>(Indirizzo=20
+    dizionario: 1005)</TT> <BR><TT>s1 contiene "Questa =E8 una stringa =
+di=20
+    prova."</TT> <BR><TT>(Indirizzo array: 1637, lungh. =3D 30)</TT> =
+<BR><TT>s2=20
+    "Mela", s3 "Sedano"</TT><TT></TT>=20
+    <P><TT>StringCompare(s1, s2) =3D 1</TT> <BR><TT>StringCompare(s1, =
+s3) =3D=20
+    -1</TT></P></BLOCKQUOTE>Come =E8 evidente una voce di dizionario non =
+deve=20
+  necessariamente essere una parola singola; qualunque parte di un testo =
+che pu=F2=20
+  essere trattata come valore pu=F2 essere inserita nella tabella del =
+dizionario.=20
+  <P>L'argomento 35 nella prima chiamata alla funzione '<TT>string</TT>' =
+
+  consente di copiare fino a 35 caratteri di <TT>a</TT> in <TT>s1</TT>, =
+ma visto=20
+  che la lunghezza di <TT>a</TT> =E8 di soli 30 caratteri, solo 31 =
+valori=20
+  (compreso lo 0 terminale) vengono copiati, e la lunghezza della =
+stringa=20
+  <TT>s1</TT> =E8 restituita in <TT>lungh</TT>.=20
+  <P>Visto che "<TT>M(ela)</TT>" =E8 alfabeticamente inferiore di=20
+  "<TT>Q(esta...)</TT>", confrontando le due si ottiene -1. Come=20
+  "<TT>S(edano)</TT>" =E8 alfabeticamente superiore di =
+"<TT>Q(esta...)</TT>" e=20
+  <TT>StringCompare</TT> restituisce 1.=20
+  <H3><A name=3DCompilazioneCond></A>IV.h. Compilazione condizionale e =
+flusso del=20
+  programma</H3>Il flusso del programma pu=F2 essere controllato usando =
+una=20
+  variet=E0 di costrutti, ognuno dei quali =E8 costruito attorno ad =
+un'espressione=20
+  che valuta il falso [false] (zero) ed il non-falso (non-zero).=20
+  <P>La pi=F9 semplice tra questi =E8 l'istruzione '<TT>if</TT>' [se].=20
+  <BLOCKQUOTE><TT>if &lt;espressione&gt;</TT> <BR><TT>&nbsp;&nbsp;&nbsp; =
+
+    {...blocco di codice condizionale...}</TT></BLOCKQUOTE><I>NOTA</I>: =
+Le=20
+  parentesi graffe non sono necessarie se il blocco di codice =E8 una =
+riga=20
+  singola. Inoltre il blocco di codice condizionale pu=F2 cominciare (ed =
+anche=20
+  finire) sulla stessa riga dell'istruzione '<TT>if</TT>' a condizione =
+che=20
+  vengano usate le parentesi graffe.=20
+  <BLOCKQUOTE><TT>if &lt;espressione&gt;</TT> <BR><TT>&nbsp;&nbsp;&nbsp; =
+
+    ...riga singola...</TT><TT></TT>=20
+    <P><TT>if &lt;espressione&gt; {...blocco di codice=20
+  condizionale...}</TT></P></BLOCKQUOTE>Se le parentesi non venogno =
+usate per=20
+  una riga singola, il compilatore le inserisce automaticamente, sebbene =
+una=20
+  cura speciale deve essere tenuta quando si costruiscono blocchi di =
+codice che=20
+  nidificano diverse condizioni su singola riga.=20
+  <P>Mentre=20
+  <BLOCKQUOTE><TT>if &lt;espressione1&gt;</TT> =
+<BR><TT>&nbsp;&nbsp;&nbsp; if=20
+    &lt;espressione2&gt;</TT> =
+<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=20
+    ...blocco di codice condizionale...</TT></BLOCKQUOTE>pu=F2 essere =
+interpretata=20
+  in maniera corretta,=20
+  <BLOCKQUOTE><TT>if &lt;espressione1&gt;</TT> =
+<BR><TT>&nbsp;&nbsp;&nbsp; for=20
+    (...&lt;espressione2&gt;...)</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if=20
+    &lt;espressione3&gt;</TT>=20
+    =
+<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;=20
+    ...blocco di codice condizionale...</TT></BLOCKQUOTE>non lo sar=E0.=20
+  <P>(Tecnicamente parlando, il compilatore sbaglier=E0 =
+nell'individuazione della=20
+  fine del ciclo del costrutto '<TT>for</TT>' visto che il blocco di =
+codice=20
+  condizionale al suo interno si aspetta di finire con l'espressione=20
+  '<TT>for</TT>'. Ad ogni ciclo l'espressione '<TT>for</TT>' non =
+differenzia=20
+  correttamente la fine del ciclo condizionale. Il risultato potrebbe =
+essere un=20
+  overflow dello stack dell'interprete perch=E9 l'interprete =
+nidificher=E0=20
+  continuamente l'esecuzione di cicli '<TT>for</TT>' ricorsivi fino a =
+che non=20
+  finir=E0 lo spazio sullo stack).=20
+  <P>Il modo corretto di strutturare la stessa sezione di codice =
+dovrebbe=20
+  essere:=20
+  <BLOCKQUOTE><TT>if &lt;espressione1&gt;</TT> <BR><TT>{</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; for (...&lt;espressione2&gt;...)</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; {</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if=20
+    &lt;espressione3&gt;</TT>=20
+    =
+<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;=20
+    ...blocco di codice condizionale...</TT> <BR><TT>&nbsp;&nbsp;&nbsp; =
+}</TT>=20
+    <BR><TT>}</TT></BLOCKQUOTE><I>NOTA</I>: Il consiglio =E8 quello di =
+usare le=20
+  parentesi graffe per chiarificare la struttura del codice ogni volta =
+che si=20
+  usano costrutti cos=EC complessi. Questo deve essere applicato in =
+maniera=20
+  particolare quando si mischiano espressioni '<TT>if</TT>', =
+'<TT>for</TT>',=20
+  '<TT>while</TT>' e '<TT>do-while</TT>', specialmente quando sono =
+coinvolte=20
+  chiamate ricorsive a funzioni. Sebbene il risultato possa apparire =
+come=20
+  voluto, il metodo per ottenerlo =E8 scorretto, ed ogni esecuzione di =
+tale=20
+  costrutto potrebbe mandare in errore lo stack.=20
+  <P>Usi pi=F9 elaborati di '<TT>if</TT>' coinvolgono l'uso di =
+'<TT>elseif</TT>'=20
+  [altrimenti-se] ed '<TT>else</TT>' [altrimenti].=20
+  <BLOCKQUOTE><TT>if &lt;espressione1&gt;</TT> =
+<BR><TT>&nbsp;&nbsp;&nbsp;=20
+    ...primo blocco di codice condizionale...</TT> <BR><TT>elseif=20
+    &lt;espressione2&gt;</TT> <BR><TT>&nbsp;&nbsp;&nbsp; ...secondo =
+blocco di=20
+    codice condizionale...</TT> <BR><TT>elseif &lt;espressione2&gt;</TT> =
+
+    <BR><TT>&nbsp;&nbsp;&nbsp; ...terzo blocco di codice =
+condizionale...</TT>=20
+    <BR><TT>...</TT> <BR><TT>else</TT> <BR><TT>&nbsp;&nbsp;&nbsp; =
+...blocco di=20
+    codice di default...</TT></BLOCKQUOTE>In questo caso l'interprete =
+valuta=20
+  ciascuna espressione fino a che trova quella vera ed allora la esegue. =
+Poi il=20
+  controllo passa alla prossima istruzione non=20
+  <TT>if</TT>/<TT>elseif</TT>/<TT>else</TT> che segue il costrutto =
+condizionale.=20
+  Se nessuna espressione vera =E8 stata trovata, il blocco di codice di =
+default=20
+  viene eseguito. Se, ad esempio, <TT>&lt;espressione1&gt;</TT> genera =
+un valore=20
+  non falso, allora nessuna delle espressioni seguenti viene valutata.=20
+  <P>Naturalmente, non tutte e tre ('<TT>if</TT>', '<TT>elseif</TT>' e=20
+  '<TT>else</TT>') devono essere usate tutte le volte, e combinazioni =
+semplici=20
+  di "<TT>if-elseif</TT>" e "<TT>if-else</TT>" sono perfettamente =
+valide.=20
+  <P>In alcuni casi, l'istruzione '<TT>if</TT>' potrebbe non andar bene =
+per la=20
+  chiarezza, ed il costrutto "<TT>select-case</TT>" [seleziona-caso] =
+potrebbe=20
+  essere pi=F9 appropriato. La forma generale =E8:=20
+  <BLOCKQUOTE><TT>select &lt;var&gt;</TT> <BR><TT>&nbsp;&nbsp;&nbsp; =
+case=20
+    &lt;valore1&gt;[, &lt;valore2&gt;, ...]</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...primo blocco =
+di codice=20
+    condizionale...</TT> <BR><TT>&nbsp;&nbsp;&nbsp; case =
+&lt;valore3&gt;[,=20
+    &lt;valore4&gt;, ...]</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...secondo blocco =
+di=20
+    codice condizionale...</TT> <BR><TT>&nbsp;&nbsp;&nbsp; ...</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; case else</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...blocco di =
+codice di=20
+    default...</TT></BLOCKQUOTE>In questo caso l'interprete esegue =
+rapidamente una=20
+  valutazione che =E8, essenzialmente=20
+  <BLOCKQUOTE><TT>if &lt;var&gt; =3D &lt;valore1&gt; [or &lt;var&gt; =3D =
+
+    &lt;valore2&gt; ...]</TT></BLOCKQUOTE>Non ci sono limiti al numero =
+di valori=20
+  (separati da virgole) che possono apparire su una riga che segue il=20
+  '<TT>case</TT>'. Si applicano le stesse regole della '<TT>if</TT>' per =
+
+  racchiudere i blocchi di codice su pi=F9 righe tra parentesi graffe =
+(cos=EC per=20
+  tutti gli altri tipi di blocchi condizionali).=20
+  <P><I>NOTA</I>: I <TT>case</TT> non proseguono al successivo =
+<TT>case</TT>.=20
+  Bisogna pensare ai <TT>case</TT> che seguono il primo come a delle=20
+  '<TT>elseif</TT>' piuttosto che delle '<TT>if</TT>'; una volta che un=20
+  <TT>case</TT> a vero viene trovato, i seguenti sono ignorati.=20
+  <P>I cicli possono essere codificati usando '<TT>while</TT>' [mentre] =
+e=20
+  "<TT>do-while</TT>" [fai-mentre].=20
+  <BLOCKQUOTE><TT>while &lt;espressione&gt;</TT> =
+<BR><TT>&nbsp;&nbsp;&nbsp;=20
+    ...blocco di codice condizionale...</TT><TT></TT>=20
+    <P><TT>do</TT> <BR><TT>&nbsp;&nbsp;&nbsp; ...blocco di codice=20
+    condizionale...</TT> <BR><TT>while=20
+  &lt;espressione&gt;</TT></P></BLOCKQUOTE>Entrambi eseguono il blocco =
+di codice=20
+  condizionale mentre <TT>&lt;espressione&gt;</TT> =E8 vera =
+(<I>true</I>). Si=20
+  presume che in qualche modo il blocco di codice alteri=20
+  l'<TT>&lt;espressione&gt;</TT> cos=EC che ad un certo punto diventa =
+falsa=20
+  (<I>false</I>); altrimenti il ciclo viene eseguito senza fine.=20
+  <BLOCKQUOTE><TT>while x &lt;=3D 10</TT> <BR><TT>&nbsp;&nbsp;&nbsp; x =
+=3D x +=20
+    1</TT><TT></TT>=20
+    <P><TT>do</TT> <BR><TT>&nbsp;&nbsp;&nbsp; {x =3D x + 1</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; print "x vale "; number x}</TT> =
+<BR><TT>while x=20
+    &lt;=3D 10</TT></P></BLOCKQUOTE>L'unica differenza tra i due =E8 che =
+se=20
+  <TT>&lt;espressione&gt;</TT> =E8 falsa dall'esterno, il blocco di =
+codice=20
+  '<TT>while</TT>' non viene eseguito. Il blocco di codice =
+"<TT>do-while</TT>"=20
+  viene eseguito almeno una volta anche se <TT>&lt;espressione&gt;</TT> =
+=E8 falsa=20
+  dall'esterno.=20
+  <P>Il ciclo pi=F9 complesso usa l'istruzione '<TT>for</TT>' [per].=20
+  <BLOCKQUOTE><TT>for (&lt;assegnazione&gt;; &lt;espressione&gt;;=20
+    &lt;modificatore&gt;)</TT> <BR><TT>&nbsp;&nbsp;&nbsp; ...blocco di =
+codice=20
+    condizionale...</TT></BLOCKQUOTE>Ad esempio:=20
+  <BLOCKQUOTE><TT>for (i=3D1; i&lt;=3D15; i=3Di+1)</TT> =
+<BR><TT>&nbsp;&nbsp;&nbsp;=20
+    print "i vale"; number i</TT></BLOCKQUOTE>Prima di tutto =
+l'interprete esegue=20
+  l'assegnazione "<TT>i =3D 1</TT>". <BR>Poi esegue l'istruzione =
+<TT>print</TT>.=20
+  Successivamente controlla se l'espressione vale <I>true</I> [vero] (se =
+
+  <TT>i</TT> =E8 minore od uguale a 15). In questo caso esegue =
+l'istruzione=20
+  <TT>print</TT> e l'assegnazione del modificatore che incrementa =
+<TT>i</TT>.=20
+  Continua il ciclo fino a quando l'espressione vale <I>false</I> =
+[falso].=20
+  <P>Non tutti gli elementi del costrutto '<TT>for</TT>' sono necessari. =
+Ad=20
+  esempio l'assegnazione pu=F2 essere omessa, come in=20
+  <BLOCKQUOTE><TT>for (; i&lt;=3D15; i=3Di+1)</TT></BLOCKQUOTE>e =
+l'interprete user=E0=20
+  il valore esistente di <TT>i</TT>.=20
+  <P>Con=20
+  <BLOCKQUOTE><TT>for (i=3D1;;i=3Di+1)</TT></BLOCKQUOTE>Il ciclo viene =
+eseguito=20
+  senza fine, a meno che qualche altro mezzo di uscita viene fornito.=20
+  <P>L'espressione del modificatore non deve per forza essere =
+un'espressione.=20
+  <BR>Potrebbe essere, ad esempio, una routine che modifica una =
+variabile=20
+  globale, che viene controllata nel ciclo '<TT>for</TT>'.=20
+  <P>(Un secondo formato del ciclo '<TT>for</TT>' =E8:=20
+  <BLOCKQUOTE><TT>for &lt;var&gt; in &lt;oggetto&gt;</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; ...blocco di codice=20
+  condizionale...</TT></BLOCKQUOTE>che cicla attraverso tutti i figli di =
+
+  <TT>&lt;oggetto&gt;</TT> (se ne ha), impostando la variabile=20
+  <TT>&lt;var&gt;</TT> con il numero dell'oggetto di ogni figlio in =
+sequenza,=20
+  cos=EC che=20
+  <BLOCKQUOTE><TT>for i in valigia</TT> <BR><TT>&nbsp;&nbsp;&nbsp; print =
+
+    i.name</TT></BLOCKQUOTE>stampa i nomi di tutti gli oggetti presenti=20
+  nell'oggetto <TT>valigia</TT>).=20
+  <P>Il modo pi=F9 semplice di visualizzare la prima forma di un ciclo=20
+  '<TT>for</TT>' di Hugo, =E8 che=20
+  <BLOCKQUOTE><TT>for (&lt;assegnazione&gt;; &lt;espressione&gt;;=20
+    &lt;modificatore&gt;)</TT> <BR><TT>&nbsp;&nbsp;&nbsp; ...blocco di =
+codice=20
+    condizionale...</TT></BLOCKQUOTE>si traduce nell'equivalente di=20
+  <BLOCKQUOTE><TT>&lt;assegnazione&gt;</TT> <BR><TT>[while]=20
+    &lt;espressione&gt;</TT> <BR><TT>{</TT> <BR><TT>&nbsp;&nbsp;&nbsp; =
+...blocco=20
+    di codice condizionale...</TT> <BR><TT>&nbsp;&nbsp;&nbsp;=20
+    &lt;modificatore&gt;</TT> <BR><TT>}</TT></BLOCKQUOTE>che a turno si =
+traduce=20
+  nell'equivalente di=20
+  <BLOCKQUOTE><TT>&lt;assegnazione&gt;</TT> =
+<BR><TT>:&lt;etichetta1&gt;</TT>=20
+    <BR><TT>[if] &lt;espressione&gt;</TT> <BR><TT>{</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; ...blocco di codice condizionale...</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; &lt;modificatore&gt;</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; jump &lt;etichetta1&gt;</TT>=20
+  <BR><TT>}</TT></BLOCKQUOTE>(D'altra parte questo non =E8 un modo =
+particolarmente=20
+  facile di visualizzare qualunque cosa, e nella sua debolezza, forse =
+giustifica=20
+  l'esistenza di cicli '<TT>while</TT>', "<TT>do-while</TT>" e =
+'<TT>for</TT>'=20
+  non minacciosi).=20
+  <P>La conoscenza di come Hugo spezzi in una serie di nodi =
+'<TT>if</TT>' e=20
+  '<TT>jump</TT>' le istruzioni di ciclo comporta una facilit=E0 =
+nell'analisi del=20
+  flusso del programma usando Hugo Debugger (si veda l'Appendice E).=20
+  <P>Come risulta ovvio dall'illustrazione fatta sopra (forse =
+confusamente),=20
+  Hugo supporta i comandi '<TT>jump</TT>' [salta] e le etichette. =
+Un'etichetta =E8=20
+  semplicemente un identificatore specificato dall'utente preceduto dai =
+due=20
+  punti ('<TT>:</TT>') all'inizio di una riga. Il nome dell'etichetta =
+deve avere=20
+  un identificatore univoco all'interno del programma. (Bisogna avere =
+una certa=20
+  cura nell'utilizzo dell'istruzione '<TT>jump</TT>' -- generalmente =E8 =
+molto=20
+  meglio usare delle alternative, visto che esiste la possibilit=E0 di=20
+  sovraccaricare lo stack dell'interprete quando non si usano =
+costruttori di=20
+  clici standard).=20
+  <P>=C8 anche importante riconoscere -- particolarmente con le =
+istruzioni=20
+  '<TT>select</TT>' e '<TT>while</TT>' o "<TT>do-while</TT>" -- che=20
+  l'espressione viene valutata tutte le volte che il ciclo viene =
+eseguito, o,=20
+  nel caso dell'istruzione '<TT>select</TT>', per ogni case =
+corrispondente. Il=20
+  significato di questo =E8 evidente nell'esempio seguente=20
+  <BLOCKQUOTE><TT>select test.prop_routine</TT> =
+<BR><TT>&nbsp;&nbsp;&nbsp;=20
+    case 1</TT> <BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+{...}</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; case 2</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {...}</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; case 3</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+{...}</TT></BLOCKQUOTE>dove=20
+  <TT>prop_routine</TT> restituisce un valore da 1 a 3. La routine =
+propriet=E0=20
+  verr=E0 eseguita per 3 volte distinte, una per ogni istruzione =
+'<TT>case</TT>'.=20
+  Se <TT>prop_routine</TT> ha qualche altro effetto, come la modifica di =
+una=20
+  variabile globale o la stampa di un output, allora questo avverr=E0 =
+per 3 volte.=20
+
+  <P>Se questo effetto non =E8 accettabile si pu=F2 provare con=20
+  <BLOCKQUOTE><TT>local test_val ! imposta una variabile locale</TT>=20
+    <BR><TT>test_val =3D test.prop_routine ! e le assegna un valore</TT> =
+
+    <BR><TT>select test_val</TT> <BR><TT>&nbsp;&nbsp;&nbsp; case 1</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {...}</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; ...</TT></BLOCKQUOTE>cos=EC che=20
+  <TT>test.prop_routine</TT> viene chiamata una sola volta.=20
+  <P>Un caso simile potrebbe essere=20
+  <BLOCKQUOTE><TT>select random(3)</TT> <BR><TT>&nbsp;&nbsp;&nbsp; case =
+1:=20
+    {...}</TT> <BR><TT>&nbsp;&nbsp;&nbsp; case 2: {...}</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; case 3: {...}</TT></BLOCKQUOTE>si =
+potrebbe avere=20
+  qualcosa tipo:=20
+  <BLOCKQUOTE><TT>if random(3) =3D 1: {...}</TT> <BR><TT>elseif =
+random(3) =3D 2:=20
+    {...}</TT> <BR><TT>elseif random(3) =3D 3: {...}</TT></BLOCKQUOTE>In =
+altre=20
+  parole un valore casuale differente potrebbe essere valutato tutte le =
+volte.=20
+  Una scelta migliore sarebbe=20
+  <BLOCKQUOTE><TT>local b</TT> <BR><TT>b =3D random(3)</TT> =
+<BR><TT>select=20
+    b</TT> <BR><TT>&nbsp;&nbsp;&nbsp; case 1: {...}</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; ...</TT></BLOCKQUOTE>Una parola chiave =
+finale =E8=20
+  importante nel flusso di un programma, e questa =E8 '<TT>break</TT>'. =
+In=20
+  qualunque punto di un ciclo potrebbe essere necessario uscirne =
+immediatamente=20
+  (e forse prematuramente). '<TT>break</TT>' passa il controllo =
+all'istruzione=20
+  che segue il ciclo attuale.=20
+  <P>Nell'esempio=20
+  <BLOCKQUOTE><TT>do</TT> <BR><TT>{</TT> <BR><TT>&nbsp;&nbsp;&nbsp; =
+while=20
+    &lt;espressione2&gt;</TT> <BR><TT>&nbsp;&nbsp;&nbsp; {</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if=20
+    &lt;espressione3&gt;</TT>=20
+    =
+<BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;=20
+    break</TT> <BR><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+...</TT>=20
+    <BR><TT>&nbsp;&nbsp;&nbsp; }</TT> <BR><TT>&nbsp;&nbsp;&nbsp; =
+...</TT>=20
+    <BR><TT>}</TT> <BR><TT>while=20
+  &lt;espressione1&gt;</TT></BLOCKQUOTE>l'istruzione '<TT>break</TT>' =
+causa la=20
+  terminazione del ciclo '<TT>while</TT>' <TT>&lt;espressione2&gt;</TT>, =
+anche=20
+  se <TT>&lt;espressione2&gt;</TT> =E8 vera. Comunque il ciclo =
+"<TT>do-while</TT>"=20
+  <TT>&lt;espressione1&gt;</TT> continua ad essere eseguito.=20
+  <P>=C8 stato detto prima che le righe che terminano con '<TT>and</TT>' =
+o=20
+  '<TT>or</TT>' continuano alla riga successiva nel caso di lunghe =
+espressioni=20
+  condizionali. Una seconda utile funzionalit=E0 =E8 la capacit=E0 di =
+usare una=20
+  virgola per separare le opzioni in una espressione condizionale. Con =
+il=20
+  risultato che=20
+  <BLOCKQUOTE><TT>if parola[1] =3D "uno", "due", "tre"</TT> =
+<BR><TT>while=20
+    oggetto is open, not locked</TT> <BR><TT>if scatola not in salotto,=20
+    garage</TT> <BR><TT>if a~=3D1, 2, 3</TT></BLOCKQUOTE>sono tradotte =
+in=20
+  <BLOCKQUOTE><TT>if parola[1]=3D"uno" or parola[1]=3D"due" or=20
+    parola[1]=3D"tre"</TT> <BR><TT>while oggetto is open and oggetto is =
+not=20
+    locked</TT> <BR><TT>if scatola not in salotto and scatola non in =
+garage</TT>=20
+    <BR><TT>if a ~=3D 1 and a ~=3D 2 and a ~=3D 3</TT></BLOCKQUOTE>Fate =
+caso al fatto=20
+  che con confronto '<TT>=3D</TT>' o '<TT>in</TT>', una virgola =
+corrisponde ad un=20
+  confronto in '<TT>or</TT>'. Con '<TT>~=3D</TT>' od un confronto di un =
+attributo,=20
+  il risultato =E8 un confronto in '<TT>and</TT>'. <BR>&nbsp;=20
+</FONT></FONT></FONT>
+  <P></P>
+  <P align=3Dcenter><IMG height=3D2=20
+  src=3D"http://plovec.interfree.it/IFItalia/Varie/Newgif/blurulr6.gif" =
+width=3D640=20
+  align=3Dbottom border=3D0 name=3DRiga><BR><BR><FONT =
+style=3D"FONT-SIZE: 8pt" size=3D1><A=20
+  href=3D"http://plovec.interfree.it/IFItalia/indice.html"><IMG =
+height=3D32=20
+  alt=3D"Torna alla pagina iniziale"=20
+  src=3D"http://plovec.interfree.it/IFItalia/Varie/Newgif/home.gif" =
+width=3D32=20
+  align=3Dmiddle border=3D0></A> <FONT size=3D2>Torna alla Home =
+Page</FONT> <A=20
+  href=3D"http://plovec.interfree.it/IFItalia/indice.html"><IMG =
+height=3D32=20
+  alt=3D"Torna alla pagina iniziale"=20
+  src=3D"http://plovec.interfree.it/IFItalia/Varie/Newgif/home.gif" =
+width=3D32=20
+  align=3Dmiddle border=3D0></A></FONT> </P>
+  <P align=3Dcenter><FONT style=3D"FONT-SIZE: 8pt" size=3D1><FONT =
+color=3D#000080>=A92000=20
+  Simone Zanella e =A92000 IF Italia. E' vietata la=20
+riproduzione.</FONT></FONT></P></BLOCKQUOTE>
+<SCRIPT type=3Dtext/javascript>=0A=
+	var gaJsHost =3D (("https:" =3D=3D document.location.protocol) ? =
+"https://ssl." : "http://www.");=0A=
+	document.write(unescape("%3Cscript src=3D'" + gaJsHost + =
+"google-analytics.com/ga.js' type=3D'text/javascript'%3E%3C/script%3E"));=0A=
+    </SCRIPT>
+
+<SCRIPT src=3D"http://club.interfree.it/js/analytics_user.js"=20
+type=3Dtext/javascript>=0A=
+    </SCRIPT>
+</BODY></HTML>
+
+------=_NextPart_000_004B_01C9BC8D.063C8550
+Content-Type: image/jpeg
+Content-Transfer-Encoding: base64
+Content-Location: http://plovec.interfree.it/IFItalia/Varie/if3backup.jpg
+
+/9j/4AAQSkZJRgABAQEAZABkAAD/2wBDAAYEBQUFBAYFBQUHBgYHCQ8KCQgICRMNDgsPFhMXFxYT
+FRUYGyMeGBohGhUVHikfISQlJygnGB0rLismLiMmJyb/2wBDAQYHBwkICRIKChImGRUZJiYmJiYm
+JiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJib/wAARCADcAOUDAREA
+AhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQA
+AAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3
+ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWm
+p6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEA
+AwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSEx
+BhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElK
+U1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3
+uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD6poAK
+ACgAoAKACgCOeeG3iaWeVIo1GSzsAB+NAHn3iT4y/D/QWaOXWkvJ1/5ZWY805+o4/WgDzvVv2mbB
+WZdI8NXE47PcShP0ANAHPTftIeK5GJtvD+nRr2Dl2P8AMUAIn7RHjcnnRNKI9kk/+KoA0rH9ovX1
+YfbvDFrIvfyZWT+eaAOv0X9oTw1clU1TS77TmPVgBIo/Ln9KAPSPDvjXwt4iUf2TrVtcOf8Allv2
+v/3yeaAOioAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAiu7m3tLeS5upo4IY1LPJIwV
+VHqSaAPBviL+0RpWmPLp/hG3XVLpcqbuTIhU+w6t+g+tAHz94l8YeMPGVwX1jVrieMnIgU7Y1+ij
+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
+33NABgUALQAUAFABQAUAFABQAUAFABQB/9k=
+
+------=_NextPart_000_004B_01C9BC8D.063C8550
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://plovec.interfree.it/IFItalia/Varie/Newgif/blurulr6.gif
+
+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
+
+------=_NextPart_000_004B_01C9BC8D.063C8550
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Location: http://plovec.interfree.it/IFItalia/Varie/Newgif/home.gif
+
+R0lGODlhIAAgAKL/AFVNfysnQIiAssTA2cDAwP///wAAAAAAACH5BAEAAAQALAAAAAAgACAAQAO+
+SLrc/lCIUaQFJddsJRBO52lkyYkB4ACBgJmwZ6jQIt7uB9b4C2s3AG0hvJyAnZMlVSOyUoFowJAa
+NiO460NCwfV224nIZwpaCWaheq3GMRVBZXJT6bCsbddRLpDPmnc6Xi5TZ1qHiImKDT2CixYDgx4f
+Wlw4e3ZgIT0/Yy2bYz98hJpxoiRjQjY3p6goQ6aSo29ognp1Ihx8UXiCLxJIFnIAfw1Ft624hTWB
+bM6CxVdPeRcsM4aHa1Wqi90PCQA7
+
+------=_NextPart_000_004B_01C9BC8D.063C8550
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://club.interfree.it/js/analytics_user.js
+
+try {=0A=
+     var pageTracker =3D _gat._getTracker("UA-4500417-4");=0A=
+     pageTracker._trackPageview();=0A=
+} catch(err) {}=0A=
+
+------=_NextPart_000_004B_01C9BC8D.063C8550--

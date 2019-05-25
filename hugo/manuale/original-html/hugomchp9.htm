@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>IF Italia - Il sito italiano sull'Interactive Fiction
+</TITLE>
+      <LINK REV="made" HREF="mailto:dickdastardly@highway.it">
+	<META NAME="GENERATOR" CONTENT="NoteTab 4.82">
+	<META NAME="copyright" CONTENT="Tutto il materiale presente in questo sito è (c)Simone Zanella e (c)IF Italia ove non diversamente indicato. Tutti i diritti sono riservati. E' vietata la riproduzione non autorizzata del sito e di sue parti.">
+	<META name="keywords" content="if interactive fiction avventura avventure testuale testuali inform infocom tads ifitalia italia giochi gioco castello adventure text simone zanella monkey island gratis freeware download">
+	<META name="description" content="Il più vasto sito italiano sulle avventure testuali e sull'Interactive Fiction">	<STYLE>
+	<!--
+		P { border: none; padding: 0cm; font-family: "Verdana", sans-serif; font-size: 10pt }
+	-->
+	</STYLE>
+</HEAD>
+<BODY>
+<BLOCKQUOTE><DIV TYPE="HEADER">
+	<P ALIGN="CENTER" STYLE="border: 1px solid #000000; padding: 0.05cm"><FONT COLOR="#000080"><FONT FACE="Verdana, sans-serif">IF
+	ITALIA - Il sito Italiano sull'Interactive Fiction</FONT></FONT></P>
+</DIV>
+<P ALIGN="CENTER"><IMG SRC="../Varie/if3backup.jpg" NAME="Logosmall" ALIGN="MIDDLE" WIDTH="108" HEIGHT="104" BORDER="0"></P>
+<P><FONT SIZE="2" STYLE="font-size: 10pt"><FONT FACE="Verdana, sans-serif"><FONT COLOR="#000080">
+
+<h2>
+IX. IL CICLO DEL GIOCO</h2>
+Questo &egrave; il modello che segue <b>Hugo Engine</b> (l'interprete)
+durante l'esecuzione del programma. (Vengono menzionate anche le chiamate
+alle routine <tt>before</tt> e a <tt>verbroutine</tt> da parte di <tt>Perform</tt>
+in <tt>HUGOLIB.H</tt>. Sebbene non facenti parte necessariamente del ciclo
+di gioco -- visto che possono o meno essere incluse in un programma --
+vengono menzionate perch&eacute; sono relative ad ogni programma Hugo che
+faccia uso della libreria standard di Hugo).
+<p>(<tt>INIT</tt>: la routine <tt>Init</tt> viene chiamata solo quando
+il programma viene eseguito la prima volta, o quando viene dato un comando
+'<tt>restart</tt>' [ricomincia]).
+<p><tt>MAIN</tt>: all'inizio del ciclo di gioco l'interprete chiama la
+routine <tt>Main</tt>. La routine dovrebbe -- come nei programmi di esempio
+forniti -- prendersi cura dell'avanzamento del contatore dei turni, eseguire
+il comando '<tt>runevents</tt>' e chiamare le routine della libreria come
+<tt>RunScripts</tt>
+e <tt>PrintStatusLine</tt>.
+<p><tt>INPUT</tt>: l'input da tastiera viene ricevuto.
+<p><tt>PARSING</tt>: viene controllata la validit&agrave; della riga di
+input, vengono controllati i sinonimi ed altre parole speciali, e viene
+chiamata (se presente) la routine <tt>Parse</tt> dell'utente.
+<p><tt>GRAMMAR MATCHING</tt>: l'interprete cerca di far corrispondere la
+riga di input con un verbo ed una sintassi validi nella tavola della grammatica.
+Se non viene trovata nessuna corrispondenza l'interprete torna ad <tt>INPUT</tt>.
+<br>Altrimenti se viene trovata una corrispondenza si ha almeno l'impostazione
+della variabile globale <tt>verbroutine</tt>, cos&igrave; come le eventuali
+<tt>object</tt> e <tt>xobject</tt>.
+<blockquote><tt>BEFORE ROUTINES</tt> (chiamate da <tt>Perform</tt> in <tt>HUGOLIB.H</tt>):
+<blockquote>se degli oggetti sono stati specificati nella riga di input,
+le loro routine before vengono controllate nel seguente ordine, per ciascun
+oggetto:
+<p><tt>player.before</tt>
+<br><tt>location.before</tt>
+<br><tt>xobject.before</tt> (se appropriato)
+<br><tt>object.before</tt> (se appropriato)
+<p>Se una qualunque di queste routine restituisce <i>true</i>, l'interprete
+salta la routine verbo.
+<p><tt>VERB ROUTINE</tt> (chiamata da <tt>Perform</tt> in <tt>HUGOLIB.H</tt>):
+<br>se nessuna routine <tt>before</tt> restituisce <i>true</i> la routine
+verbo viene eseguita.
+<p>Se un'azione viene completata con successo, la routine verbo deve restituire
+<i>true</i>. Un valore di ritorno <i>false</i> annulla gli eventuali comandi
+rimanenti sulla riga di input.
+<p><tt>Perform</tt> non esegue nessuna propriet&agrave; <tt>after</tt>
+per <tt>object</tt> o <tt>xobject</tt>; questo &egrave; compito della routine
+verbo. Esegue sia <tt>player.after</tt> che <tt>location.after</tt> se
+la routine verbo restituisce <i>true</i>.</blockquote>
+</blockquote>
+(Il controllo ritorna dalla routine <tt>Perform</tt> della libreria all'interprete)
+<p>Quando ha finito l'interprete ritorna a <tt>MAIN</tt>, chiamando la
+routine <tt>Main</tt> solo se l'ultimo verbo verificato non era un <tt>xverb</tt>.
+<p>Impostare la variabile globale <tt>endflag</tt> in qualunque punto ad
+un valore diverso da zero comporta il termine del ciclo di gioco e l'esecuzione
+della routine <tt>EndGame</tt>.
+<p><i>NOTA</i>: Le informazioni di annullamento richiamate da '<tt>undo</tt>'
+vengono salvate ad ogni turno solo durante la routine <tt>Main</tt> (compreso
+qualunque comando o funzione richiamati al suo interno, come gli eventi,
+le micce ed i demoni, o gli script dei personaggi) e le routine verbo (a
+meno che il verbo sia un <tt>xverb</tt>). &Egrave; perci&ograve; raccomandato
+che nessun'altra routine cambi un dato di gioco significativo, visto che
+questo non sarebbe recuperabile da '<tt>undo</tt>'.
+<br>&nbsp;
+<br>&nbsp;
+</FONT></FONT></FONT></P>
+<P ALIGN="CENTER"><IMG SRC="../Varie/Newgif/blurulr6.gif" NAME="Riga" ALIGN="BOTTOM" WIDTH="640" HEIGHT="2" BORDER="0"><BR><BR>
+<FONT SIZE="1" STYLE="font-size: 8pt"><A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A>
+<FONT SIZE="2">Torna alla Home Page</FONT> 
+<A HREF="../indice.html"><IMG SRC="../Varie/Newgif/home.gif" ALIGN="MIDDLE" WIDTH="32" HEIGHT="32" BORDER="0" ALT="Torna alla pagina iniziale"></A></FONT>
+</P>
+<P ALIGN="CENTER"><FONT SIZE="1" STYLE="font-size: 8pt"><FONT COLOR="#000080">&copy;2000 Simone
+Zanella e &copy;2000 IF Italia. E' vietata la riproduzione.</FONT></FONT></P></BLOCKQUOTE>
+</BODY>
+</HTML>

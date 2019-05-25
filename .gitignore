@@ -15,6 +15,7 @@ ___*
 ## Anteprime HTML di lavoro
 ###########################
 **/asciidoc/*.html
+!**/docinfo.html
 
 ## Nel caso qualcuno stesse ancora usando Ruby Sass:
 .sass-cache/

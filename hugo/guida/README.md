@@ -4,6 +4,10 @@ Ristampa digitale (AsciiDoc » HTML5) ai fini dell'archiviazione della guida _Hu
 
 - [`guida-hugo.html`][guida html] — [clicca qui per un'anteprima live HTML][guida live].
 
+Archiviata sullo [IF Archive] in data 2019/06/25:
+
+- [if-archive/starters/italian]/[Hugo_per_giocare.zip]  (HTML + AsciiDoc) 
+
 Curatore ristampa: [Tristano Ajmone].
 
 # File del progetto
@@ -50,6 +54,12 @@ Ho contattato Paolo Vece, autore della guida, il quale mi ha fornito il consenso
 [MHTML]: https://it.wikipedia.org/wiki/MHTML
 [non è presente nell'incarnazione attuale del sito IF Italia]: http://ifitalia.oldgamesitalia.net/pmwiki/pmwiki.php?n=Main.Manuali
 [Asciidoctor]: https://asciidoctor.org/ "Visita il sito di Asciidoctor"
+
+<!-- IF Archive -->
+
+[IF Archive]: https://www.ifarchive.org/ "Visita lo IF Archive"
+[if-archive/starters/italian]: https://www.ifarchive.org/indexes/if-archive/starters/italian/ "Vai alla sezione 'starters/italian' dello IF Archive"
+[Hugo_per_giocare.zip]: https://www.ifarchive.org/if-archive/starters/italian/Hugo_per_giocare.zip "Scarica lo zippato della guida 'Hugo per giocare' dallo IF Archive"
 
 <!-- WaybackMachine: plovec.interfree.it -->
 

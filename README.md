@@ -60,12 +60,13 @@ Qui di seguito sono riportate le risorse destinate all'archiviazione, suddivise 
 
 È stato pianificato il recupero, la ristampa e l'archiviazione delle seguenti risorse:
 
-- [ ] __"Hugo per giocare"__, guida scritta da Paolo Vece.
+- [x] __"Hugo per giocare"__, guida scritta da Paolo Vece.
     + [x] Richiesta permessi di ristampa e archivizione.
     + [x] Conversione in AsciiDoc e ristampa in HTML5.
-    + [ ] Archiviazione su IF Archive.
+    + [x] Archiviazione su IF Archive.
         * [x] Richiesta inoltrata il 2019/05/25.
-        * [ ] In attesa di risposta.
+        * [x] Risorsa archiviata il 2019/06/25 (HTML + AsciiDoc) in:
+            - [if-archive/starters/italian]/[Hugo_per_giocare.zip]
 - [ ] __"Hugo v2.5, Manuale del programmatore"__, scritto da Ken Tessman e tradotto da Paolo Vece. (Vedi [#1])
     + [x] Richiesta permessi di ristampa e archivizione.
     + [ ] Conversione in AsciiDoc e ristampa in HTML5.
@@ -76,17 +77,21 @@ Qui di seguito sono riportate le risorse destinate all'archiviazione, suddivise 
     + [ ] Richiesta permessi di ristampa e archivizione.
     + [ ] Archiviazione su IF Archive.
 
-
 <!-----------------------------------------------------------------------------
                                REFERENCE LINKS                                
 ------------------------------------------------------------------------------>
 
-[IF Archive]: https://www.ifarchive.org/ "Visita lo IF Archive"
 
 [Progetto Lazzaro]: http://ifitalia.oldgamesitalia.net/pmwiki/pmwiki.php?n=Main.ProgettoLazzaro
 
 [Terra d'IF]: https://github.com/tajmone/Archivio-AT-Tristano/tree/master/Terra_dIF
 [Terra IFArchive]: http://ifarchive.org/indexes/if-archiveXmagazinesXTerra.html "Vai alla sezione 'Terra d'IF' sullo IF Archive"
+
+<!-- IF Archive -->
+
+[IF Archive]: https://www.ifarchive.org/ "Visita lo IF Archive"
+[if-archive/starters/italian]: https://www.ifarchive.org/indexes/if-archive/starters/italian/ "Vai alla sezione 'starters/italian' dello IF Archive"
+[Hugo_per_giocare.zip]: https://www.ifarchive.org/if-archive/starters/italian/Hugo_per_giocare.zip "Scarica lo zippato della guida 'Hugo per giocare' dallo IF Archive"
 
 <!-- link progetto -->
 

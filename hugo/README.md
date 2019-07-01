@@ -8,6 +8,28 @@ Questa directory contiene tutto il materiale rinvenuto per il sistema di svilupp
 
 Curatore ristampa: [Tristano Ajmone].
 
+# Stato del progetto
+
+È stato pianificato il recupero, la ristampa e l'archiviazione delle seguenti risorse:
+
+- [x] __"Hugo per giocare"__:
+    + [x] Richiesta permessi di ristampa e archivizione.
+    + [x] Conversione in AsciiDoc e ristampa in HTML5.
+    + [x] Archiviazione su IF Archive.
+        * [x] Richiesta inoltrata il 2019/05/25.
+        * [x] Risorsa archiviata il 2019/06/25 (HTML + AsciiDoc) in:
+            - [if-archive/starters/italian]/[Hugo_per_giocare.zip]
+- [ ] __"Hugo v2.5, Manuale del programmatore"__:
+    + [x] Richiesta permessi di ristampa e archivizione.
+    + [ ] Conversione in AsciiDoc e ristampa in HTML5.
+        * [x] conversione in corso (in locale).
+    + [ ] Archiviazione su IF Archive.
+- [ ] __Libreria italiana di Hugo__:
+    + [ ] Individuare chi l'ha tradotta.
+    + [ ] Richiesta permessi di ristampa e archivizione.
+    + [ ] Archiviazione su IF Archive.
+
+
 # Permessi
 
 Il _Manuale_ di Hugo, di Ken Tessman, è prottetto da copyright ma l'autore ha concesso via email il permesso di ripubblicare e archiviare la traduzione italiana sia del manuale che della libreria.
@@ -37,6 +59,12 @@ Per sostenere il lavoro di archiviazione di questo progetto, Paolo Vece ha reso 
 
 [Hugo]: http://www.generalcoffee.com/hugo/gethugo.html "Visita il sito di Hugo"
 [MHTML]: https://it.wikipedia.org/wiki/MHTML
+
+<!-- IF Archive -->
+
+[IF Archive]: https://www.ifarchive.org/ "Visita lo IF Archive"
+[if-archive/starters/italian]: https://www.ifarchive.org/indexes/if-archive/starters/italian/ "Vai alla sezione 'starters/italian' dello IF Archive"
+[Hugo_per_giocare.zip]: https://www.ifarchive.org/if-archive/starters/italian/Hugo_per_giocare.zip "Scarica lo zippato della guida 'Hugo per giocare' dallo IF Archive"
 
 <!-- WaybackMachine -->
 

@@ -2,6 +2,8 @@
 
 - https://github.com/tajmone/lazzaro2
 
+Welcome to the __Lazzaro II__ project for the preservation of the Italian Interactive Fiction heritage. [Click here for the English presentation].
+
 Benvenuti al progetto «Lazzaro II» per la preservazione del patrimonio storico dell'Interactive Fiction italiano.
 
 Creato in data 2019/05/16 da [Tristano Ajmone].
@@ -14,6 +16,9 @@ Creato in data 2019/05/16 da [Tristano Ajmone].
 
 - [Introduzione](#introduzione)
 - [Partecipazione](#partecipazione)
+- [Contenuti del progetto](#contenuti-del-progetto)
+- [Stato del progetto](#stato-del-progetto)
+    - [Hugo](#hugo)
 
 <!-- /MarkdownTOC -->
 
@@ -21,7 +26,7 @@ Creato in data 2019/05/16 da [Tristano Ajmone].
 
 # Introduzione
 
-Ispirato al [Progetto Lazzaro] che, dalla fine degli '90 al 2006, si dedicò alla ressurezione delle avventure testuali che negli anni '80 vennero commercializzate nelle edicole italiane, tramite cassette audio per gli homecomputer, questo nuovo progetto si prefigge lo scopo di preservare il patrimonio italiano dell'Interactive Fiction.
+Ispirato al [Progetto Lazzaro] che, dalla fine degli '90 al 2006, si dedicò alla resurezione delle avventure testuali che negli anni '80 vennero commercializzate nelle edicole italiane, tramite cassette audio per gli homecomputer, questo nuovo progetto si prefigge lo scopo di preservare il patrimonio italiano dell'Interactive Fiction.
 
 L'obiettivo è quello di archiviare più materiale possibile sullo [IF Archive], licenza permettendo. Purtroppo, molti dei portali storici di riferimento per l'Interactive Fiction italiano non sono più online, e il rischio è che col passare del tempo materiale prezioso vada perso nell'oblio.
 
@@ -39,19 +44,65 @@ Allo stato attuale non è ancora stata delineata una modalità organizzativa per
 
 Gli [issues] di questo repository sono disponibili per segnalare materiale, discutere strategie, porre domande e avanzare proposte.
 
+# Contenuti del progetto
+
+- [`/_assets/`](./_assets) — risorse condivise.
+- [`/hugo/`](./hugo) — risorse per Hugo.
+- [`ABOUT.md`][ABOUT.md] — presentazione in inglese.
+
+# Stato del progetto
+
+Qui di seguito sono riportate le risorse destinate all'archiviazione, suddivise per categoria di appartenenza. In futuro, quando il numero di risorse in coda, fase di lavoro e completate crescerà, verrà studiato un sistema organizzativo apposito.
+
+## Hugo
+
+- [`/hugo/`](./hugo)
+
+È stato pianificato il recupero, la ristampa e l'archiviazione delle seguenti risorse:
+
+- [x] __"Hugo per giocare"__, guida scritta da Paolo Vece.
+    + [x] Richiesta permessi di ristampa e archivizione.
+    + [x] Conversione in AsciiDoc e ristampa in HTML5.
+    + [x] Archiviazione su IF Archive.
+        * [x] Richiesta inoltrata il 2019/05/25.
+        * [x] Risorsa archiviata il 2019/06/25 (HTML + AsciiDoc) in:
+            - [if-archive/starters/italian]/[Hugo_per_giocare.zip]
+- [ ] __"Hugo v2.5, Manuale del programmatore"__, scritto da Ken Tessman e tradotto da Paolo Vece. (Vedi [#1])
+    + [x] Richiesta permessi di ristampa e archivizione.
+    + [ ] Conversione in AsciiDoc e ristampa in HTML5.
+        * [x] conversione in corso (in locale).
+    + [ ] Archiviazione su IF Archive.
+- [ ] __Libreria italiana di Hugo__.
+    + [ ] Individuare chi l'ha tradotta.
+    + [ ] Richiesta permessi di ristampa e archivizione.
+    + [ ] Archiviazione su IF Archive.
 
 <!-----------------------------------------------------------------------------
                                REFERENCE LINKS                                
 ------------------------------------------------------------------------------>
 
-[issues]: https://github.com/tajmone/lazzaro2/issues "Vedi gli issues del progetto"
-
-[IF Archive]: https://www.ifarchive.org/ "Visita lo IF Archive"
 
 [Progetto Lazzaro]: http://ifitalia.oldgamesitalia.net/pmwiki/pmwiki.php?n=Main.ProgettoLazzaro
 
 [Terra d'IF]: https://github.com/tajmone/Archivio-AT-Tristano/tree/master/Terra_dIF
 [Terra IFArchive]: http://ifarchive.org/indexes/if-archiveXmagazinesXTerra.html "Vai alla sezione 'Terra d'IF' sullo IF Archive"
+
+<!-- IF Archive -->
+
+[IF Archive]: https://www.ifarchive.org/ "Visita lo IF Archive"
+[if-archive/starters/italian]: https://www.ifarchive.org/indexes/if-archive/starters/italian/ "Vai alla sezione 'starters/italian' dello IF Archive"
+[Hugo_per_giocare.zip]: https://www.ifarchive.org/if-archive/starters/italian/Hugo_per_giocare.zip "Scarica lo zippato della guida 'Hugo per giocare' dallo IF Archive"
+
+<!-- link progetto -->
+
+[issues]: https://github.com/tajmone/lazzaro2/issues "Vedi gli issues del progetto"
+[Click here for the English presentation]: ./ABOUT.md "Read the English presentation"
+
+[#1]: https://github.com/tajmone/lazzaro2/issues/1 "Issue #1 — Hugo: Manuale del Progammatore"
+
+<!-- file del progetto -->
+
+[ABOUT.md]: ./ABOUT.md "Read the English presentation"
 
 <!-- persone -->
 

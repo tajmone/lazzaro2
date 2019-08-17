@@ -18,6 +18,7 @@ Creato in data 2019/05/16 da [Tristano Ajmone].
 - [Partecipazione](#partecipazione)
 - [Contenuti del progetto](#contenuti-del-progetto)
 - [Stato del progetto](#stato-del-progetto)
+    - [Glulx e Glk](#glulx-e-glk)
     - [Hugo](#hugo)
 
 <!-- /MarkdownTOC -->
@@ -46,13 +47,25 @@ Gli [issues] di questo repository sono disponibili per segnalare materiale, disc
 
 # Contenuti del progetto
 
-- [`/_assets/`](./_assets) — risorse condivise.
-- [`/hugo/`](./hugo) — risorse per Hugo.
+- [`/_assets/`](./_assets/) — risorse condivise.
+- [`/glk/`](./glk/) — risorse per Glk.
+- [`/hugo/`](./hugo/) — risorse per Hugo.
 - [`ABOUT.md`][ABOUT.md] — presentazione in inglese.
 
 # Stato del progetto
 
 Qui di seguito sono riportate le risorse destinate all'archiviazione, suddivise per categoria di appartenenza. In futuro, quando il numero di risorse in coda, fase di lavoro e completate crescerà, verrà studiato un sistema organizzativo apposito.
+
+## Glulx e Glk
+
+- [`/glk/bibbione-glk/`](./glk/bibbione-glk/)
+
+È stato pianificato il recupero e l'archiviazione delle seguenti risorse:
+
+- [ ] __"Il Bibbione di Glk"__, a cura di Lorenzo Marcantonio (2007).
+    + [x] Richiesta permessi di ridistribuzione e archivizione.
+    + [x] Archiviazione copia del documento nel progetto.
+    + [ ] Archiviazione su IF Archive.
 
 ## Hugo
 

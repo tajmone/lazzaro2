@@ -66,6 +66,7 @@ Qui di seguito sono riportate le risorse destinate all'archiviazione, suddivise 
     + [x] Richiesta permessi di ridistribuzione e archivizione.
     + [x] Archiviazione copia del documento nel progetto.
     + [ ] Archiviazione su IF Archive.
+        * [x] Richiesta inoltrata il 2019/08/17.
 
 ## Hugo
 

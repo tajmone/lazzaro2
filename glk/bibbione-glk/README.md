@@ -14,7 +14,7 @@ Nome originale del file: `guida_glk.pdf`.
 
 - [Contenuti cartella](#contenuti-cartella)
 - [Introduzione](#introduzione)
-- [Collocazione in IF Archive](#collocazione-in-if-archive)
+- [Archiviazione su IF Archive](#archiviazione-su-if-archive)
 - [Note legali](#note-legali)
 - [Menzione su SPAG](#menzione-su-spag)
 
@@ -37,16 +37,17 @@ Il link da cui scaricai l'originale era:
 - http://www.logossrl.com/gargoyle-mod/guida_glk.pdf
 
 
+# Archiviazione su IF Archive
 
-# Collocazione in IF Archive
+Il documento è stato sottoposto allo IF Archive in data 2019/08/17.
 
-Questo testo potrebbe andare in:
+La sezione di archiviazione proposta è:
 
 - [IF Archive » programming » glk]
 
-magari in una sottocartella `italian/`.
+possibilmente, nella sottocartella `italian/`.
 
-Il documento va distribuito in formato zippato, così da poter allegare la licenza [CC BY-NC-SA 3.0] e sopperire al fatto che non è menzionata nel testo (vedi sotto).
+Il documento è stato caricato in formato zippato, così da poter allegare la licenza [CC BY-NC-SA 3.0] e sopperire al fatto che non è menzionata nel testo (vedi sotto).
 
 # Note legali
 

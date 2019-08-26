@@ -6,6 +6,14 @@ Tratto e tradotto da [_Glk API Specification_ 0.7.0][Glk v0.7.0] di Andrew Plotk
 
 Nome originale del file: `guida_glk.pdf`.
 
+Archiviato sullo [IF Archive] in data 2019/08/25:
+
+- [if-archive/programming/glk/italian]/[bibbione-glk.zip]  (PDF + licenza) 
+
+
+Curatore archiviazione: [Tristano Ajmone].
+
+
 -----
 
 **Indice dei contenuti**
@@ -39,13 +47,9 @@ Il link da cui scaricai l'originale era:
 
 # Archiviazione su IF Archive
 
-Il documento è stato sottoposto allo IF Archive in data 2019/08/17.
+Il documento è stato sottoposto allo IF Archive in data 2019/08/17 e archiviato il 2019/08/25.
 
-La sezione di archiviazione proposta è:
-
-- [IF Archive » programming » glk]
-
-possibilmente, nella sottocartella `italian/`.
+- [if-archive/programming/glk/italian]/[bibbione-glk.zip]  (PDF + licenza) 
 
 Il documento è stato caricato in formato zippato, così da poter allegare la licenza [CC BY-NC-SA 3.0] e sopperire al fatto che non è menzionata nel testo (vedi sotto).
 
@@ -92,13 +96,24 @@ La pubblicazione de _Il "Bibbione di Glk"_ è menzionata nella rivista [SPAG #51
                                LINK REFERENZIALI
 ------------------------------------------------------------------------------>
 
-[IF Archive » programming » glk]: https://www.ifarchive.org/indexes/if-archive/programming/glk/ "Vai alla sezione 'programming/glk' dello IF Archive"
-
 [Glk v0.7.0]: https://www.eblong.com/zarf/glk/glk-spec-070.txt "Visiona la Glk API v0.7.0 originale (txt)"
 [Glk API Specification]: https://www.eblong.com/zarf/glk/glk-spec-075.html "Visiona l'attuale Glk API originale (HTML)"
 
 [CC BY-NC-SA 3.0]: https://creativecommons.org/licenses/by-nc-sa/3.0/ "Vedi la licenza Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported"
 
 [SPAG #51]: https://www.spagmag.org/archives/backissues/spag51.html "Vai al numero #51 dello SPAG Magazine"
+
+<!-- IF Archive -->
+
+[IF Archive]: https://www.ifarchive.org/ "Visita lo IF Archive"
+
+[IF Archive » programming » glk]: https://www.ifarchive.org/indexes/if-archive/programming/glk/ "Vai alla sezione 'programming/glk' dello IF Archive"
+
+[if-archive/programming/glk/italian]: https://www.ifarchive.org/indexes/if-archive/programming/glk/italian/ "Vai alla sezione 'programming/glk/italian' dello IF Archive"
+[bibbione-glk.zip]: https://ifarchive.org/if-archive/programming/glk/italian/bibbione-glk.zip "Scarica lo zippato del 'Bibbione di Glk' dallo IF Archive"
+
+<!-- persone -->
+
+[Tristano Ajmone]: https://github.com/tajmone "Visita il profilo GitHub di Tristano Ajmone"
 
 <!-- EOF -->

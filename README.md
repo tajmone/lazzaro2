@@ -6,6 +6,11 @@ Welcome to the __Lazzaro II__ project for the preservation of the Italian Intera
 
 Benvenuti al progetto «Lazzaro II» per la preservazione del patrimonio storico dell'Interactive Fiction italiano.
 
+
+| risorse:  archiviate  | presentate | in preparazione | in coda |
+| --------------------: | ---------: | --------------: | ------: |
+| 2                     | 0          | 1               | 0       |
+
 Creato in data 2019/05/16 da [Tristano Ajmone].
 
 -----
@@ -62,11 +67,13 @@ Qui di seguito sono riportate le risorse destinate all'archiviazione, suddivise 
 
 È stato pianificato il recupero e l'archiviazione delle seguenti risorse:
 
-- [ ] __"Il Bibbione di Glk"__, a cura di Lorenzo Marcantonio (2007).
+- [x] __"Il Bibbione di Glk"__, a cura di Lorenzo Marcantonio (2007).
     + [x] Richiesta permessi di ridistribuzione e archivizione.
     + [x] Archiviazione copia del documento nel progetto.
-    + [ ] Archiviazione su IF Archive.
+    + [x] Archiviazione su IF Archive.
         * [x] Richiesta inoltrata il 2019/08/17.
+        * [x] Risorsa archiviata il 2019/08/25 (PDF + licenza):
+            - [if-archive/programming/glk/italian]/[bibbione-glk.zip]
 
 ## Hugo
 
@@ -104,8 +111,12 @@ Qui di seguito sono riportate le risorse destinate all'archiviazione, suddivise 
 <!-- IF Archive -->
 
 [IF Archive]: https://www.ifarchive.org/ "Visita lo IF Archive"
+
 [if-archive/starters/italian]: https://www.ifarchive.org/indexes/if-archive/starters/italian/ "Vai alla sezione 'starters/italian' dello IF Archive"
 [Hugo_per_giocare.zip]: https://www.ifarchive.org/if-archive/starters/italian/Hugo_per_giocare.zip "Scarica lo zippato della guida 'Hugo per giocare' dallo IF Archive"
+
+[if-archive/programming/glk/italian]: https://www.ifarchive.org/indexes/if-archive/programming/glk/italian/ "Vai alla sezione 'programming/glk/italian' dello IF Archive"
+[bibbione-glk.zip]: https://ifarchive.org/if-archive/programming/glk/italian/bibbione-glk.zip "Scarica lo zippato del 'Bibbione di Glk' dallo IF Archive"
 
 <!-- link progetto -->
 

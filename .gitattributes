@@ -56,6 +56,11 @@ LICENSE        text
 NEWS           text
 readme         text
 
+## ===============
+## Scripting langs
+## ===============
+*.rb       text
+
 ## =============
 ## Shell scripts
 ## =============

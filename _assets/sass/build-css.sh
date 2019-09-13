@@ -48,6 +48,13 @@ css=guida-hugo.css
 docinfo=../../hugo/guida/asciidoc/docinfo.html
 buildSass guida-hugo.scss $css
 docinfoInject $css $docinfo
+#*******************************************************************************
+printHeading1 "\"Hugo Manuale del Programmatore\" di Ken Tessman"
+#*******************************************************************************
+css=manuale-hugo.css
+docinfo=../../hugo/manuale/asciidoc/docinfo.html
+buildSass manuale-hugo.scss $css
+docinfoInject $css $docinfo
 # ------------------------------------------------------------------------------
 printFinished
 exit

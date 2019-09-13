@@ -1,0 +1,738 @@
+Hugo Change Log
+---------------
+
+To do:
+------
+
+
+v3.1.03 - 5-Jan-05
+------------------
+- Windows - fixed improper shared resizing/moving behavior affecting
+  in-game windows
+- Windows - hetalk.cpp's speech_speak_status wasn't being obeyed
+  for overriding speaking status window text
+- Pocket PC - fixed "..." button to bring up in-game context menu first,
+  then user-selected word menu
+- GetVal() was incorrectly saving local variable undo information
+- objlib.h - added DoPutIn before rule to component class
+
+v3.1.02 - 18-Jan-05
+-------------------
+- verbstub.h - added CheckReach calls to relevant stub verbroutines
+- hugolib.h - added FINDOBJECT_NONLIVING flag for better ParseError phrasing
+- Linux - improved packaging for binaries
+- Pocket PC - screen positioning problem if started with keyboard showing
+- Pocket PC - properly uses program directory for PocketHugo.settings
+- hemisc.c - fixed FileIO() path generation for file reading/writing
+- hugolib.h - >GET UNKNOWN FROM X no longer mentions the unknown object
+- Pocket PC - added LoadDefaultCESettingsFile() in addition to
+  LoadCESettingsFile() to fix loading/saving setting files
+- Pocket PC - LoadDefaultCESettingsFile() moved from LoadRegistryDefaults()
+  to SetupCEWindow()
+- Pocket PC - fixed improper system() time value in hugo_gettimeformatted()
+- Pocket PC - addressed minor graphics corruption with image display
+- Palm - fixed failed crash on long resource names
+- MAX_RES_PATH now used in heres.c; defaults to length of 255
+- Pocket PC - properly handles changes in screen orientation under Windows
+  Mobile 2003
+- Windows - SetClientDimensions() explicitly called in WinMain()--to avoid
+  potential wrong startup behavior under WinCE
+
+v3.1.01 - 18-Sep-04
+-------------------
+- change fcolor, bgcolor, icolor, default_bgcolor to explicit 'signed char'
+- fixed font-size-related linespacing issue with wxWidgets ports (Mac/Linux)
+- hemisc.c - sanity check in Printout() for mismatched font heights
+- increased default initial window size for wxWidgets ports
+- Windows - 04-Jan-05 update:
+- Windows - changing colors screws up background of first-printed line
+- Windows - debugger's "Code" window not showing up properly
+
+v3.1 - 7-Aug-04
+---------------
+- herun.c - added 'isxverb' argument to Perform calls for v3.1 and later
+- hemisc.c - SetupDisplay() sets default fore/back colors properly
+- Windows - getline_active toggled for menu-selected Restart
+- compiler - put back '-e' switch for expanded error format
+- various - hugo_scrollwindowup() doesn't call TB_Scroll() for sub-line
+  lineheight values
+- hemisc.c - added contingency TB_AddWord() call to Flushpbuffer()
+- Windows, BeOS, Mac, Linux - improved client resizing behavior
+- Palm - cached WinHandle for push/pop draw state in RunDialog()
+- BeOS - MediaView.cpp - video playback fix using wildcard rowbytes
+- Windows - fixed spacing/linewrap issue for bold fixed printing
+- hemisc.c - added pre-scrolling PromptMore() check
+- Palm - saves context menu, command-input font, scrollback for AutoResume()
+- Windows - wndCompassProc calls RedrawWindow(wndMain) when moving compass
+- heparse.c - enhanced behavior of disambiguation calls within MatchObject()
+  where multiple objects are used (resulting in multiple pobjcount)
+- hccode.c - proper resolving for, e.g., "if RoutineName = val1, val2..."
+- heset.c - fixed bug in:  array[n] |= value
+- herun.c - RunGame() now checks for blank ('""') parsestr before setting
+  parseerr
+- compiler - options no longer explicitly list -25 switch
+- herun.c - input color always defaults to fcolor if no 3rd arg is given
+- Windows - MikMod always uses wndMain for DirectSound focus via hwndMikMod
+- various - updated hugo_splitpath() functions to sanity-check extension
+  for empty filename
+- Win32/WinCE - improved Unicode support
+- hcbuild.c - 'break' can also cause 'Statement will never be reached'
+- hemisc.c - PromptMore() sets background more intelligently, before
+  pausing (where appropriate)
+- Windows - better mousewheel and scrolling behavior in child windows
+- MatchObject - calls ParseError(6) for unmatchable object at start of
+  command instead of ParseError(2)
+- hdwin.c - greatly optimized textgrid redraw for Windows debugger
+- hugolib.h - fixes to tall-style listing of objects
+- Mac, Linux - MikMod_Update() now may be called from a thread to avoid
+  blocking on disk i/o
+- debugger - better maintenance of dbnest for JUMP_T
+- Windows - implemented proper Copy functionality for debugger windows
+- debugger - RunRoutine() properly resets dbnest _before_ BREAK_T stack pop
+- debugger - EnterSearch() no longer always puts found search at top
+  of window
+- Windows - debugger was getting confused switching to game screen with
+  scrollback active
+- hugolib.h - fine-tuning of identical_class and ParsePluralObjects
+- hugolib.h - added ImplicitTake and ImplicitTakeForDrop
+- herun.c - prevented multiple listing of local variables in debugger
+- Windows - additional update calls for debugger when switching between
+  game/debug screens to keep displays up to date (hdnewwin.c)
+- heparse.c - MatchObject() disallows improper >GET ALL OBJECT, etc.
+- heset.c - fixed wrongly calculating af_addr in GetAnonymousFunction()
+- library - test implementation of USE_CHECKHELD
+- Palm - temporary fixed-font workaround for 1.5-density displays
+- hccode.c - fixed comma-separated conditionals for long initial comparison
+  value constructions in CodeLine()
+- heobject.c - proper setting of complex property breakpoints (before/after)
+- hdmisc.c - fixed shared allocation of non-routine-name strings in
+  RoutineName()
+- heparse.c - already_got_multicheck to account for grammar that mixes
+  multi and non-multi tokens                                                                  
+- hemisc.c - In-text newlines set fcolor/bgcolor just in case--mainly
+  in case a PromptMore() comes after a color change but before Printout()
+- hemisc.c - SetupDisplay() uses 16/17 instead of DEF_FCOLOR/DEF_BGCOLOR
+- Palm - fixed possible initial input text buffer offset in hugo_getline()
+  (caused by hugo_scrollwindowup() from hugo_print())
+- hugolib.h - better handling of "again" in Parse so >I. G. doesn't loop
+
+
+v3.7.07a 8-Feb-04
+-----------------
+- Windows - changed installation to Inno Setup; David Kinder noted a couple
+  of issues installing as a non-admin user on multiuser NT machine
+
+
+v3.0.07 15-Jan-04
+-----------------
+- Palm - should accommodate nonstandard display sizes (like Sony Clie) better
+- Palm - now gives an error when restoring settings if none are available
+- Windows, Mac, X11, BeOS, PocketPC - option for graphics smoothing using
+  bilinear filtering of resized images
+- Windows - compiler front-end now uses WaitForSingleObject()
+- hccode.c - proper error on 'print capital; ...'
+- hcwin.c - properly accommodates pathnames with spaces
+- hewin.c - processes WM_EXITMENULOOP to redraw corrupted video post-menu
+- Windows - front-end dialogs properly scroll horizontally for long filenames
+- Windows - fixed build structure for third-party libraries in 'lib' folder
+- Windows - added SAPI 4.0 speech support to engine/debugger (with thanks to
+  David Kinder)
+- Windows CE/Pocket PC port ready for release
+- Windows - option to turn off speaking in statusline window
+- Palm - fix to hugo2pdb by Chris Tate - for the recently shipped PalmOS 6,
+  games may have to be reconverted to PDB format
+- Glk - fix to hugo_settextpos() adding glk_window_clear() by Simon Baldwin
+- Mac - QDFlushPortBuffer() in HECanvas::Update() to speed OS X updating
+- Glk - graphics display capability added (at least in XGlk) by Simon Baldwin
+- Palm - FldDelete(fieldP, 0, MAXBUFFER) changed to non-debug-warning
+  FldDelete(fieldP, 0, FldGetTextLength(fieldP)) by Chris Tate
+- heparse.c - MatchObject() recursive call now utilizes better adjective-noun,
+  etc. disambiguation
+- Mac - fixed lockup in wxMac's macnotify.cpp
+- Mac - recompiled libmikmod to address sporadic audio-related crash
+- hugolib.h - added found_in property to plural/identical classes
+- heparse.c - >OOPS IT wasn't working properly - added another call to
+  library Parse() after oops-handling
+- hugolib.h - last single object preferred for final disambiguation
+- Windows - added progress bar and Cancel button to compiler front-end
+- Palm - clean-up of sources by Chris Tate
+- address_scale to change to 16 for v3.1-compiled executables
+
+
+v3.0.06 - 27-Jun-03
+-------------------
+- hemisc.c - fixed font-changing bug in linebreaking code
+- objlib.h - improvements to obstacle-finding algorithm for attachables
+- objlib.h - renamed system routines for attachables for greater clarity
+- hugolib.h - CheckReach now takes into account attached objects as reachable
+  (as do objlib.h's AttachObject and DetachObject)
+- hdmisc.c - fixed retrieval of routine names for upper-range packed addresses
+- Palm - put additional "..." for context menus at bottom of menu
+- heparse.c - "all" (actually TryObj()) now only considers nameable objects
+- heparse.c - better built-in ambiguous ParseError for multiple Parse() calls
+- Palm - turning off colors (in engine options) should make everything black
+  on white--unless colors are statusline defaults
+- Palm - default game .PDB size changed back to 4K
+- Palm - much more highly optimized memory management for substantial
+  performance improvement
+- hemisc.c - Printout() tweaked to avoid spurious [MORE] prompts
+- Palm - games should load and run on devices with as little as 2 MB of RAM
+- Palm - added progress bar for extended file operations
+- Mac - fixed mis-centering of initial window
+- engine - fixed undoing of setting object.property, which was broken in the
+  previous version (in RunSet())
+- Windows - fixed "key-sticking" problem in hugo_print() (due to PM_NOREMOVE
+  combined with processing key messages)
+- Windows - attempted to reduce unnecessary CPU usage in hugo_getkey() and
+  video playback
+- engine - all 'system' calls now flush the printing buffer
+- engine - fixed non-printing bug for printchar ' ' (ASCII 32)
+- hemisc.c - fix color-bleeding problem in AP() when breaking a line
+  with mixed colors over a [MORE] prompt
+- hemisc.c - 'script' command wasn't checking for file-overwrite
+- MatchObject() - "but", "except", etc. not allowed for xobject parsing
+- MatchWord() - tweaked setting of domain from pobj to objlist[0]
+- heparse.c - better engine handling of "all", etc., with AddAllObjects()
+- heparse.c - fixed case of no grammar match in directed command
+  trying to find speaking twice
+- Mac - fixed startup window positioning
+- wxWindows - updated Mac and Linux to compile with wxWindows 2.4.0 stable
+- Windows - rewrote and optimized JPEG renderer
+- BeOS - realigned JPEG and video renderer placement algorithms
+- Windows, BeOS, Linux, Mac - fixed linefeed background coloring
+- debugger - fixed potential output overwrites by using debug_line
+- MatchWord() - if verbroutine unknown at xobject disambig., figure it out
+- hugolib.h - modified DoLook to list container/platform contents, by default
+- 32-bit DOS port rebuilt with updated djgpp; now works with Windows XP
+- Mac OS X - command-line development tools now linked for OS X 10.2
+- Windows - improved buffering for faster text rendering
+- Palm - fixed setting of input (i.e., field) colors
+- Windows - better buffering of text on Windows side for printing
+- heparse.c - additional disambiguation check for clarification question
+  where a single entered word equals a single object's name
+- debugger - runaway_counter properly reset when for multi-command input
+- hugofix.h - added parse_rank monitoring (in tandem with FindObject)
+- MatchObject() - added initial disambiguation clarification disqualification
+- hugolib.h - FindObject() tweaks parse_rank for certain verbs + attributes
+- engine - inlined memory accessors for speed
+- hebuffer.c - fixed buffer reading of cells with non-ASCII characters
+- hcbuild.c - fixed crash with inheriting multiple comma-separated classes
+- objlib.h - much improved reflexive-pronoun handling
+- heset.c - array[n] |= val wasn't setting the element properly
+- verblib.h - DoGo now checks "You'll have to get up first" earlier
+- heset.c - fixed assignment of anonymous functions for non-properties
+- Linux - Alex Butcher submitted a patch for building against wxGTK2.4
+  on Red Hat 8.0
+- resource.h - fixed PictureInText for hopefully better bottom-of-screen
+  alignment
+- compiler - fixed array definition with error in size identifier
+- Windows - engine/debugger - improved MRU file list management
+- hemisc.c - Max Cotin found a bug with trying to print Cyrillic
+  characters
+- Windows - also fixed a bug with printing non-Latin-1 characters
+  in proportional font
+- Windows - non-fast-scrolling was jerky for intermixed text/graphics
+- hugofix.h - added a "check articles" capability to the HugoFix library
+- heexpr.c - parse$ and string$ weren't being properly evaluated as
+  standalone values
+- heparse.c - fixed condition where "and", etc. used in an xobject
+  wasn't getting flagged
+- simple return statements are now tail-recursive on the runtime side
+- Windows - fixed a bug where a sample would try to play despite sound
+  being disabled
+- icons redone for cross-platform consistency
+- 'word' in grammar now sets object_is_number
+- hugolib.h - added NewParseError to allow selective error replacement
+- hemisc.c - Printout() plays nicer with RunWindow() and font changes
+- hemisc.c - further AP() print optimizations eliminate duplicate font
+  changes
+- hewin - unnecessarily updating before drawing a graphic--changed
+  UpdateClient(true) to false in hejpeg.c
+- compiler now reports missing brace at the start of the object/etc.
+  instead of at end-of-file in DefOther()
+- FindWord() improvements for faster dictionary searching
+- Windows - fixed default font selection charsets
+- Mac - changed package name to hugov30_macos.sit
+
+
+v3.0.05 - 11-Dec-02
+-------------------
+- No longer building "v2.5" executables per se; COMPILE_V25 results in
+  a version number like "v3.0.05 (2.5)"
+- Windows - fixed flickering when video finished playing in fullscreen
+- Windows - fixed async updating in hugo_playvideo() for XP
+- Mac - Carbonized app now runs on both OS X and OS 9/earlier
+- Windows - fixed changing of fonts in-game and font/line clipping
+- hcres.c - sped up building of resourcefiles using TRANSFER_BLOCK_SIZE
+- hemisc.c - AP() - fixed smart-formatting where a line begins with "--"
+- Windows, wxWin (Linux and Mac), BeOS, Palm - changed so that Story
+  menu functions Save, Restore, and Undo pass an actual "typed" string
+- Windows XP - video disappeared when changing window size
+- Windows - fixed off-by-one error on bottom of statusline during video
+- provided a monochrome mode for ncurses-based debugger (for non-color
+  terminals, such as xterm or OS X Terminal)
+- hugolib.h - better (object-based) handling of pronouns (currently
+  turned off because it doesn't yet work perfectly)
+- hugolib.h - more sensible parser errors thanks to implementation
+  of parser_status
+- hugolib.h - moved SetupDirectionObjects from Perform into its own
+  routine
+- Windows - compiler front-end now behaves properly if the program
+  location contains a space (such as "C:\Program Files\Hugo")
+- Mac - proper color-selector widget
+- fixed line-counting bug left over from text-rendering rewrite by
+  adding currentline to SAVED_WINDOW_DATA struct
+- added system(SYSTEM_TIME) call to engine (and resource.h)
+- resource.h - GetSystemTimeValue(TIME_CONSTANT) added
+- compiler - fixed BuildEvent() to correct local-variable count
+  (causing improper local name display in debugger)
+- fixed return-value bug when calling runevents from a property routine
+- objlib.h - components have an additional built-in scoper that
+  makes them known if their "parent" is known
+- debugger - fixed stepping out of a routine call that was not originally
+  stepped into
+- debugger - saving/loading of additional preferences, such as runtime
+  warnings and nesting formatting
+- hugolib.h - changes to indent-overriding allowing ShortDescribe to
+  override indenting completely (including AFTER_PERIOD)
+- Mac - scrollback window
+- debugger - 'runevents' wasn't being stepped over properly
+- debugger - multiple matched blocks of a complex property weren't being
+  stepped over properly
+- herun.c - RunWindow() calls hugo_settextpos() at close instead of
+  resetting current_text_y directly
+- hugolib.h - tweaked disambiguation of pronoun vs. possessive "her"
+- Windows - fixed all-at-once updating of input line with when
+  override_update_client is true (for context menus)
+- heparse.c - fixed ordering of word[] and wd[] restore after a
+  disambiguation GetCommand()
+- heparse.c - reset odomain = 0 in MatchCommand() after NextStructure in
+  case a previous HELD_T or MULTIHELD_T grammar is found invalid
+- hebuffer.c - fixed storing/retrieval of text cells with smart-formatted
+  characters
+- hepass.c, hedef.c - changes to when CreateResourceFile() is called in
+  order to allow compiler directives within resource blocks
+- compiler - can now report total number of files compiled
+- wxWin - hugo_getfilename() uses wxOVERWRITE_PROMPT, making 
+  hugo_overwrite() redundant
+- Mac - now has proper scrollback
+- wxWin - fixed incorrect saving of some font information when font-chooser
+  dialog is cancelled
+- Mac - better font selector dialog
+- Mac - added compass rose
+- Mac - added support for video (AVI/MPEG) and MIDI/MP3
+- Mac - changed default Mac type/creator for Hugo games to Hugo/HUGO
+- Unix he/hd - fixed bug with pressing Delete at the end of an input
+- Palm - fixed non-repainting of prompt when returning to game screen
+- Palm - fixed field colors to use proper system defaults
+- smart formatting option for both Palm and BeOS
+- Palm - fixed text buffering of formatted text to correct display glitches
+- Palm - changing default blocksize of game .pdb files to 32 kB improves
+  performance up to 8 times, in places (with other optimizations)
+- Windows - shell properly enters .hex file into Recent Documents
+- heparse.c - properly account for property routines in ObjWord()
+- engine - implemented obj_parselist to predetermine what objects have
+  noun/adjective properties
+- PalmHugo - fixed sizing of "..." button popup and memory leak for entry[0]
+- engine - changed implementations of hugo_getkey() to allow proper
+  reporting of values > 127 (Windows, Mac, Linux, BeOS, Palm)
+- Windows - fixed encoding of application-specific "control characters" to
+  not interfere with Latin-1 range on input
+- compiler - fixed overflow crash with misplaced quotes in long lines of
+  text (and other very long error lines)
+- engine - MoveObj() always moves an object, regardless of whether it was
+  already in the specified new parent (for reordering capability)
+- heparse.c - various speed optimizations
+- compiler - stricter checking of verb definition headers
+- BeOS, wxWindows - needed to set getline_active = false after menu-based
+  restart--otherwise a mouse-click wouldn't work on an initial [MORE] prompt
+- fixed lingering DOS/Mac/Unix line-ending counting problem
+- file i/o (readfile and writefile) now better constrained to the engine's
+  program or user's home directory, where appropriate for OS
+- wxHugo - fixed off-by-one error in updating
+- heparse.c - substantial improvement to how MatchWord() and MatchObject()
+  find the xobject--which also fixes a bug regarding trailing dict. words
+- heparse.c - fixed end-of-MatchObject() disambiguation when speaking
+  to a character and no valid object is found
+- fixed stepping issues with debugger in RunRoutine() by setting
+  debugger_interrupt = false if debugger_step_over is true
+- RunSet() was sending the property length to SaveUndo() instead of the
+  property element--Undo() takes care of resetting the length anyway
+- compiler - added fatal error for end-of-file before #endif
+- debugger - fixed decoding of readfile/writefile lines
+- Palm - fixed bug with printing underlined fixed-width text
+- Win32 - Windows port converted to Unicode
+- Win32 - ported to compile under Windows CE (eVC++ 4.0/WCE SDK)
+- herun.c - added #ifdef NO_STRFTIME for PalmOS, WinCE; moved OS-specific
+  strftime() replacement(s) to hugo_gettimeformatted()
+- Mac - added option to use Quartz text rendering on OS X (10.1.5 or later)
+- Win32 - fixed additional non-updating bug in hevideo.cpp for XP
+- Win32 - worked around the one-letter-printing effect after playing video
+- heparse.c - generalized disambiguation for non-player actors
+- hemisc.c - fixed a line-count bug due to a rounding error in AP()
+- engine - added MINIMAL_INTERFACE system() constant for Glk, etc.
+- various - fixed bug with scrollback text leaving old text at end
+- hugolib.h - added activate_event and deactivate_event properties
+  for fuses and daemons
+- Mac - filetyper utility is now written in AppleScript
+
+
+v3.0.04/v2.5.04 (22-Mar-02)
+---------------------------
+- BeOS - optimized pre-calculation of text spacing
+- Win32 - fixed updating issues post-restart (after image drawing)
+- debugger breaks now when a DebugMessageBox is displayed
+- Win32 - skips mouse click as input when setting app focus
+- hugolib.h - Parse now checks player.before:{player PreParse}
+- added display.needs_repaint property (settable by the individual
+  port depending on if the window is resized or otherwise changed),
+  implemented on:  Win32, wxWindows (Linux), BeOS
+- Win32 - added most-recent-files list to engine/debugger
+- put a cap on adjectives in SetObjWord in hugolib.h to match
+  MAX_MOBJ in heparse.c (which is set to 16 words in total:
+  15 adjectives + 1 noun)
+- removed useless #defines for 'and', 'or', and 'not'
+- removed need for -fwritable-strings when compiling with gcc
+- wxMac - fixed MikMod bug where a sample would only play when
+  music was playing
+- Windows, BeOS, wxWindows - added text buffer for selecting text
+  from the display
+- Windows, BeOS, wxWindows - key toggle for sound on/off
+- BeOS - hugo_charwidth() was incorrectly returning FIXEDCHARWIDTH
+  for a non-proportional FORCED_SPACE
+- better boundschecking for objects in PropAddr()
+- better writefile security:  only 8 character or less alphanumeric
+  filenames are allowed (not extensions, path separators, etc.)
+- hugolib.h - changed ListObjects to list for objects that are both
+  containers _and_ platforms (for SuperContainer functionality)
+- added a proper fullscreen mode to the Windows engine
+- updated all Kent's ports (except 16-bit simple) to v3.0
+- fixed FindObject in hugolib.h to only set best_parse_rank
+  if the object was actually found
+- heparse.c - MatchObject() now prefers Available() objects for an
+  'anything' token
+- added GAME_RESET system() constant which is set after an undo
+  or restore
+- heparse.c - MatchObject() now offers "Better start with a verb"
+  when no object match is made at the start of the input, instead of
+  "You haven't seen any..."
+- added hcreset.c to compiler sources
+- Windows - changed compass rose shortcut to Ctrl+C from Ctrl+M
+- Windows -  wasn't properly updating if compass rose showing initially
+- fixed stack depth handling of labels in complex property blocks
+- BeOS - added override_updating for context commands and word selection
+- Windows - removed second simultaneous DirectSound playback buffer
+- Compiler properly handles Mac-format text files
+- fixed rare inaccurate line offset (and vertical input-positioning) in
+  Windows, BeOS, and wxWindows
+- resource files can now contain > 17 MB of data each (actually now up
+  to 2,147,483,648 bytes, or 2048 MB)
+- BeOS - screen properly redraws before Quit confirmation dialog
+- hugolib.h - better handling of negative parse_rank properties
+- hugolib.h - fixed FindObject for dealing with DoGet and similarly
+  named objects (where one or more may be held)
+- objlib.h - cleanup to attachable class, particularly with regard to
+  attach_take and detach_take
+- debgger wasn't properly displaying routine names during player input
+- herun.c - fixed getting property of return value of function, as in
+  Function(arg).property
+- Mac - wxHugo now properly launches a double-clicked game file from
+  the Finder
+- Palm - occasional (non-reproducible but speculatively explicable)
+  saving crash should be fixed
+- Windows - better handling of international character sets
+- compiler no longer prints banner by default
+- fixed line-spacing bug for mixed prop/non-prop fonts under Windows
+- hcmisc.c - removed '-e' switch for expanded error format
+- hcdef.c - better compile-time initialization (CheckInitializer())
+- mouse clicks now set display.pointer_x and display.pointer_y instead
+  of cursor_column and cursor_row properties
+- parser now loads all recognized words into the word[] array, even if
+  it encounters an unrecognized one
+- Windows - nicer, thicker border for non-maximized game window
+- Terminal ports where the rightmost column forces a linefeed now have
+  TERMINAL_LINEFEED #defined; non-Kent ports now #define this for
+  consistency in heheader.h.  This helps in managing non-proportional
+  printing for GUI ports.
+- he - fixes to AP() for correctly optimizing font changes mid-string
+- hugolib.h - change to FindObject() for objects that are supposed to
+  be in a specific parent being found available regardless
+- Windows, Mac - optional smart-formatting for curly quotes, etc.
+- hugolib.h - Parse() attempts to differentiate "her" pronoun from
+  "her" possessive
+- Windows - hejpeg.c only calls update when there's a scroll_offset
+
+
+v3.0.01d/v2.5.03d (9-Sep-01)
+-----------------
+- Win32 - fixed proportional/underline printing broken in last release
+- changed hugov25_win32_source.zip to hugov30_win32_source.zip
+- fixed setting of 'full = 0' in GetCommand() to avoid unnecessary
+  "[MORE...]" prompt
+- BeOS - Made Alt+C do a copy, not bring up the compass in the
+  scrollback window
+- 'local n = <non-static value>' now gives appropriate compiler
+  warning
+- BeOS - hugo_settextwindow() was one pixel too tall (low)
+- BeOS - fixed bottom boundary of displayed images, also
+- BeOS - caret was left visible on menu restart/restore/save
+- changed hemisc.c SpecialChar() constants to hex values
+- removed em-dash (code 151) from SpecialChar() due to lack of
+  cross-platform support
+- Win32 - fixed misbehaving video playback after several plays
+  by making dcMain local, not global
+- Win32 - rewrote video playback subsystem in C++
+- Win32 - fixed positioning of video window in async threaded
+  (background) playback
+- hugolib.h - Fixes to FindObject() for non-present objects
+- heparse.c - Fixed final disambiguation bug in MatchObject()
+  (added k--) to not skip over object post-SubtractPobject()
+- Modified MikMod v2.09 to play WAV files with a RIFF 'fact' chunk
+- BeOS - change to calculation of ao->trackTime in AudioOutput.cpp
+- IMPORTANT:  Changes to PlayMusic and PlaySound in resource.h;
+  Hugo programs using these will need calling arguments modified
+- BeOS - fixed threading sync by adding quit_he_thread = true to
+  HugoWindow::QuitRequested()
+- PromptMore() now clears key buffer every time
+- BeOS - removed redundant overwrite confirmation
+- Win32 - fixed image scaling making maxheight or maxwidth < 0
+- Win32 - fixed typing flicker during background video playback
+- Win32 - async video playback waits for video to actually start
+- hugolib.h - changed SetObjWord to skip "" for nouns/adjectives
+- "hc <filename.hex>" (by accident) is no longer valid (as it would
+  delete filename.hex)
+- fixed compiling/handling of user-defined $complex properties
+- removed Win32 DirectSound volume fiddling to try to increase
+  cross-platform audio level consistency
+- Fixed 'Syntax' lines to use argv[0], not "he" or "hc", etc.
+- Fixed loading of some MODs in heres.c
+- hccode.c - fixed potential buffer overflow with some errors
+- Win32 - less updating when drawing multiple images in succession
+- hc - successive block comments with no newline between wrongly
+  caused an error
+- Win32 - fixed potential crash when stopping a sync-started video
+- BeOS - fixed intermittent off-by-one error in view updating
+- hugolib.h - Parse() - added additional words for referring to
+  it_obj, him_obj, etc.
+- verbstub.h - Made verb default responses player-person agnostic
+- BeOS - fixed an off-by-one error in picture.cpp's DisplayBBitmap()
+- hemisc.c - better runtime error checking of $MAXDICTEXTEND
+- BeOS - added file attributes for Title, Author, and Genre
+- hc - changed error format from path(line): to path:line:
+- header-guarded Hugo Library files
+- better handling of property elements <= 0 in compiler, engine,
+  and debugger
+- BeHugo - remembers last save/restore folder
+- fixed setting of override_full in the engine for 'input' and
+  'pause' commands
+- Win32 - fixed use of GetVersion() to only limit audio functionality
+  for NT 4.0 and earlier, not 2000 or XP
+- Win32 - cleaned up source packaging
+- Win32 - DirectSound sample playback from resource file no longer
+  needs a tempfile
+- Win32 - DirectShow video playback from resource file no longer
+  needs a tempfile
+- changed wxWin source to register drivers individually, not
+  RegisterAllDrivers(), to avoid loading drv_raw, etc.
+
+
+v3.0.01c/v2.5.03c (22-Mar-01)
+-----------------
+- BeOS - changed "right-click" behavior for one-button mousers
+- push MOUSE_CLICK even when Hugo isn't explicitly waiting for a key,
+  and queue the mouse position for retrieval with MOUSE_CLICK
+- tweaked text renderer to fix odd linebreaks with bold/italic fonts
+- "local n = true" was initializing n = 0
+- debugger's 'system' token output was improperly terminated
+- added additional misusage compiler warnings
+- better PromptMore() "[MORE...]" for BeOS, Win32, wxWindows
+- compiler was dropping trailing ':' from multi-line strings
+- fixed font/style changes getting lost across linebreaks
+- compiler does better warning of illegal characters in source
+- ports without Latin-1 charsets (DOS, curses, etc.) handle Latin-1
+  characters better now
+- compiler has better handling of unterminated strings in
+  SeparateWords()
+- fixed resolution of explicit 'parent' objects in MatchWord() and
+  Available()
+- 'resource' blocks can now specify more than one filename per line
+- fixed compiler overflow on very long 'case' statements
+- fixed potential STRINGDATA_T overflow in GetToken()
+- BeOS - added sample_thread guard using sample_deleted
+- a number of enhancements to the debugging library hugofix.h
+- DOS - fixed handling of text style colors
+- MAXUNDO can now vary between ports; only ports with the
+  same MAXUNDO can restore undo data from save files
+- Context menu commands ending in "..." now add a trailing space
+- Kent's ports:  right mouse button during input is the same as left
+  button (i.e., for a context menu)
+- Kent's ports:  compilers now all updated to v3.0
+- fixed heobject.c GetProp() so that display.hasvideo works properly
+- Perform's queue argument is now set if "all" is used to refer to
+  only one object
+- Fixed problem with replacing objects/routines containing labels
+
+
+v3.0.01b/v2.5.03b (12-Dec-00)
+-----------------
+- Glk - disabled PAUSE_100TH_SECOND
+- hc - Fix nested case problem
+- wxWindows - included optional SDL-based modifications by
+  Torbjorn Andersson to hesound.cpp
+
+
+v3.0.01a/v2.5.03a (12-Oct-00)
+-----------------
+- Unix - changed Alt+a for debugger menu to Alt+Space
+- Unix - added "make clean" option to Makefile
+- hc - fixed problem with inheriting complex properties
+- BeOS - tweaked updating before/after video playback, and on 'pause'
+- BeOS/Win32 - audited tempfile management--better usage and
+  cleanup of resource cache tempfiles
+- BeOS - fixed video.cpp and sound.cpp to use SubsetIO
+- GetResourceParameters() in heres.c now calls strupr() on filename
+  if it's a resource file (since these are forced to all-caps in
+  the compiler)
+
+
+v3.0.01/v2.5.03 (25-Jul-00)
+---------------
+- Consolidated v3.0/v2.5 code bases to remove v3.0's beta status
+- he - "object.property #n is not attribute" caused runtime crash
+- BeOS - stopped audible playback of MODs even when audio is disabled
+- updated library to 2.5.03.1
+- Compiler can now optionally produce an objectfile even with errors
+
+
+v2.5.02a (6-May-00)
+--------
+- Win32 - now recognizes VK_APPS (the application menu key)
+- Unix/BeOS - Compiler now properly parses @resource=... paths
+- Better handling for command-line #settings; both case-sensitivity
+  (in CompilerSet) and presets (ParseCommand)
+- Fixed non-error on illegal use of 'number' token
+- Fixed superfluous "...needs more than one parameter" compiler error
+- Squashed elusive dropped letters in some printed strings
+- Win32 - Alt+F4, and the close box verify before closing the engine
+- Win32 - Last non-looping sample doesn't play when focus returns
+- Safer array writing (and property values, object numbers, etc.)
+- Built hes.exe (simple text-based 16-bit DOS engine) for use with
+  speech software
+- Win32 - fixed stray cursor behavior
+
+v3.0 beta (May-June):
+- Added background argument to 'video' statement to play a video
+  clip in the background (looping, if desired)
+- Also added volume argument to hugo_playvideo()
+- Upgraded BeOS package to v3.0
+- Win32 - fixed improper sizing of video frames
+
+
+v2.5.02 (22-Feb-00)
+-------
+- Compiler's DefEnum() caused errors on explicit "enumerate globals"
+  or "enumerate constants"
+- BeOS - Added character-encoding selection option and full-screen mode
+- In Kent's ports, a mouse-click now passes keycode=1 to
+  hugo_keywaiting(); also sets display.cursor_column and
+  display.cursor_row
+- Also in Kent's ports, fixed hugo_getline() so that it doesn't
+  call hugo_scrollwindowup() unless we're at the window bottom
+- Glk - Half-fixed hugo_settextpos putting things off-screen with
+  positioning based on display.screenheight and screenwidth
+- Removed usage of global 'z' from both heheader.h and hcheader.h
+  (meaning a fairly thorough rewrite of some sections)
+- Rewrote heheader.h and hcheader.h for brevity and clarity
+- Added better compile-time checking to property value syntax
+- Occasional usage of a local __selectvar in compiling select-case
+  for proper working of random(), ++, etc.
+- Tweaked the debugger's runaway-loop watchdog to reset on 'pause'
+  statements
+- Snazzy new icons for BeOS, Win32, Unix, and whoever else wants them
+- Fixed an array-element parsing problem in heexpr.c (with inobj)
+- Fix so that positioning on the lowest line in a window clears the
+  "MORE" prompt count
+- Better compiler label checking in DefOther()
+- Better compiler argument checking for built-ins (such as string()
+  and dict()) in CodeLine()
+- Fixed compiler error exit code reporting (for front-ends like
+  hcwin.exe)
+- wxWindows - Now links dynamically to libmikmod instead of statically
+- Win32 - Context menus now track either mouse button
+- "text to <array>" printing now always appends a terminating zero
+  (without advancing the textto index)
+- Win32 - v2.5 now uses old non-DirectSound audio; v3.0 currently and
+  inexplicably needs a debug-built libmik.lib to overcome hissy
+  DirectSound playback
+
+
+v2.5.01f (9-Feb-00)
+--------
+(Released only for the Win32 package of Guilty Bastards)
+
+
+v2.5.01e (7-Jan-00)
+--------
+- Fixed a bug in the linker that would overflow when reading the
+  text bank (because performaddr was getting missed)
+- Added "'move' requires 'to'" compiler error
+- Win32 - fixed LCC-Win32 makefiles and source to allow compiling of
+  v2.5 with LCC-Win32 as well as MSVC++
+- Fixed a disambiguation problem where, on a "Which...do you mean?"
+  parser question, a parser error message might be printed before
+  proper processing
+- wxWindows - Torbjorn Andersson fixed where the file selector 
+  dialogs were displaying only directories
+- Unix - removed drv_raw loading from MikMod to avoid massive 
+  music.raw file dumps when the sound device is unavailable
+
+
+v2.5.01d (4-Dec-99)
+--------
+- Retooled 'notheld' and 'held' object disambiguation; released
+  accompanying library 2.5.01.4 (and also changed the library so
+  that the banner now contains the version)
+- Win32 - v3.0 media now pay attention to audio/graphics menu
+  settings
+- Win32 - my brother Dean added the program icon to the scrollback
+  window and made it resizable
+
+
+v2.5.01c (29-Oct-99)
+--------
+- fixed bleeding text formatting at end/start of line (only
+  noticeable on Win32?)
+- more fixes to non-Latin character handling
+- added BeOS compile option to heheader.h
+
+
+v2.5.01b (9-Aug-99)
+--------
+- fixed glitch where saved games wouldn't restore if byte 0 or 1 of 
+  the game header is zero
+- pressing '+' at the [MORE...] prompt during command playback skips
+  further prompting
+- Win32 - fixed/uglified the sound factory for better NT support and
+  performance
+- Win32 - fixed save/restore of user colors
+
+
+v2.5.01a
+--------
+- bug in translation of >128 non-Latin characters
+- heres.c incorrectly identified some MP3s as MOD-type mods
+- fixed command playback in (at least Win/DOS) Glk port
+- Win32 - added option to override automatic Latin-1 translation
+- fixed RunRestore to avoid a warning on default unsigned char compilers
+- Win32 - fixed script selection in ChooseFont dialog
+- Win32 - padded temporary image bitmaps to align on word boundaries,
+  hopefully fixing distorted images with some video cards
+- Unix/Linux - first debugger port
+- Win32 - enabled custom color selection of default colors
+- Win32 - extended compiler user interface, allowing saving of compile
+  sessions, redo last compile, changes to output font
+
+
+v2.5.01 and v3.0 beta (26-Apr-99)
+---------------------
+- consolidation of v2.5 and v3.0 beta base-level functionality

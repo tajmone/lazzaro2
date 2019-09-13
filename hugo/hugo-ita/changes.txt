@@ -1,0 +1,273 @@
+HUGO Library Changes File
+Maintained by Julian Arnold (jools@arnod.demon.co.uk)
+
+
+This file details important differences between versions of the standard
+Hugo library by Kent Tessmann (from v2.3.0 onwards).
+
+Important differences are ones which fix bugs, add features, or
+otherwise affect the functioning and/or functionality of the library.
+
+Each release of the library also contains numerous small changes:
+altered formatting, restructured code, additional or reworded comments,
+and so on.  These differences will not be mentioned.
+
+
+________________________________________________________________________
+
+v2.3.0, for use with HC v2.3
+________________________________________________________________________
+
+grammar.g	14,263		10:42:40 17 Mar 1997
+hugofix.g	2,432		09:53:50 27 Jan 1997
+hugofix.h	5,196		10:56:18 18 Mar 1997
+hugolib.h	114,408		09:47:18 20 Mar 1997
+objlib.h	44,328		09:43:30 20 Mar 1997
+verbstub.g	4,481		11:43:50 10 Jan 1997
+verbstub.h	3,558		11:43:38 10 Jan 1997
+________________________________________________________________________
+
+________________________________________________________________________
+
+v2.3.1, for use with HC v2.3
+________________________________________________________________________
+
+grammar.g	14,263		10:00:14 26 Mar 1997
+hugofix.g	2,432		10:00:32 26 Mar 1997
+hugofix.h	5,200		10:00:26 26 Mar 1997
+hugolib.h	115,376		12:31:22 02 Apr 1997
+objlib.h	44,306		12:38:20 02 Apr 1997
+verbstub.g	4,481		10:00:48 26 Mar 1997
+verbstub.h	3,558		10:00:38 26 Mar 1997
+________________________________________________________________________
+
+1.
+The output of the $di (audit directions) debugging verb from hugofix.h
+has been tidied.
+
+2.
+The HoursMinutes routine in hugolib.h can now take an optional second
+argument to specify military 24-hour time.  For example:
+	HoursMinutes(847)      prints 2:07 p.m.
+	HoursMinutes(847,true) prints 14:07
+
+3.
+The DoGo routine in hugolib.h now ensures object does not have a door_to
+property, and is enterable, before passing control to the DoEnter
+routine.
+
+This fixes a bug to do with ENTERing or GOing to an `enterable' object
+with a `door_to' property-- previously this would cause a stack
+overflow, as DoGo and DoEnter would call each other endlessly.
+
+4.
+The component class, defined in objlib.h, now inherits from the scenery
+class, also defined in oblib.h, and is part_of the nothing object by
+default (previously it did not necessariy have the part_of property).
+
+________________________________________________________________________
+
+v2.3.2, for use with HC v2.3
+________________________________________________________________________
+
+grammar.g	14,309		14:38:24 16 Apr 1997
+hugofix.g	2,352		12:41:00 16 Apr 1997
+hugofix.h	5,486		10:23:20 21 Apr 1997
+hugolib.h	119,891		11:24:12 29 Apr 1997
+objlib.h	44,992		09:47:52 02 May 1997
+verbstub.g	4,481		12:41:14 16 Apr 1997
+verbstub.h	3,402		12:41:08 16 Apr 1997
+________________________________________________________________________
+
+5.
+A new global, `player_person', has been added to hugolib.h.  This should
+be set to either 1, 2, or 3 (2 is the default) to reflect whether
+library messages (ie, those contained in routines Message in hugolib.h
+and OMessages in objlib.h) are to be given in the first-, second-, or
+third-person.  For example:
+	VALUE	PERSONAL	EXAMPLE
+		PRONOUN		MESSAGE
+	---------------------------------------------------
+	1	I		I already have that.
+		we		We already have that.
+	2	you (s.)	You already have that.
+		you (pl.)	You already have that.
+	3	he/she/it	He/she/it already has that.
+		they		They already have that.
+
+Being a global the value of `player_person' can be changed during play.
+
+NOTE: Depending on the value of `player_person' the player object should
+either have, or not have the `plural' attribute set (ie, `player is
+[not] plural'):
+	VALUE	PERSONAL	ATTRIBUTE
+		PRONOUN
+	--------------------------------------------
+	1	I       	player is plural
+		we		player is plural
+	2	you (s.)	player is plural
+		you (pl.)	player is plural
+	3	he/she/it	player is not plural
+		they		player is plural
+
+NOTE: The `name' property of the player object should also reflect the
+value of `player_person':
+	VALUE	PERSONAL	NAME
+		PRONOUN
+	----------------------------------------------------------------
+	1	I		player.name="I"
+		we		player.name="we"
+	2	you (s.)	player.name="you"
+		you (pl.)	player.name="you"
+	3	he/she/it	player.name="he"/"she"/"it" (or a proper
+				noun, ie, "Bob")
+		they		player.name="they" (or a proper noun,
+				ie, "men of Harlech")
+
+6.
+The global `nest', declared in hugolib.h, has been renamed to
+`list_nest', to better reflect its purpose (`list_nest' is used in
+various library routines which print a list).
+
+7.
+The `extra_scenery' check (which checks the players input for words
+listed in the current location's `extra_scenery' property) in routine
+Parse in hugolib.h, now begins its checking at the second word of the
+input (ie, `word[2]'), rather than the first.  This ensures that verb
+words are not considered during this check.
+
+8. (See also: 2.)
+Routine HoursMinutes in hugolib.h previously had three bugs: a) midnight
+in 12-hour format was printed as "0:00 a.m."--it is now "12:00 a.m."; b)
+hours before noon in 24-hour format were printed as, ie, "5:00"--they
+are now, ie, "05:00"; c) hours before noon in 24-hour format were still
+suffixed with "a.m."--they no longer are.
+
+9. (See also: 5.)
+Routines The and Art in hugolib.h now take optional true-or-false second
+arguments, which only take effect if the first argument is equal to
+`player' and `player_person' equals 1.  In full:
+	The(player)		prints "I"
+	The(player, true)	prints "me"
+	Art(player)		prints "I"
+	Art(player, true)	prints "me"
+
+10. (See also: 5, 9.)
+If the first argument is equal to `player' and `player_person' equals 1
+routine IsorAre in hugolib.h prints " am" or "'m" rather than " are" or
+"'re".
+
+11. (See also: 5, 9, 10.)
+A new routine, MatchPlural, has been added to hugolib.h, as a
+requirement of the new "player person" rules.  MatchPlural is called
+with three arguments, <object>, <word1>, and <word2>.  It simply prints
+<word1> if <object> is not `plural', or <word2> if <object> is `plural'. 
+For example:
+	print CThe(player); MatchPlural(player, "doesn't", "don't"); \
+	" need to refer to that."
+
+12.
+Previously rooms were not being marked as `visited'.  Thus a full
+description was given whenever the player entered a room, regardless of
+`verbosity', and whether or not he had been there before.  This
+behaviour has been fixed.
+
+13.
+Routine DoEnter in hugolib.h no longer allows the entering of objects in
+the players inventory (response is "You can't enter that").
+
+14. (See also: 5, 9, 10, 11.)
+Routines Message in hugolib.h and OMessages in objlib.h updated to work
+with the new "player person" rules.
+
+15.
+Object definitions for compass directions in objlib.h have been
+re-ordered.  They are now defined, starting with north (`n_obj'),
+clockwise around the compass.  Ie, `n_obj', `ne_obj', `e_obj', `se_obj',
+etc.  Previously they were given in the (somewhat illogical) order
+`n_obj', `s_obj', `e_obj', `w_obj', `ne_obj', `se_obj', `nw_obj',
+`sw_obj'.
+
+________________________________________________________________________
+
+v2.4.0ß, for use with HC v2.4ß
+________________________________________________________________________
+
+grammar.g	14,309		09:50:52 20 May 1997
+hugofix.g	2,352		09:51:10 20 May 1997
+hugofix.h	5,486		09:51:26 20 May 1997
+hugolib.h	120,229		15:42:14 03 Jun 1997
+objlib.h	45,146		10:48:22 21 May 1997
+verbstub.g	4,481		09:50:40 20 May 1997
+verbstub.h	3,448		09:50:28 20 May 1997
+window.h	3,708		22:25:49 06 Jun 1997
+________________________________________________________________________
+
+16.
+The Window Class Library, window.h, has been added.  This defines a
+class, `window_class', for use with the multiple window feature new to
+v2.4.  Full instructions are contained in the file.
+
+17.
+Built-in properties for the engine-defined `display' object have been
+enumerated in hugolib.h, and the library-specific `display' object
+property, `statusline_height' (aliased with `n_to') has also been
+declared, and given a default value of 1.
+
+18.
+The classes `female_character' and `component' no longer inherit from
+`character' and `scenery', respectively, in objlib.h, as this was
+causing problems with `replace <object>' code using non-precompiled
+libraries.
+
+________________________________________________________________________
+
+v2.4.0ß Gr, for use with HC v2.4ß Gr
+________________________________________________________________________
+
+grammar.g	14,309		09:50:52 20 May 1997
+hugofix.g	2,352		09:51:10 20 May 1997
+hugofix.h	5,486		09:51:26 20 May 1997
+hugolib.h	120,661		11:40:04 11 Jul 1997
+objlib.h	44,924		11:24:34 11 Jul 1997
+resource.h	3,070		11:19:12 11 Jul 1997
+verbstub.g	4,481		09:50:40 20 May 1997
+verbstub.h	3,448		09:50:28 20 May 1997
+window.h	3,704		16:57:06 01 Jul 1997
+________________________________________________________________________
+
+19.
+The Hugo Resource Library, resource.h, has been added.  This currently
+contains two routines for loading and displaying graphics.  Full
+instructions are contained in the file.
+
+20.
+Menu() in hugolib.h now takes an optional 3rd argument which specifies
+the starting selection in the menu.
+
+21.
+CenterTitle() in hugolib.h now takes an optional 2nd argument which
+determines the height of the window created by this routine.  If this
+2nd argument is unspecified, or given as 0, it defaults to 1.
+
+22.
+DoGo() in hugolib.h now checks to see if the attempted move is to a door
+object (ie, if the object is of the `door' class (defined in objlib.h)
+or if the object has a door_to property).  If so, the direction in which
+the move is being attempted is set to the return value of the object's
+`door_to' property.
+
+All this means that instead of, for example:
+  n_to {
+    return my_door.door_to
+  }
+
+it is now permissable to have:
+  n_to my_door
+
+23.
+Most classes, as defined in objlib.h, no longer have specific `name'
+properties.
+
+24.
+Various bugfixes have been made to window.h.

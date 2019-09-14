@@ -1,0 +1,277 @@
+// *****************************************************************************
+// *                                                                           *
+// *                                 HUGO v2.5                                 *
+// *                         Manuale del Programmatore                         *
+// *                                                                           *
+// *                         6. MICCE, DEMONI E SCRIPT                         *
+// *                                                                           *
+// *****************************************************************************
+
+= MICCE, DEMONI E SCRIPT
+
+Mentre tutti gli elementi menzionati in precedenza sono programmati all'interno del codice dell'interprete, i mezzi per l'esecuzione delle micce [fuse], dei demoni e degli script sono scritti completamente in Hugo e si trovano nella libreria (`HUGOLIB.H`).
+
+== Micce e Demoni
+
+Daemon [demone] è un termine tradizionale che serve a definire un'attività ricorrente.
+Hugo gestisce i daemon come eventi speciali allegati ad oggetti che possono essere attivati o disattivati (cioè inseriti od estratti dall'area di visibilità di `runevents`).
+
+Visto che la classe `daemon` è definita nella libreria, per definire un daemon si usa
+
+[source,hugo]
+------------------------------------------------------------
+daemon <nome>
+{}
+------------------------------------------------------------
+
+Il corpo della definizione del daemon è vuoto.
+È necessaria solo per associare l'evento daemon, così che la definizione del daemon deve essere seguita da
+
+[source,hugo]
+------------------------------------------------------------
+event [in] <nome>
+{
+    ...
+}
+------------------------------------------------------------
+
+Attivato da
+
+[source,hugo]
+------------------------------------------------------------
+Activate(<nome>)
+------------------------------------------------------------
+
+che muove l'oggetto daemon specificato nell'area di visibilità del giocatore.
+In questo modo tutte le volte che un comando '`runevents`' viene eseguito (come dovrebbe essere nella routine `Main`), l'evento associato a `<nome>` viene eseguito.
+
+Il daemon viene disattivato usando
+
+[source,hugo]
+------------------------------------------------------------
+Deactivate(<nome>)
+------------------------------------------------------------
+
+che rimuove l'oggetto daemon dalla visibilità.
+
+Si può vedere come un daemon sia in realtà uno speciale tipo di oggetto che che posto o meno nell'area di visibilità di '`runevents`', e che è l'evento associato al daemon che contiene veramente il codice.
+
+Un fuse [miccia] è il nome con il quale si indica un timer -- cioè qualunque evento che debba accadere dopo uno specifico periodo di tempo.
+Il fuse è una versione un po' più complessa di un oggetto daemon, contenendo due proprietà addizionali in aggiunta a `in_scope`:
+
+
+[cols="<10m,<90d"]
+|===============================================================================
+| timer
+| il numero di turni prima che l'evento del fuse venga eseguito
+
+| tick
+| una routine che decrementa il `timer` e restituisce il numerodi turni che restano (cioè il valore di `timer`)
+|===============================================================================
+
+Come per i daemon la definizione di un fuse viene fatta in due passi
+
+[source,hugo]
+------------------------------------------------------------
+fuse <nome>
+{}
+
+event [in] <nome>
+{
+    ...
+    if not      self.tick
+    {
+        ...
+    }
+}
+------------------------------------------------------------
+
+e si accende e spegne con
+
+[source,hugo]
+------------------------------------------------------------
+Activate(<nome>,    <impostazioni>)
+------------------------------------------------------------
+
+o
+
+[source,hugo]
+------------------------------------------------------------
+Deactivate(<nome>)
+------------------------------------------------------------
+
+dove `<impostazioni>` è il valore iniziale della proprietà `timer`.
+
+Notare che è compito dell'evento eseguire il timer e verificare la sua scadenza.
+La riga
+
+[source,hugo]
+------------------------------------------------------------
+if not self.tick
+------------------------------------------------------------
+
+esegue la proprietà `tick` -- che decrementa il timer -- ed esegue il blocco di codice condizionale seguente se `self.timer` è 0.
+
+=== Esempio: Un semplice Daemon ed un ancor più semplice Fuse
+
+Il daemon più semplice è qualcosa tipo un contatore di sonno, che misura quanto un giocatore può continuare a cominciare da un determinato momento di riposo.
+
+Assumiamo che la quantità di riposo del giocatore sia contenuta in una proprietà chiamata `riposo`, che si decrementa di 2 ad ogni turno.
+
+[source,hugo]
+------------------------------------------------------------
+daemon affaticamento
+{}
+
+event in affaticamento
+{
+         player.riposo = player.riposo - 2
+    if      player.riposo < 0
+             player.riposo = 0
+
+    select player.riposo
+        case 20
+                 "Ti stai affaticando."
+        case 10
+                 "Stai diventando \Imolto\i stanco."
+        case 0
+                 "Ti sei addormentato!"
+}
+------------------------------------------------------------
+
+Si avvia e si ferma il daemon con `Activate(affaticamento)` e `Deactivate(affaticamento)`.
+
+Ora, per il fuse [miccia], perché non costruire l'esempio più ovvio: quello di una bomba ad orologeria? (Assumendo che esista un altro oggetto fisico `bomba`; `bombaorologeria` è solo il fuse per il conto alla rovescia).
+
+[source,hugo]
+------------------------------------------------------------
+fuse bombaorologeria
+{}
+
+event in bombaorologeria
+{
+    if not self.tick
+         {
+        if      Contains(location, bomba)
+                 "Scompari in un elegante KABOOM!"
+        else
+                 "Senti un KABOOM da qualche parte!"
+        remove bomba
+    }
+}
+------------------------------------------------------------
+
+Si attiva (con un conto alla rovescia di 25 turni) e si ferma con `Activate(bombaorologeria, 25)` e `Deactivate(bombaorologeria)`.
+
+== Script
+
+Gli script sono decisamente più complessi dei fuse e dei daemon.
+Lo scopo di uno script (chiamato anche script del personaggio) è quello di consentire ad un oggetto -- di solito un personaggio -- di eseguire una sequenza di azioni in base ai turni del gioco e indipendentente dal giocatore.
+
+Fino a 16 script possono essere eseguiti insieme.
+È compito del programmatore preoccuparsi di non superare tale limite.
+
+Uno script è rappresentato da due array: `scriptdata` e `setscript`.
+Il secondo è stato nominato per la chiarezza della programmazione piuttosto che per il suo contenuto.
+Ecco perché:
+
+Per definire uno script si usa la seguente notazione:
+
+[source,hugo]
+------------------------------------------------------------
+setscript[Script(<ogg>, <numero>)] =      &CharRoutine, ogg,
+                                 &CharRoutine, ogg,
+                                 ...
+------------------------------------------------------------
+
+(ricordandosi che una virgola alla fine di una riga dice al compilatore che la riga prosegue alla successiva).
+
+Fare caso al fatto che "`setscript`" in realtà è un array, che prende il suo elemento iniziale dal valore di ritorno della routine `Script`, che ha `<oggetto>` e `<numero>` come argomenti.
+
+`Script` restituisce un puntatore all'interno del grande array "`setscript`" dove il `<numero>` di passi di uno script per `<oggetto>` si trovano.
+Un singolo script può avere fino a 32 passi.
+Un passo in uno script è composto da una routine ed un oggetto -- sono entrambi necessari anche se la routine non richiede un oggetto. (Si usa l'oggetto `nothing` (0); vedere la routine `CharWait` in `HUGOLIB.H` per le informazioni).
+
+La consuetudine in `HUGOLIB.H` vuole che le routine di script del personaggio abbiano il prefisso "`Char`", sebbene questo non sia obbligatorio.
+Al momento le routine fornite comprendono:
+
+[cols=",,",]
+|===
+|`CharMove` |[Muovi] |(richiede un oggetto direzione)
+|`CharWait` |[Attendi] |(si usa l'oggetto nothing)
+|`CharGet` |[Prendi] |(richiede un oggetto prendibile)
+|`CharDrop` |[Lascia] |(richiede un oggetto in possesso del personaggio)
+|===
+
+così come la routine speciale
+
+[cols=",,",]
+|===
+|`LoopScript` |[RipetiScript] |(si usa l'oggetto nothing)
+|===
+
+che indica uno script che verrà eseguito in continuazione. (È compito del programmatore assicurarsi che la posizione finale di un personaggio o di un oggetto sia adatta a ricominciare con lo script se `LoopScript` viene usato.
+Vale a dire che se lo script è composto da una complessa serie di direzioni, il personaggio deve sempre ritornare allo stesso punto di partenza.)
+
+La sequenza di routine ed oggetti di ogni script è memorizzata nell'array `setscript`.
+
+Gli script vengono eseguiti tramite la routine `RunScripts`, simile a `runevents`, da cui differisce per il fatto che `runevents` è un comando dell'interprete mentre `RunScripts` è contenuta in `HUGOLIB.H`.
+
+La riga
+
+[source,hugo]
+------------------------------------------------------------
+RunScripts
+------------------------------------------------------------
+
+eseguirà tutti gli script personaggio/oggetto attivi, un turno alla volta, liberando lo spazio usato da ognuno una volta che sono terminati.
+
+Quello che segue è uno script di esempio per un personaggio di nome "`Ned`":
+
+[source,hugo]
+------------------------------------------------------------
+setscript[Script(ned, 4)] = &CharMove, s_obj,
+                     &CharGet, palladicannone,
+                     &CharMove, n_obj,
+                     &CharWait, 0,
+                     &CharDrop, palladicannone
+------------------------------------------------------------
+
+Ned andrà a sud, raccoglierà l'oggetto `palladicannone`, la porterà con sé a nord, attenderà un turno e lascerà la `palladicannone`. (Le routine di script per i personaggi fornite dalla libreria sono relativamente elementari; ad esempio, `CharGet` assume che l'oggetto specificato sia presente quando il personaggio cerca di prenderlo).
+
+Altre routine di gestione script in `HUGOLIB.H` comprendono:
+
+[cols=",",]
+|===
+|`CancelScript(ogg)` |per terminare immediatamente l'esecuzione dello script per `<ogg>`
+|`PauseScript(ogg)` |ferma temporaneamente l'esecuzione dello script per `<ogg>`
+|`ResumeScript(ogg)` |riprende l'esecuzione di uno script fermato
+|`SkipScript(ogg)` |salta lo script per `<ogg>` per la successiva esecuzione di `RunScripts`
+|===
+
+La routine `RunScripts` controlla anche le proprietà `before` e `after`.
+Continua con l'azione predefinita -- la routine di azione del personaggio specificata nello script -- se trova un valore _false_.
+
+Per ignorare una routine di azione predefinata per un personaggio si include una proprietà `before` per l'oggetto del personaggio usando la forma seguente:
+
+[source,hugo]
+------------------------------------------------------------
+before
+{
+    actor      CharRoutine
+    {
+        ...
+    }
+}
+------------------------------------------------------------
+
+dove `CharRoutine` è `CharWait`, `CharMove`, `CharGet`, `CharDrop`, ecc.
+
+== Una nota sulla globale event_flag
+
+Le routine della libreria -- in particolare le routine verbo `DoWait...` -- si aspettano che la variabile globale `event_flag` venga impostata con un valore non falso se qualcosa accade (in un evento o uno script) così che al giocatore venga notificato e venga data l'opportunita si smettere si aspettare.
+Ad esempio le routine di script dei personaggi in `HUGOLIB.H` impostano `event_flag` ogni volta che un personaggio fa qualcosa nella stessa locazione del giocatore.
+
+Se si usa `HUGOLIB.H` deve essere seguita la regola di impostare `event_flag` dopo ogni evento significativo.
+
+// EOF //

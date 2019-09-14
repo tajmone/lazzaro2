@@ -1,0 +1,476 @@
+// *****************************************************************************
+// *                                                                           *
+// *                                 HUGO v2.5                                 *
+// *                         Manuale del Programmatore                         *
+// *                                                                           *
+// *                       2. UNA PRIMA OCCHIATA A HUGO                        *
+// *                                                                           *
+// *****************************************************************************
+
+= UNA PRIMA OCCHIATA A HUGO
+
+Ci sono un paio di concetti base da capire prima di poter cominciare a lavorare con Hugo.
+
+Prima di tutto, la maggior parte del lavoro di programmazione in Hugo riguarderà la creazione di quelli che chiamiamo "`oggetti`".
+Letteralmente questi rappresentano gli "`oggetti`" o elementi dell'universo del gioco: persone, luoghi e cose.
+
+Il grosso del rimanente di un programma Hugo è composto dalle "`routine`".
+Queste sono le sezioni di codice fatte di comandi o istruzioni che guidano il reale comportamento del programma a punti differenti nella storia.
+Le routine vengono chiamate meno frequentemente (o più frequentemente in altri linguaggi) "`funzioni`" -- vanno pensate come l'esecuzione di un'operazione o una serie di operazioni, per poi restituire qualche tipo di valore come risultato.
+
+(Il concetto dei valori di ritorno è importante e, sebbene sembri complicato ai meno esperti, è in realtà piuttosto semplice.
+Spesso una particolare funzione verrà indicata come "`restituisce vero`" o "`restituisce falso`" -- il che significa che restituirà un valore non a zero (di solito 1) o un valore a zero, la maggior parte delle volte indicanti un successo od un fallimento.
+Un programma controllerà constantemente i valori di ritorno di un insieme di routine e comandi per determinare se una particolare operazione ha avuto successo, in maniera da decidere che cosa fare dopo. +
+Naturalmente un valore di ritorno può essere qualunque valore intero; una routine che somma tra loro i due valori indicati, a e b, potrebbe restituire la somma di a+b.)
+
+Per quelli che hanno familiarità con i più comuni linguaggi di programmazione C e BASIC, Hugo somiglia fortemente ad un ibrido tra i due. +
+Oggetti individuali e routine -- così come i blocchi condizionali -- sono racchiusi tra parentesi graffe come in C, ma a differenza del C (e come il BASIC), un punto e virgola non è richiesto alla fine di ogni riga, ed il linguaggio stesso è considerevolmente meno criptitco. +
+Istruzioni, varibili, routine e nomi di oggetti, e altre parole chiave non sono case-sensitive (possono essere scritte indifferentemente in maiuscolo e minuscolo).
+
+L'obiettivo nella progettazione di Hugo è stato quello di fare in modo che la programmazione fosse il più intuitiva possibile per facilitare sia lo sviluppo iniziale che il debug seguente.
+
+== Hello, Sailor!
+
+La grandiosa tradizione dei testi di programmazione ha un'introduzione al nuovo linguaggio di programmazione che dettaglia il modo di stampare l'ottimistica frase "`Salve, mondo`" come esempio della forma e sostanza particolare del linguaggio.
+
+Nell'ugualmente grandiosa tradizione dell'interactive fiction, cominceremo con il richiamo "`Hello, Sailor!`".
+Non vi preoccupate troppo della sintassi che segue; serve solo per familiarizzare con l'aspetto di Hugo.
+
+[source,hugo]
+------------------------------------------------------------
+routine main
+{
+    print "Hello, Sailor!"
+    return
+}
+------------------------------------------------------------
+
+Tutto il programma è composto da una sola routine. (Normalmente sono necessarie due routine per ogni programma Hugo, l'altra è la routine `Init`, che è stata omessa in questo esempio visto che non è richiesto nulla in fase di inizializzazione).
+
+La routine `Main` viene chiamata automaticamente dall'interprete.
+È da qui che il comportamento centrale di ogni programma Hugo viene controllato.
+In questo caso il compito è quello di stampare "`Hello, Sailor!`", seguito da un ordine di ritornare (`return`) dalla routine (uscire dalla stessa) così da non bloccare il programma per attendere un input, che è il compito normale di Hugo.
+
+== Tipi di dati
+
+Tutti i dati in Hugo sono rappresentati in termini di interi a 16 bit, sia con segno (-32768 a 32767) che senza segno (0 a 65535) come richiesto.
+Il nome di ciascun tipo di dato può contenere fino a 32 caratteri alfanumerici (così come il carattere di sottolineato '_').
+
+Quelli che seguono sono tipi di dato validi:
+
+_Valori interi_ `0,` `-10`, `16800`, `-25005` +
+(valori costanti che compaiono nel codice sorgente di Hugo come numeri)
+
+_Caratteri ASCII_ `'A'`, `'z'`, `'7'` +
+(valori costanti corrispondenti al valore ASCII di ciascun carattere, ad es. 65 per `'A'`)
+
+_Oggetti_ `borsa`, `stanzavuota`, `giocatore` +
+(valori costanti rappresentanti il numero dell'oggetto indicato)
+
+_Variabili_ `a`, `b`, `score`, `TEXTCOLOR` +
+(contenitori di valori modificabili che posso essere impostati uguali ad un'altra variabile o ad un valore costante)
+
+_Costanti_ `true`, `false`, `BANNER` +
+(valori costanti che hanno un nome simile ad una variabile, ma che non sono modificabili)
+
+_Voci di dizionario_ `"a"`, `"the"`, `"basketball"` +
+(l'indicazione di `"the"` in una riga di codice in realtà si riferisce alla posizione nella tabella del dizionario in cui `"the"` è memorizzata).
+
+_Elementi di matrici_ `posizione[1]` +
+(una serie di uno o più valori modificabili che possono essere indicati a partire da un punto iniziale comune)
+
+_Indirizzi di matrici_ `posizione` +
+(il punto iniziale -- vedi sopra)
+
+_Proprietà_ `nouns`, `short_desc`, `found_in` +
+(allegati varibili di dati relativi ad oggetti specifici)
+
+_Attributi_ `open`, `light`, `transparent` +
+(allegati meno complessi di dati che descrivono un oggetto, con i quali si può specificare se un oggetto ha o meno l'attributo indicato)
+
+La maggior parte di questi tipi sono relativamente semplici, rappresentando in molti casi un valore singolo.
+Le voci di dizionario indirizzano la tabella del dizionario, con la stringa nulla `""` avente il valore 0.
+Gli indirizzi di matrici (al contrario degli elementi di matrici) rappresentano l'indirizzo a cui inizia la matrice nella tabella delle matrici.
+Le proprietà e gli attributi considerati come valori discreti rappresentano il numero di quella proprietà o quell'attributo, assegnato in maniera sequenziale quando la singola proprietà o il singolo attributo vengono definiti.
+
+Come indicato le routine possono anche restituire dei valori, come le funzioni dell'interprete, così che
+
+[source,hugo]
+------------------------------------------------------------
+FindLight(room)
+------------------------------------------------------------
+
+e
+
+[source,hugo]
+------------------------------------------------------------
+parent(object)
+------------------------------------------------------------
+
+rappresentanto dei valori interi validi.
+
+Anche gli indirizzi delle routine sono memorizzati come interi a 16 bit. +
+Comunque, quelli portati a questi calcoli possono notare che un valore simile, trattato come un indirizzo assoluto possa indicare un limite di indirizzamento di 64k di dimensioni.
+Comunque non è questo il caso, visto che l'indirizzo della routine è in realtà una rappresentazione indicizzata dell'indirizzo assoluto.
+
+[NOTE]
+================================================================================
+l'indirizzo in formato a 16 bit di una routine (o l'indirizzo di una routine proprietà, come verrà indicato più sotto), può essere ottenuto tramite l'operatore indirizzo '`&`', come in:
+================================================================================
+
+[source,hugo]
+------------------------------------------------------------
+x = &Routine
+x = &object.property
+------------------------------------------------------------
+
+(dove `x` è una variabile).
+
+== Righe multiple
+
+Se un singolo comando è troppo lungo per entrare in una riga, può essere suddiviso su diverse righe terminando ciascuna di esse tranne l'ultima con il carattere di controllo '`\`'.
+
+[source,hugo]
+------------------------------------------------------------
+"Questa è una stringa di esempio."
+------------------------------------------------------------
+
+e
+
+[source,hugo]
+------------------------------------------------------------
+x = 5 + 6 * higher(a, b)
+------------------------------------------------------------
+
+hanno lo stesso significato di
+
+[source,hugo]
+------------------------------------------------------------
+"Questa è una riga \
+    di esempio."
+------------------------------------------------------------
+
+e
+
+[source,hugo]
+------------------------------------------------------------
+x = 5 + 6 * \
+    higher(a, b)
+------------------------------------------------------------
+
+Lo spazio vuoto alla fine della prima riga è necessario perché il compilatore elimina automaticamente gli spazi iniziali dalla seconda riga.
+
+Le costanti stringa, come nell'esempio di stampa precedente, sono un'eccezione in quanto non richiedono il carattere '`\`' alla fine di ogni riga.
+
+[source,hugo]
+------------------------------------------------------------
+print "L'interprete stamperà correttamente
+       questo testo, aggiungendo uno spazio
+       singolo alla fine di ogni
+       riga."
+------------------------------------------------------------
+
+verrà visualizzato come:
+
+[example,role="gametranscript"]
+================================================================================
+L'interprete stamperà correttamente questo testo, aggiungendo uno spazio singolo alla fine di ogni riga.
+================================================================================
+
+
+Bisogna fare attenzione al fatto, comunque, che le virgolette di chiusura non vengano dimenticate nella costante stringa.
+Dimenticandosene, il compilatore potrebbe generare un errore "`Closing brace missing`" quando oltrepassa i limiti dell'oggetto/routine/evento cercando una soluzione al numero errato di virgolette.
+
+Inoltre, molte delle righe che terminano con una virgola, '`and`', o '`or`' continuano automaticamente alla riga successiva (se capitano in una riga di codice).
+In altre parole,
+
+[source,hugo]
+------------------------------------------------------------
+x[0] = 1, 2, 3, ! assegnazione array da x[0] a x[4]
+       4, 5
+------------------------------------------------------------
+
+e
+
+[source,hugo]
+------------------------------------------------------------
+if a = 5 and
+   b = "alto"
+------------------------------------------------------------
+
+vengono convertite in
+
+[source,hugo]
+------------------------------------------------------------
+x[0] = 1, 2, 3, 4, 5
+------------------------------------------------------------
+
+e
+
+[source,hugo]
+------------------------------------------------------------
+if a = 5 and b = "alto"
+------------------------------------------------------------
+
+Questa funzionalità è presente principalmente perché le righe lunghe e le espressioni complesse non eccedano dal limite destro dello schermo durante l'editing, e che non sia continuamente necessario estendere le righe usano '`\`' alla fine di ogni riga.
+
+(_NOTA:_ Le righe multiple che non sono esplicitamente codice, come le assegnazioni alle proprietà nelle definizioni degli oggetti -- che verranno illustrate -- devono ancora essere unite usando '`\`', come in
+
+[source,hugo]
+------------------------------------------------------------
+nouns "pianta", "fiore", "calendola", \
+      "fauna",  "fogliame"
+------------------------------------------------------------
+
+e casi simili, anche se terminano con una virgola).
+
+Esiste un carattere di controllo complementare a '`\`': il carattere '`:`' consente di mettere le righe multiple su una riga singola, ad esempio:
+
+[source,hugo]
+------------------------------------------------------------
+x = 5 : Y = 1
+------------------------------------------------------------
+
+o
+
+[source,hugo]
+------------------------------------------------------------
+if i = 1 : print "Inferiore a tre."
+------------------------------------------------------------
+
+che il compilatore trasforma in
+
+[source,hugo]
+------------------------------------------------------------
+x = 5
+y = 1
+------------------------------------------------------------
+
+e
+
+[source,hugo]
+------------------------------------------------------------
+if i = 1
+    {print "Inferiore a tre."}
+------------------------------------------------------------
+
+(Consultate le sezioni che seguono sulla formattazione del codice per capire esattamente che cosa rappresentano questi costrutti)
+
+== Commenti
+
+Ci sono due tipi di commenti.
+I commenti su una singola riga cominciano con '`!`'.
+Tutto quello che segue sulla riga viene ignorato.
+I commenti a riga multipla iniziano con '`!\`' e terminano con '`\!`'.
+
+[source,hugo]
+------------------------------------------------------------
+! Un commento su una singola riga
+!\ Un commento a
+   riga multipla \!
+
+------------------------------------------------------------
+
+La combinazione '`!\`' deve cominciare all'inizio di una riga per essere significativa; non può essere preceduta da nessun'altra istruzione o commento.
+Allo stesso modo la combinazione '`\!`' deve trovarsi alla fine di una riga.
+
+== Errori del compilatore
+
+Un errore del compilatore è generalmente di due tipi.
+Un errore fatale (grave) somiglia a:
+
+[literal, role="cmd"]
+................................................................................
+Fatal error: <messaggio>
+................................................................................
+
+e termina l'esecuzione del compilatore.
+
+Un errore non fatale di solito appare come:
+
+[literal, role="cmd"]
+................................................................................
+<nomefile>(<riga>): Error:    <messaggio>
+................................................................................
+
+Inoltre, il compilatore può produrre avvertimenti nella forma:
+
+[literal, role="cmd"]
+................................................................................
+<nomefile>(<riga>): Warning:      <messaggio>
+................................................................................
+
+La compilazione continua, ma questa è un'indicazione che il compilatore sospetta esista in problema a tempo di compilazione.
+
+Se l'opzione `-e` è stata impostata durante l'esecuzione per generare gli errori in formato esteso, gli errori verranno visualizzati come:
+
+[literal, role="cmd"]
+................................................................................
+<NOMEFILE>: <POSIZIONE>
+(Riga che ha causato l'errore)
+"ERROR: <messaggio di errore>"
+................................................................................
+
+Stampa la sezione di codice che ha causato l'errore, seguita da una spiegazione del problema.
+Generalmente la compilazione continua a meno che sia stata selezionata l'opzione `-a`.
+
+
+[NOTE]
+================================================================================
+La sezione di codice errato potrebbe non essere stampata esattamente come compare nel sorgente, visto che il compilatore spesso risistema e ricostruisce il codice sorgente in un formato più rigido prima di costruire la riga.
+================================================================================
+
+== Direttive di compilazione
+
+Una serie di comandi speciali può essere usata per determinare a.) come il codice sorgente viene letto dal compilatore, o b.) quale output speciale verrà generato a tempo di compilazione.
+
+Per impostare le opzioni all'interno del codice sorgente così che non sia necessario specificarle tutte le volte che viene eseguito il compilatore per quel particolare programma, la riga
+
+[source,hugo]
+------------------------------------------------------------
+#switches -<sequenza>
+------------------------------------------------------------
+
+imposterà le opzioni specificate da `<sequenza>`, dove `<sequenza>` è una stringa di caratteri rappresentante delle opzioni valide, senza nessun separatore tra i caratteri.
+
+Molti programmatori possono trovare utile fare di
+
+[source,hugo]
+------------------------------------------------------------
+#switches -ils
+------------------------------------------------------------
+
+la prima riga di ogni nuovo programma, che automaticamente stamperà le informazioni di debug, un elenco di statistiche, e tutti gli errori nel file list `.LST`.
+
+Usando
+
+[source,hugo]
+------------------------------------------------------------
+#version  <versione>[.<revisione>]
+------------------------------------------------------------
+
+è possibile specificare che il file deve essere usato con la versione `<versione>.<revisione>` del compilatore.
+Se le versioni del file e del compilatore non coincidono, viene generato un avvertimento.
+
+Per inserire il contenuto di un altro file al punto specificato nella riga corrente, usate
+
+[source,hugo]
+------------------------------------------------------------
+#include "<nomefile>"
+------------------------------------------------------------
+
+dove `<nomefile>` è il nome completo di percorso del file che deve essere letto.
+Quando `<nomefile>` è stato letto completamente, il compilatore prosegue con l'istruzione immediatamente successiva al comando `#include`.
+
+(Un file od un insieme di file può essere compilato in un header precompilato usando l'opzione `-h`, e poi linkato usando `#link` al posto di `#include`.
+Consultate l'Appendice D sugli Header Precompilati).
+
+Uno strumento molto utile per la gestione del codice sorgente Hugo è la capacità di usare i flag del compilatore per la compilazione condizionale.
+Un flag del compilatore è semplicemente un segnale definito dall'utente che serve a controllare quali sezioni del codice sorgente vanno compilate.
+In questo modo, un programmatore può sviluppare aggiunte ad un programma che possono essere incluse o escluse a volontà.
+Ad esempio, i file della libreria `HUGOLIB.H`, `VERBLIB.H`, e `VERBLIB.G` verificano se un flag chiamato `DEBUG` è stato precedentemente impostato (come in `SAMPLE.HUG`).
+In questo caso includono i file `HUGOFIX.H` e `HUGOFIX.G`.
+
+Per impostare e pulire i flag usate
+
+[source,hugo]
+------------------------------------------------------------
+#set <nomeflag>
+------------------------------------------------------------
+
+e
+
+[source,hugo]
+------------------------------------------------------------
+#clear <nomeflag>
+------------------------------------------------------------
+
+Poi è possibile verificare se un flag è impostato o meno (e includere o escludere il blocco di codice sorgente specificato) usando
+
+[source,hugo]
+------------------------------------------------------------
+#ifset <nomeflag>
+    ...blocco di codice condizionale...
+#endif
+------------------------------------------------------------
+
+o
+
+[source,hugo]
+------------------------------------------------------------
+#ifclear <nomeflag>
+    ...blocco di codice condizionale...
+#endif
+------------------------------------------------------------
+
+I costrutti di compilazione condizionale possono essere nidificati fino ad una profondità di 32 livelli.
+
+(È anche possibile specificare i flag del compilatore dalla riga di comando quando si esegue il compilatore con `#<nomeflag>`):
+
+"`#if set`" e "`#if clear`" sono le forme estese di "`#ifset`" e "`#ifclear`", che consentono l'uso di "`#elseif`" per il codice come in:
+
+[source,hugo]
+------------------------------------------------------------
+#set QUESTO_FLAG
+#set QUEL_FLAG
+#if clear QUESTO_FLAG
+#messagge "Questo non viene mai stampato."
+#elseif set QUEL_FLAG
+#message "Questo viene sempre stampato."
+#else
+#message "Questo no se QUEL_FLAG è impostato."
+#endif
+------------------------------------------------------------
+
+Usate "`#if defined <flag>`" e "`#if undefined    <flag>`" per verificare se oggetti, proprietà, routine, ecc. sono state definite in precedenza.
+
+Come si è visto più sopra la direttiva `#message` può essere usata come
+
+[source,hugo]
+------------------------------------------------------------
+#message "<testo>"
+------------------------------------------------------------
+
+per visualizzare `<testo>` quando (o se) quell'istruzione viene interpretata durante il primo passo della compilazione.
+
+Includendo "`error`" o "`warning`" prima di "`<testo>`" come in
+
+[source,hugo]
+------------------------------------------------------------
+#message error "<testo>"
+------------------------------------------------------------
+
+o
+
+[source,hugo]
+------------------------------------------------------------
+#message warning "<testo>"
+------------------------------------------------------------
+
+si forzerà il compilatore a generare, rispettivamente, un errore od un avvertimento quando dovrà stampare "`<testo>`".
+
+È anche possibile includere l'impostazione dei limiti nel codice, come in
+
+[source,hugo]
+------------------------------------------------------------
+$<impostazione>=<limite>
+------------------------------------------------------------
+
+allo stesso modo della riga di comando.
+Comunque un errore verrà genenerato se, ad esempio, si tenta di reimpostare `MAXOBJECTS` quando uno o più oggetti sono stati definiti.
+
+=== Esempio: Compilazione dalla linea di comando
+
+Sulla macchina dell'autore, che gira sotto MS-DOS, l'eseguibile del compilatore `HC.EXE` è in una directory chiamata `C:\HUGO`.
+I file della libreria sono in `C:\HUGO\LIB`, ed il codice sorgente per il gioco Spur è in `C:\HUGO\SPUR`.
+
+È possibile chiamare il compilatore per compilare Spur con una serie di opzioni differenti, inclusa l'impostazione dei flag del compilatore per includere la libreria di debug HugoFix e le routine dei verbi addizionali (che potrebbe essere ottenuto diversamente con "`#set DEBUG`" e "`#set    VERBSTUBS`" nel sorgente), e stampare tutte le informazioni di debug, l'albero degli oggetti, e le statistiche in un file. (Assumendo che la directory corrente è `C:\HUGO` e che nessuna delle opzioni o flag del compilatore sono impostati nel sorgente.)
+
+[literal, role="cmd"]
+................................................................................
+hc -iols #debug #verbstubs @source=spur @lib=lib    spur
+................................................................................
+
+Questa riga mostra l'uso di tutti i tipi di opzione della riga di comando possibili, comprese le opzioni multiple, l'impostazione dei flag, e l'indicazione delle directory.
+
+// EOF //

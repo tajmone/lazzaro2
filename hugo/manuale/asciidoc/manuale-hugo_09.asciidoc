@@ -1,0 +1,60 @@
+// *****************************************************************************
+// *                                                                           *
+// *                                 HUGO v2.5                                 *
+// *                         Manuale del Programmatore                         *
+// *                                                                           *
+// *                           9. IL CICLO DEL GIOCO                           *
+// *                                                                           *
+// *****************************************************************************
+
+= IL CICLO DEL GIOCO
+
+Questo è il modello che segue *Hugo Engine* (l'interprete) durante l'esecuzione del programma. (Vengono menzionate anche le chiamate alle routine `before` e a `verbroutine` da parte di `Perform` in `HUGOLIB.H`.
+Sebbene non facenti parte necessariamente del ciclo di gioco -- visto che possono o meno essere incluse in un programma -- vengono menzionate perché sono relative ad ogni programma Hugo che faccia uso della libreria standard di Hugo).
+
+(`INIT`: la routine `Init` viene chiamata solo quando il programma viene eseguito la prima volta, o quando viene dato un comando '`restart`' [ricomincia]).
+
+`MAIN`: all'inizio del ciclo di gioco l'interprete chiama la routine `Main`.
+La routine dovrebbe -- come nei programmi di esempio forniti -- prendersi cura dell'avanzamento del contatore dei turni, eseguire il comando '`runevents`' e chiamare le routine della libreria come `RunScripts` e `PrintStatusLine`.
+
+`INPUT`: l'input da tastiera viene ricevuto.
+
+`PARSING`: viene controllata la validità della riga di input, vengono controllati i sinonimi ed altre parole speciali, e viene chiamata (se presente) la routine `Parse` dell'utente.
+
+`GRAMMAR MATCHING`: l'interprete cerca di far corrispondere la riga di input con un verbo ed una sintassi validi nella tavola della grammatica.
+Se non viene trovata nessuna corrispondenza l'interprete torna ad `INPUT`. +
+Altrimenti se viene trovata una corrispondenza si ha almeno l'impostazione della variabile globale `verbroutine`, così come le eventuali `object` e `xobject`.
+
+`BEFORE ROUTINES` (chiamate da `Perform` in `HUGOLIB.H`):
+
+se degli oggetti sono stati specificati nella riga di input, le loro routine before vengono controllate nel seguente ordine, per ciascun oggetto:
+
+* `player.before`
+* `location.before`
+* `xobject.before` (se appropriato)
+* `object.before` (se appropriato)
+
+Se una qualunque di queste routine restituisce _true_, l'interprete salta la routine verbo.
+
+`VERB ROUTINE` (chiamata da `Perform` in `HUGOLIB.H`): +
+se nessuna routine `before` restituisce _true_ la routine verbo viene eseguita.
+
+Se un'azione viene completata con successo, la routine verbo deve restituire _true_.
+Un valore di ritorno _false_ annulla gli eventuali comandi rimanenti sulla riga di input.
+
+`Perform` non esegue nessuna proprietà `after` per `object` o `xobject`; questo è compito della routine verbo.
+Esegue sia `player.after` che `location.after` se la routine verbo restituisce _true_.
+
+(Il controllo ritorna dalla routine `Perform` della libreria all'interprete)
+
+Quando ha finito l'interprete ritorna a `MAIN`, chiamando la routine `Main` solo se l'ultimo verbo verificato non era un `xverb`.
+
+Impostare la variabile globale `endflag` in qualunque punto ad un valore diverso da zero comporta il termine del ciclo di gioco e l'esecuzione della routine `EndGame`.
+
+[NOTE]
+================================================================================
+Le informazioni di annullamento richiamate da '`undo`' vengono salvate ad ogni turno solo durante la routine `Main` (compreso qualunque comando o funzione richiamati al suo interno, come gli eventi, le micce ed i demoni, o gli script dei personaggi) e le routine verbo (a meno che il verbo sia un `xverb`).
+È perciò raccomandato che nessun'altra routine cambi un dato di gioco significativo, visto che questo non sarebbe recuperabile da '`undo`'.
+================================================================================
+
+// EOF //

@@ -1,0 +1,464 @@
+// *****************************************************************************
+// *                                                                           *
+// *                                 HUGO v2.5                                 *
+// *                         Manuale del Programmatore                         *
+// *                                                                           *
+// *                          7. GRAMMATICA E PARSING                          *
+// *                                                                           *
+// *****************************************************************************
+
+= GRAMMATICA E PARSING
+
+== Definizione della grammatica
+
+Ogni comando valido del giocatore deve essere specificato.
+Più precisamente ogni uso di un particolare verbo deve essere dettagliato per intero nel codice sorgente.
+
+Le definizioni della grammatica devono essere inserite sempre all'inizio del codice, prima di ogni oggetto o codice da eseguire.
+In pratica se diversi file addizionali di grammatica devono essere inclusi, o una nuova grammatica deve essere definita esplicitamente nel codice sorgente, deve essere fatto prima dell'inclusione dei file che contengono del codice da eseguire, o prima della definizione di ogni routine, oggetto, ecc.
+
+La sintassi da usare è:
+
+[source,hugo]
+------------------------------------------------------------
+[x]verb "<verbo1>" [, "<verbo2>",      "<verbo3>",...]
+    * <specificazione      di sintassi 1> <RoutineVerbo1>
+    *      <specificazione di sintassi 2> <RoutineVerbo2>
+    ...
+------------------------------------------------------------
+
+Bene, che vuol dire?
+Ecco alcuni esempi tratti dal file di grammatica della libreria `VERBLIB.G`:
+
+[source,hugo]
+------------------------------------------------------------
+verb "get"
+         *                                           DoVague
+    *      "up"/"out"/"off"                          DoExit
+    * "outof"/"offof"/"off"      object         DoExit
+    * "in"/"on"      object                          DoEnter
+    * multinotheld "from"/"off"      parent     DoGet
+    *      multinotheld "offof"/"outof" parent  DoGet
+    *      multinotheld                              DoGet
+
+verb "take"
+         *                                           DoVague
+    * "off"      multiheld                           DoTakeOff
+    * multiheld      "off"                           DoTakeOff
+    *      multinotheld                              DoGet
+    * multinotheld "from"/"off"      parent     DoGet
+    *      multinotheld "offof"/"outof" parent  DoGet
+
+xverb "save"
+         *                 DoSave
+    * "game"          DoSave
+
+verb "read", "peruse"
+         *                   DoVague
+    * readable          DoRead
+
+verb "unlock"
+         *                           DoVague
+    *      lockable                  DoUnLock
+    * lockable "with" held      DoUnLock
+------------------------------------------------------------
+
+Ogni intestazione '`verb`' o '`xverb`' comincia con una nuova definizione di un verbo.
+Un '`xverb`' è un qualificatore speciale che indica che l'interprete non deve chiamare la routine `Main` dopo aver completato con successo l'azione.
+Un '`xverb`' viene di solito usato con i verbi non di azione, o di utilità come il salvataggio, il ripristino, l'uscita dal gioco, o il ricominciare da capo.
+
+Successivamente nell'intestazione sono indicati uno o più nomi del verbo.
+Ogni nome specificato userà la grammatica seguente allo stesso modo. +
+Questo è il motivo per il quale "`get`" e "`take`" negli esempi precedenti sono definiti separatamente, invece di
+
+[source,hugo]
+------------------------------------------------------------
+verb "get", "take"
+------------------------------------------------------------
+
+In questo modo i comandi
+
+[example,role="gametranscript"]
+================================================================================
+get up
+================================================================================
+
+
+e
+
+[example,role="gametranscript"]
+================================================================================
+take off hat
+================================================================================
+
+
+sono consentiti, mentre
+
+[example,role="gametranscript"]
+================================================================================
+take up
+================================================================================
+
+
+e
+
+[example,role="gametranscript"]
+================================================================================
+get off hat
+================================================================================
+
+
+non hanno senso.
+
+Ogni riga che comincia con l'asterisco ('`*`') è un uso valido del verbo che si sta defininendo. (Ogni input del giocatore deve cominciare con un verbo.
+Le eccezioni, dove un comando è diretto ad un oggetto come in
+
+[example,role="gametranscript"]
+================================================================================
+Ned, get the ball
+================================================================================
+
+
+verranno dettagliate in seguito).
+
+Fino a due oggetti ed un qualunque numero di parole del dizionario possono essere usate per creare una riga di sintassi.
+Gli oggetti devono essere separati ad almeno una parola del dizionario.
+
+Specificazioni di oggetto valide sono:
+
+[cols=",",]
+|===
+|`object` |qualunque oggetto visibile (l'oggetto diretto)
+|`xobject` |l'oggetto indiretto
+|`attribute` |qualunque oggetto visibile che ha l'attributo `<attribute>`
+|`parent` |qualunque `xobject` che è il padre dell'oggetto
+|`held` |qualunque oggetto in possesso del giocatore
+|`notheld` |un oggetto non in possesso del giocatore
+|`multi` |oggetti visibili multipli
+|`multiheld` |oggetti multipli in possesso del giocatore
+|`multinotheld` |oggetti multipli non posseduti dal giocatore
+|`number` |un numero intero positivo
+|`word` |qualunque parola del dizionario
+|`string` |una stringa tra virgolette
+|`(NomeRoutine)` |un nome di routine, tra parentesi
+|`(nomeogg)` |un nome di oggetto, tra parentesi
+|===
+
+(Se viene specificato un numero nella sintassi della grammatica, questo viene passato alla routine verbo nell'oggetto `global`.
+Se viene specificata una stringa, questa viene passata nella variabile dell'interprete `parse$`, che può essere trasformata in un array di stringhe usando la funzione '`string`').
+
+Le parole del dizionario che possono essere usate in maniera intercambiabile vanno separate da una barra ('`/`').
+
+Due o più parole del dizionario digitate in sequenza devono essere specificate separatamente.
+Cioè se la riga in input è:
+
+[example,role="gametranscript"]
+================================================================================
+take hat out of suitcase
+================================================================================
+
+
+la riga di sintassi
+
+[source,hugo]
+------------------------------------------------------------
+* object "out" "of" container
+------------------------------------------------------------
+
+corrisponderà, mentre
+
+[source,hugo]
+------------------------------------------------------------
+* object "out of" container
+------------------------------------------------------------
+
+non verrà mai riconosciuta, visto che l'interprete tratta in automatico "`out`" e "`of`" come due parole separate; il parser non troverà mai una corrispondenza per "`out of`".
+
+Per quel che riguarda l'indicazione degli oggetti nella riga di sintassi: Una volta che l'oggetto diretto è stato trovato, l'oggetto rimanente sulla riga di input verrà memorizzato come `xobject`.
+In pratica nell'esempio precendente, un oggetto valido sulla riga di input con l'attributo `container` verrà considerato l'oggetto indiretto dalla routine verbo.
+
+[NOTE]
+================================================================================
+Un punto importante da ricordare quando si mischiano parole del dizionario ed oggetti in una riga di sintassi è che, a meno che sia stato indirizzato diversamente, il parser può confondere una combinazione parola-oggetto con un nome di oggetto non valido.
+Considerate questo:
+
+[source,hugo]
+------------------------------------------------------------
+verb "pick"
+    *      object      DoGet
+    *      "up" object DoGet
+------------------------------------------------------------
+
+Questa definizione avrà come risultato qualcosa tipo
+
+[example,role="gametranscript"]
+=======================================================
+>pick up box
+You haven't seen any "up box", nor are you likely to in
+the near future even if such a thing exists.
+=======================================================
+
+
+(partendo dal presupposto che "`up`" sia stato definito da qualche altra parte come parte di un altro nome di oggetto, come in `OBJLIB.H`), visto che il processore processa la sintassi
+
+[source,hugo]
+-------------
+* object
+-------------
+
+e determina che un nome di oggetto non valido viene usato; non arriva mai a
+
+[source,hugo]
+-------------
+* "up" object
+-------------
+
+La definizione corretta del verbo deve essere ordinata come
+
+[source,hugo]
+----------------------------
+verb "pick"
+    * "up" object      DoGet
+    * object           DoGet
+----------------------------
+
+così che "`pick <oggetto>`" e "`pick up    <oggetto>`" sono comandi validi.
+================================================================================
+
+Per definire una nuova condizione grammaticale che abbia la precedenza rispetto ad una già esistente -- come in `VERBLIB.G` -- basta definire la nuova condizione prima (ad esempio prima di includere `VERBLIB.G`).
+
+[NOTE]
+================================================================================
+Come regola generale, a meno che si abbia la necessità di anticipare il normale processo della grammatica della libreria, la nuova grammatica va inserita dopo l'inclusione dei file della libreria. (La ragione di questo è che la grammatica della libreria è stata messa punto per gestire situazioni come quelle esposte più sopra).
+================================================================================
+
+Un oggetto singolo può essere specificato come l'unico oggetto valido per una particolare sintassi:
+
+[source,hugo]
+------------------------------------------------------------
+verb "sfrega"
+    *      (lampada_magica) DoSfregaLampadaMagica
+------------------------------------------------------------
+
+che produrrà un errore "`You can't do that with...`" per ogni oggetto diverso dall'oggetto `lampada_magica`.
+
+Usare un nome di routine per specificare un oggetto è leggermente più complicato: l'interpete chiama la routine indicata passandole l'oggetto specificato nell'input come argomento; se la routine restituisce _true_ allora l'oggetto è valido, altrimenti un errore di interpretazione deve essere stampato dalla routine.
+Se due nomi di routine vengono usati in una determinata sintassi, come in
+
+[source,hugo]
+------------------------------------------------------------
+* (PrimaRoutine) "con"    (SecondaRoutine)
+------------------------------------------------------------
+
+allora `PrimaRoutine` viene usata per la validazione di `object` e `SecondaRoutine` per la validazione di `xobject`.
+
+== Il parser
+
+Subito dopo che una riga in input è stata ricevuta, l'interprete chiama il parser, ed il primo passo consiste nell'identificare tutte le parole non valide, cioè le parole che non sono nella tabella del dizionario.
+
+[NOTE]
+================================================================================
+Nella riga di input è consentito inserire una parola o frase non compresa nel dizionario a patto che venga racchiusa tra virgolette ("`{wj}`").
+Se il comando viene interpretato correttamente, questa stringa viene passata a `parse$`.
+Non è possibile avere più di una parola o frase non compresa nel dizionario (anche se le frasi addizionali vengono racchiuse tra virgolette).
+================================================================================
+
+Il passo successivo consiste nel suddividere la riga in parole singole.
+Le parole sono separate da spazi e simboli di punteggiatura (inclusi "`!`" e "`?`") che vengono rimossi.
+Tutti i caratteri della riga di input vengono convertiti in minuscolo.
+
+Successivamente si tratta di processare i tre tipi di parole speciali che possono essere definiti nel codice sorgente.
+
+I *REMOVAL* [rimuovibili] sono i più semplici.
+Sono semplicemente parole che vengono automaticamente rimosse dalla riga in input, e sono fondamentalmente limitati a parole come "`a`" e "`the`", che renderebbero l'esame della grammatica più complicato e difficile.
+
+La sintassi per la definizione di un removal è:
+
+[source,hugo]
+------------------------------------------------------------
+removal "<parola1>"[, "<parola2>",      "<parola3>",...]
+------------------------------------------------------------
+
+come in
+
+[source,hugo]
+------------------------------------------------------------
+removal "a", "an", "the"
+------------------------------------------------------------
+
+Il *PUNCTUATION* [punteggiatura] è simile al removal, solo che specifica la rimozione di caratteri singoli invece di intere parole:
+
+[source,hugo]
+------------------------------------------------------------
+punctuation    "<carattere1>[<carattere2>...]"
+------------------------------------------------------------
+
+come in
+
+[source,hugo]
+------------------------------------------------------------
+punctuation "$%"
+------------------------------------------------------------
+
+I *SYNONYM* [sinonimi] sono più complicati.
+Sono parole che non verranno mai trovate nella riga di input interpretata; sono sostituiti dalla parola specificata per la quale sono sinonimi.
+
+[source,hugo]
+------------------------------------------------------------
+synonym "<sinonimo>" for "<parola>"
+------------------------------------------------------------
+
+come in
+
+[source,hugo]
+------------------------------------------------------------
+synonym "myself" for "me"
+------------------------------------------------------------
+
+L'esempio precedente sostituisce tutte le ricorrenze di "`myself`" nella riga di input con "`me`".
+L'uso dei sinonimi non deve essere molto esteso, visto che esiste la possibilità, particolarmente nel caso dei nomi di oggetti e degli aggettivi, di specificare come sinonimi parole che vengono già trattate come distinte.
+
+I *COMPOUND* [compositi] sono l'ultimo tipo di parole speciali, specificati con:
+
+[source,hugo]
+------------------------------------------------------------
+compound "<parola1>",    "<parola2>"
+------------------------------------------------------------
+
+come in
+
+[source,hugo]
+------------------------------------------------------------
+compound "out", "of"
+------------------------------------------------------------
+
+così che la riga di input
+
+[example,role="gametranscript"]
+================================================================================
+get hat out of suitcase
+================================================================================
+
+
+venga interpretata come
+
+[example,role="gametranscript"]
+================================================================================
+get hat outof suitcase
+================================================================================
+
+
+A seconda della progettazione delle tabelle di grammatica per alcune sintassi, l'uso dei compound può rendere la definizione della grammatica più semplice, così che usando il compound precedente,
+
+[source,hugo]
+------------------------------------------------------------
+verb "get"
+    * multinotheld      "outof"/"offof"/"from" parent
+------------------------------------------------------------
+
+è possibile, e preferibile a
+
+[source,hugo]
+------------------------------------------------------------
+verb "get"
+    * multinotheld      "out"/"off" "of" parent
+    * multinotheld      "from" parent
+------------------------------------------------------------
+
+Quando il parser ha terminato di processare la riga di input, il risultato è un array definito (da Hugo Engine) in maniera speciale chiamato `word`, il cui numero di elementi validi è contenuto nella variabile globale `words`.
+
+Perciò in
+
+[example,role="gametranscript"]
+===============================
+get the hat from the table
+===============================
+
+
+il parser -- usando i removal definiti in `HUGOLIB.H` -- produce i seguenti risultati:
+
+[source,hugo]
+-----------------
+word[1] = "get"
+word[2] = "hat"
+word[3] = "from"
+word[4] = "table"
+
+words = 4
+-----------------
+
+[NOTE]
+================================================================================
+Le righe di comandi multipli sono consentite, purché ogni comando venga separato da un punto ("`.`").
+
+[example,role="gametranscript"]
+===============================
+get hat. go n. go e.
+===============================
+
+
+diventa
+
+[source,hugo]
+---------------
+word[1] = "get"
+word[2] = "hat"
+word[3] = ""
+word[4] = "go"
+word[5] = "n"
+word[6] = ""
+word[7] = "go"
+word[8] = "e"
+word[9] = ""
+
+words = 9
+---------------
+
+(Controllate la routine `Parse` in `HUGOLIB.H` per un esempio di come
+
+[example,role="gametranscript"]
+===============================
+get hat then go n
+===============================
+
+
+viene tradotto in:
+
+[source,hugo]
+---------------
+word[1] = "get"
+word[2] = "hat"
+word[3] = ""
+word[4] = "go"
+word[5] = "n")
+---------------
+================================================================================
+
+È consentito un massimo di trentadue parole.
+Il punto viene in ogni caso convertito nella voce di dizionario `null` (`""`, indirizzo = 0), che segnala all'interprete che l'analisi del comando corrente termina qui.
+
+[NOTE]
+================================================================================
+le routine di parsing e della grammatica riconoscono anche diverse parole di sistema, ognuna nel formato "`~parola`".
+Queste sono:
+
+[cols=",",]
+|===
+|`~and` |riferendosi a: oggetti multipli specifici
+|`~all` |riferendosi a: oggetti multipli in generale
+|`~any` |riferendosi a: uno qualunque in una lista di oggetti
+|`~except` |riferendosi a: un oggetto da escludere
+|`~oops` |per correggere un errore nella riga di input precedente
+|===
+
+Per consentire ad una riga di input di accedere ad una di queste parole di sistema, bisogna definire un sinonimo come in
+
+[source,hugo]
+------------------------
+synonym "and" for "~and"
+------------------------
+
+La libreria definisce diversi di questi sinonimi.
+================================================================================
+
+// EOF //

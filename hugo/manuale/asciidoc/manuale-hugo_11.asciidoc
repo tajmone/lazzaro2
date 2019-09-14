@@ -1,0 +1,166 @@
+// *****************************************************************************
+// *                                                                           *
+// *                                 HUGO v2.5                                 *
+// *                         Manuale del Programmatore                         *
+// *                                                                           *
+// *                                11. RISORSE                                *
+// *                                                                           *
+// *****************************************************************************
+
+= RISORSE
+
+L'interprete consente ad un programma Hugo di accedere a dei dati esterni (chiamati risorse) compilati in un file formattato in maniera speciale chiamato _resourcefile_ [file delle risorse].
+Un _resourcefile_ viene creato usando:
+
+[source,hugo]
+--------------------------------------------------------------------------------
+resource "<filerisorse>"
+{
+    "<risorsa1>"
+    "<risorsa2>"
+    ...
+}
+--------------------------------------------------------------------------------
+
+Il nome `<filerisorse>` deve essere di 8 caratteri (o meno) alfanumerici che vengono automaticamente convertiti in maiuscolo. (La ragione è quella di massimizzare la portabilità attraverso le differenti piattaforme ed i differenti sistemi di nomenclatura dei file -- sfortunatamente non tutti seguono le stesse convenzioni, così questa restrizione vuole ridurre la nomenclatura dei file al minimo comun denominatore).
+
+Attualmente la versione v2.5 supporta i file grafici JPEG, i campionamenti audio RIFF/WAV, e i moduli musicali MOD/S3M/XM come risorse.
+
+Ad esempio, quello che segue è un file di risorse immaginario compilato su una piattaforma Windows 95/NT:
+
+[source,hugo]
+--------------------------------------------------------------------------------
+resource "gameres1"
+{
+    "c:\hugo\graphics\logo.jpg"
+    "h:\data\scenic panorama.jpg"
+    "h:\data\background.jpg"
+    "c:\music\intro_theme.s3m"
+    "c:\music\theme2.xm"
+    "c:\sounds\sample1.wav"
+    "c:\sounds\sample2.wav"
+}
+--------------------------------------------------------------------------------
+
+Non importa che la nomenclatura all'interno della definizione della risorsa non sia portabile.
+Nel precedente "`gameres1`", ad esempio, i nomi dei file sono specifici di Windows 95/NT, visto che è dove i file originali sono posizionati.
+Le risorse, comunque, vengono accedute solo per mezzo del nome del file come voci nell'indice del file delle risorse.
+Perciò, dopo che "`gameres1`" è stato creato, ci si riferisce alle tre immagini come "`logo`", "`scenic panorama`" e "`background`" all'interno del file delle risorse "`gameres1`".
+(Notate come qualunque indicazione di disco/percorso o estensione di file siano stati rimossi e non inclusi nell'indice.
+Come risultato due risorse con lo stesso nome, ma con percorsi o estensioni differenti non possono essere inclusi nello stesso file delle risorse).
+
+A causa della relativa non portabilità dei _resourcefile_ (più il tempo aggiuntivo richiesto su macchine lente dall'indicizzazione ed il consolidamento di centinaia di kilobyte di dati ponteziali), si raccomanda di compilare le risorse da file sorgenti separati del resto del gioco Hugo.
+
+L'estensione della libreria `RESOURCE.H` fornisce delle routine utili alla gestione delle risorse in un programma Hugo.
+
+Definisce inoltre i seguenti valori potenziali per `system_status`, che può essere controllata dopo un'operazione sulle risorse.
+Se `system_status` ha un valore diverso da zero (indicante lo stato normale), può contenere uno dei seguenti valori:
+
+
+[cols=",",]
+|===
+|`-1` |`STAT_UNAVAILABLE`
+|`101` |`STAT_NOFILE`
+|`102` |`STAT_NORESOURCE`
+|`103` |`STAT_LOADERROR`
+|===
+
+== Immagini
+
+Un'immagine memorizzata in un _resourcefile_ viene visualizzata mediante:
+
+[source,hugo]
+--------------------------------------------------------------------------------
+picture "<resourcefile>", "<immagine>"
+--------------------------------------------------------------------------------
+
+Ad esempio,
+
+[source,hugo]
+--------------------------------------------------------------------------------
+picture "gameres1", "logo"
+--------------------------------------------------------------------------------
+
+(È possibile inserire il percorso diretto di un'immagine come in
+
+[source,hugo]
+--------------------------------------------------------------------------------
+picture "c:\hugo\graphics\logo.jpg"
+--------------------------------------------------------------------------------
+
+ma visto che l'indicazione percorso/nomefile è specifica di un sistema operativo questa notazione deve essere usata solo per i test.
+Se l'immagine indicata non viene trovata nel resourcefile specificato, l'interprete cercherà di leggere l'immagine come un file nel percorso di ricerca corrente).
+
+L'immagine verrà visualizzata nella finestra di testo corrente.
+Se l'immagine è più piccola della finestra verrà centrata.
+Se è più larga, verrà ristretta per farla entrare.
+Se la versione di Hugo Engine che si sta usando non è abilitata alla grafica, allora '`picture`' non avrà effetto.
+
+Se l'immagine non viene trovata o se un errore non bloccante viene incontrato durante la lettura, l'esecuzione dell'interprete prosegue normalemente.
+
+`RESOURCE.H` fornisce un paio di routine per la gestione della grafica:
+
+[source,hugo]
+--------------------------------------------------------------------------------
+LoadPicture("resourcefile", "immagine")
+LoadPicture("immagine")``
+
+PictureInText("file", "immagine", larghezza, altezza, preserva)
+PictureInText("immagine", larghezza, altezza, preserva)
+--------------------------------------------------------------------------------
+
+Sostanzialmente `LoadPicture` è un _wrapper_ per l'istruzione '`picture`' che fornisce il servizio addizionale del controllo di `display.hasgraphics` per verificare che sia disponibile uno schermo grafico.
+
+`PictureInText` è leggermente più complicata.
+Consente ad un'immagine di essere visualizzata nel normale flusso del testo della finestra principale.
+Gli argomenti `<larghezza>` e `<altezza>` forniscono le dimensioni in caratteri a larghezza fissa dell'area dello schermo. (Visto che gli schermi differiscono nelle dimensioni dei caratteri, si raccomanda di calcolarle basandosi su `display.screenwidth` e `display.screenheight` invece di passare dei valori assoluti).
+Il parametro `<preserva>`, se fornito, assicura che una o più righe all'inizio dello schermo vengano protette dallo scrolling (si evita che scorrano fuori dallo schermo).
+
+(Sia `LoadPicture` che `PictureInText` possono essere chiamate solo con l'indicazione dell'immagine, senza indicare il _resourcefile_.
+In questo caso `RESOURCE.H` cerca di trovare la risorsa nell'ultimo _resourcefile_ usato, memorizzato nella variabile globale `last_resource_file`.
+Vista la potenziale imprecizione di questo metodo, si raccomanda di specificare sempre il nome del _resourcefile_).
+
+== Suono e musica
+
+I suoni e la musica vengono riprodotti usando le istruzioni Hugo:
+
+[source,hugo]
+--------------------------------------------------------------------------------
+sound [repeat] <resourcefile>, <risorsa>[, <vol>]
+music [repeat] <resourcefile>, <risorsa>[, <vol>]
+--------------------------------------------------------------------------------
+
+La parola chiave `repeat` è opzionale; se fornita si forza l'interprete a ripetere in continuazione la riproduzione della risorsa suono/musica fino ad una notifica successiva (cioè fino a che non viene fermata o quando viene riprodotta un'altra risorsa suono/musica).
+L'argomento `<vol>` è opzionale.
+Se fornito indica una percentuale di volume (da 0 a 100) per la riproduzione.
+
+Il suono o la musica che si stanno riproducendo possono essere interrotti usando:
+
+[source,hugo]
+--------------------------------------------------------------------------------
+sound 0
+music 0
+--------------------------------------------------------------------------------
+
+`RESOURCE.H` fornisce un paio di funzioni _wrapper_ per la gestione delle risorse audio:
+
+[source,hugo]
+--------------------------------------------------------------------------------
+PlaySound(resourcefile, campione, ciclo, forza)
+PlayMusic(resourcefile, canzone, ciclo, forza)
+--------------------------------------------------------------------------------
+
+In entrambi i casi se `<ciclo>` è _true_ ha lo stesso effetto di usare `repeat` nelle istruzioni '`sound`' e '`music`'.
+Se `<forza>` è _true_, il campione o la musica ripartono anche se quel campione o quella musica sono già in riproduzione (altrimenti le chiamate a `PlaySound` o `PlayMusic` non hanno effetti sostanziali).
+
+Per fermare la riproduzione di un campione o di una musica attraverso l'interfaccia della libreria si usa:
+
+[source,hugo]
+--------------------------------------------------------------------------------
+PlaySound(SOUND_STOP)
+PlayMusic(MUSIC_STOP)
+--------------------------------------------------------------------------------
+
+(dove `SOUND_STOP` e `MUSIC_STOP` sono costanti definite in `RESOURCE.H`).
+
+// EOF //

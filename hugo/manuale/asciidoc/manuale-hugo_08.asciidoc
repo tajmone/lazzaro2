@@ -1,0 +1,332 @@
+// *****************************************************************************
+// *                                                                           *
+// *                                 HUGO v2.5                                 *
+// *                         Manuale del Programmatore                         *
+// *                                                                           *
+// *                        8. ROUTINE DI CONGIUNZIONE                         *
+// *                                                                           *
+// *****************************************************************************
+
+= ROUTINE DI CONGIUNZIONE
+
+Visto che, per dirla semplice, l'interprete non conosce cose tipo attributi, proprietà ed oggetti se non nel senso tecnico, sono state fornite una serie di routine che servono a facilitare la comunicazione tra l'interprete ed il programma.
+
+Insieme a queste routine di congiunzione ci sono una serie di variabili globali e proprietà che sono predefinite dal compilatore ed a cui accede l'interprete.
+Queste sono:
+
+*GLOBALI:*
+
+
+[cols=",",]
+|===
+|`object` |l'oggetto diretto di un verbo
+|`xobject` |l'oggetto indiretto
+|`self` |l'oggetto che si riferisce a se stesso
+|`words` |numero totale di parole
+|`player` |l'oggetto giocatore
+|`location` |la posizione del giocatore
+|`verbroutine` |l'indirizzo della routine verbo
+|`endflag` |se non è _false_ (0) chiama `EndGame`
+|`prompt` |per la riga di input
+|`objects` |numero totale di oggetti
+|`system_status` |dopo determinate operazioni
+|===
+
+*PROPRIETÀ:*
+
+[cols=",",]
+|===
+|`name` |nome dell'oggetto
+|`before` |routine pre verbo
+|`after` |routine post verbo
+|`noun` |nome(i) con cui riferirsi all'oggetto
+|`adjective` |aggettivo(i) con cui riferirsi all'oggetto
+|`article` |"a", "an", "the", "some", ecc.
+|===
+
+(Insieme agli alias `nouns` e `adjectives` per `noun` e `adjective` definiti dalla libreria).
+
+Le routine di congiunzione non sono necessarie.
+L'interprete possiede delle routine di default già pronte, sebbene queste potrebbero essere non molto utili per la maggior parte dei programmatori.
+Per questo `HUGOLIB.H` contiene le routine seguenti che implementano tutte le funzionalità della libreria.
+Se si vuole usare una routine differente al posto di quella fornita, la routine deve essere sostituita usando '`replace`'.
+
+== Parse
+
+La routine `Parse`, se esiste, viene chiamata dal parser dell'interprete.
+Qui il programma può modificare la riga di input prima che venga controllata la grammatica.
+Quello che accade è:
+
+{empty}1. La riga di input è suddivisa in parole (dall'interprete). +
+2. La routine `Parse`, se esiste, viene chiamata. +
+3. Il controllo ritorna all'interprete per l'esame della grammatica.
+
+Ad esempio, la routine `Parse` in `HUGOLIB.H` si occupa di cose come i pronomi ("`he`", "`she`", "`it`", "`them`") e la ripetizione dell'ultimo comando valido (con "`again`" o "`g`").
+
+La restituzione di _true_ da parte della routine `Parse` comporta una nuova chiamata al parser dell'interprete; se si restituisce _false_ l'elaborazione prosegue normalmente.
+Questa cosa è utile nel caso la routine `Parse` abbia cambiato la riga di input in maniera sostanziale, richiedendo una riconfigurazione delle parole già suddivise.
+
+[NOTE]
+================================================================================
+Visto che la routine `Parse` della libreria è piuttosto grande, è stata fornita una routine `PreParse` -- che nella libreria è stata definita vuota -- che può essere sostituita più facilmente per un parsing addizionale.
+================================================================================
+
+== ParseError
+
+La routine `ParseError` viene chiamata tutte le volte che un comando non è valido. `ParseError` viene chiamata nella forma
+
+[source,hugo]
+------------------------------------------------------------
+ParseError(<numeroerrore>,    <oggetto>)
+------------------------------------------------------------
+
+dove `<oggetto>` è il numero dell'oggetto (se presente) dell'oggetto coinvolto nell'errore.
+
+[NOTE]
+================================================================================
+L'interprete imposta anche una variabile speciale chiamata '`parse$`', usabile solo in un'istruzione `print` (o insieme a '`string`'), che rappresenta il componente illegale di una riga di input, che sia il verbo, un nome di oggetto, un nome parziale di oggetto, od ogni altra combinazione di parole.
+Ad esempio:
+
+[source,hugo]
+------------------------------------------------
+print "La parola illegale era: "; parse$;    "."
+------------------------------------------------
+================================================================================
+
+Le risposte di default fornite dalla routine di errore del parser dell'interprete sono:
+
+
+[cols=">d,<m"options="header,autowidth"]
+|=======================================
+| NUMERO ERRORE | RISPOSTA
+|  0 | "What?"
+|  1 | "You can't use the word <parse$>."
+|  2 | "Better start with a verb."
+|  3 | "You can't <parse$> multiple objects."
+|  4 | "Can't do that."
+|  5 | "You haven't seen any <parse$>, nor are you likely to in the near future even if such a thing exists."
+|  6 | "That doesn't make any sense."
+|  7 | "You can't use multiple objects like that."
+|  8 | "Which <parse$> do you mean,...?"
+|  9 | "Nothing to <parse$>."
+| 10 | "You haven't seen anything like that."
+| 11 | "You don't see that."
+| 12 | "You can't do that with the <parse$>."
+| 13 | "You'll have to be a little more specific."
+| 14 | "You don't see that there."
+| 15 | "You don't have that."
+| 16 | "You'll have to make a mistake first."
+| 17 | "You can only correct one word at a time."
+|=======================================
+
+La routine `ParseError` in `HUGOLIB.H` fornisce risposte su misura che tengono conto di cose come, ad esempio, il giocatore è in prima o seconda persona, un oggetto è un personaggio o meno, e se è maschio o femmina.
+
+Se la routine `ParseError` non fornisce una risposta per un particolare `<numeroerrore>` deve restituire _false_.
+La restituzione di _false_ è un segnale che indica all'interprete di continuare con il messaggio predefinito.
+La restituizione di 2 indica che bisogna reinterpretare l'intera riga (utile nel caso in cui una particolare sintassi sia stata intercettata come un errore, cambiata, e debba essere reinterpretata).
+
+[NOTE]
+================================================================================
+Se si vogliono usare dei messaggi di errore personalizzati per le routine di parsing dell'utente, bisogna sostiture (`replace`) la routine `CustomError` con una nuova routine (chiamata con gli stessi parametri di `ParseError`), assicurandosi che `<numeroerrore>` sia maggiore od uguale a 100.
+================================================================================
+
+== EndGame
+
+La routine `EndGame` viene chiamata immediatamente tutte le volte che la variabile globale `EndFlag` è diversa da 0, senza curarsi del fatto che la funzione corrente sia o meno terminata.
+
+La routine `EndGame` di `HUGOLIB.H` reagisce in maniera differente a seconda di come sia stata impostata `endflag`:
+
+[cols=",",]
+|===
+|`endflag` |RISULTATO
+| |
+|`1` |Il giocatore vince
+|`2` |Il giocatore muore
+|(`3` |Altra fine non fornita di default dalla routine `PrintEndGame`)
+|===
+
+Restituire _false_ da `EndGame` comporta il termine del gioco; un valore non falso ricomincia da capo.
+
+[NOTE]
+================================================================================
+Per modificare solo il messaggio visualizzato alla fine del gioco (default: "`*** YOU'VE WON THE GAME! ***`" e "`*** YOU ARE    DEAD ***`") bisogna sostituire la routine `PrintEndGame`.
+Oltre che ad essere non falsi i vari valori di `endflag` non hanno significato, tranne per `PrintEndGame.`
+================================================================================
+
+== FindObject
+
+La routine si occupa di controllare tutte le proprietà necessarie, gli attributi e la gerarchia degli oggetti per determinare se un particolare oggetto è disponibile o meno.
+Ad esempio il _child_ [figlio] di un oggetto _parent_ [padre] potrebbe essere disponibile se il padre è un _platform_ [piattaforma], ma non disponibile se il _parent_ è un _container_ [contenitore] (e chiuso) -- sebbene internamente la gerarchia degli oggetti sia la stessa.
+
+`FindObject` viene chiamata con:
+
+[source,hugo]
+------------------------------------------------------------
+FindObject(<oggetto>,    <locazione>)
+------------------------------------------------------------
+
+dove `<oggetto>` è l'oggetto in questione e `<locazione>` è l'oggetto dove la disponibilità deve essere controllata. (Di solito `<locazione>` è una stanza, a meno che un _parent_ differente sia stato specificato nella riga di input).
+
+`FindObject` restituisce _true_ (1) se l'oggetto è disponibile, _false_ (0) altrimenti.
+Restituisce 2 se l'oggetto è visibile, ma non raggiungibile fisicamente.
+
+La routine `FindObject` in `HUGOLIB.H` considera non solo la posizione di `<oggetto>` nell'albero degli oggetti, ma controlla anche gli attributi del _parent_ per vedere se è aperto o chiuso.
+Inoltre controlla la proprietà `found_in` [trovato_in], nel caso in cui `<oggetto>` sia assegnato a locazioni multiple invece di un determinato _parent_, e poi controlla la proprietà `in_scope` [a_portata] dell'oggetto (se esiste).
+
+Infine il comportamento predefinito di `FindObject` richiede che il giocatore abbia incontrato l'oggetto per renderlo valido in un'azione, deve avere l'attributo `known` [conosciuto] impostato.
+Per evitarlo bisogna sostituire la routine `ObjectIsKnown` con una routine che restituisce un valore _true_ incondizionatamente.
+
+Esiste un caso speciale in cui l'interprete si aspetta che la routine `FindObject` sia utile: ed è quando la routine viene chiamata con `<locazione>` uguale a 0.
+Questo avviene tutte le volte che l'interprete ha bisogno di sapere se un oggetto è disponibile -- ignorando le regole che normalemente governano la disponibilità degli oggetti -- come quando un'istruzione grammaticale '`anything`' [qualunque cosa] viene incontrata, o quando l'interprete ha bisogno di distinguere tra due o più oggetti apparentemente identici.
+
+(Inoltre `FindObject` può essere chiamata dall'interprete con `<oggetto> `e `<locazione>` entrambi a 0 per ripristinare una distinzione di oggetti operata dalla libreria).
+
+== SpeakTo
+
+La routine `SpeakTo` viene chiamata tutte le volte che una riga di input comincia con un nome di un oggetto valido invece di un verbo.
+In questo modo il giocatore può indirizzare i comandi ai personaggi (di solito) nel gioco.
+Ad esempio:
+
+[source,hugo]
+------------------------------------------------------------
+Professor Plum, drop the lead pipe
+------------------------------------------------------------
+
+È compito della routine `SpeakTo` interpretare correttamente l'istruzione.
+
+`SpeakTo` viene chiamata con:
+
+[source,hugo]
+------------------------------------------------------------
+SpeakTo(<personaggio>)
+------------------------------------------------------------
+
+dove `<personaggio>` nell'esempio precedente dovrebbe essere l'oggetto `Professor Plum`.
+
+Le variabili globali `object`, `xobject` e `verbroutine` vengono impostate normalmente.
+Nell'esempio precedente i valori sarebbero
+
+[source,hugo]
+------------------------------------------------------------
+object      leadpipe
+xobject     nothing
+verbroutine      &DoDrop
+------------------------------------------------------------
+
+quando `SpeakTo` viene chiamata.
+
+La routine `SpeakTo` di `HUGOLIB.H` fornisce un'interpretazione base delle domande, così che
+
+[example,role="gametranscript"]
+================================================================================
+Professor Plum, what about the lead    pipe?
+================================================================================
+
+
+viene indirizzata alla routine verbo appropriata, come se il giocatore avesse scritto:
+
+[example,role="gametranscript"]
+================================================================================
+ask Professor Plum about the lead pipe
+================================================================================
+
+
+I comandi imperativi, come
+
+[example,role="gametranscript"]
+================================================================================
+Colonel Mustard, stand up
+================================================================================
+
+
+vengono prima indirizzati alla proprietà `order_response` dell'oggetto personaggio in questione.
+A questo punto è compito di `<personaggio>.order_response` analizzare `verbroutine` (così come `object` e `xobject` se necessario) per vedere se la richiesta è valida.
+Se non è prevista nessuna risposta, `order_response` deve restituire _false_.
+
+[source,hugo]
+------------------------------------------------------------
+order_response
+{
+    if verbroutine = &DoGet
+        "Vorrei, ma la mia      schiena mi fa troppo male."
+    else
+        return false
+}
+------------------------------------------------------------
+
+== Perform
+
+La routine `Perform` è quella che viene chiamata dall'interprete per eseguire la `verbroutine` appropriata, con gli oggetti diretti e indiritti forniti.
+È compito di `Perform` eseguire i controlli alle routine `before` per determinare se l'esecuzione corrisponde a `verbroutine`.
+
+`Perform` viene chiamata con:
+
+[source,hugo]
+------------------------------------------------------------
+Perform(<verbroutine>, <object>,      <xobject>, <accoda>)
+------------------------------------------------------------
+
+I primi tre argomenti sono il verbo (sempre), l'oggetto (se fornito) e l'oggetto indiretto, cioè l'`xobject` (se fornito).
+Il parametro `<accoda>` è 0 a meno che la routine verbo debba essere chiamata più di una volta per oggetti multipli. (Come caso speciale `<accoda>` è -1 se `object` o `xobject` sono un numero fornito in input come una o più cifre, in modo da indicare a `Perform` di non effettuare le normali chiamate alle routine `before/after`).
+
+Ad esempio i vari comandi del giocatore potrebbero (approssimativamente, a seconda delle routine verbo e degli oggetti) generare le chiamate:
+
+[example,role="gametranscript"]
+================================================================================
+>i
+================================================================================
+
+[source,hugo]
+--------------------------------------------------------------------------------
+Perform(&doInventory, 0, 0,      0)
+--------------------------------------------------------------------------------
+
+
+[example,role="gametranscript"]
+================================================================================
+>get key
+================================================================================
+
+[source,hugo]
+--------------------------------------------------------------------------------
+Perform(&DoGet, key_object, 0, 0)
+--------------------------------------------------------------------------------
+
+
+[example,role="gametranscript"]
+================================================================================
+>put the key on the table
+================================================================================
+
+[source,hugo]
+--------------------------------------------------------------------------------
+Perform(&DoPutIn, key_object, table_object, 0)
+--------------------------------------------------------------------------------
+
+
+[example,role="gametranscript"]
+================================================================================
+>turn the dial to 127
+================================================================================
+
+[source,hugo]
+--------------------------------------------------------------------------------
+Perform(&DoTurn, dial, 127, -1)
+--------------------------------------------------------------------------------
+
+
+[example,role="gametranscript"]
+================================================================================
+>get key and banana
+================================================================================
+
+[source,hugo]
+--------------------------------------------------------------------------------
+Perform(&DoGet, key_object, 0, 1)
+Perform(&DoGet, banana, 0, 2)
+--------------------------------------------------------------------------------
+
+
+(Se non esiste una routine `Perform`, l'interprete esegue la chiamata di default a `player.before`, `location.before`, `xobject.before` e `object.before`, infine `verbroutine` se nessuno di questi restituisce _true_).
+
+// EOF //

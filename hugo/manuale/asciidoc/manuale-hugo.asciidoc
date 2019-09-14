@@ -1,0 +1,109 @@
+= HUGO, manuale del programmatore
+Kent Tessman
+v1, 25 Febbraio 1999: Alpha 1 (html2adoc conv)
+:lang: it
+// Doc Settings
+:doctype: book
+:encoding: utf-8
+// TOC Settings:
+:toclevels: 5
+:toc: left
+// Sections Numbering:
+:sectnums:
+:sectnumlevels: 2
+// Cross References:
+:xrefstyle: short
+:section-refsig: Sect.
+// Misc Settings:
+:experimental: true
+:icons: font
+:linkattrs: true
+:reproducible: true
+:sectanchors:
+// GitHub Settings for Admonitions Icons:
+ifdef::env-github[]
+:caution-caption: :fire:
+:important-caption: :heavy_exclamation_mark:
+:note-caption: :information_source:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+// Italian i18n:
+:toc-title: Contenuti
+// Custom CSS
+:docinfo: shared
+:source-highlighter: highlight
+
+// *****************************************************************************
+// *                                                                           *
+// *                            Document Preamble                              *
+// *                                                                           *
+// *****************************************************************************
+
+////
+HUGO v2.5 - An Interactive Fiction Design System
+MANUALE DEL PROGRAMMATORE
+Copyright (c) 1995-1999 by Kent Tessman
+(Revisionato il 25 Febbraio 1999)
+////
+
+Hugo Compiler, Engine, Debugger, Library, and the Hugo Manual +
+Copyright (c) 1995-1998 by Kent Tessman
+
+mailto:generalcoffee@geocities.com[mailto:generalcoffee@geocities.com]
+
+http://www.geocities.com/hollywood/academy/5976/hugo.html
+
+'''''
+
+// =============================================================================
+// Includi tutti i capitoli del libro
+// =============================================================================
+
+:leveloffset: +1
+
+// 1. INTRODUZIONE
+// ===============
+include::manuale-hugo_01.asciidoc[]
+
+// 2. UNA PRIMA OCCHIATA A HUGO
+// ============================
+include::manuale-hugo_02.asciidoc[]
+
+// 3. OGGETTI
+// ==========
+include::manuale-hugo_03.asciidoc[]
+
+// 4. LA PROGRAMMAZIONE DI HUGO
+// ============================
+include::manuale-hugo_04.asciidoc[]
+
+// 5. ROUTINE ED EVENTI
+// ====================
+include::manuale-hugo_05.asciidoc[]
+
+// 6. MICCE, DEMONI E SCRIPT
+// =========================
+include::manuale-hugo_06.asciidoc[]
+
+// 7. GRAMMATICA E PARSING
+// =======================
+include::manuale-hugo_07.asciidoc[]
+
+// 8. ROUTINE DI CONGIUNZIONE
+// ==========================
+include::manuale-hugo_08.asciidoc[]
+
+// 9. IL CICLO DEL GIOCO
+// =====================
+include::manuale-hugo_09.asciidoc[]
+
+// 10. FUNZIONALITÀ AVANZATE
+// =========================
+include::manuale-hugo_10.asciidoc[]
+
+// 11. RISORSE
+// ===========
+include::manuale-hugo_11.asciidoc[]
+
+// EOF //

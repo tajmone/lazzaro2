@@ -1,0 +1,210 @@
+// *****************************************************************************
+// *                                                                           *
+// *                                 HUGO v2.5                                 *
+// *                         Manuale del Programmatore                         *
+// *                                                                           *
+// *                         10. FUNZIONALITÀ AVANZATE                         *
+// *                                                                           *
+// *****************************************************************************
+
+= FUNZIONALITÀ AVANZATE
+
+== L'oggetto Display
+
+L'interprete fornisce un accesso alle seguenti proprietà di sola lettura (sebbene i nomi siano definiti in `HUGOLIB.H`):
+
+[cols=",",]
+|===
+|`screenwidth` |la larghezza dello schermo, in caratteri
+|`screenheight` |l'altezza dello schermo, in caratteri
+|`linelength` |la larghezza della finestra di testo corrente
+|`windowlines` |l'altezza della finestra di testo corrente
+| |
+|`cursor_column` |posizione orizzontale e verticale del cursore nella
+|`cursor_row` |finestra di testo corrente
+|===
+
+La libreria di Hugo definisce anche la proprietà leggibile/scrivibile:
+
+[cols=",",]
+|===
+|`statusline_height` |altezza dell'ultima riga di stato stampata
+|===
+
+Per consentire all'interprete di identificare correttamente l'oggetto `display`, viene selezionato l'oggetto (se presente) con il nome "`(display)`", cioè un oggetto che è definito come
+
+[source,hugo]
+------------------------------------------------------------
+object display
+{
+
+}
+------------------------------------------------------------
+
+senza nessun nome indicato.
+Questo è il modo in cui la libreria definisce l'oggetto `display`, così che le varie proprietà dell'oggetto `display` siano leggibili come in `display.screenheight`, `display.cursor_column`, ecc.
+
+== Finestre
+
+È possibile creare una finestra all'interno dello schermo per l'output del testo.
+La posizione del cursore, il ritorno a capo delle righe, ecc., vengono tarati ai limiti della finestra corrente.
+La posizione del cursore ed i limiti della finestra vengono sempre calcolati sulla dimensione dei caratteri a larghezza fissa.
+Le varie sintassi dell'istruzione '`window`' sono:
+
+
+[cols=",",]
+|===
+|`window 0` |Ripristina la visualizzazione a tutto schermo
+|`window n` +
+`{...}` |Crea una finestra di `n` righe dimensionandola come l'intero schermo
+|`window l, t, r, b {...}` |Crea una finestra con angolo in alto a sinistra (`l,t`) ed un angolo in basso a destra (`r, b`), con queste coordinate indicate in coordinate di caratteri dell'intero schermo
+|`window ` +
+`{...}` |ridisegna l'ultima finestra definita
+|===
+
+Ognuna di queste sintassi, tranne "`window 0`", è seguita da un blocco di codice durante il quale, normalmente, il testo viene inviato alla finestra.
+
+La finestra (i suoi limiti) esiste per la durata del blocco "`{...}`".
+Quando finisce la sommità della finestra di testo principale viene ridefinita come se cominciasse immediatamente sotto l'ultima finestra disegnata.
+Per cancellare la registrazione di qualunque finestra e ripristinare la finestra di testo principale allo schermo intero, si usa "`window 0`".
+
+Il file di libreria per la gestione delle finestre si chiama `WINDOW.H` e definisce una classe finestra chiamata `window_class` con le proprietà associate, così che una finestra possa essere creata con:
+
+[source,hugo]
+------------------------------------------------------------
+window_class <nome finestra> "titolo"
+{
+    win_position        <colonna schermo>, <riga schermo>
+    win_size            <colonne>, <righe>
+
+    win_textcolor  <colore del testo>
+    win_backcolor  <colore dello      sfondo>
+    win_titlecolor <colore del      testo del titolo>
+    win_titleback       <colore dello sfondo del titolo>
+}
+------------------------------------------------------------
+
+La `window_class` incorpora anche le routine proprietà `win_init`, `win_clear` e `win_end`.
+
+[NOTE]
+================================================================================
+Può essere importante tenere a mente che le misure come `display.screenwidth` possono cambiare durante l'esecuzione, in particolar modo in un ambiente con un'interfaccia grafica a finestre che consente il ridimensionamento della finestra del programma Hugo. +
+Per questa ragione è prudente controllare `display.<proprietà>` ogni volta che una finestra deve essere disegnata, invece di basare le coordinate su, ad esempio, un insieme di limiti calcolati durante l'inizializzazione del programma.
+================================================================================
+
+== Leggere e scrivere i file
+
+Ci possono essere delle occasioni in cui sia utile memorizzare dei dati in un file per una lettura successiva.
+Il modo più semplice per farlo richiede
+
+[source,hugo]
+------------------------------------------------------------
+x = save
+------------------------------------------------------------
+
+e
+
+[source,hugo]
+------------------------------------------------------------
+x = restore
+------------------------------------------------------------
+
+dove le funzioni '`save`' e '`restore`' restituiscono il valore _true_ a `x` se hanno avuto successo, o il valore _false_ se per qualche ragione sono andate in errore.
+In ogni caso, tutto l'insieme dei dati di gioco -- comprese le posizioni degli oggetti, i valori delle variabili, gli array, gli attributi, ecc. -- vengono salvati o ripristinati.
+
+Altre volte può essere preferibile salvare solo determinati valori. +
+Ad esempio, un determinato gioco può consentire al giocatore di creare alcune caratteristiche del personaggio o altri "`dati da ricordare`" che possono essere ripristinati nello stesso gioco od in altri giochi.
+
+Per fare questo si usano le operazioni '`writefile`' e '`readfile`'.
+
+La struttura
+
+[source,hugo]
+------------------------------------------------------------
+writefile <nomefile>
+{
+    ...
+}
+------------------------------------------------------------
+
+aprirà, all'inizio del blocco `writefile`, il file `<nomefile>` per la scrittura e posizionerà `<nomefile>` all'inizio del file (vuoto). (Se il file esiste verrà pulito/cancellato).
+Alla fine del blocco il file verrà nuovamente chiuso.
+
+All'interno di un blocco `writefile` si scrivono i valori usando
+
+[source,hugo]
+------------------------------------------------------------
+writeval <valore1>[, <valore2>,    ...]
+------------------------------------------------------------
+
+dove uno o più valori possono essere specificati.
+
+Per leggere il file si usa la struttura
+
+[source,hugo]
+------------------------------------------------------------
+readfile <nomefile>
+{
+    ...
+}
+------------------------------------------------------------
+
+che conterrà le assegnazioni
+
+[source,hugo]
+------------------------------------------------------------
+x = readval
+------------------------------------------------------------
+
+per ogni valore che deve essere letto, con `x` che rappresenta una variabile, o una proprietà, o un altro valore scrivibile.
+
+Ad esempio,
+
+[source,hugo]
+------------------------------------------------------------
+local conta, test
+
+conta = 10
+writefile "filetest"
+{
+    writeval count, "telefono", 10
+    test = FILE_CHECK
+         writeval test
+}
+if test ~= FILE_CHECK ! c'è stato un errore
+{
+    print "Errore      durante la scrittura."
+}
+------------------------------------------------------------
+
+scriverà la variabile `conta`, la voce di dizionario "`telefono`" ed il valore `10` in "`filetest`".
+
+[source,hugo]
+------------------------------------------------------------
+local a, b, c, test
+
+readfile "filetest"
+{
+    a = readval
+    b = readval
+    c = readval
+    test = readval
+}
+if test ~= FILE_CHECK ! c'è stato un errore
+{
+    print "Errore durante la lettura."
+}
+------------------------------------------------------------
+
+Se il blocco `readfile` viene eseguito con successo, `a` sarà uguale al precedente valore di `conta`, `b` conterrà "`telefono`" e `c` sarà uguale a `10`.
+
+La costante `FILE_CHECK`, definita in `HUGOLIB.H`, è utile perché `writefile` e `readfile` non forniscono nessun valore di ritorno esplicito per indicare un errore. `FILE_CHECK` è una sequenza di due byte univoca che può essere usata per verificare la correttezza delle operazioni.
+
+Nel blocco `writefile`, se il blocco termina prematuramente a causa di un errore, la variabile `test` non viene impostata a `FILE_CHECK`.
+L'istruzione '`if`' che segue il blocco verifica proprio questo.
+
+Nel blocco `readfile`, `test` viene impostata a `FILE_CHECK` sono se la sequenza di funzioni `readval` trova il numero corretto di valori in "`filetest`".
+Se ce ne sono troppi o troppo pochi, o se un errore causa un termine prematuro del blocco, `test` sarà uguale ad un valore diverso da `FILE_CHECK`.
+
+
+// EOF //

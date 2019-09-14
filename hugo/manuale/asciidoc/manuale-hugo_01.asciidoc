@@ -16,10 +16,10 @@ Hugo deve molto al formato originale della Infocom (particolarmente per quel che
 Il miglior consiglio che si possa dare per imparare Hugo è probabilmente quello di stampare o avere sottomano in qualche modo il listato del sorgente di `SAMPLE.HUG`, e di riferirsi completamente a quello; esempi di tutte le funzionalità di Hugo posso essere trovati nel codice sorgente del gioco di esempio.
 
 L'e-mail dell'autore (The General Coffee Company Film Productions): +
-<generalcoffe@geocities.com>
+link:mailto:general@generalcoffee.com[+<generalcoffe@geocities.com>+,title="Contatta Kent Tessman tramite il suo attuale indirizzo e-mail: +<general@generalcoffee.com>+"]
 
 Home page di Hugo: +
-http://www.geocities.com/hollywood/academy/5976/hugo.html
+link:http://www.generalcoffee.com/hugo/gethugo.html[http://www.geocities.com/hollywood/academy/5976/hugo.html^,title="Visita il nuovo sito di Hugo su www.generalcoffee.com"]
 
 (Al momento di questa revisione)
 
@@ -50,7 +50,7 @@ Non ho nessun problema in questo senso, anche se l'interprete (Hugo Engine) vien
 (Sarebbe comunque gentile farmi venire a conoscenza di questo fatto, solo per fare in modo che possa fornire aiuto assicurando che istruzioni corrette, informazioni aggiornate, ecc. siano incluse).
 Riguardo all'utilizzo della Hugo Library: l'ho scritta proprio per questo scopo, per fare in modo che la gente la usi per scrivere i propri giochi.
 La distribuzione Freeware è qualcosa che certamente incoraggio.
-Il codice sorgente della Hugo Library, naturalmente, non può essere distribuito in forma modificata a meno che sia esplicitamente indicato che a.) è stata scritta da Kent Tessman, e b.) che è stata successivamente modificata e distribuita da qualcun'altro.
+Il codice sorgente della Hugo Library, naturalmente, non può essere distribuito in forma modificata a meno che sia esplicitamente indicato che (**a.**) è stata scritta da Kent Tessman, e (**b.**) che è stata successivamente modificata e distribuita da qualcun'altro.
 
 {empty}2. _Shareware_.
 Ancora, non credo che questo mi disturbi. (Sebbene, ancora, vorrei essere tenuto aggiornato sulla distribuzione.
@@ -63,7 +63,7 @@ Questo è l'unico punto critico che mi viene in mente.
 Sfortunatamente è piuttosto difficile che qualcuno riesca a produrre una pezzo di Interactive Fiction di grande successo commerciale.
 D'altro canto, credo fermamente che Hugo sia in grado di creare alcuni giochi di grande impatto visivo (e sonoro).
 E d'altra parte, specialmente con il software commerciale, quello che avete intenzione di distribuire potrebbe essere stato scritto per più della metà da qualcun altro (ad esempio, io, chi contribuisce alla libreria, i porter, poiché sarei impressionato nel vedere qualcuno che scriva un gioco che, per numero di righe del sorgente, possa rivaleggiare con le più di 35.000 righe di codice dell'interprete e della libreria).
-Ma anche in un caso come questo, mi aspetterei che ogni licenza individuale dia all'autore la libertà di vendere n copie del gioco senza coinvolgere me o qulunque altro in qualche (anche minore) partecipazione.
+Ma anche in un caso come questo, mi aspetterei che ogni licenza individuale dia all'autore la libertà di vendere _n_ copie del gioco senza coinvolgere me o qualunque altro in qualche (anche minore) partecipazione.
 
 == Nomi e ringraziamenti
 
@@ -77,7 +77,12 @@ Gerald Bostock  :: OS/2
 
 L'autore ha un forte debito nei loro confronti, per tutto il loro lavoro e per i loro suggerimenti su come migliorare il compilatore e l'interprete per mezzo di critiche generose e dirette.
 
-Più di qualche parola di apprezzamento è dovuta a Volker Blasius che (ora con l'aiuto di David Kinder) ha la responsabilità sostanziale del mantenimento dell'Interactive Fiction Archive a ftp://ftp.gmd.de/if-archive -- una delle risorse chiave per i programmatori Hugo e raccoglitore primario del materiale dei collaboratori (e lettori) dei newsgroup news:rec.arts.int-fiction[rec.arts.int-fiction] e news:rec.games.int-fiction[rec.games.int-fiction].
+Più di qualche parola di apprezzamento è dovuta a Volker Blasius che (ora con l'aiuto di David Kinder) ha la responsabilità sostanziale del mantenimento dell'Interactive Fiction Archive a
+link:http://ifarchive.org/[ftp://ftp.gmd.de/if-archive^,title="Visita il nuovo portale dello IF Archive"]
+-- una delle risorse chiave per i programmatori Hugo e raccoglitore primario del materiale dei collaboratori (e lettori) dei newsgroup
+link:++https://groups.google.com/forum/#!forum/rec.arts.int-fiction++[rec.arts.int-fiction^,title="Visita rec.arts.int-fiction su Google Groups"]
+e
+link:++https://groups.google.com/forum/#!forum/rec.games.int-fiction++[rec.games.int-fiction^,title="Visita rec.games.int-fiction su Google Groups"].
 
 Grazie anche a chi con i suoi commenti e suggerimenti ha contribuito a rendere Hugo così utile ed usabile come è ora: Dr. Jeff Jenness, Vikram Ravindran, Jesse McGrew, Paolo Vece, Daniel Cardenas, Cam Bowes, Mark Bijster, Jose Luis Cebrian, John Menichelli, Jerome Nichols, Jason Dyer, e Jason Brown. +
 Riconoscimenti e ringraziamenti vanno anche a Graham Nelson, il cui linguaggio Inform ha contribuito a dare forma alla sintassi iniziale ed alla struttura di Hugo.
@@ -91,8 +96,12 @@ Infine, mio fratello Dean Tessman è stata una risorsa ben sfruttata per la sua 
 
 Una serie di file fa parte della distribuzione di Hugo:
 
-_(NOTA: nel corso di questo manuale, la convenzione dei nomi riguarda il mondo MS-DOS/Windows.
-Dal momento che Hugo è disponibile per altri sistemi, il modo di indicare il nome dei file può variare, e la documentazione specifica per le macchine dovrebbe indicare queste variazioni)._
+[NOTE]
+================================================================================
+Nel corso di questo manuale, la convenzione dei nomi riguarda il mondo MS-DOS/Windows.
+Dal momento che Hugo è disponibile per altri sistemi, il modo di indicare il nome dei file può variare, e la documentazione specifica per le macchine dovrebbe indicare queste variazioni.
+================================================================================
+
 
 [horizontal]
 `HC.EXE`     :: Hugo Compiler (il compilatore)
@@ -122,12 +131,17 @@ Un file sorgente Hugo addizionale dimostra la capacità di creare header precomp
 [horizontal]
 `HUGOLIB.HUG` :: Per creare una versione linkabile di `HUGOLIB.H`
 
-L'ultima versione di Hugo è disponibile tramite FTP anonimo a ftp://ftp.gmd.de/if-archive/programming/hugo nella directory if-archive/programming/hugo.
-La distribuzione di ciascuno dei file di Hugo è autorizzata solo con il permesso dell'autore come indicato nelle http://plovec.interfree.it/IFItalia/Traduhugo/hugomchp1.htm#NoteLegali[Note Legali] più sopra.
+L'ultima versione di Hugo è disponibile tramite FTP anonimo a
+link:https://www.ifarchive.org/indexes/if-archive/programming/hugo/[ftp://ftp.gmd.de/if-archive/programming/hugo^,title="Visita la sezione Hugo sul nuovo portale dello IF Archive"]
+nella directory if-archive/programming/hugo.
+La distribuzione di ciascuno dei file di Hugo è autorizzata solo con il permesso dell'autore come indicato nelle <<Note legali,Note Legali>> più sopra.
 
 I file `.HUG`, `.H` e `.G` sono file di testo e come tali vanno scaricati; gli eseguibili sono file binari.
 
-_(NOTA SULLA FORMATTAZIONE: i file indicati sopra sono formattati con una dimensione di tabulazione di 8 spazi; se la formattazione appare incorretta, è necessario sistemare la dimensione della tabulazione nel proprio editor)._
+[NOTE]
+================================================================================
+**NOTA SULLA FORMATTAZIONE**: i file indicati sopra sono formattati con una dimensione di tabulazione di 8 spazi; se la formattazione appare incorretta, è necessario sistemare la dimensione della tabulazione nel proprio editor.
+================================================================================
 
 == Convenzioni adottate nel manuale
 

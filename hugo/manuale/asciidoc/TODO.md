@@ -36,56 +36,73 @@ The whole document now needs to be thoroughly revised, chapter by chapter, by re
     + [ ] Fix code blocks.
     + [ ] Fix typography.
     + [ ] Fix cross-references.
+    + [x] Fix dead links: point to current location (but preserve old URL in t ext):
+        * [x] Author email (generalcoffe@geocities.com &rarr; general@generalcoffee.com)
+        * [x] Hugo website (geocities &rarr; www.generalcoffee.com)
+        * [x] IF Archive (ftp.gmd.de &rarr; ifarchive.org)
+        * [x] rec.arts.int-fiction
+        * [x] rec.games.int-fiction
+        * [x] IF Archive » Hugo (ftp.gmd.de &rarr; ifarchive.org)
 - [ ] 2. **UNA PRIMA OCCHIATA A HUGO**
     + [ ] Proofread whole chapter.
     + [ ] Fix code blocks.
     + [ ] Fix typography.
     + [ ] Fix cross-references.
+    + [ ] Fix dead links: point to current location (but preserve old URL in t ext).
 - [ ] 3. **OGGETTI**
     + [ ] Proofread whole chapter.
     + [ ] Fix code blocks.
     + [ ] Fix typography.
     + [ ] Fix cross-references.
+    + [ ] Fix dead links: point to current location (but preserve old URL in t ext).
 - [ ] 4. **LA PROGRAMMAZIONE DI HUGO**
     + [ ] Proofread whole chapter.
     + [ ] Fix code blocks.
     + [ ] Fix typography.
     + [ ] Fix cross-references.
+    + [ ] Fix dead links: point to current location (but preserve old URL in t ext).
 - [ ] 5. **ROUTINE ED EVENTI**
     + [ ] Proofread whole chapter.
     + [ ] Fix code blocks.
     + [ ] Fix typography.
     + [ ] Fix cross-references.
+    + [ ] Fix dead links: point to current location (but preserve old URL in t ext).
 - [ ] 6. **MICCE, DEMONI E SCRIPT**
     + [ ] Proofread whole chapter.
     + [ ] Fix code blocks.
     + [ ] Fix typography.
     + [ ] Fix cross-references.
+    + [ ] Fix dead links: point to current location (but preserve old URL in t ext).
 - [ ] 7. **GRAMMATICA E PARSING**
     + [ ] Proofread whole chapter.
     + [ ] Fix code blocks.
     + [ ] Fix typography.
     + [ ] Fix cross-references.
+    + [ ] Fix dead links: point to current location (but preserve old URL in t ext).
 - [ ] 8. **ROUTINE DI CONGIUNZIONE**
     + [ ] Proofread whole chapter.
     + [ ] Fix code blocks.
     + [ ] Fix typography.
     + [ ] Fix cross-references.
+    + [ ] Fix dead links: point to current location (but preserve old URL in t ext).
 - [ ] 9. **IL CICLO DEL GIOCO**
     + [ ] Proofread whole chapter.
     + [ ] Fix code blocks.
     + [ ] Fix typography.
     + [ ] Fix cross-references.
+    + [ ] Fix dead links: point to current location (but preserve old URL in t ext).
 - [ ] 10. **FUNZIONALITÀ AVANZATE**
     + [ ] Proofread whole chapter.
     + [ ] Fix code blocks.
     + [ ] Fix typography.
     + [ ] Fix cross-references.
+    + [ ] Fix dead links: point to current location (but preserve old URL in t ext).
 - [ ] 11. **RISORSE**
     + [ ] Proofread whole chapter.
     + [ ] Fix code blocks.
     + [ ] Fix typography.
     + [ ] Fix cross-references.
+    + [ ] Fix dead links: point to current location (but preserve old URL in t ext).
 
 -------------------------------------------------------------------------------
 

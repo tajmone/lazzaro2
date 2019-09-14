@@ -17,6 +17,7 @@ Ristampa digitale ai fini dell'archiviazione del _Manuale del Programmatore_ di 
 <!-- MarkdownTOC autolink="true" bracket="round" autoanchor="false" lowercase="only_ascii" uri_encoding="true" levels="1,2,3" -->
 
 - [File del progetto](#file-del-progetto)
+- [Note sulla ristampa](#note-sulla-ristampa)
 - [Origine del documento](#origine-del-documento)
 - [Versione del documento](#versione-del-documento)
     - [Hugo 2.5 \(1998-2000\)](#hugo-25-1998-2000)
@@ -35,6 +36,10 @@ Ristampa digitale ai fini dell'archiviazione del _Manuale del Programmatore_ di 
 - [`/salvaged-mht/`][salvaged] — file [MHTML] del manuale, recuperati dal mio hard disk. 
 - [`converti.bat`](./converti.bat) — script per la conversione in HTML.
 - [`manuale-hugo.html`](./manuale-hugo.html) — documento HTML finale.
+
+# Note sulla ristampa
+
+Poiché la ristampa di questo documento è finalizzata all'archiviazione sullo IF Archive per la preservazione storica, i link obsoleti del documento sono stati preservati nel testo ma fatti puntare ai corrispettivi URL aggiornati (p.es. il nuovo sito di Hugo, il portale dello IF Archive, etc.).
 
 # Origine del documento
 

@@ -39,7 +39,9 @@ Ristampa digitale ai fini dell'archiviazione del _Manuale del Programmatore_ di 
 
 # Note sulla ristampa
 
-Poiché la ristampa di questo documento è finalizzata all'archiviazione sullo IF Archive per la preservazione storica, i link obsoleti del documento sono stati preservati nel testo ma fatti puntare ai corrispettivi URL aggiornati (p.es. il nuovo sito di Hugo, il portale dello IF Archive, etc.).
+Poiché la ristampa di questo documento è finalizzata all'archiviazione sullo IF Archive per la preservazione storica, i link obsoleti del documento sono stati preservati nel testo ma reindirizzati ai corrispettivi URL aggiornati (p.es. il nuovo sito di Hugo, il portale dello IF Archive, etc.).
+
+Quanto allo stile originale del documento, si è voluto sfruttare al meglio il formato AsciiDoc, trasformando quindi le varie note negli elementi _admonition_ offerti da Asciidoctor; per gli esempi di codice si è ricorso alla colorazione sintattica; e altre migliorie estetiche che non andassero ad intaccare il testo originale nei suoi contenuti.
 
 # Origine del documento
 

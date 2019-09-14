@@ -1,6 +1,6 @@
 = HUGO, manuale del programmatore
 Kent Tessman
-v1, 25 Febbraio 1999: Alpha 2 (revisione documento)
+v1, 25 Febbraio 1999: Alpha 3 (revisione documento)
 :lang: it
 // Doc Settings
 :doctype: book

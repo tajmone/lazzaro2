@@ -2274,7 +2274,7 @@ che a turno si traduce nell'equivalente di
 La conoscenza di come Hugo spezzi in una serie di nodi '`if`' e '`jump`' le istruzioni di ciclo comporta una facilità nell'analisi del flusso del programma usando Hugo Debugger (si veda l'Appendice E).
 
 Come risulta ovvio dall'illustrazione fatta sopra (forse confusamente), Hugo supporta i comandi '`jump`' [salta] e le etichette.
-Un'etichetta è semplicemente un identificatore specificato dall'utente preceduto dai due punti ('`:`') all'inizio di una riga.
+Un'etichetta è semplicemente un identificatore specificato dall'utente preceduto dai due punti (`:`) all'inizio di una riga.
 Il nome dell'etichetta deve avere un identificatore univoco all'interno del programma. (Bisogna avere una certa cura nell'utilizzo dell'istruzione '`jump`' -- generalmente è molto meglio usare delle alternative, visto che esiste la possibilità di sovraccaricare lo stack dell'interprete quando non si usano costruttori di clici standard).
 
 È anche importante riconoscere -- particolarmente con le istruzioni '`select`' e '`while`' o "`do-while`" -- che l'espressione viene valutata tutte le volte che il ciclo viene eseguito, o, nel caso dell'istruzione '`select`', per ogni case corrispondente.

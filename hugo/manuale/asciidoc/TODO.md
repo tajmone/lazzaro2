@@ -33,9 +33,7 @@ The whole document now needs to be thoroughly revised, chapter by chapter, by re
 
 - [ ] 1. **INTRODUZIONE**
     + [ ] Proofread whole chapter.
-    + [ ] Fix code blocks.
     + [ ] Fix typography.
-    + [ ] Fix cross-references.
     + [x] Fix dead links: point to current location (but preserve old URL in t ext):
         * [x] Author email (generalcoffe@geocities.com &rarr; general@generalcoffee.com)
         * [x] Hugo website (geocities &rarr; www.generalcoffee.com)
@@ -45,10 +43,9 @@ The whole document now needs to be thoroughly revised, chapter by chapter, by re
         * [x] IF Archive » Hugo (ftp.gmd.de &rarr; ifarchive.org)
 - [ ] 2. **UNA PRIMA OCCHIATA A HUGO**
     + [ ] Proofread whole chapter.
-    + [ ] Fix code blocks.
+    + [x] Fix code blocks.
     + [ ] Fix typography.
     + [ ] Fix cross-references.
-    + [ ] Fix dead links: point to current location (but preserve old URL in t ext).
 - [ ] 3. **OGGETTI**
     + [ ] Proofread whole chapter.
     + [ ] Fix code blocks.
@@ -128,6 +125,7 @@ Once the document is production-ready:
 
 - [ ] Set `revmark` to `HUGO v2.5` (the Hugo version the translated manual refers to).
 - [ ] Add inside the book a note about the Hugo v2.5/3.1 difference?
+- [ ] Italian Attributes: either `include::` the `_assets/adoc/attributes-it.adoc` or paste it into main module.
 
 ## Book Structure
 

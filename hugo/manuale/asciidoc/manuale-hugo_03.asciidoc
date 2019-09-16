@@ -34,14 +34,17 @@ Le parentesi graffe sono necessarie anche se la definizione dell'oggetto non ha 
 Gli unici dati assegnati all'oggetto `valigia` sono -- da destra a sinistra -- un nome, un identificatore, e l'appartenenza alla classe base `object`.
 
 Il compilatore assegna all'oggetto identificato da `<nomeoggetto>` il prossimo numero sequenziale disponibile.
-Cioè, se il primo oggetto definito è l'oggetto "`nothing`" [niente] (oggetto 0), allora al successivo oggetto che verrà definito, qualunque esso sia, viene assegnato il numero 1; quello che seguirà sarà il 2, ecc.
+Cioè, se il primo oggetto definito è l'oggetto `nothing` [niente] (oggetto 0), allora al successivo oggetto che verrà definito, qualunque esso sia, viene assegnato il numero 1; quello che seguirà sarà il 2, ecc.
 Tutto questo è accademia, comunque, visto che un programmatore non avrà mai bisogno di sapere che numero di oggetto ha un particolare oggetto -- tranne che in alcune situazioni di debug -- e si può sempre riferire ad un oggetto tramite la sua etichetta `<nomeoggetto>`.
 
-Se nessuno esplicito "`name`" (la proprietà nome) è fornito, il compilatore gli assegna automaticamente il nome "`(<nomeoggetto>)`", cioè `<nomeoggetto>` tra parentesi.
+Se nessuno esplicito `name` (la proprietà nome) è fornito, il compilatore gli assegna automaticamente il nome `(<nomeoggetto>)`, cioè `<nomeoggetto>` tra parentesi.
 
-(Il compilatore crea automaticamente un oggetto chiamato "`display`" [schermo] come ultimo oggetto definito.
+[NOTE]
+================================================================================
+Il compilatore crea automaticamente un oggetto chiamato `display` [schermo] come ultimo oggetto definito.
 L'oggetto display può essere usato per ottenere informazioni riguardanti la visualizzazione dell'interprete.
-Consultate la sezione sull'oggetto display più avanti in "`Funzionalità Avanzate`".)
+Consultate la sezione sull'oggetto display più avanti in "`Funzionalità Avanzate`".
+================================================================================
 
 == L'albero degli oggetti
 
@@ -55,8 +58,11 @@ Questo è la radice dell'albero degli oggetti, sul quale tutti gli oggetti si ba
 Quando si riferisce ai numeri degli oggetti, questo manuale si riferisce generalmente al nome dato all'oggetto nel codice sorgente: ed esempio, `<nomeoggetto>`.
 Il compilatore assegna automaticamente ad ogni oggetto un numero di oggetto, e si riferisce a quello ogni volta che uno specifico `<nomeoggetto>` viene incontrato.
 
-(_NOTA_: Quando si usano le routine standard della libreria, assicuratevi che nessun oggetto (o classe, che verrà discussa in seguito) sia definito prima dell'inclusione di `HUGOLIB.H`.
-Potrebbero sorgere dei problemi se il primo oggetto definito -- l'oggetto 0 -- non è l'oggetto "`nothing`").
+[NOTE]
+================================================================================
+Quando si usano le routine standard della libreria, assicuratevi che nessun oggetto (o classe, che verrà discussa in seguito) sia definito prima dell'inclusione di `HUGOLIB.H`.
+Potrebbero sorgere dei problemi se il primo oggetto definito -- l'oggetto 0 -- non è l'oggetto `nothing`.
+================================================================================
 
 Questo è un esempio di albero degli oggetti:
 
@@ -65,7 +71,7 @@ Nothing
 |
 Room
 |
-Table------Chair------Book------Player
+Table ———— Chair ———— Book ———— Player
 |                     |
 Bowl                  Bookmark
 |
@@ -74,80 +80,82 @@ Spoon
 
 Una serie di funzioni può essere usata per leggere l'albero degli oggetti.
 
-[source,hugo]
-------------------------------------------------------------
-parent [genitore]
-sibling [fratello]
-child [figlio]
-youngest [minore]
-elder [maggiore]
-eldest (uguale a child)
-younger (uguale a sibling)
-------------------------------------------------------------
+[horizontal]
+`parent`    :: [genitore]
+`sibling`   :: [fratello]
+`child`     :: [figlio]
+`youngest`  :: [minore]
+`elder`     :: [maggiore]
+`eldest`    :: (uguale a `child`)
+`younger`   :: (uguale a `sibling`)
 
 e
 
-[source,hugo]
-------------------------------------------------------------
-children [figli]
-------------------------------------------------------------
+[horizontal]
+`children`  :: [figli]
 
 Ogni funzione accetta un oggetto singolo come argomento, così che
 
-[source,hugo]
-------------------------------------------------------------
-parent(Table) = Room
-parent(Bookmark) = Book
-parent(Player) = Room
-child(Bowl) = Spoon
-child(Room) = Table
-child(Chair) = 0 (Nothing)
-sibling(Table) = Chair
-sibling(Player) = 0 (Nothing)
-youngest(Room) = Player
-youngest(Spoon) = 0 (Nothing)
-elder(Chair) = Table
-elder(Table) = 0 (Nothing)
-------------------------------------------------------------
+[horizontal]
+`parent(Table)`    :: = `Room`
+`parent(Bookmark)` :: = `Book`
+`parent(Player)`   :: = `Room`
+`child(Bowl)`      :: = `Spoon`
+`child(Room)`      :: = `Table`
+`child(Chair)`     :: = 0 (`nothing`)
+`sibling(Table)`   :: = `Chair`
+`sibling(Player)`  :: = 0 (`nothing`)
+`youngest(Room)`   :: = `Player`
+`youngest(Spoon)`  :: = 0 (`nothing`)
+`elder(Chair)`     :: = `Table`
+`elder(Table)`     :: = 0 (`nothing`)
 
 e
 
-[source,hugo]
-------------------------------------------------------------
-children(Room) = 4
-children(Table) = 1
-children(Chair) = 0
-------------------------------------------------------------
+[horizontal]
+`children(Room)`   :: = 4
+`children(Table)`  :: = 1
+`children(Chair)`  :: = 0
 
-(Ritornando alla spiegazione precedente riguardante i numeri degli oggetti e `<nomeoggetto>`, le funzioni del primo insieme in realtà restituiscono un numero intero che si riferisce ad un particolare `<nomeoggetto>`).
+
+[TIP]
+================================================================================
+Ritornando alla spiegazione precedente riguardante i numeri degli oggetti e `<nomeoggetto>`, le funzioni del primo insieme in realtà restituiscono un numero intero che si riferisce ad un particolare `<nomeoggetto>`.
+================================================================================
+
 
 Per capire meglio come l'albero degli oggetti rappresenti il mondo fisico, il tavolo (`table`), la sedia (`chair`), il libro (`book`), ed il giocatore (`player`) sono tutti nella stanza (`room`).
 Il segnalibro (`bookmark`) è nel libro (`book`).
 La scodella (`bowl`) è sul tavolo (`table`), ed il cucchiaio (`spoon`) è sulla scodella (`bowl`).
 La libreria di Hugo cosidererà l'oggetto giocatore dell'esempio come se stesse in piedi; se il giocatore fosse stato seduto, l'albero degli oggetti sarebbe apparso come:
 
-.........................
+..............................
 Nothing
 |
 Room
 |
-Table------Chair-----Book
-|          |         |
-...        Player    ...
-.........................
+Table ———— Chair ———— Book
+|          |          |
+Bowl       Player     Bookmark
+|
+Spoon
+..............................
 
 e
 
-[source,hugo]
-------------------------------------------------------------
-child(Chair) = Player
-parent(Player) = Chair
-children(Chair) = 1
-------------------------------------------------------------
+[horizontal]
+`child(Chair)`     :: = `Player`
+`parent(Player)`   :: = `Chair`
+`children(Chair)`  :: = 1
 
-(Provate a compilare `SAMPLE.HUG` con l'opzione `-o` per vedere l'albero degli oggetti per il gioco di esempio.
-Oppure, se il flag `DEBUG` è stato impostato durante la compilazione, usate il comando HugoFix "*`$ot`*" o "*`$ot <oggetto>`*" durante il gioco per vedere lo stato attuale dell'albero degli oggetti e vedere come cambia nel corso del gioco.
-Compilando con l'opzione `-d` viene generata una versione per il debug (`.HDX`) del file -- l'albero degli oggetti può essere visto direttamente dal debugger).
+
+[TIP]
+================================================================================
+Provate a compilare `SAMPLE.HUG` con l'opzione `-o` per vedere l'albero degli oggetti per il gioco di esempio.
+Oppure, se il flag `DEBUG` è stato impostato durante la compilazione, usate il comando HugoFix `$ot` o `$ot <oggetto>` durante il gioco per vedere lo stato attuale dell'albero degli oggetti e vedere come cambia nel corso del gioco.
+Compilando con l'opzione `-d` viene generata una versione per il debug (`.HDX`) del file -- l'albero degli oggetti può essere visto direttamente dal debugger.
+================================================================================
+
 
 I test logici possono essere valutati per quel che riguarda gli oggetti ed i figli.
 La struttura
@@ -157,7 +165,7 @@ La struttura
 <oggetto> [not] in <genitore>
 ------------------------------------------------------------
 
-restituirà `true` (vero) se `<oggetto>` si trova in `<genitore>` (o `false` (falso) se viene usato '`not`' (non)).
+restituirà `true` (vero) se `<oggetto>` si trova in `<genitore>` (o `false` (falso) se viene usato `not` (non)).
 
 Per posizionare inizialmente un oggetto nell'albero degli oggetti si usa
 
@@ -196,15 +204,18 @@ object <nomeoggetto> "nome oggetto"
 }
 ------------------------------------------------------------
 
-(Assicuratevi che la parentesi graffa aperta '`{`' non si trovi sulla stessa riga dello speficificatore '`object`'.
+[WARNING]
+================================================================================
+Assicuratevi che la parentesi graffa aperta `{` non si trovi sulla stessa riga dello speficificatore `object`.
 
 [source,hugo]
 ------------------------------------------------------------
-object <nomeoggetto> "nome oggetto"    {...
+object <nomeoggetto> "nome oggetto" {...
 ------------------------------------------------------------
 
+non è permesso.
+================================================================================
 
-non è permesso).
 
 Il tavolo (`table`) dell'esempio probabilmente aveva una definizione come
 
@@ -227,12 +238,14 @@ object suitcase "suitcase"
 }
 ------------------------------------------------------------
 
-Gli oggetti possono poi essere mossi all'interno dell'albero degli oggetti tramite il comando '`move`' (muovi) come in
+Gli oggetti possono poi essere mossi all'interno dell'albero degli oggetti tramite il comando `move` (muovi) come in
 
 [source,hugo]
 ------------------------------------------------------------
-move <oggetto> to <nuovo    genitore>
+move <oggetto> to <nuovo genitore>
 ------------------------------------------------------------
+
+// @TODO: Questa frase va rivista!
 
 Che, praticamente, rimuove `<oggetto>` dal vecchio genitore, rende il fratello di `<oggetto>` il fratello del maggiore di `<oggetto>`, e sposta `<oggetto>` (con tutto quello che gli appartiene) dal nuovo genitore.
 
@@ -246,17 +259,17 @@ move bowl to player
 avrebbe modificato l'albero degli oggetti come segue:
 
 
-.........................................
+......................................
 Nothing
 |
 Room
 |
-Table------Chair-----Book------Player
-                          |         |
-                          Bookmark  Bowl
-                                    |
-                                    Spoon
-.........................................
+Table ———— Chair ———— Book ———— Player
+                      |         |
+                      Bookmark  Bowl
+                                |
+                                Spoon
+......................................
 
 Esiste anche un comando per rimuovere un oggetto dalla sua posizione nell'albero:
 
@@ -289,44 +302,49 @@ attribute <nome attributo>
 Possono essere definiti fino a 128 attributi.
 Quelli definiti in `HUGOLIB.H` comprendono:
 
-[cols=",",]
-|===
-|`known` |se un oggetto è conosciuto dal giocatore
-|`moved` |se un oggetto è stato spostato
-|`visited` |se una stanza è stata visitata
-|`static` |se un oggetto non può essere preso
-|`plural` |per oggetti al plurale (ad es., `some hats` [alcuni cappelli])
-|`living` |se l'oggetto è un personaggio
-|`female` |se il personaggio è femminile
-|`unfriendly` |se un personaggio non è amichevole
-|`openable` |se un oggetto può essere aperto
-|`open` |se è aperto
-|`lockable` |se un oggetto può essere chiuso a chiave
-|`locked` |se è chiuso a chiave
-|`light` |se un oggetto fornisce luce
-|`readable` |se un oggetto può essere letto
-|`switchable` |se un oggetto può essere acceso o spento
-|`switchedon` |se un oggetto è acceso
-|`clothing` |per oggetti che possono essere indossati
-|`worn` |se l'oggetto è indossato
-|`mobile` |se l'oggetto può essere spinto, ecc.
-|`enterable` |se è possibile entrare nell'oggetto
-|`container` |se l'oggetto può contenere altri oggetti
-|`platform` |se si possono posare oggetti sull'oggetto (_NOTA_: `container` e `platform` sono mutualmente esclusivi)
-|`hidden` |se l'oggetto non deve essere indicato
-|`quiet` |se il `container` o il `platform` sono quieti (cioè, se l'indicazione iniziale degli oggetti che contengono non deve essere prodotta)
-|`transparent` |se l'oggetto non è opaco
-|`already_listed` |se l'oggetto è già stato indicato (cioè, prima di un listato `WhatsIn`)
-|`workflag` |usato dal sistema
-|`special` |per varii usi
-|===
+[cols="<m,<d",options="autowidth"]
+|===============================================================================
+| known          | se un oggetto è conosciuto dal giocatore
+| moved          | se un oggetto è stato spostato
+| visited        | se una stanza è stata visitata
+| static         | se un oggetto non può essere preso
+| plural         | per oggetti al plurale (ad es., `some hats` [alcuni cappelli])
+| living         | se l'oggetto è un personaggio
+| female         | se il personaggio è femminile
+| unfriendly     | se un personaggio non è amichevole
+| openable       | se un oggetto può essere aperto
+| open           | se è aperto
+| lockable       | se un oggetto può essere chiuso a chiave
+| locked         | se è chiuso a chiave
+| light          | se un oggetto fornisce luce
+| readable       | se un oggetto può essere letto
+| switchable     | se un oggetto può essere acceso o spento
+| switchedon     | se un oggetto è acceso
+| clothing       | per oggetti che possono essere indossati
+| worn           | se l'oggetto è indossato
+| mobile         | se l'oggetto può essere spinto, ecc.
+| enterable      | se è possibile entrare nell'oggetto
+| container      | se l'oggetto può contenere altri oggetti
+| platform       | se si possono posare oggetti sull'oggetto
+| hidden         | se l'oggetto non deve essere indicato
+| quiet          | se il `container` o il `platform` sono quieti (cioè, se l'indicazione iniziale degli oggetti che contengono non deve essere prodotta)
+| transparent    | se l'oggetto non è opaco
+| already_listed | se l'oggetto è già stato indicato (cioè, prima di un listato `WhatsIn`)
+| workflag       | usato dal sistema
+| special        | per varii usi
+|===============================================================================
+
+[IMPORTANT]
+================================================================================
+`container` e `platform` sono mutualmente esclusivi.
+================================================================================
 
 Alcuni di questi attributi sono in realtà lo stesso attributo con un nome differente.
 Questo viene ottenuto tramite
 
 [source,hugo]
 ------------------------------------------------------------
-attribute <attributo2> alias    <attributo1>
+attribute <attributo2> alias <attributo1>
 ------------------------------------------------------------
 
 dove `<attributo1>` è già stato definito.
@@ -346,7 +364,7 @@ Gli attributi vengono assegnati ad un oggetto durante la sua definizione come se
 ------------------------------------------------------------
 object <nomeoggetto> "nome oggetto"
 {
-    is [not] <attributo1>, [not]      <attributo2>, ...
+    is [not] <attributo1>, [not] <attributo2>, ...
     ...
 }
 ------------------------------------------------------------
@@ -354,7 +372,7 @@ object <nomeoggetto> "nome oggetto"
 
 [NOTE]
 ================================================================================
-La parola chiave '`not`' (non) nella definizione di un oggetto è importante quando si usa una classe invece della definizione base di un oggetto (`object`), visto che la classe può avere alcuni attributi predefiniti che non sono utili all'oggetto corrente.
+La parola chiave `not` (non) nella definizione di un oggetto è importante quando si usa una classe invece della definizione base di un oggetto (`object`), visto che la classe può avere alcuni attributi predefiniti che non sono utili all'oggetto corrente.
 ================================================================================
 
 Anche se ad un oggetto non è stato dato un particolare attributo durante la definizione dello stesso, è possibile assegnargli l'attributo in qualunque punto seguente nel programma con il comando
@@ -364,9 +382,9 @@ Anche se ad un oggetto non è stato dato un particolare attributo durante la def
 <oggetto> is [not] <attributo>
 ------------------------------------------------------------
 
-dove la parola chiave '`not`' rimuove l'attributo invece di impostarlo.
+dove la parola chiave `not` rimuove l'attributo invece di impostarlo.
 
-Gli attributi possono anche essere letti usando le strutture '`is`' (è) e '`is not`' (non è).
+Gli attributi possono anche essere letti usando le strutture `is` (è) e `is not` (non è).
 Come una funzione,
 
 [source,hugo]
@@ -374,7 +392,7 @@ Come una funzione,
 <oggetto> is [not] <attributo>
 ------------------------------------------------------------
 
-ritorna `true` (1) se l'`<oggetto>` è (o non è, se viene indicato '`not`') `<attributo>`.
+ritorna `true` (1) se l`'``<oggetto>`` è (o non è, se viene indicato `not`) `<attributo>`.
 Altrimenti ritorna `false` (0).
 
 Per fornire all'oggetto `suitcase` (valigia) gli attributi appropriati, si espande la definizione dell'oggetto per includere
@@ -384,24 +402,24 @@ Per fornire all'oggetto `suitcase` (valigia) gli attributi appropriati, si espan
 object suitcase "suitcase"
 {
     in emptyroom
-    is      openable, not open
+    is openable, not open
     ...
 }
 ------------------------------------------------------------
 
-Adesso le equzioni che seguono restituiscono `true` (vero):
+Adesso le equazioni che seguono restituiscono `true` (vero):
 
 [source,hugo]
 ------------------------------------------------------------
 suitcase is openable = 1
-suitcase is open =      0
+suitcase is open = 0
 suitcase is locked = 0
 ------------------------------------------------------------
 
 == Proprietà
 
 Le proprietà sono decisamente più complesse degli attributi.
-Prima di tutto, non tutti gli oggetti possono avere delle proprietà; per fare in modo che un oggetto abbia delle proprietà deve essere specificato nella definizione dello stesso
+Prima di tutto, non tutti gli oggetti possono avere delle proprietà; per fare in modo che un oggetto abbia delle proprietà deve essere specificato nella definizione dello stesso.
 
 In più le proprietà non sono dei semplici flag sì/no.
 Sono un insieme di dati validi associati ad un oggetto, i cui valori possono rappresentare quasi ogni cosa, compresi i numeri degli oggetti, indirizzi del dizionario, valori interi, ed indirizzi di codice eseguibile.
@@ -418,28 +436,32 @@ size 20
 found_in tinello, ingresso
 
 long_desc
-    {"Ci sono delle uscite a      nord ed ovest. Nel muro a
-    sudest c'è una      porta."}
+{
+    "Ci sono delle uscite a nord ed ovest. Nel muro a
+    sudest c'è una porta."
+}
 
 short_desc
 {
-    "C'è una      scatola. Ed è ";
+    "C'è una scatola. Ed è ";
     if self is open
-    print "aperta";
-         else
-    print "chiusa";
+        print "aperta";
+    else
+        print "chiusa";
     print "."
 }
 
 before
 {
-    object      DoGet
+    object  DoGet
     {
-        if Acquire(player,      self)
-                 {"Raccogli ";
-                 print Art(self); "."}
+        if Acquire(player, self)
+        {
+            "Raccogli ";
+            print Art(self); "."
+        }
         else
-        return false
+            return false
     }
 }
 ------------------------------------------------------------
@@ -448,10 +470,14 @@ La proprietà `nouns` (nomi) contiene 4 indirizzi del dizionario; la proprietà 
 
 La proprietà `before` (prima) è un caso speciale.
 Questa proprietà complessa viene definita dal compilatore e viene trattata differentemente dall'interprete rispetto alle altre proprietà.
-In questo caso, il valore della proprietà rappresentante l'indirizzo della routine viene restituito solo se le varabili globali object e verbroutine contengono, rispettivamente, l'oggetto in questione e l'indirizzo della routine `DoGet`. (C'è anche una routine `after` [dopo], che viene controllata dopo che la routine del verbo è stata chiamata).
+In questo caso, il valore della proprietà rappresentante l'indirizzo della routine viene restituito solo se le varabili globali `object` e `verbroutine` contengono, rispettivamente, l'oggetto in questione e l'indirizzo della routine `DoGet`. (C'è anche una routine `after` [dopo], che viene controllata dopo che la routine del verbo è stata chiamata).
 
-(_Nota per chiarificare_: la routine `Art` di `HUGOLIB.H` stampa l'articolo corretto, se presente, seguito dal nome dell'oggetto.
-La routine `Acquire` restituisce `true` solo se la proprietà `holding` [quanto contiene] del primo oggetto più la proprietà `size` [dimensione] del secondo oggetto non eccedono la proprietà `capacity` [capacità] del primo oggetto).
+[NOTE]
+================================================================================
+_Nota per chiarificare_: la routine `Art` di `HUGOLIB.H` stampa l'articolo corretto, se presente, seguito dal nome dell'oggetto.
+La routine `Acquire` restituisce `true` solo se la proprietà `holding` [quanto contiene] del primo oggetto più la proprietà `size` [dimensione] del secondo oggetto non eccedono la proprietà `capacity` [capacità] del primo oggetto.
+================================================================================
+
 
 Tutto questo può apparire poco chiaro per il momento.
 Più avanti si parlerà ancora delle routine proprietà.
@@ -468,7 +494,7 @@ Un valore di default può essere definito per la proprietà usando
 
 [source,hugo]
 ------------------------------------------------------------
-property <nome proprietà> <valore di      default>
+property <nome proprietà> <valore di default>
 ------------------------------------------------------------
 
 dove `<valore di default>` può essere una costante od una parola del dizionario.
@@ -477,6 +503,7 @@ Se il valore di default non viene dichiarato esplicitamente viene impostato a 0.
 
 La lista delle proprietà definita in `HUGOLIB.H` è:
 
+// [cols="<m,<d",options="autowidth"]
 [cols="<10m,<90d"]
 |===============================================================================
 | name             | il nome base dell'oggetto
@@ -492,18 +519,18 @@ La lista delle proprietà definita in `HUGOLIB.H` è:
 | long_desc        | descrizione dettagliata
 | found_in         | in caso di locazioni multiple (oggetti genitore virtuali, *NON* fisici)
 | type             | per identificare il tipo di un oggetto
-| n_to             |
-| ne_to            |
-| e_to             |
-| se_to            |
-| s_to             |
-| sw_to            | (solo per le stanze indicano dove conducono le uscite)
-| w_to             |
-| nw_to            |
-| u_to             |
-| d_to             |
-| in_to            |
-| out_to           |
+| n_to       .12+.^| (solo per le stanze indicano dove conducono le uscite)
+| ne_to
+| e_to
+| se_to
+| s_to
+| sw_to
+| w_to
+| nw_to
+| u_to
+| d_to
+| in_to
+| out_to
 | cant_go          | messaggio se una direzione non è valida
 | size             | dimensione per l'inventario o la capacità di oggetti contenitore
 | capacity         | la capacità di un oggetto contenitore
@@ -524,9 +551,14 @@ La lista delle proprietà definita in `HUGOLIB.H` è:
 | misc             | per usi diversi
 |===============================================================================
 
-(Per una descrizione dettagliata di come ogni proprietà viene usata, consultate l'Appendice B: La libreria).
+// @TODO: Missing XRef:
 
-(Le seguenti proprietà sono inoltre definite ed usate esclusivamente dall'oggetto `display`:
+[TIP]
+================================================================================
+Per una descrizione dettagliata di come ogni proprietà viene usata, consultate l`'_Appendice B: La libreria_.
+================================================================================
+
+Le seguenti proprietà sono inoltre definite ed usate esclusivamente dall'oggetto `display`:
 
 [cols="<10m,<90d"]
 |===============================================================================
@@ -541,13 +573,13 @@ La lista delle proprietà definita in `HUGOLIB.H` è:
 | statusline_height | altezza dell'ultima riga di stato visualizzata
 |===============================================================================
 
-Notate che mentre alcune di queste, da `screenwidth` a `title_caption`, sono definite come costanti nella libreria, possono essere comunque usate come indicatori di proprietà, visto che sia i numeri di proprietà che le costanti sono semplici interi).
+Notate che mentre alcune di queste, da `screenwidth` a `title_caption`, sono definite come costanti nella libreria, possono essere comunque usate come indicatori di proprietà, visto che sia i numeri di proprietà che le costanti sono semplici interi.
 
 Anche i nomi di proprietà possono avere degli _alias_ tramite
 
 [source,hugo]
 ------------------------------------------------------------
-property <proprietà2> alias    <proprietà1>
+property <proprietà2> alias <proprietà1>
 ------------------------------------------------------------
 
 dove `<proprietà1>` è stata definita in precedenza.
@@ -558,9 +590,9 @@ La libreria definisce i seguenti _alias_ (tra gli altri):
 [source,hugo]
 ------------------------------------------------------------
 nouns alias noun
-adjectives alias      adjective
+adjectives alias adjective
 prep alias preposition
-pronouns alias      pronoun
+pronouns alias pronoun
 ------------------------------------------------------------
 
 Una proprietà viene espressa tramite
@@ -581,14 +613,15 @@ ed un singolo elemento viene espresso tramite
 
 [source,hugo]
 ------------------------------------------------------------
-<oggetto>.<proprietà> #<numero      elemento>
+<oggetto>.<proprietà> #<numero elemento>
 ------------------------------------------------------------
 
 
 [NOTE]
 ================================================================================
-"`<oggetto>.<proprietà>`" è semplicemente la versione ridotta di "`<oggetto>.<proprietà>    #1`".
+`<oggetto>.<proprietà>` è semplicemente la versione ridotta di `<oggetto>.<proprietà> #1`.
 ================================================================================
+
 
 Per aggiungere qualche proprietà all'oggetto `suitcase` (valigia) è necessario espandere la definizione dell'oggetto con
 
@@ -596,13 +629,13 @@ Per aggiungere qualche proprietà all'oggetto `suitcase` (valigia) è necessario
 ------------------------------------------------------------
 object suitcase "big green suitcase"
 {
-    in emptyroom ! fatto prima
-    is openable, not open !
+    in emptyroom            ! fatto prima
+    is openable, not open   !
 
     nouns "suitcase", "case", "luggage"
     adjective "big", "green", "suit"
     article "a"
-    size      25
+    size 25
     capacity 100
 }
 ------------------------------------------------------------
@@ -610,29 +643,30 @@ object suitcase "big green suitcase"
 Basandosi sulle regole dell'interprete per l'identificazione degli oggetti, il giocatore si può riferire all'oggetto valigia come "`big green suitcase`" (grande valigia verde), "`big case`" (grande valigia), o "`green suitcase`" (valigia verde) tra le varie combinazioni.
 Anche "`big green`" (grande verde) e "`suit`" possono essere valide, garantendo che queste espressioni non si riferiscano anche ad altri oggetti disponibili come "`a big green apple`" (una grande mela verde) o "`your suit jacket`" (la giacca del tuo vestito).
 
-(_NOTA_: il formato base di identificazione del parser è
+[NOTE]
+================================================================================
+Il formato base di identificazione del parser è
 
-[source,hugo]
-------------------------------------------------------------
-<aggettivo 1> <agg. 2> <agg. 3>...<agg.      n> <nome>
-------------------------------------------------------------
+..................................................
+<aggettivo 1> <agg. 2> <agg. 3> ... <agg.n> <nome>
+..................................................
 
 dove ogni sottoinsieme di questi elementi è consentito.
 Comunque il nome deve apparire per ultimo e solo un nome viene riconosciuto, così che
 
-[source,hugo]
-------------------------------------------------------------
-<nome> <nome> and <nome>      <aggettivo>
-------------------------------------------------------------
+.............
+<nome> <nome>
+.............
 
-come in
+e
 
-[source,hugo]
-------------------------------------------------------------
-"luggage case" e "suitcase green"
-------------------------------------------------------------
+..................
+<nome> <aggettivo>
+..................
 
-non vengono riconosciuti).
+(come in "`luggage case`" e "`suitcase green`") non vengono riconosciuti.
+================================================================================
+
 
 Una sorgente occasionale di codice stupido che non si comporta nel modo che il programmatore intendeva è quando non viene riservato abbastanza spazio per una proprietà di un determinato oggetto.
 Cioè se l'oggetto è stato originariamente definito con la proprietà
@@ -651,7 +685,12 @@ e poi il programma cerca di impostare
 
 non avrà nessun effetto evidente.
 In pratica non ci sarà dello spazio nella tabella delle proprietà di `<oggetto>` per un secondo valore di `found_in`.
-Cercando di leggere `<oggetto>.found_in    #2` si avrà un valore di ritorno pari a 0 -- una proprietà non esistente -- non il numero dell'oggetto `livingroom`. (Eseguendo il debugger con gli avvertimenti a runtime [runtime warnings] abilitati aiuta ad individuare situazioni come questa).
+Cercando di leggere `<oggetto>.found_in    #2` si avrà un valore di ritorno pari a 0 -- una proprietà non esistente -- non il numero dell'oggetto `livingroom`.
+
+[TIP]
+================================================================================
+Eseguendo il debugger con gli avvertimenti a runtime [_runtime warnings_] abilitati aiuta ad individuare situazioni come questa.
+================================================================================
 
 Per ovviare a ciò, se si prevede che probabilmente un secondo (o terzo, o quarto, o nono) valore andrà impostato -- anche se solo un valore viene definito -- usate
 
@@ -662,7 +701,10 @@ found_in kitchen, 0[, 0, 0,...]
 
 nella definizione dell'oggetto.
 
-(Una scorciatoia utile per inizializzare una serie di valori a 0 è quella di usare
+
+[TIP]
+================================================================================
+Una scorciatoia utile per inizializzare una serie di valori a 0 è quella di usare
 
 [source,hugo]
 ------------------------------------------------------------
@@ -676,7 +718,9 @@ invece di
 found_in 0, 0, 0, 0
 ------------------------------------------------------------
 
-nella definizione dell'oggetto).
+nella definizione dell'oggetto.
+================================================================================
+
 
 Come ci si potrebbe aspettare le combinazioni di proprietà sono lette da sinistra a destra, così che
 
@@ -713,47 +757,51 @@ Ad esempio:
 ------------------------------------------------------------
 class scatola
 {
-         noun "scatola"
+    noun "scatola"
     long_desc
-        "Sembra una normale      vecchia scatola."
+        "Sembra una normale vecchia scatola."
     is openable, not open
 }
 
 scatola scatolagrande "scatola grande"
 {
     article "una"
-         adjectives "grande", "larga"
+    adjectives "grande", "larga"
     is open
 }
 
 scatola scatolaverde "scatola verde"
 {
     article "una"
-         adjective "verde"
+    adjective "verde"
     long_desc
-        "Sembra una normale      vecchia scatola, solo verde."
+        "Sembra una normale vecchia scatola, solo verde."
 }
 ------------------------------------------------------------
 
-(Cominciando la routine della proprietà `long_desc` sulla riga sotto il nome della proprietà, questa viene interpretata dal compilatore come:
+[NOTE]
+================================================================================
+Cominciando la routine della proprietà `long_desc` sulla riga sotto il nome della proprietà, questa viene interpretata dal compilatore come:
 
 [source,hugo]
 ------------------------------------------------------------
 long_desc
 {
-"Sembra una normale      vecchia scatola, solo verde."
+    "Sembra una normale vecchia scatola, solo verde."
 }
 ------------------------------------------------------------
 
-Visto che la proprietà è lunga solo una riga -- un comando di stampa -- le parentesi graffe non sono necessarie).
+Visto che la proprietà è lunga solo una riga -- un comando di stampa -- le parentesi graffe non sono necessarie.
+================================================================================
 
-La definizione di un oggetto di una certa classe comincia con il nome dell'oggetto prototipo invece di "`object`".
+
+La definizione di un oggetto di una certa classe comincia con il nome dell'oggetto prototipo invece di `object`.
 Tutte le proprietà e gli attributi della classe vengono ereditati (tranne la posizione all'interno dell'albero degli oggetti), a meno che essi siano esplicitamente definiti nel nuovo oggetto.
 
-In pratica, sebbene la classe scatola sia stata definita senza l'attributo `open` (aperto), l'oggetto `scatolagrande` comincierà il gioco aperta (`open`), visto che così è stata impostata nella definzione di `scatolagrande`.
+In pratica, sebbene la classe `scatola` sia stata definita senza l'attributo `open` (aperto), l'oggetto `scatolagrande` comincierà il gioco aperta (`open`), visto che così è stata impostata nella definzione di `scatolagrande`.
 Comincierà il gioco comunque apribile (`openable`) visto che questo attributo è stato ereditato dalla classe `scatola`.
 
-Mentre l'oggetto `scatolagrande` avrà la proprietà `long_desc` della classe `scatola`, l'oggetto `scatolaverde` sostituisce la descrizione di default con una nuova descrizione. (Un'eccezione a questo è la proprietà "`$additive`", spiegata in seguito, dove nuove proprietà vengono aggiunte a quelle delle classi precedenti).
+Mentre l'oggetto `scatolagrande` avrà la proprietà `long_desc` della classe `scatola`, l'oggetto `scatolaverde` sostituisce la descrizione di default con una nuova descrizione. (Un'eccezione a questo è la proprietà `$additive`, spiegata in seguito, dove nuove proprietà vengono aggiunte a quelle delle classi precedenti).
 
 Poiché una classe è fondamentalmente un oggetto, è possibile definire un oggetto usando un oggetto precedente come classe anche se l'oggetto precedente non è stato esplicitamente definito come classe. +
 Perciò
@@ -762,20 +810,20 @@ Perciò
 ------------------------------------------------------------
 scatolagrande scatolagranderossa "scatola grande rossa"
 {
-    adjectives "grande", "larga",      "rossa"
+    adjectives "grande", "larga", "rossa"
 }
 ------------------------------------------------------------
 
 è perfettamente valido.
 
 Occasionalmente può essere necessario avere un oggetto o una classe che ereditano da più di una classe definita in precedenza.
-Questo può essere ottenuto usando l'istruzione "`inherits`" (eredita).
+Questo può essere ottenuto usando l'istruzione `inherits` (eredita).
 
 [source,hugo]
 ------------------------------------------------------------
 <classe1> <nomeoggetto> "nome"
 {
-    inherits <classe2>[,      <classe3>,...]
+    inherits <classe2>[, <classe3>, ...]
     ...
 }
 ------------------------------------------------------------
@@ -786,7 +834,7 @@ o anche
 ------------------------------------------------------------
 object <nomeoggetto> "nome"
 {
-    inherits <classe1>, <classe2>[,      <classe3>,...]
+    inherits <classe1>, <classe2>[, <classe3>, ...]
     ...
 }
 ------------------------------------------------------------
@@ -803,3761 +851,16 @@ Invece di modificare il file `OBJLIB.H` si usa:
 ------------------------------------------------------------
 replace <classe> ["<nome opzionale>"]
 {
-    (...nuova definizione      dell'oggetto...)
+    (...nuova definizione dell'oggetto...)
 }
 ------------------------------------------------------------
 
-dove `<classe>` è il nome di un oggetto o di una classe definiti in precedenza, come "`room`" (stanza).
-Tutti i riferimenti seguenti a `<classe>` useranno questo oggetto invece di quello definito precedentemente. +
-(Questo significa che la sostituzione [`replace`] deve avvenire *PRIMA* dell'uso della classe dagli altri oggetti).
+dove `<classe>` è il nome di un oggetto o di una classe definiti in precedenza, come `room` (stanza).
+Tutti i riferimenti seguenti a `<classe>` useranno questo oggetto invece di quello definito precedentemente.
 
-= LA PROGRAMMAZIONE DI HUGO
-
-== Variabili
-
-Hugo supporta due tipi di variabili: globali e locali.
-Entrambi i tipi contengono un intero a 16 bit, così una variabile può memorizzare un valore semplice, il numero di un oggetto, un indirizzo del dizionario, un indirizzo di una routine, o qualunque altro tipo di dati standard di Hugo tramite un'assegnazione come:
-
-[source,hugo]
-------------------------------------------------------------
-a = 1
-nextobj = parent(obj)
-temp_word = "the"
-------------------------------------------------------------
-
-Le variabili globali sono visibili per tutto il programma.
-Debbono essere definite in maniera simile a quanto viene fatto per le proprietà e gli attributi come in
-
-[source,hugo]
-------------------------------------------------------------
-global <nome variabile globale>[ = <valore      iniziale>]
-------------------------------------------------------------
-
-Le variabili locali, d'altra parte, sono riconosciute solo all'interno della routine in cui sono state definite.
-Vengono definite usando
-
-[source,hugo]
-------------------------------------------------------------
-local <nome variabile locale>[ = <valore      iniziale>]
-------------------------------------------------------------
-
-Le variabili globali devono avere un nome univoco, diverso da quello usato per altri oggetti: le variabili locali, invece, possono usare lo stesso nome usato per altre variabili locali in altre routine.
-
-In entrambi i casi, globali o locali, il valore iniziale di default è 0 se nessun valore viene fornito.
-Ad esempio,
-
-[source,hugo]
-------------------------------------------------------------
-global time_of_day = 1100
-------------------------------------------------------------
-
-è uguale a 1100 quando il programma viene eseguito, ed è visibile in ogni punto del programma ad ogni oggetto o routine.
-D'altra parte le variabili
-
-[source,hugo]
-------------------------------------------------------------
-local a, max = 100, t
-------------------------------------------------------------
-
-sono visibili solo nel blocco di codice in cui sono state definite, e sono inizializzate, rispettivamente, a 0, 100 e 0, ogni volta che quella sezione di codice (che sia una routine, una routine proprietà, un evento, ecc.) viene eseguita.
-
-Il compilatore definisce una serie di globali dell'interprete (engine globals): varibili globali referenziate direttamente dall'interprete, ma che possono essere utilizzate come ogni altra variabile globale.
-Sono:
-
-
-[horizontal]
-`object`        :: oggetto a cui si riferisce un'azione
-`xobject`       :: l'oggetto indiretto
-`self`          :: l'oggetto che punta a se stesso
-`words`         :: numero di parole nel comando
-`player`        :: l'oggetto giocatore
-`actor`         :: il giocatore, od un personaggio (per gli script)
-`verbroutine`   :: la routine specificata dal comando
-`endflag`       :: se non è falso (0), esegue la routine `EndGame`
-`prompt`        :: per l'input; il default è "`>`"
-`objects`       :: il numero totale di oggetti
-`system_status` :: dopo certe operazioni
-
-
-Le globali `object` e `xobject` vengono impostate dall'interprete in base al comando digitato dal giocatore.
-La globale `self` è indefinita a meno che un oggetto sia stato referenziato (in una routine proprietà).
-In questo caso viene impostata con il numero dell'oggetto.
-La variabile `player` contiene il numero dell'oggetto che il giocatore sta controllando; la variabile `verbroutine` contiene l'indirizzo della routine specificata nella tavola della grammatica e corrispondente al comando inserito; la varibile `endflag` deve essere 0 a meno che non accada qualcosa che faccia terminare il gioco; e la variabile `prompt` contiene la parola del dizionario che appare all'inzio della riga di input.
-
-La variabile `objects` può essere impostata dal giocatore, ma senza alcun effetto utile.
-L'interprete la reimposterà al valore "`vero`" ogni volta che verrà referenziata. (Tutti i numeri di oggetto variano da 0 al valore di `objects`).
-La variabile `system_status` può essere letta (dopo un'operazione riguardante una risorsa o una chiamata di 'sistema'; controllate le sezioni corrispondenti per una spiegazione di queste funzioni) per controllare se si è verificato un errore.
-Consultate la sezione riguardante le "`Risorse`" per i possibili valori di ritorno.
-
-(_NOTA_: Impostando `endflag` ad un valore diverso da 0 forza un'interruzione *IMMEDIATA* del ciclo di gioco.
-Le istruzioni che seguono l'assegnazione del valore ad `endflag`, anche se nella stessa funzione, non verranno eseguite; il controllo passa direttamente all'interprete che chiama la routine `EndGame`).
-
-== Costanti
-
-Le costanti sono semplicemente delle etichette che identificano un valore non modificabile.
-
-[source,hugo]
-------------------------------------------------------------
-constant NOME "John"
-constant COGNOME      "Smith"
-------------------------------------------------------------
-
-(Fate caso alla mancanza di un segno di '`=`' tra, ad esempio, `NOME` e `"John"`)
-
-[source,hugo]
-------------------------------------------------------------
-print COGNOME; ", "; NOME
-------------------------------------------------------------
-
-visualizza:
-
-[example,role="gametranscript"]
-================================================================================
-Smith, John
-================================================================================
-
-
-Le costanti possono essere, come ogni altro tipo di dato in Hugo, interi, voci del dizionario, numeri di oggetti, ecc.
-
-(Non è necessario assegnare un valore definito ad una costante se le costanti devono essere usate come una specie di flag o indicatore.
-Perciò,
-
-[source,hugo]
-------------------------------------------------------------
-constant QUESTO_RISULTATO
-constant      QUEL_RISULTATO
-------------------------------------------------------------
-
-avranno un valore differente tra di loro, così come da ogni altra costante definita senza uno specifico valore).
-
-A volte può essere utile numerare una serie di costanti in sequenza.
-Invece di definirle individualmente è possibile usare:
-
-[source,hugo]
-------------------------------------------------------------
-enumerate start = 1
-{
-    LUNEDI, MARTEDI, MERCOLEDI, GIOVEDI, VENERDI
-}
-------------------------------------------------------------
-
-che assegna:
-
-[source,hugo]
-------------------------------------------------------------
-LUNEDI = 1, MARTEDI = 2, MERCOLEDI = 3, GIOVEDI = 4, VENERDI      = 5
-------------------------------------------------------------
-
-Il valore `start` [inizio] è opzionale.
-Se viene omesso si assume 0.
-Inoltre è possible cambiare il valore corrente in ogni punto (questo riguarderà anche i valori seguenti).
-
-[source,hugo]
-------------------------------------------------------------
-enumerate
-{
-    A,      B, C = 5, D, E
-}
-------------------------------------------------------------
-
-imposta: `A = 0, B = 1, C =    5, D = 6, E = 7`.
-
-Infine è possibile modificare il passo della numerazione usando la parola chiave "`step`" seguita da "`+x`", "`-x`", "`*x`" o "`/x`", dove `x` è un valore intero.
-Per contare per due:
-
-[source,hugo]
-------------------------------------------------------------
-enumerate step *2
-{
-    A = 1, B, C, D
-}
-------------------------------------------------------------
-
-imposta: `A = 1, B = 2, C = 4, D = 8`.
-
-
-[NOTE]
-================================================================================
-la numerazione delle variabili globali è possibile usando lo specificatore '`globals`', come in:
-
-[source,hugo]
-------------------------------------------------------------
-enumerate globals
-{
-    <globale1>, <globale2>...
-}
-------------------------------------------------------------
-
-Altrimenti lo specificatore "`constants`" viene considerato di default.
-================================================================================
-
-== Scrivere il test
-
-Il testo può essere stampato usando due metodi differenti.
-Il primo è l'utilizzo del comando '`print`', la cui forma più semplice è
-
-[source,hugo]
-------------------------------------------------------------
-print "<stringa>"
-------------------------------------------------------------
-
-dove `<stringa>` rappresenta una serie di caratteri alfanumerici e simboli di punteggiatura.
-
-Il carattere di controllo barra inversa (`\`) viene gestito in maniera speciale.
-Modifica il modo in cui il carattere che lo segue nella stringa viene trattato.
-
-
-[horizontal]
-`\"` :: inserisce le doppie virgolette
-`\\` :: inserisce il carattere di barra inversa
-`\_` :: inserisce uno spazio, ignorando la giustificazione a sinistra per il resto della stringa
-`\n` :: inserisce un carattere di nuova riga
-
-Come normale, un singolo "`\`" alla fine di una riga segnala che la riga continua sulla successiva.
-
-Esempi:
-
-[source,hugo]
-------------------------------------------------------------
-print "\"Salve!\""
-------------------------------------------------------------
-
-[example,role="gametranscript"]
-================================================================================
-    "Salve!"
-================================================================================
-
-
-[source,hugo]
-------------------------------------------------------------
-print "Stampa una...\n...riga nuova"
-------------------------------------------------------------
-
-[example,role="gametranscript"]
-================================================================================
-    Stampa una...
-         ...riga nuova
-================================================================================
-
-
-[source,hugo]
-------------------------------------------------------------
-print "Uno\\Due\\Tre"
-------------------------------------------------------------
-
-[example,role="gametranscript"]
-================================================================================
-    Uno\Due\Tre
-================================================================================
-
-
-[source,hugo]
-------------------------------------------------------------
-print "      Giustificato a sinistra"
-print "\_    Non giustificato a sinistra"
-------------------------------------------------------------
-
-[example,role="gametranscript"]
-================================================================================
-Giustificato a sinistra
-     Non      giustificato a sinistra
-================================================================================
-
-
-[source,hugo]
-------------------------------------------------------------
-print "Questa è una \
-riga singola."
-------------------------------------------------------------
-
-[example,role="gametranscript"]
-================================================================================
-    Questa è una riga    singola.
-================================================================================
-
-
-(Sebbene
-
-[source,hugo]
-------------------------------------------------------------
-print "Questa è una
-riga    singola."
-------------------------------------------------------------
-
-produca lo stesso risultato, visto che l'interruzione di riga avviene tra doppi apici).
-
-[NOTE]
-================================================================================
-queste combinazioni di caratteri di controllo sono valide solo in stampa; non vengono trattate in maniera letterale, come, ad esempio, le espressioni che coinvolgono le voci del dizionario.
-================================================================================
-
-Dopo ognuno dei comandi `print` indicati sopra, viene stampata una riga nuova.
-Per evitarlo è necessario aggiungere un punto e virgola (`;`) alla fine dell'istruzione `print`.
-
-[source,hugo]
-------------------------------------------------------------
-print "Questa è una ";
-print "singola      riga."
-------------------------------------------------------------
-
-[example,role="gametranscript"]
-================================================================================
-    Questa è una singola riga.
-================================================================================
-
-
-Le istruzioni `print` possono anche contenere dei tipi di dato, o una combinazione di tipi di dato e stringhe.
-Il comando
-
-[source,hugo]
-------------------------------------------------------------
-print "La "; object.name; " è    chiusa."
-------------------------------------------------------------
-
-stamperà la parola che si trova all'indirizzo del dizionario specificato da `object.name`, così se `object.name` punta alla parola "`scatola`", l'output risultante sarà:
-
-....................
-La scatola è chiusa.
-....................
-
-Per rendere maiuscola la prima lettera della parola specificata, si usa il modificatore '`capital`'.
-
-[source,hugo]
-------------------------------------------------------------
-print "La "; capital object.name; " è chiusa."
-------------------------------------------------------------
-
-[example,role="gametranscript"]
-================================================================================
-La Scatola è chiusa.
-================================================================================
-
-
-Per stampare il dato come un valore invece di indirizzare una voce di dizionario, si usa il modificatore '`number`'.
-Ad esempio, se la variabile `tempo` contiene il numero 5,
-
-[source,hugo]
-------------------------------------------------------------
-print "Restano ancora "; number tempo; " secondi."
-------------------------------------------------------------
-
-[example,role="gametranscript"]
-================================================================================
-Restano ancora 5 secondi.
-================================================================================
-
-
-Se non fosse stato usato '`number`', l'interprete avrebbe cercato di trovare una parola all'indirizzo 5 del dizionario, ed il risultato sarebbe stato una stampa errata.
-
-
-[NOTE]
-================================================================================
-Soprattutto per gli scopi del debug, il modificatore '`hex`' stampa il dato come un numero esadecimale invece di un numero decimale.
-Se la variabile `val` contiene 127,
-
-[source,hugo]
-----------------------------------------------------
-print number val; " è "; hex val; " in esadecimale."
-----------------------------------------------------
-
-[example,role="gametranscript"]
-===============================
-127 è 7F in esadecimale.
-===============================
-================================================================================
-
-
-Un secondo modo per stampare il testo è quello di prenderlo dalla memoria del testo (text bank), da dove -- se non c'è abbastanza memoria -- le sezioni di testo sono caricate dal disco solo quando è richiesto dal programma.
-Questo metodo è stato adottato così che lunghi blocchi di testo -- come le descrizioni e la narrazione -- non consumano spazio prezioso se la memoria è limitata.
-Il comando consiste semplicemente in una stringa tra doppi apici senza nessuna istruzione che la precede.
-
-[source,hugo]
-------------------------------------------------------------
-"Questa stringa verrà scritta sul disco."
-------------------------------------------------------------
-
-[example,role="gametranscript"]
-================================================================================
-    Questa stringa verrà scritta sul    disco.
-================================================================================
-
-
-o
-
-[source,hugo]
-------------------------------------------------------------
-"Così questa ";
-"ed anche questa."
-------------------------------------------------------------
-
-[example,role="gametranscript"]
-================================================================================
-    Così questa ed anche    questa.
-================================================================================
-
-
-Fate caso al fatto che un punto e virgola alla fine dell'istruzione continua ad evitare la stampa su una nuova riga.
-I caratteri di controllo nella stringa sono ancora utilizzabili con queste istruzioni di stampa, ma visto che ogni comando è una singola riga, i tipi di dato e gli altri modificatori non possono essere composti.
-Per questo
-
-// @TODO: Controlla, credo dovrebbe essere:
-//           "\"Salve,\" disse."
-//        Ma nell'originale inglese è proprio così!
-
-[source,hugo]
-------------------------------------------------------------
-"\"Salve,\"" disse."
-------------------------------------------------------------
-
-scriverà
-
-[example,role="gametranscript"]
-================================================================================
-"Salve," disse.
-================================================================================
-
-
-Nella memoria di testo del file `.HEX`, ma
-
-[source,hugo]
-------------------------------------------------------------
-"Restano ancora "; number tempo_rimasto; "    secondi."
-------------------------------------------------------------
-
-è illegale.
-
-Il colore del testo può essere cambiato usando il comando '`color`' (usabile anche secondo la sintassi Inglese "`colour`").
-Il formato è
-
-[source,hugo]
-------------------------------------------------------------
-color <primopiano>[, <sfondo>[, <colore      dell'input>]]
-------------------------------------------------------------
-
-dove il colore di sfondo non è obbligatorio.
-Se nessun colore di sfondo viene specificato, verrà usato quello corrente).
-
-Anche il colore dell'input non è obbligatorio -- specifica il colore usato per stampare i comandi del giocatore.
-
-Il set standard di colori con i valori corrispondenti ed i nomi delle costanti è:
-
-[cols="<d,>d,<m",options="header,autowidth"]
-|============================================================
-| COLORE  | VALORE  | COSTANTE
-
-| Nero           | 0  | BLACK
-| Blu            | 1  | BLUE
-| Verde          | 2  | GREEN
-| Ciano          | 3  | CYAN
-| Rosso          | 4  | RED
-| Magenta        | 5  | MAGENTA
-| Marrone        | 6  | BROWN
-| Bianco         | 7  | WHITE
-| Grigio scuro   | 8  | DARK_GRAY
-| Blu chiaro     | 9  | LIGHT_BLUE
-| Verde chiaro   | 10 | LIGHT_GREEN
-| Ciano chiaro   | 11 | LIGHT_CYAN
-| Rosso chiaro   | 12 | LIGHT_RED
-| Magenta chiaro | 13 | LIGHT_MAGENTA
-| Giallo         | 14 | YELLOW
-| Bianco brill.  | 15 | BRIGHT_WHITE
-3+|
-| Primo piano default            | 16 | DEF_FOREGROUND
-| Sfondo default                 | 17 | DEF_BACKGROUND
-| Primo piano statusline default | 18 | DEF_SL_FOREGROUND
-| Sfondo statusline default      | 19 | DEF_SL_BACKGROUND
-| Primo piano corr.              | 20 | MATCH_FOREGROUND
-|============================================================
-
-(Le costanti sono definite in `HUGOLIB.H`; quando si usa la libreria non è necessario riferirsi ai colori usando il loro valore numerico).
-
-Ci si aspetta che, a parte il sistema, ogni colore venga stampato differentemente dagli altri.
-Comunque la pratica suggerisce che il bianco (talvolta il bianco brillante) venga usato per la stampa del testo.
-Blu e nero vengono di solito usati per lo sfondo.
-
-Un testo magenta su uno sfondo ciano si ottiene con
-
-[source,hugo]
-------------------------------------------------------------
-color MAGENTA, CYAN
-------------------------------------------------------------
-
-o
-
-[source,hugo]
-------------------------------------------------------------
-color 5, 3 !Se non si usa HUGOLIB.H
-------------------------------------------------------------
-
-Una riga corrente può essere riempita -- con spazi bianchi del colore corrente -- fino ad una specifica colonna (sostanzialmente un tabulatore) usando la struttura "`print to...`" come segue:
-
-[source,hugo]
-------------------------------------------------------------
-print "Ora:"; to 40; "Data:"
-------------------------------------------------------------
-
-dove il valore che segue il '`to`' non deve essere superiore alla lunghezza massima della riga indicata dalla variabile globale dell'interprete `linelength`.
-
-L'output risultante è qualcosa del tipo:
-
-[example,role="gametranscript"]
-================================================================================
-Ora:                     Data:
-================================================================================
-
-
-Il testo può essere posizionato usando il comando '`locate`'
-
-[source,hugo]
-------------------------------------------------------------
-locate <colonna>, <riga>
-------------------------------------------------------------
-
-dove
-
-[source,hugo]
-------------------------------------------------------------
-locate 1, 1
-------------------------------------------------------------
-
-posiziona il testo in output all'angolo in alto a sinistra della finestra di testo corrente.
-Né `<colonna>` né `<riga>` devono superare i bordi della finestra corrente -- l'interprete le riduce automaticamente se necessario.
-
-== Altri caratteri di controllo
-
-Come indicato prima quelli che seguono sono dei caratteri di controllo validi che possono essere racchiusi in una stringa:
-
-
-[horizontal]
-`\"` :: doppi apici
-`\\` :: una barra inversa
-`\_` :: uno spazio forzato, ignorando l giustificazione a sinistra per il resto della stringa
-`\n` :: riga nuova
-
-Il prossimo insieme di caratteri definisce l'aspetto del testo impostando il grassetto, il corsivo, il proporzionale ed il sottolineato.
-Non tutti i computer e sistemi operativi sono in grado di fornire tutti i tipi di output; comunque l'interprete si occuperà di formattare in maniera corretta tutti i testi -- ad esempio, il testo stampato in maniera proporzionale apparirà corretto anche su un sistema con solo caratteri a spaziatura fissa, come l'MS-DOS (sebbene non verrà stampato con la spaziatura porporzionale).
-
-[horizontal]
-`\B` :: attiva il grassetto (*Bold*)
-`\b` :: disattiva il grassetto
-`\I` :: attiva il corsivo (_Italic_)
-`\i` :: disattiva il corsivo
-`\P` :: attiva la stampa proporzionale
-`\p` :: disattiva la stampa proporzionale
-`\U` :: attiva il sottolineato ([.underline]#Underline#)
-`\u` :: disattiva il sottolineato
-
-(Lo stile della stampa può anche essere modificato usando la routine `Font` di `HUGOLIB.H`.
-Le costanti di modifica dei caratteri possono essere combinate:
-
-[source,hugo]
-------------------------------------------------------------
-Font(BOLD_ON | ITALICS_ON | PROP_OFF)
-------------------------------------------------------------
-
-dove le costanti valide sono `BOLD_ON, BOLD_OFF, ITALICS_ON, ITALICS_OFF,    UNDERLINE_ON, UNDERLINE_OFF, PROP_ON,` e `PROP_OFF`).
-
-I caratteri speciali possono essere stampati attraverso i caratteri di controllo.
-Questi caratteri sono quelli compresi nel set di caratteri _Latin-1_; se un sistema non è in grado di visualizzarli, stamperà gli equivalenti ASCII. +
-(Gli esempi seguenti, tra parentesi, possono non essere visualizzati correttamente su tutti i computer e stampanti).
-
-
-[horizontal]
-`\\`  ::
-accento grave seguito da una lettera +
-es. `"\\`a"` stampa una 'a' con accento grave (à)
-
-`\'`  ::
-accento acuto seguito da una lettera +
-es. `"\´E"` stampa una 'E' con accento acuto (É)
-
-`\~`  ::
-tilde seguita da una lettera +
-es. `"\~n"` stampa una 'n' con una tilde (ñ)
-
-`\^`  ::
-accento circonflesso seguito da una lettera +
-es. `"\^u"` stampa una 'i' con accento circonflesso (î)
-
-`\:`  ::
-umlaut seguito da una lettera +
-es. `"\:u"` stampa una 'u' con umlaut (ü)
-
-`\,`  ::
-cedilla seguito da c o C +
- es. `"\,c"` stampa una 'c' con cedilla (ç)
-
-`\<` o `\>`  ::
-virgolette (« »)
-
-`\!`   ::
-punto esclamativo inverso (¡)
-
-`\?`   ::
-punto interrogativo inverso (¿)
-
-`\ae`  ::
-ae legate (æ)
-
-`\AE`  ::
-AE legate (Æ)
-
-`\c`   ::
-simbolo del centesimo (¢)
-
-`\L`   ::
-simbolo della lira (£)
-
-`\Y`   ::
-Yen Giapponese (¥)
-
-`\-`   ::
-linea (-)
-
-`\#xxx`  ::
-un qualunque carattere ASCII dove xxx è il codice ASCII a tre cifre del carattere che deve essere stampato +
-es. `"\#065"` stampa una 'A' (ASCII 65).
-
-
-=== Esempio: Mischiare gli stili del testo
-
-[source,hugo]
-------------------------------------------------------------
-! Routine di esempio che stampa diversi stili e colori
-
-#include "hugolib.h"
-
-routine PrintingSample
-{
-         print "Il testo pu\`o essere stampato
-        in \Bgrassetto\b,      \Icorsivo\i,
-             \Usottolineato\u, o
-             \Pproporzionale\p."
-
-    color RED ! o color 4
-    print "\nPronti. ";
-    color YELLOW ! color 14
-    print "Partenza. ";
-    color GREEN ! color 2
-    print "Via!"
-}
-------------------------------------------------------------
-
-L'output sarà:
-
-[example,role="gametranscript"]
-================================================================================
-Il testo può essere stampato in grassetto,      corsivo, sottolineato o `proporzionale`.
-Pronti. Partenza. Via!
-================================================================================
-
-
-con "`grassetto`", "`corsivo`", "`sottolineato`" e "`proporzionale`" stampati nel rispettivo stile. "`Pronti`", "`Partenza`" e "`Via!`" appariranno sulla stessa riga in tre colori differenti.
-
-Non tutti i computer sono in grado di stampare tutti gli stili.
-Le versioni base MS-DOS, ad esempio, usano i colori invece dei cambi di stile e non supportano la stampa proporzionale.
-
-== Operatori ed assegnazioni
-
-Hugo consente l'uso degli operatori matematici standard:
-
-
-[horizontal]
-`+`  :: addizione
-`-`  :: sottrazione
-`*`  :: moltiplicazione
-`/`  :: divisione intera
-
-I confronti sono operatori validi, restituendo vero o falso booleano (1 o 0) così che
-
-[source,hugo]
-------------------------------------------------------------
-2 + (x = 1)
-5 - (x >    1)
-------------------------------------------------------------
-
-valgono rispettivamente 3 e 5 se `x` è 1, e 2 e 4 se `x` è 2 o superiore.
-
-Operatori relazionali validi sono
-
-
-// @NOTE: {wj} prevents font-ligatures in `<=` and `>=`!
-[horizontal]
-`=`      :: uguale a
-`~=`     :: diverso
-`<`      :: minore di
-`>`      :: maggiore di
-`<{wj}=` :: minore o uguale
-`>{wj}=` :: maggiore o uguale
-
-Sono consentiti anche gli operatori logici (`and`, `or` e `not`).
-
-[source,hugo]
-------------------------------------------------------------
-(x and y) or (a and b)
-(j + 5) and not      ObjectIsLight(k)
-------------------------------------------------------------
-
-Usando `and` si ha _true_ (1) se entrambi i valori sono diversi da zero. +
-Usando `or` si ha _true_ se uno dei due non è zero. `not` vale _true_ solo se il valore seguente è zero.
-
-[source,hugo]
-------------------------------------------------------------
-1 and 1 = 1
-1 and 0 = 0
-5 and 3 =      1
-0 and 9 = 0
-0 and 169 and 1 = 0
-1      and 12 and 1233 = 1
-
-1 or 1 = 1
-35 or 0 = 1
-0 or 0 =      0
-
-not 0 = 1
-not 1 = 0
-not 8 = 0
-
-1 and 7 or (14 and not 0) = 1
-(0 or not 1) and 3 =      0
-------------------------------------------------------------
-
-Inoltre sono forniti anche gli operatori binari:
-
-// @FIXME: Not source. Use horiz.list.
-
-[source,hugo]
-------------------------------------------------------------
-`1 & 1 = 1` (`and` binario) +
-1 & 0      = 0
-`1 | 0 = 1` (`or` binario) +
-1 | 1 = 1
-`~0 = -1` (`not`/inversione binaria)
-------------------------------------------------------------
-
-(Una spiegazione dettagliata degli operatori binari è un po' oltre lo scopo di questo manuale; i programmatori potranno usare l'operatore '`|`' per combinare i parametri a mascheratura di bit per alcune funzioni della libreria come `font` e `list-formats`, ma solo gli utenti avanzati saranno in grado di usare gli operatori binari con ottimi risultati nella programmazione pratica).
-
-Qualunque tipo di dato di Hugo può comparire in una espressione, comprese le routine, attributi, proprietà, costanti e variabili.
-Nella valutazione delle espressioni vengono applicate le regole matematiche standard di precedenza negli operatori così che le espressioni tra parentesi vengono valutate prima, seguite da moltiplicazioni e divisioni, seguite da addizioni e sottrazioni.
-
-Alcune combinazioni di esempio sono:
-
-[source,hugo]
-------------------------------------------------------------
-10 +      object.size         ! costante      intera e proprietà
-object is openable + 1   ! test su      un attributo e costante
-FindLight(location) +a   !      valore di ritorno e variabile
-1 and object is      light    ! costante, test logico e    attributo
-------------------------------------------------------------
-
-Le espressioni possono essere valutate e assegnate sia ad una variabile che ad una proprietà.
-
-[source,hugo]
-------------------------------------------------------------
-<variabile> = <espressione>
-
-<oggetto>.<proprietà> [#<elemento>] =      <espressione>
-------------------------------------------------------------
-
-In alcuni casi il compilatore può consentire l'uso di un'istruzione la cui parte sinistra dell'assegnazione non è modificabile.
-Ad esempio
-
-[source,hugo]
-------------------------------------------------------------
-Funzione() = <espressione>
-------------------------------------------------------------
-
-o
-
-[source,hugo]
-------------------------------------------------------------
-<oggetto>.#<proprietà> =    <espressione>
-------------------------------------------------------------
-
-possono essere compilate, ma queste istruzioni generanno un errore di run-time nell'interprete.
-
-== Operatori efficienti
-
-[source,hugo]
-------------------------------------------------------------
-numero_di_oggetti = numero_di_oggetti + 1
-if      numero_di_oggetti > 10
-{
-         print "Troppi oggetti!"
-}
-------------------------------------------------------------
-
-può essere codificato in maniera più semplice
-
-[source,hugo]
-------------------------------------------------------------
-if ++numero_di_oggetti > 10
-{
-    print "Troppi oggetti!"
-}
-------------------------------------------------------------
-
-L'operatore '`++`' incrementa il valore della variabile seguente di uno prima di restituire il valore della stessa.
-Allo stesso modo si può far precedere una variabile da '`--`' per decrementarne il valore di uno prima di resituire il valore.
-Poiché questi operatori agiscono prima che il valore venga restituito vengono chiamati operatori di "`pre incremento`" e "`pre decremento`".
-
-Se '`++`' o '`--`' vengono DOPO una variabile, il valore della variabile viene restituito e poi il valore viene incrementato o decrementato.
-In questo caso si parla di operatori di "`post incremento`" e "`post decremento`".
-
-Ad esempio,
-
-[source,hugo]
-------------------------------------------------------------
-while ++i < 5 ! pre incremento
-{
-    print number i; " ";
-}
-------------------------------------------------------------
-
-stamperà:
-
-[example,role="gametranscript"]
-================================================================================
-1 2 3 4
-================================================================================
-
-
-Ma
-
-[source,hugo]
-------------------------------------------------------------
-while i++ < 5 ! post incremento
-{
-    print number i; " ";
-}
-------------------------------------------------------------
-
-stamperà:
-
-[example,role="gametranscript"]
-================================================================================
-1 2 3 4 5
-================================================================================
-
-
-Visto che nel primo esempio la variabile viene incrementata prima di leggerne il valore, mentre nel secondo è incrementata dopo la lettura.
-
-È anche possibile usare gli operatori '`+=`', '`-=`', '`*=`', '`/=`', '`&=`' e '`|=`'.
-Possono essere usati anche per modificare una variabile mentre il suo valore viene controllato.
-Questi operatori, comunque, agiscono prima che il valore venga restituito.
-
-[source,hugo]
-------------------------------------------------------------
-x = 5
-y = 10
-print "x = "; number      x*=y; ", y = "; number y
-------------------------------------------------------------
-
-Risultato:
-
-[example,role="gametranscript"]
-================================================================================
-x = 50, y = 10
-================================================================================
-
-
-Quando il compilatore interpreta una delle righe più sopra gli operatori efficienti hanno la precedenza rispetto a quelli normali (quelli a carattere singolo).
-
-Ad esempio,
-
-[source,hugo]
-------------------------------------------------------------
-x = y + ++zz
-------------------------------------------------------------
-
-viene compilato in
-
-[source,hugo]
-------------------------------------------------------------
-x = y++ + z
-------------------------------------------------------------
-
-visto che '`++`' viene interpretato prima.
-Per codificare correttamente questa riga con un pre incremento della variabile `z` invece di un post incremento di `y`:
-
-[source,hugo]
-------------------------------------------------------------
-x = y + (++z)
-------------------------------------------------------------
-
-== Array e stringhe
-
-Prima di questo paragrafo non si è parlato molto degli array. +
-Gli array sono un insieme di valori che condividono un nome comune, e dove gli elementi sono indicati tramite un numero.
-Gli array si definiscono con
-
-[source,hugo]
-------------------------------------------------------------
-array <nomearray> [<dimensione    array>]
-------------------------------------------------------------
-
-dove `<dimensione array>` deve essere una costante numerica.
-
-Una definizione di array riserva un blocco di memoria di `<dimensione    array>` parole a 16 bit, così che, ad esempio:
-
-[source,hugo]
-------------------------------------------------------------
-array prova_array[10]
-------------------------------------------------------------
-
-inizializza dieci parole a 16 bit per l'array.
-
-Bisogna tener presente che `<dimensione array>` determina la dimensione dell'array, *NON* il numero massimo di elementi.
-Il conteggio degli elementi comincia da 0, perciò `array_prova`, con 10 elementi, ha i membri numerati da 0 a 9.
-Cercando di accedere a `array_prova[10]` o superiore viene restituito un valore senza senso. (Cercando di assegnargli un valore si potrebbe avere la sovrascrittura di qualcosa di importante, come il successivo array).
-
-Per prevenire queste letture/scritture fuori dai limiti dell'array è possibile leggere la lunghezza di un array con:
-
-[source,hugo]
-------------------------------------------------------------
-array[]
-------------------------------------------------------------
-
-senza nessun elemento specificato.
-Usando l'esempio di prima,
-
-[source,hugo]
-------------------------------------------------------------
-print number array_prova[]
-------------------------------------------------------------
-
-ritorna "`10`".
-
-Gli elementi di un array possono essere assegnati più di uno alla volta, come in
-
-[source,hugo]
-------------------------------------------------------------
-<nomearray> = <elemento1>, <elemento2>,      ...
-------------------------------------------------------------
-
-dove `<elemento1>` e `<elemento2>` possono essere espressioni o valori singoli.
-
-Gli elementi non devono essere tutti dello stesso tipo, così che
-
-[source,hugo]
-------------------------------------------------------------
-array_prova[0] = (19+5)*x, "Salve!",    FindLight(location)
-------------------------------------------------------------
-
-è perfettamente legale (sebbene non sia, probabilmente, molto utile). +
-Più comune è un uso del tipo
-
-[source,hugo]
-------------------------------------------------------------
-nomi[0] = "Ned", "Sue", "Bob", "Maria"
-------------------------------------------------------------
-
-o
-
-[source,hugo]
-------------------------------------------------------------
-array_prova[2]) = 5, 4, 3, 2, 1
-------------------------------------------------------------
-
-L'array può essere usato con
-
-[source,hugo]
-------------------------------------------------------------
-print nomi[0]; " e "; nomi[3]
-------------------------------------------------------------
-
-[example,role="gametranscript"]
-================================================================================
-    Ned e Maria
-================================================================================
-
-
-o
-
-[source,hugo]
-------------------------------------------------------------
-b = array_prova[3] + array_prova[5]
-------------------------------------------------------------
-
-che imposta a variabile `b` a 4 + 2, o 6.
-
-Visto che lo spazio degli array viene allocato staticamente dal compilatore, tutti gli array vanno dichiarati a livello globale.
-Gli array locali sono illegali, così come lo sono array interi passati come paramentri.
-Comunque gli elementi singoli di un array sono parametri validi.
-
-È possibile passare l'indirizzo di un array come parametro, così che la routine possa accedere agli elementi dell'array tramire il modificatore '`array`'.
-Ad esempio, se elementi è un array che contiene:
-
-[source,hugo]
-------------------------------------------------------------
-elementi[0] = "mele"
-elementi[1] =      "arance"
-elementi[2] = "calzini"
-------------------------------------------------------------
-
-La routine:
-
-[source,hugo]
-------------------------------------------------------------
-routine Test(v)
-{
-    print array v[2]
-}
-------------------------------------------------------------
-
-può essere chiamata usando
-
-[source,hugo]
-------------------------------------------------------------
-Test(elementi)
-------------------------------------------------------------
-
-per produrre in output "`calzini`", sebbene `v` sia un parametro (cioè una variabile locale), e non un array.
-La riga "`print array v[2]`" dice all'inteprete di considerare `v` come un indirizzo di un array, non come un valore in sé.
-
-È possibile usare anche gli array di stringhe, e Hugo prevede un modo per memorizzare una voce di dizionario in un array come una serie di caratteri usando il comando '`string`':
-
-[source,hugo]
-------------------------------------------------------------
-string(<indirizzo array>, <voce diz.>, <max      lungh.>)
-------------------------------------------------------------
-
-(`<max lungh.>` è necessario perché l'inteprete non ha modo di sapere quali sono i limiti dell'array).
-
-Ad esempio,
-
-[source,hugo]
-------------------------------------------------------------
-string(a, word[1], 10)
-------------------------------------------------------------
-
-memorizzerà fino a 10 caratteri da `word[1]` in `a`.
-
-[NOTE]
-================================================================================
-Nell'esempio precedente ci si aspetta che `a` abbia almeno 11 elementi, visto che '`string`' memorizza un terminatore a 0 o carattere nullo dopo la stringa.
-================================================================================
-
-Ad esempio,
-
-[source,hugo]
-------------------------------------------------------------
-x = string(a, word[1], 10)
-------------------------------------------------------------
-
-memorizza fino a 10 caratteri di `word[1]` nell'array `a`, e restituisce la lunghezza della stringa memorizzata nella variabile `x`.
-
-(Le variabili dell'interprete '`parse$`' e '`serial$`' possono essere usate al posto delle voci di dizionario; vedere la sezione più avanti sulle "`ROUTINE DI CONGIUNZIONE: ParseError`" per una descrizione).
-
-Nella libreria sono definite le funzioni `StringCopy`, `StringEqual`, `StringLength` e `StringPrint`, che sono estremamente utili quando si usano gli array di stringhe.
-
-`StringCopy `copia un array di stringhe in un altro array.
-
-[source,hugo]
-------------------------------------------------------------
-StringCopy(<nuovo array>, <vecchio array>[,      <lungh.>])
-------------------------------------------------------------
-
-Ad esempio,
-
-[source,hugo]
-------------------------------------------------------------
-StringCopy(a, b)
-------------------------------------------------------------
-
-copia il contenuto di `b` in `a`, mentre
-
-[source,hugo]
-------------------------------------------------------------
-StringCopy(a, b, 5)
-------------------------------------------------------------
-
-copia solo fino a 5 caratteri di `b` in `a`.
-
-[source,hugo]
-------------------------------------------------------------
-x = StringEqual(<stringa1>, <stringa2>)
-x = StringCompare(<stringa1>,    <stringa2>)
-------------------------------------------------------------
-
-`StringEqual` restituisce _true_ solo se i due array di stringhe indicati sono identici. `StringCompare` restituisce 1 se `<stringa1>` è alfabeticamente più grande di `<stringa2>`, -1 se `<stringa1>` è inferiore di `<stringa2>`, e 0 se le due stringhe sono identiche.
-
-`StringLength` restituisce la lunghezza di un array di stringhe, come in:
-
-[source,hugo]
-------------------------------------------------------------
-lungh = StringLength(a)
-------------------------------------------------------------
-
-e `StringPrint` stampa un array di stringhe (od una parte).
-
-[source,hugo]
-------------------------------------------------------------
-StringPrint(<ind. array>[, <inizio>,      <fine>])
-------------------------------------------------------------
-
-Ad esempio, se contiene "`presto`",
-
-[source,hugo]
-------------------------------------------------------------
-StringPrint(a)
-------------------------------------------------------------
-
-stampa "`presto`", ma
-
-[source,hugo]
-------------------------------------------------------------
-StringPrint(a, 1, 4)
-------------------------------------------------------------
-
-stampa "`res`". (Il parametro `<inizio>` del primo esempio ha come valore predefinito 0, non 1 -- il primo elemento in un array è numerato 0).
-
-Un effetto collaterale interessante della possibilità di passare gli indirizzi degli array come parametri è che è possibile barare con l'indirizzo, così che, ad esempio,
-
-[source,hugo]
-------------------------------------------------------------
-StringCopy(a, b+2)
-------------------------------------------------------------
-
-copia `b` in `a`, cominciando dalla terza lettera di `b` (visto che la prima lettera di `b` è `b[0]`).
-
-Bisogna tenere a mente che gli array di stringhe e le voci del dizionario sono due animali completamente separati, e che confrontarli direttamente con `StringCompare` non è possibile.
-Cioè, mentre una voce di dizionario è un valore che rappresenta un indirizzo, un array di stringhe è una serie di valori ognuno dei quali rappresentante un carattere della stringa.
-
-La libreria fornisce la funzione seguente per risolvere:
-
-[source,hugo]
-------------------------------------------------------------
-StringDictCompare(<array>, <voce      dizionario>)
-------------------------------------------------------------
-
-che restituisce gli stessi valori (1, -1, 0) di `StringCompare`, a seconda del fatto che l'array di stringhe sia alfabeticamente superiore, inferiore o uguale alla voce di dizionario.
-
-(C'è un comando complementare a '`string`', la funzione '`dict`', che crea dinamicamente a runtime una nuova voce di dizionario.
-La sintassi è:
-
-[source,hugo]
-------------------------------------------------------------
-x = dict(<array>, <max lungh.>)
-x =      dict(parse$, <max lungh.>)
-------------------------------------------------------------
-
-dove i contenuti di `<array>` o `parse$` vengono scritti nel dizionario, per un massimo di `<max lungh.> `caratteri, e l'indirizzo della nuova parola viene restituito.
-
-Comunque visto che questo richiede di estendere la lunghezza della tabella del dizionario nel file del gioco, è necessario prevederlo durante la compilazione.
-Inserendo
-
-[source,hugo]
-------------------------------------------------------------
-$MAXDICTEXTEND=<numero>
-------------------------------------------------------------
-
-all'inizio del codice sorgente scriverà un buffer di `<numero>` byte vuoti alla fine del dizionario. +
-(`MAXDICTEXTEND` è 0 per default).
-
-L'estensione dinamica del dizionario è usata, soprattutto, in situazioni dove il giocatore deve essere in grado di, ad esempio, dare un nome ad un oggetto, e poi riferirsi a quell'oggetto con il nuovo nome.
-In questo caso, le nuove parole devono esistere nel dizionario, e devono essere scritte usando '`dict`'.
-Comunque, una linea guida per i programmatori è che dovrebbe esserci un limite al numero di nuove parole che il giocatore può creare, in modo che la lunghezza totale delle nuove voci non superi mai `<numero>`, tenendo a mente che la lunghezza di una voce di dizionario è pari al numero di caratteri più uno (il byte che rappresenta la lunghezza).
-In pratica la parola "`test`" richiede 5 byte.)
-
-=== Esempio: Usare le stringhe
-
-[source,hugo]
-------------------------------------------------------------
-#include "hugolib.h"
-
-array s1[32]
-array s2[10]
-array      s3[10]
-
-routine ProvaStringhe
-{
-         local a, lungh
-
-    a = "Questa è una stringa di prova."
-    lungh = string(s1, a, 35)
-    string(s2, "Mela", 9)
-    string(s3, "Pomodoro", 9)
-
-    print "a = \""; a; "\""
-    print "(Indirizzo dizionario: "; number a;      ")"
-    print "s1 contiene \""; StringPrint(s1);      "\""
-    print "(Indirizzo array: "; number      s1;
-    print ", lungh. = "; number lungh;      ")"
-    print "s2 \\`e \""; StringPrint(s2);
-    print "\", s3 \\`e \""; StringPrint(s3);      "\""
-
-    "\nStringCompare(s1, s2) = ";
-    print number StringCompare(s1, s2)
-    "StringCompare(s1, s3) = ";
-    print number StringCompare(s1, s2)
-}
-------------------------------------------------------------
-
-Il cui output sarà:
-
-[example,role="gametranscript"]
-================================================================================
-a = "Questa è una stringa di prova."
-(Indirizzo      dizionario: 1005)
-s1 contiene "Questa è una stringa di      prova."
-(Indirizzo array: 1637, lungh. = 30)
-s2      "Mela", s3 "Sedano"
-StringCompare(s1, s2) = 1
-StringCompare(s1, s3) =      -1
-================================================================================
-
-
-Come è evidente una voce di dizionario non deve necessariamente essere una parola singola; qualunque parte di un testo che può essere trattata come valore può essere inserita nella tabella del dizionario.
-
-L'argomento 35 nella prima chiamata alla funzione '`string`' consente di copiare fino a 35 caratteri di `a` in `s1`, ma visto che la lunghezza di `a` è di soli 30 caratteri, solo 31 valori (compreso lo 0 terminale) vengono copiati, e la lunghezza della stringa `s1` è restituita in `lungh`.
-
-Visto che "`M(ela)`" è alfabeticamente inferiore di "`Q(esta...)`", confrontando le due si ottiene -1.
-Come "`S(edano)`" è alfabeticamente superiore di "`Q(esta...)`" e `StringCompare` restituisce 1.
-
-== Compilazione condizionale e flusso del programma
-
-Il flusso del programma può essere controllato usando una varietà di costrutti, ognuno dei quali è costruito attorno ad un'espressione che valuta il falso [false] (zero) ed il non-falso (non-zero).
-
-La più semplice tra questi è l'istruzione '`if`' [se].
-
-[source,hugo]
-------------------------------------------------------------
-if <espressione>
-         {...blocco di codice condizionale...}
-------------------------------------------------------------
-
-// @TODO: Check where this admonition note should end exactly (more or less?)
-
-[NOTE]
-================================================================================
-Le parentesi graffe non sono necessarie se il blocco di codice è una riga singola.
-Inoltre il blocco di codice condizionale può cominciare (ed anche finire) sulla stessa riga dell'istruzione '`if`' a condizione che vengano usate le parentesi graffe.
-
-[source,hugo]
-------------------------------------------------------------
-if <espressione>
-         ...riga singola...
-
-if <espressione> {...blocco di codice    condizionale...}
-------------------------------------------------------------
-================================================================================
-
-Se le parentesi non venogno usate per una riga singola, il compilatore le inserisce automaticamente, sebbene una cura speciale deve essere tenuta quando si costruiscono blocchi di codice che nidificano diverse condizioni su singola riga.
-
-Mentre
-
-[source,hugo]
-------------------------------------------------------------
-if <espressione1>
-    if      <espressione2>
-             ...blocco di codice condizionale...
-------------------------------------------------------------
-
-può essere interpretata in maniera corretta,
-
-[source,hugo]
-------------------------------------------------------------
-if <espressione1>
-    for      (...<espressione2>...)
-        if      <espressione3>
-                 ...blocco di codice condizionale...
-------------------------------------------------------------
-
-non lo sarà.
-
-(Tecnicamente parlando, il compilatore sbaglierà nell'individuazione della fine del ciclo del costrutto '`for`' visto che il blocco di codice condizionale al suo interno si aspetta di finire con l'espressione '`for`'.
-Ad ogni ciclo l'espressione '`for`' non differenzia correttamente la fine del ciclo condizionale.
-Il risultato potrebbe essere un overflow dello stack dell'interprete perché l'interprete nidificherà continuamente l'esecuzione di cicli '`for`' ricorsivi fino a che non finirà lo spazio sullo stack).
-
-Il modo corretto di strutturare la stessa sezione di codice dovrebbe essere:
-
-[source,hugo]
-------------------------------------------------------------
-if <espressione1>
-{
-    for (...<espressione2>...)
-    {
-        if      <espressione3>
-                 ...blocco di codice condizionale...
-    }
-}
-------------------------------------------------------------
-
-[NOTE]
-================================================================================
-Il consiglio è quello di usare le parentesi graffe per chiarificare la struttura del codice ogni volta che si usano costrutti così complessi.
-Questo deve essere applicato in maniera particolare quando si mischiano espressioni '`if`', '`for`', '`while`' e '`do-while`', specialmente quando sono coinvolte chiamate ricorsive a funzioni.
-Sebbene il risultato possa apparire come voluto, il metodo per ottenerlo è scorretto, ed ogni esecuzione di tale costrutto potrebbe mandare in errore lo stack.
-================================================================================
-
-Usi più elaborati di '`if`' coinvolgono l'uso di '`elseif`' [altrimenti-se] ed '`else`' [altrimenti].
-
-[source,hugo]
-------------------------------------------------------------
-if <espressione1>
-         ...primo blocco di codice condizionale...
-elseif      <espressione2>
-    ...secondo blocco di      codice condizionale...
-elseif <espressione2>
-    ...terzo blocco di codice condizionale...
-...
-else
-    ...blocco di      codice di default...
-------------------------------------------------------------
-
-In questo caso l'interprete valuta ciascuna espressione fino a che trova quella vera ed allora la esegue.
-Poi il controllo passa alla prossima istruzione non `if`/`elseif`/`else` che segue il costrutto condizionale.
-Se nessuna espressione vera è stata trovata, il blocco di codice di default viene eseguito.
-Se, ad esempio, `<espressione1>` genera un valore non falso, allora nessuna delle espressioni seguenti viene valutata.
-
-Naturalmente, non tutte e tre ('`if`', '`elseif`' e '`else`') devono essere usate tutte le volte, e combinazioni semplici di "`if-elseif`" e "`if-else`" sono perfettamente valide.
-
-In alcuni casi, l'istruzione '`if`' potrebbe non andar bene per la chiarezza, ed il costrutto "`select-case`" [seleziona-caso] potrebbe essere più appropriato.
-La forma generale è:
-
-[source,hugo]
-------------------------------------------------------------
-select <var>
-    case      <valore1>[, <valore2>, ...]
-        ...primo blocco di codice      condizionale...
-    case <valore3>[,      <valore4>, ...]
-        ...secondo blocco di      codice condizionale...
-    ...
-    case else
-        ...blocco di codice di      default...
-------------------------------------------------------------
-
-In questo caso l'interprete esegue rapidamente una valutazione che è, essenzialmente
-
-[source,hugo]
-------------------------------------------------------------
-if <var> = <valore1> [or <var> =      <valore2> ...]
-------------------------------------------------------------
-
-Non ci sono limiti al numero di valori (separati da virgole) che possono apparire su una riga che segue il '`case`'.
-Si applicano le stesse regole della '`if`' per racchiudere i blocchi di codice su più righe tra parentesi graffe (così per tutti gli altri tipi di blocchi condizionali).
-
-[NOTE]
-================================================================================
-I `case` non proseguono al successivo `case`.
-Bisogna pensare ai `case` che seguono il primo come a delle '`elseif`' piuttosto che delle '`if`'; una volta che un `case` a vero viene trovato, i seguenti sono ignorati.
-================================================================================
-
-I cicli possono essere codificati usando '`while`' [mentre] e "`do-while`" [fai-mentre].
-
-[source,hugo]
-------------------------------------------------------------
-while <espressione>
-         ...blocco di codice condizionale...
-
-do
-    ...blocco di codice      condizionale...
-while    <espressione>
-------------------------------------------------------------
-
-Entrambi eseguono il blocco di codice condizionale mentre `<espressione>` è vera (_true_).
-Si presume che in qualche modo il blocco di codice alteri l'`<espressione>` così che ad un certo punto diventa falsa (_false_); altrimenti il ciclo viene eseguito senza fine.
-
-[source,hugo]
-------------------------------------------------------------
-while x <= 10
-    x = x +      1
-
-do
-    {x = x + 1
-    print "x vale "; number x}
-while x      <= 10
-------------------------------------------------------------
-
-L'unica differenza tra i due è che se `<espressione>` è falsa dall'esterno, il blocco di codice '`while`' non viene eseguito.
-Il blocco di codice "`do-while`" viene eseguito almeno una volta anche se `<espressione>` è falsa dall'esterno.
-
-Il ciclo più complesso usa l'istruzione '`for`' [per].
-
-[source,hugo]
-------------------------------------------------------------
-for (<assegnazione>; <espressione>;      <modificatore>)
-    ...blocco di codice      condizionale...
-------------------------------------------------------------
-
-Ad esempio:
-
-[source,hugo]
-------------------------------------------------------------
-for (i=1; i<=15; i=i+1)
-         print "i vale"; number i
-------------------------------------------------------------
-
-Prima di tutto l'interprete esegue l'assegnazione "`i = 1`". +
-Poi esegue l'istruzione `print`.
-Successivamente controlla se l'espressione vale _true_ [vero] (se `i` è minore od uguale a 15).
-In questo caso esegue l'istruzione `print` e l'assegnazione del modificatore che incrementa `i`.
-Continua il ciclo fino a quando l'espressione vale _false_ [falso].
-
-Non tutti gli elementi del costrutto '`for`' sono necessari.
-Ad esempio l'assegnazione può essere omessa, come in
-
-[source,hugo]
-------------------------------------------------------------
-for (; i<=15; i=i+1)
-------------------------------------------------------------
-
-e l'interprete userà il valore esistente di `i`.
-
-Con
-
-[source,hugo]
-------------------------------------------------------------
-for (i=1;;i=i+1)
-------------------------------------------------------------
-
-Il ciclo viene eseguito senza fine, a meno che qualche altro mezzo di uscita viene fornito.
-
-L'espressione del modificatore non deve per forza essere un'espressione. +
-Potrebbe essere, ad esempio, una routine che modifica una variabile globale, che viene controllata nel ciclo '`for`'.
-
-(Un secondo formato del ciclo '`for`' è:
-
-[source,hugo]
-------------------------------------------------------------
-for <var> in <oggetto>
-    ...blocco di codice    condizionale...
-------------------------------------------------------------
-
-che cicla attraverso tutti i figli di `<oggetto>` (se ne ha), impostando la variabile `<var>` con il numero dell'oggetto di ogni figlio in sequenza, così che
-
-[source,hugo]
-------------------------------------------------------------
-for i in valigia
-    print      i.name
-------------------------------------------------------------
-
-stampa i nomi di tutti gli oggetti presenti nell'oggetto `valigia`).
-
-Il modo più semplice di visualizzare la prima forma di un ciclo '`for`' di Hugo, è che
-
-[source,hugo]
-------------------------------------------------------------
-for (<assegnazione>; <espressione>;      <modificatore>)
-    ...blocco di codice      condizionale...
-------------------------------------------------------------
-
-si traduce nell'equivalente di
-
-[source,hugo]
-------------------------------------------------------------
-<assegnazione>
-[while]      <espressione>
-{
-    ...blocco      di codice condizionale...
-         <modificatore>
-}
-------------------------------------------------------------
-
-che a turno si traduce nell'equivalente di
-
-[source,hugo]
-------------------------------------------------------------
-<assegnazione>
-:<etichetta1>
-[if] <espressione>
-{
-    ...blocco di codice condizionale...
-    <modificatore>
-    jump <etichetta1>
-}
-------------------------------------------------------------
-
-(D'altra parte questo non è un modo particolarmente facile di visualizzare qualunque cosa, e nella sua debolezza, forse giustifica l'esistenza di cicli '`while`', "`do-while`" e '`for`' non minacciosi).
-
-La conoscenza di come Hugo spezzi in una serie di nodi '`if`' e '`jump`' le istruzioni di ciclo comporta una facilità nell'analisi del flusso del programma usando Hugo Debugger (si veda l'Appendice E).
-
-Come risulta ovvio dall'illustrazione fatta sopra (forse confusamente), Hugo supporta i comandi '`jump`' [salta] e le etichette.
-Un'etichetta è semplicemente un identificatore specificato dall'utente preceduto dai due punti (`:`) all'inizio di una riga.
-Il nome dell'etichetta deve avere un identificatore univoco all'interno del programma. (Bisogna avere una certa cura nell'utilizzo dell'istruzione '`jump`' -- generalmente è molto meglio usare delle alternative, visto che esiste la possibilità di sovraccaricare lo stack dell'interprete quando non si usano costruttori di clici standard).
-
-È anche importante riconoscere -- particolarmente con le istruzioni '`select`' e '`while`' o "`do-while`" -- che l'espressione viene valutata tutte le volte che il ciclo viene eseguito, o, nel caso dell'istruzione '`select`', per ogni case corrispondente.
-Il significato di questo è evidente nell'esempio seguente
-
-[source,hugo]
-------------------------------------------------------------
-select test.prop_routine
-         case 1
-        {...}
-    case 2
-        {...}
-    case 3
-        {...}
-------------------------------------------------------------
-
-dove `prop_routine` restituisce un valore da 1 a 3.
-La routine proprietà verrà eseguita per 3 volte distinte, una per ogni istruzione '`case`'.
-Se `prop_routine` ha qualche altro effetto, come la modifica di una variabile globale o la stampa di un output, allora questo avverrà per 3 volte.
-
-Se questo effetto non è accettabile si può provare con
-
-[source,hugo]
-------------------------------------------------------------
-local test_val ! imposta una variabile locale
-test_val = test.prop_routine ! e le assegna un valore
-select test_val
-    case 1
-        {...}
-    ...
-------------------------------------------------------------
-
-così che `test.prop_routine` viene chiamata una sola volta.
-
-Un caso simile potrebbe essere
-
-[source,hugo]
-------------------------------------------------------------
-select random(3)
-    case 1:      {...}
-    case 2: {...}
-    case 3: {...}
-------------------------------------------------------------
-
-si potrebbe avere qualcosa tipo:
-
-[source,hugo]
-------------------------------------------------------------
-if random(3) = 1: {...}
-elseif random(3) = 2:      {...}
-elseif random(3) = 3: {...}
-------------------------------------------------------------
-
-In altre parole un valore casuale differente potrebbe essere valutato tutte le volte.
-Una scelta migliore sarebbe
-
-[source,hugo]
-------------------------------------------------------------
-local b
-b = random(3)
-select      b
-    case 1: {...}
-    ...
-------------------------------------------------------------
-
-Una parola chiave finale è importante nel flusso di un programma, e questa è '`break`'.
-In qualunque punto di un ciclo potrebbe essere necessario uscirne immediatamente (e forse prematuramente). '`break`' passa il controllo all'istruzione che segue il ciclo attuale.
-
-Nell'esempio
-
-[source,hugo]
-------------------------------------------------------------
-do
-{
-    while      <espressione2>
-    {
-        ...
-        if      <espressione3>
-                 break
-        ...
-    }
-    ...
-}
-while    <espressione1>
-------------------------------------------------------------
-
-l'istruzione '`break`' causa la terminazione del ciclo '`while`' `<espressione2>`, anche se `<espressione2>` è vera.
-Comunque il ciclo "`do-while`" `<espressione1>` continua ad essere eseguito.
-
-È stato detto prima che le righe che terminano con '`and`' o '`or`' continuano alla riga successiva nel caso di lunghe espressioni condizionali.
-Una seconda utile funzionalità è la capacità di usare una virgola per separare le opzioni in una espressione condizionale.
-Con il risultato che
-
-[source,hugo]
-------------------------------------------------------------
-if parola[1] = "uno", "due", "tre"
-while      oggetto is open, not locked
-if scatola not in salotto,      garage
-if a~=1, 2, 3
-------------------------------------------------------------
-
-sono tradotte in
-
-[source,hugo]
-------------------------------------------------------------
-if parola[1]="uno" or parola[1]="due" or      parola[1]="tre"
-while oggetto is open and oggetto is not      locked
-if scatola not in salotto and scatola non in garage
-if a ~= 1 and a ~= 2 and a ~= 3
-------------------------------------------------------------
-
-Fate caso al fatto che con confronto '`=`' o '`in`', una virgola corrisponde ad un confronto in '`or`'.
-Con '`~=`' od un confronto di un attributo, il risultato è un confronto in '`and`'.
-
-= ROUTINE ED EVENTI
-
-== Routine
-
-Le routine sono dei blocchi di codice che possono essere chiamati in ogni punto del programma.
-Una routine può, o meno, restituire un valore, e può, o meno, richiedere una lista di parametri (o argomenti). +
-(Un certo numero di routine è stato incontrato negli esempi precedenti, ma qui c'è la spiegazione formale).
-
-Una routine viene definita come
-
-[source,hugo]
-------------------------------------------------------------
-routine <nomeroutine> [(<argomento1>,      <argomento2>, ...)]
-{
-         ...
-}
-------------------------------------------------------------
-
-ancora una volta è necessario assicurarsi del fatto che la parentesi graffa aperta ('`{`') compaia su una riga nuova dopo l'istruzione '`routine`'.
-
-(_NOTA_: Per sostituire una vecchia routine con una nuova con lo stesso nome (come in un file di libreria), si definisce la nuova usando '`replace`' invece di '`routine`'.
-
-[source,hugo]
-------------------------------------------------------------
-replace <nomeroutine> [(<argomento1>,      <argomento2>, ...)]
-------------------------------------------------------------
-
-Ad esempio
-
-[source,hugo]
-------------------------------------------------------------
-routine RoutineProva(ogg)
-{
-    print "La "; ogg.name; " ha una dimensione di      ";
-    print ogg.size; "."
-    return ogg.size
-}
-------------------------------------------------------------
-
-prende un valore come argomento, lo assegna ad una variabile locale `ogg`, esegue una semplice sequenza di stampa e restituisce il valore della proprietà: `ogg.size`.
-La parola chiave '`return`' esce dalla routine corrente, e restituisce un valore se specificato.
-
-Sia
-
-[source,hugo]
-------------------------------------------------------------
-return
-------------------------------------------------------------
-
-che
-
-[source,hugo]
-------------------------------------------------------------
-return <espressione>
-------------------------------------------------------------
-
-sono validi.
-Se non viene fornita nessuna espressione, la routine restituisce 0.
-Se nessuna istruzione '`return`' viene incontrata, la routine prosegue l'esecuzione fino alla parentesi graffa chiusa ('`}`') e poi restituisce 0.
-
-`RoutineProva` può essere chiamata in diversi modi:
-
-[source,hugo]
-------------------------------------------------------------
-RoutineProva(valigia)
-------------------------------------------------------------
-
-stamperà (assumendo che l'oggetto `valigia` sia stato definito come in precedenza)
-
-[example,role="gametranscript"]
-================================================================================
-"La grande valigia verde ha una dimensione di    25."
-================================================================================
-
-
-Il valore di ritorno verrà ignorato.
-D'altra parte,
-
-[source,hugo]
-------------------------------------------------------------
-x = RoutineProva(valigia)
-------------------------------------------------------------
-
-stamperà lo stesso output, ma assegnerà il valore di ritorno di `RoutineProva` alla variabile `x`.
-
-Diversamente dal C e da linguaggi simili, Hugo non richiede che una routine segua un prototipo specifico.
-Perciò sia
-
-[source,hugo]
-------------------------------------------------------------
-RoutineProva
-------------------------------------------------------------
-
-che
-
-[source,hugo]
-------------------------------------------------------------
-RoutineProva(valigia, 5)
-------------------------------------------------------------
-
-sono chiamate valide per la routine.
-
-Nel primo caso l'argomento `ogg` assume di default il valore 0, visto che nessun valore è stato passato.
-Le parentesi non sono necessarie se non vengono passati dei parametri.
-Nel secondo caso il valore 5 viene passato a `RoutineProva`, ma viene ignorato.
-
-Gli argomenti sono sempre passati per valore, non per riferimento o indirizzo.
-Una variabile locale in una routine non può essere modificata da un'altra routine.
-Questo significa che, ad esempio, nelle routine seguenti:
-
-[source,hugo]
-------------------------------------------------------------
-routine RoutineProva
-{
-    local a
-
-    a = 5
-         Raddoppia(a)
-    print number a
-}
-
-routine Raddoppia(a)
-{
-    a      = a * 2
-}
-------------------------------------------------------------
-
-Chiamando `RoutineProva` verrà stampato "`5`" e non "`10`" perché la variabile locale `a` in `Raddoppia` è solo una copia della variabile che le è stata passata come argomento.
-
-Queste due routine dovrebbero, d'altra parte, stampare "`10`":
-
-[source,hugo]
-------------------------------------------------------------
-routine RoutineProva
-{
-    local a
-
-    a = 5
-    a =      Raddoppia(a)
-    print number a
-}
-
-routine Raddoppia(a)
-{
-         return a * 2
-}
-------------------------------------------------------------
-
-Alla variabile locale `a` di `RoutineProva` viene assegnato il valore di ritorno di `Raddoppia`.
-
-Un effetto collaterale interessante di un valore di ritorno nullo (0) può essere visto usando il comando '`print`'.
-Considerando la routine `The` di `HUGOLIB.H`, che stampa l'articolo di un oggetto (ad es., "`la`" se appropriato), seguito dalla proprietà `name` [nome] dell'oggetto.
-
-[source,hugo]
-------------------------------------------------------------
-print "Apri "; The(oggetto); "."
-------------------------------------------------------------
-
-potrebbe stampare
-
-[example,role="gametranscript"]
-================================================================================
-Apri la valigia.
-================================================================================
-
-
-Notate che il comando '`print`' stampa solo
-
-[example,role="gametranscript"]
-================================================================================
-"Apri "
-================================================================================
-
-
-e
-
-[example,role="gametranscript"]
-================================================================================
-"."
-================================================================================
-
-
-È la routine `The` che stampa
-
-[example,role="gametranscript"]
-================================================================================
-la valigia
-================================================================================
-
-
-Visto che `The` restituisce 0 (la stringa nulla, o `""`), il comando '`print`' in realtà visualizza
-
-[source,hugo]
-------------------------------------------------------------
-"Apri "`, `""`, e `"."
-------------------------------------------------------------
-
-dove la stringa nulla (`""`) è preceduta sulla riga di output dalla stampa di `"la    "` e del nome dell'oggetto da parte di `The`.
-
-== Routine proprietà
-
-Le routine proprietà sono decisamente più complicate di quelle descritte fino ad ora, ma seguono le stesse regole base.
-Normalmente una routine proprietà viene eseguita quando il programma cerca di leggere il valore di una proprietà che contiene una routine.
-
-Cioè, invece di
-
-[source,hugo]
-------------------------------------------------------------
-size 10
-------------------------------------------------------------
-
-un oggetto può contenere la proprietà
-
-[source,hugo]
-------------------------------------------------------------
-size
-{
-    return x      + 5
-}
-------------------------------------------------------------
-
-Cercando di leggere `oggetto.size` in entrambi i casi restituirà un valore intero.
-
-Ecco un altro esempio.
-Normalmente se `<oggetto>` è la stanza corrente, allora `<oggetto>.n_to` dovrebbe contenere il numero della stanza a nord.
-La libreria controlla `<oggetto>.n_to` per vedere se esiste un valore; se non ce ne sono, allora lo spostamento non è valido.
-
-Considerate questo:
-
-[source,hugo]
-------------------------------------------------------------
-n_to ufficio
-------------------------------------------------------------
-
-e
-
-[source,hugo]
-------------------------------------------------------------
-n_to
-    {"La porta dell'ufficio      è chiusa."}
-------------------------------------------------------------
-
-o
-
-[source,hugo]
-------------------------------------------------------------
-n_to
-{
-    "La      porta dell'ufficio è chiusa. ";
-    return      false
-}
-------------------------------------------------------------
-
-Nel primo caso se il giocatore (`player`) cerca di andare a nord si avrà che `parent(player)` verrà cambiato con l'oggetto `ufficio`.
-Nel secondo caso un messaggio personalizzato di mossa non valida verrà visualizzato.
-Nel terzo caso, il messaggio personalizzato di mossa non valida verrà visualizzato, ma poi la libreria continuerà come se non avesse trovato una proprietà `n_to` per `<oggetto>`, e stamperà il messaggio standard di mossa non valida (senza andare a riga nuova, grazie al punto e virgola):
-
-[example,role="gametranscript"]
-================================================================================
-"La porta dell'ufficio è chiusa. You can't go that    way."
-================================================================================
-
-
-[NOTE]
-================================================================================
-Mentre le routine normali resituiscono _false_ (o 0) per default, le routine proprietà restituiscono _true_ (o 1) per default.
-================================================================================
-
-(Per quelli che si stanno domandando come mai il valore di ritorno _true_ nel secondo caso non cerchi di effettuare uno spostamento all'oggetto numero 1, la routine `DoGo` della libreria assume che non ci sarà mai un oggetto stanza col numero uno.)
-
-Le routine proprietà possono essere eseguite direttamente usando il comando '`run`' [esegui]:
-
-[source,hugo]
-------------------------------------------------------------
-run <oggetto>.<proprietà>
-------------------------------------------------------------
-
-Se `<oggetto>` non ha `<proprietà>`, o se `<oggetto>.<proprietà>` non è una routine, allora non accade nulla. +
-Altrimenti la routine proprietà viene eseguita.
-Le routine proprietà non accettano argomenti.
-
-Ricordate che in qualunque punto del programma, una proprietà può essere modificata usando
-
-[source,hugo]
-------------------------------------------------------------
-<oggetto>.<proprietà> =    <valore>
-------------------------------------------------------------
-
-Una routine proprietà può essere cambiata usando
-
-[source,hugo]
-------------------------------------------------------------
-<oggetto>.<proprietà> =
-{
-    ...
-}
-------------------------------------------------------------
-
-dove la nuova routine deve essere racchiusa tra parentesi graffe.
-
-È anche possibile cambiare quella che prima era una routine proprietà in un valore semplice, o vice versa, facendo in modo che lo spazio per la routine (ed il numero di elementi richiesti) venga fornito nella definizione originale dell'oggetto.
-Anche se una routine proprietà deve essere assegnata più tardi nel programma, la proprietà in senso stretto deve essere definita per l'esterno nella definizione originale dell'oggetto.
-Un semplice
-
-[source,hugo]
-------------------------------------------------------------
-<proprietà> 0
-------------------------------------------------------------
-
-o
-
-[source,hugo]
-------------------------------------------------------------
-<proprietà> {return false}
-------------------------------------------------------------
-
-è sufficiente.
-
-C'è, comunque, un problema in queste riassegnazioni di valori di proprietà a routine e vice versa.
-Ad una routine proprietà viene data una "`__lunghezza__`" di una parola a 16 bit, che è l'indirizzo della proprietà.
-Quando si assegna un valore, od un insieme di valori, ad una routine proprietà, l'interprete si comporta come se la proprietà fosse stata originariamente definita per questo oggetto con solo una parola di dati, visto che non ha modo di sapere la lunghezza originale dei dati della proprietà.
-
-Ad esempio, se la specificazione originale della proprietà nella definizione dell'oggetto era:
-
-[source,hugo]
-------------------------------------------------------------
-found_in cameradaletto, salotto, garage
-------------------------------------------------------------
-
-e ad un certo punto venisse eseguito:
-
-[source,hugo]
-------------------------------------------------------------
-found_in = {return scantinato}
-------------------------------------------------------------
-
-allora l'istruzione seguente non potrebbe funzionare:
-
-[source,hugo]
-------------------------------------------------------------
-found_in #3 = attico
-------------------------------------------------------------
-
-visto che l'interprete ora crede che `<oggetto>.found_in` abbia solo una parola a 16 bit di dati -- un indirizzo di routine -- assegnata.
-
-Infine tenete a mente che ogni volta che viene chiamata una routine proprietà, la variabile globale `self` viene normalmente impostata con il numero dell'oggetto.
-Per evitarlo, come quando si "`__prende__`" una proprietà da un altro oggetto dall'interno di un oggetto differente, bisogna referenziare la proprietà tramite
-
-[source,hugo]
-------------------------------------------------------------
-<oggetto>..<proprietà>
-------------------------------------------------------------
-
-usando '`..`' invece del normale operatore.
-
-=== Esempio: "`Prendere a prestito`" le Routine Proprietà
-
-Consideriamo una situazione nella quale una classe fornisce una particolare routine proprietà.
-Normalmente quella routine viene ereditata da tutti gli oggetti definiti usando quella classe.
-Ma potrebbe presentarsi una situazione in cui uno di questi oggetti deve avere una variazione od un'espansione della routine originale.
-
-[source,hugo]
-------------------------------------------------------------
-class cibo
-{
-         morsi_rimasti 5
-    mangiare
-    {
-        self.morsi_rimasti =      self.morsi_rimasti - 1
-        if self.morsi_rimasti =      0
-                 remove self ! tutto mangiato
-    }
-}
-
-cibo alimento_naturale
-{
-         mangiare
-    {
-        actor.salute =      actor.salute + 1
-        run      cibo..mangiare
-    }
-}
-------------------------------------------------------------
-
-(Presupponendo che `morsi_rimasti`, `mangiare`, e `salute` siano definiti come proprietà, con `mangiare` che viene chiamata tutte le volte che un oggetto `cibo` viene mangiato).
-
-In questo caso sarebbe stato scomodo dover riscrivere la routine `cibo.mangiare` per l'oggetto `alimento_naturale` solo perché quest'ultimo deve anche incrementare `actor.salute`.
-Usando '`..`' si chiama `cibo.mangiare` con `self` impostata a `alimento_naturale`, non la classe `cibo`, così che `cibo.mangiare` riguarda `alimento_naturale`.
-Questo consente di apportare delle modifiche ad ogni proprietà, attributo, o routine proprietà in una classe, e quella modifica verrà ripetuta in tutti gli oggetti costruiti da quella classe.
-
-== Le routine Before e After
-
-Il compilatore di Hugo ha due proprietà predefinite: `before` [prima] e `after` [dopo].
-Sono uniche nel senso che non solo sono sempre routine, ma sono anche molto più complesse (e versatili) di una routine proprietà standard.
-
-Proprietà complesse come `before` e `after` vengono definite con
-
-[source,hugo]
-------------------------------------------------------------
-property <nome proprietà> $complex <valore      default>
-------------------------------------------------------------
-
-come in:
-
-[source,hugo]
-------------------------------------------------------------
-property before $complex
-property after      $complex
-------------------------------------------------------------
-
-Questa è la sintassi della proprietà `before`:
-
-[source,hugo]
-------------------------------------------------------------
-before
-{
-         <uso1> <routineverbo1>[, <routineverbo2>,...]
-    {
-        ...
-    }
-    <uso2>      <routineverbo3>[, <routineverbo4>,...]
-    {
-        ...
-    }
-    ...
-}
-------------------------------------------------------------
-
-(La routine `after` è uguale, basta sostituire '`after`' a '`before`').
-
-Lo specificatore `<uso>` è il valore con il quale l'oggetto specificato viene comparato.
-Più comunemente, è "`object`", "`xobject`", "`location`", "`actor`", "`parent(object)`", ecc.
-La `<routineverbo>` è il nome della routine verbo a cui l'uso in questione viene applicato.
-
-Se `<oggetto>.before` viene controllata, con la variabile globale `verbroutine` impostata con una delle routine verbo specificate nella proprietà `before`, e `<uso>` in quell'instanza è "`object`", allora il blocco di codice seguente viene eseguito.
-Se non viene trovata nessuna corrispondenza, `<oggetto>.before` restituisce _false_ [falso].
-
-Questo è un esempio più chiaro che usa l'oggetto `valigia` che stiamo sviluppando:
-
-[source,hugo]
-------------------------------------------------------------
-before
-{
-    object      DoEat
-    {
-        "Non puoi mangiare la      valigia!"
-    }
-}
-
-after
-{
-    object      DoGet
-    {
-        "Con grande sforzo      raccogli la valigia."
-    }
-    xobject DoPutIn
-         {
-        "Hai messo ";
-        The(object)
-        " nella valigia."
-    }
-}
-------------------------------------------------------------
-
-Ognuno di questi esempi restituisce _true_, scavalcando quindi l'operazione di default dell'interprete (controllate la sezione sul "`Ciclo del gioco`").
-Il modo di ingannare l'interprete per farlo continuare normalmente, come se non fossero state trovate proprietà `before` o `after`, è quello di restituire _false_ dalla routine proprietà.
-
-[source,hugo]
-------------------------------------------------------------
-after
-{
-    object      DoGet
-    {"Bene. ";
-    return false}
-}
-------------------------------------------------------------
-
-avrà come risultato:
-
-[example,role="gametranscript"]
-================================================================================
->get valigia
-Bene.    Taken.
-================================================================================
-
-
-Visto che la routine `after` restituisce _false_, e che la risposta predefinita della libreria per una chiamata a `DoGet` che ha avuto successo è "`Taken`." [Preso].
-
-È importante ricordare che, a differenza delle altre routine, `before` e `after` sono routine "`__aggiuntive__`"; cioè, una routine `before` (o `after`) definita in una classe ereditata o un oggetto non viene sovrascritta da una nuova routine proprietà nel nuovo oggetto.
-Invece la definizione della nuova routine viene -- in sostanza -- aggiunta.
-Una proprietà aggiuntiva viene definita usando il qualificatore '`$additive`', come in:
-
-[source,hugo]
-------------------------------------------------------------
-property <nome proprietà> $additive <valore      default>
-------------------------------------------------------------
-
-Tutte le subroutine `before/after` precedenti vengono sovrapposte.
-Il processo di esame di una proprietà `before/after` comincia con l'oggetto presente, andando indietro attraverso i parenti dell'oggetto fino a che viene trovata una combinazione `uso/routineverbo` valida; una volta che la corrispondenza è stata trovata, nessun'altra classe precedente nell'ereditarietà viene processata (a meno che la routine proprietà in questione restituisca _false_).
-
-// @TODO: Check were this note should end! (it seems it could go on for many paragraphs!)
-
-[NOTE]
-================================================================================
-Per fare in modo che una routine proprietà `before` o `after` venga applicata ad *OGNI* routine verbo, non bisogna specificare una routine verbo.
-
-Ad esempio,
-
-[source,hugo]
-------------------------------------------------------------
-before
-{
-         xobject
-    {
-        ...
-    }
-}
-------------------------------------------------------------
-
-La routine specificata viene eseguita ogni volta che l'oggetto in questione è l'`xobject` per *OGNI* input valido.
-================================================================================
-
-Se questo blocco non specifico capita prima di qualunque blocco che specifica routine verbo, allora i blocchi seguenti, se corrispondenti, verranno eseguiti a condizione che il blocco non restituisca _true_.
-Se il blocco non specifico viene dopo gli altri blocchi, allora verrà eseguito solo se nessuna altra combinazione `object/routineverbo` viene trovata.
-
-Un difetto di questa non specificazione è che tutte le routine verbo vengono controllate -- sia `verbs` che `xverbs`.
-Questo può essere particolarmente sgradevole nel caso delle proprietà `before/after` per le locazioni, dove una risposta non specifica viene eseguita anche per '`save`', '`restore`', ecc.
-
-Per evitarlo la libreria fornisce la funzione `AnyVerb` che come argomento accetta un oggetto e restituisce il numero di quell'oggetto se la routine `verbroutine` attuale non è nel gruppo degli `xverb`; altrimenti restituisce _false_.
-Perciò può essere usata tramite:
-
-[source,hugo]
-------------------------------------------------------------
-before
-{
-         AnyVerb(location)
-    {
-        ...
-    }
-}
-------------------------------------------------------------
-
-al posto di
-
-[source,hugo]
-------------------------------------------------------------
-before
-{
-         location
-    {
-        ...
-    }
-}
-------------------------------------------------------------
-
-La prima esegue il blocco di codice condizionale tutte le volte che la variabile globale `location` corrisponde all'oggetto corrente e la `verbroutine` attuale non è un `xverb`.
-La seconda (che non usa `AnyVerb`), viene eseguita per `verb` e `xverb`. (La ragione di questa cosa, per dirla in modo semplice, è che la variabile globale `location` è sempre uguale alla variabile globale `location` (!).
-Ma `AnyVerb(location)` sarà uguale alla variabile globale `location` solo se `verbroutine` non è un `xverb`).
-
-=== Esempio: Costruzione di un oggetto complesso
-
-A questo punto è stato coperto abbastanza materiale per sviluppare un esempio comprensivo di un oggetto funzionale che servirà da riepilogo dei concetti introdotti fino adesso, così come a fornire esempi di una serie di proprietà comuni di `HUGOLIB.H`.
-
-[source,hugo]
-------------------------------------------------------------
-object mobiledilegno "mobiletto di legno"
-{
-    in empryroom
-    article "un"
-         nouns "mobiletto", "scaffale", "mensole", \
-        "mobilio", "sportelli",      "sportello"
-    adjectives "legno", "fine",      "mogano"
-
-    short_desc ! descrizione sintetica
-        "Un mobiletto di legno è      posto lungo una parete."
-    when_open ! quando      aperto
-        "Un mobiletto      di legno aperto è posto lungo una parete."
-         long_desc ! descrizione estesa
-    {
-        "Il mobiletto è fatto di      fine legno di mogano,
-        costruito a mano da un      falegname esperto. Nella parte
-        anteriore ci sono due      sportelli (al momento ";
-        if self is open
-                 print "aperti";
-             else: print "chiusi";
-        print ")."
-    }
-contains_desc ! descrizione del      contenuto
-    "Dietro gli sportelli aperti del      mobiletto
-        puoi      vedere"; ! punto e virgola - niente riga nuova
-
-key_object chiave_mobiletto ! un oggetto chiave_mobiletto
-! deve essere creato
-
-holding 0 ! comincia vuoto
-capacity 100
-
-before
-{
-    object      DoLookUnder ! guarda sotto l'oggetto
-        {"Niente tranne la      polvere."}
-    object DoGet ! prendi      l'oggetto
-             {"L'armadietto è troppo pesante per
-                 essere spostato!"}
-}
-after
-{
-    object DoLock ! chiudi a chiave
-        {"Con una girata di      chiavi chiudi l'armadietto
-                 per bene."}
-}
-
-! contenitore, apribile, non aperto
-is container,      openable, not open
-
-! chiudibile a chiave, non spostabile
-is lockable,      static
-}
-------------------------------------------------------------
-
-Per esercizio: come può un armadietto essere convertito in un passaggio segreto per un'altra stanza?
-
-_RISPOSTA_: basta aggiungere una proprietà `door_to`, come in:
-
-[source,hugo]
-------------------------------------------------------------
-door_to secondroom ! un nuovo oggetto    stanza
-------------------------------------------------------------
-
-Ora si può entrare nell'armadietto con: "`go    armadietto`", "`get into armadietto`", "`enter armadietto`", ecc.
-
-== Init e Main
-
-Almeno due routine fanno tipicamente parte di un programma Hugo: `Init` e `Main`. (La seconda è obbligatoria.
-Il compilatore genererà un errore se non trova nessuna routine `Main`).
-
-`Init`, se esiste, viene chiamata una sola volta all'inizio del programma (così come durante un comando '`restart`').
-La routine dovrebbe configurare tutte le variabili, gli oggetti e gli array necessari a cominciare il gioco.
-
-`Main` viene chiamata ad ogni turno.
-Dovrebbe prendersi cura delle faccende generali del gioco come l'incremento del contatore, così come l'esecuzione di eventi e script.
-
-== Eventi
-
-Gli eventi sono utili per rendere vivo un gioco, così che piccoli sotterfugi, comportamenti, e avvenimenti possono essere forniti con piccolo sforzo.
-
-Gli eventi sono anche routine, ma la loro caratteristica speciale è che possono essere attaccati ad un particolare oggetto, e che sono eseguiti in gruppo dal comando '`runevents`'.
-
-Gli eventi vengono definiti con
-
-[source,hugo]
-------------------------------------------------------------
-event
-{
-         ...
-}
-------------------------------------------------------------
-
-per gli eventi globali e
-
-[source,hugo]
-------------------------------------------------------------
-event [in] <oggetto>
-{
-    ...
-}
-------------------------------------------------------------
-
-per gli eventi _allegati_ ad un particolare oggetto. (La parola '`in`' è opzionale, ma è utile per favorire la leggibilità).
-Se un evento è allegato ad un oggetto viene eseguito solo quando quell'oggetto ha lo stesso '_nonno_' dell'oggetto giocatore (dove con 'nonno' ci si riferisce all'ultimo oggetto prima di 0, l'oggetto `nothing`).
-
-[NOTE]
-================================================================================
-Se l'evento non è un evento globale, la variabile globale `self` è impostata con il numero dell'oggetto a cui l'evento è allegato.
-================================================================================
-
-=== Esempio: Costruzione di un evento orologio
-
-Supponiamo che ci sia un oggetto `orologio` in una stanza.
-Questa è una possibile routine:
-
-[source,hugo]
-------------------------------------------------------------
-event in orologio
-{
-    local minuti, ore
-
-    ore = counter / 60
-         minuti = counter - (ore * 60)
-
-    if minuti = 0
-         {
-        print "L'orologio      suona ";
-        select      ore
-                 case 1: print "l'una";
-                 case 2: print "le due";
-                 case 3: print "le tre";
-                 .
-                 .
-                 .
-                 case 12: print "le dodici";
-        print " in punto."
-    }
-}
-------------------------------------------------------------
-
-Ogni volta che il giocatore e l'orologio sono nella stessa stanza (quando un comando `runevents` viene eseguito), l'evento viene eseguito.
-
-Ora, supponiamo che l'orologio debba essere udito in tutta la casa -- cioè in ogni parte della mappa del gioco.
-Basta cambiare la definizione dell'evento in
-
-[source,hugo]
-------------------------------------------------------------
-event ! nessun oggetto specificato
-{
-    ...
-}
-------------------------------------------------------------
-
-renderà l'evento globale. (In questo caso la variabile globale `self` non viene modificata).
-
-= MICCE, DEMONI E SCRIPT
-
-Mentre tutti gli elementi menzionati in precedenza sono programmati all'interno del codice dell'interprete, i mezzi per l'esecuzione delle micce [fuse], dei demoni e degli script sono scritti completamente in Hugo e si trovano nella libreria (`HUGOLIB.H`).
-
-== Micce e Demoni
-
-Daemon [demone] è un termine tradizionale che serve a definire un'attività ricorrente.
-Hugo gestisce i daemon come eventi speciali allegati ad oggetti che possono essere attivati o disattivati (cioè inseriti od estratti dall'area di visibilità di `runevents`).
-
-Visto che la classe `daemon` è definita nella libreria, per definire un daemon si usa
-
-[source,hugo]
-------------------------------------------------------------
-daemon <nome>
-{}
-------------------------------------------------------------
-
-Il corpo della definizione del daemon è vuoto.
-È necessaria solo per associare l'evento daemon, così che la definizione del daemon deve essere seguita da
-
-[source,hugo]
-------------------------------------------------------------
-event [in] <nome>
-{
-    ...
-}
-------------------------------------------------------------
-
-Attivato da
-
-[source,hugo]
-------------------------------------------------------------
-Activate(<nome>)
-------------------------------------------------------------
-
-che muove l'oggetto daemon specificato nell'area di visibilità del giocatore.
-In questo modo tutte le volte che un comando '`runevents`' viene eseguito (come dovrebbe essere nella routine `Main`), l'evento associato a `<nome>` viene eseguito.
-
-Il daemon viene disattivato usando
-
-[source,hugo]
-------------------------------------------------------------
-Deactivate(<nome>)
-------------------------------------------------------------
-
-che rimuove l'oggetto daemon dalla visibilità.
-
-Si può vedere come un daemon sia in realtà uno speciale tipo di oggetto che che posto o meno nell'area di visibilità di '`runevents`', e che è l'evento associato al daemon che contiene veramente il codice.
-
-Un fuse [miccia] è il nome con il quale si indica un timer -- cioè qualunque evento che debba accadere dopo uno specifico periodo di tempo.
-Il fuse è una versione un po' più complessa di un oggetto daemon, contenendo due proprietà addizionali in aggiunta a `in_scope`:
-
-
-[cols="<10m,<90d"]
-|===============================================================================
-| timer
-| il numero di turni prima che l'evento del fuse venga eseguito
-
-| tick
-| una routine che decrementa il `timer` e restituisce il numerodi turni che restano (cioè il valore di `timer`)
-|===============================================================================
-
-Come per i daemon la definizione di un fuse viene fatta in due passi
-
-[source,hugo]
-------------------------------------------------------------
-fuse <nome>
-{}
-
-event [in] <nome>
-{
-    ...
-    if not      self.tick
-    {
-        ...
-    }
-}
-------------------------------------------------------------
-
-e si accende e spegne con
-
-[source,hugo]
-------------------------------------------------------------
-Activate(<nome>,    <impostazioni>)
-------------------------------------------------------------
-
-o
-
-[source,hugo]
-------------------------------------------------------------
-Deactivate(<nome>)
-------------------------------------------------------------
-
-dove `<impostazioni>` è il valore iniziale della proprietà `timer`.
-
-Notare che è compito dell'evento eseguire il timer e verificare la sua scadenza.
-La riga
-
-[source,hugo]
-------------------------------------------------------------
-if not self.tick
-------------------------------------------------------------
-
-esegue la proprietà `tick` -- che decrementa il timer -- ed esegue il blocco di codice condizionale seguente se `self.timer` è 0.
-
-=== Esempio: Un semplice Daemon ed un ancor più semplice Fuse
-
-Il daemon più semplice è qualcosa tipo un contatore di sonno, che misura quanto un giocatore può continuare a cominciare da un determinato momento di riposo.
-
-Assumiamo che la quantità di riposo del giocatore sia contenuta in una proprietà chiamata `riposo`, che si decrementa di 2 ad ogni turno.
-
-[source,hugo]
-------------------------------------------------------------
-daemon affaticamento
-{}
-
-event in affaticamento
-{
-         player.riposo = player.riposo - 2
-    if      player.riposo < 0
-             player.riposo = 0
-
-    select player.riposo
-        case 20
-                 "Ti stai affaticando."
-        case 10
-                 "Stai diventando \Imolto\i stanco."
-        case 0
-                 "Ti sei addormentato!"
-}
-------------------------------------------------------------
-
-Si avvia e si ferma il daemon con `Activate(affaticamento)` e `Deactivate(affaticamento)`.
-
-Ora, per il fuse [miccia], perché non costruire l'esempio più ovvio: quello di una bomba ad orologeria? (Assumendo che esista un altro oggetto fisico `bomba`; `bombaorologeria` è solo il fuse per il conto alla rovescia).
-
-[source,hugo]
-------------------------------------------------------------
-fuse bombaorologeria
-{}
-
-event in bombaorologeria
-{
-    if not self.tick
-         {
-        if      Contains(location, bomba)
-                 "Scompari in un elegante KABOOM!"
-        else
-                 "Senti un KABOOM da qualche parte!"
-        remove bomba
-    }
-}
-------------------------------------------------------------
-
-Si attiva (con un conto alla rovescia di 25 turni) e si ferma con `Activate(bombaorologeria, 25)` e `Deactivate(bombaorologeria)`.
-
-== Script
-
-Gli script sono decisamente più complessi dei fuse e dei daemon.
-Lo scopo di uno script (chiamato anche script del personaggio) è quello di consentire ad un oggetto -- di solito un personaggio -- di eseguire una sequenza di azioni in base ai turni del gioco e indipendentente dal giocatore.
-
-Fino a 16 script possono essere eseguiti insieme.
-È compito del programmatore preoccuparsi di non superare tale limite.
-
-Uno script è rappresentato da due array: `scriptdata` e `setscript`.
-Il secondo è stato nominato per la chiarezza della programmazione piuttosto che per il suo contenuto.
-Ecco perché:
-
-Per definire uno script si usa la seguente notazione:
-
-[source,hugo]
-------------------------------------------------------------
-setscript[Script(<ogg>, <numero>)] =      &CharRoutine, ogg,
-                                 &CharRoutine, ogg,
-                                 ...
-------------------------------------------------------------
-
-(ricordandosi che una virgola alla fine di una riga dice al compilatore che la riga prosegue alla successiva).
-
-Fare caso al fatto che "`setscript`" in realtà è un array, che prende il suo elemento iniziale dal valore di ritorno della routine `Script`, che ha `<oggetto>` e `<numero>` come argomenti.
-
-`Script` restituisce un puntatore all'interno del grande array "`setscript`" dove il `<numero>` di passi di uno script per `<oggetto>` si trovano.
-Un singolo script può avere fino a 32 passi.
-Un passo in uno script è composto da una routine ed un oggetto -- sono entrambi necessari anche se la routine non richiede un oggetto. (Si usa l'oggetto `nothing` (0); vedere la routine `CharWait` in `HUGOLIB.H` per le informazioni).
-
-La consuetudine in `HUGOLIB.H` vuole che le routine di script del personaggio abbiano il prefisso "`Char`", sebbene questo non sia obbligatorio.
-Al momento le routine fornite comprendono:
-
-[cols=",,",]
-|===
-|`CharMove` |[Muovi] |(richiede un oggetto direzione)
-|`CharWait` |[Attendi] |(si usa l'oggetto nothing)
-|`CharGet` |[Prendi] |(richiede un oggetto prendibile)
-|`CharDrop` |[Lascia] |(richiede un oggetto in possesso del personaggio)
-|===
-
-così come la routine speciale
-
-[cols=",,",]
-|===
-|`LoopScript` |[RipetiScript] |(si usa l'oggetto nothing)
-|===
-
-che indica uno script che verrà eseguito in continuazione. (È compito del programmatore assicurarsi che la posizione finale di un personaggio o di un oggetto sia adatta a ricominciare con lo script se `LoopScript` viene usato.
-Vale a dire che se lo script è composto da una complessa serie di direzioni, il personaggio deve sempre ritornare allo stesso punto di partenza.)
-
-La sequenza di routine ed oggetti di ogni script è memorizzata nell'array `setscript`.
-
-Gli script vengono eseguiti tramite la routine `RunScripts`, simile a `runevents`, da cui differisce per il fatto che `runevents` è un comando dell'interprete mentre `RunScripts` è contenuta in `HUGOLIB.H`.
-
-La riga
-
-[source,hugo]
-------------------------------------------------------------
-RunScripts
-------------------------------------------------------------
-
-eseguirà tutti gli script personaggio/oggetto attivi, un turno alla volta, liberando lo spazio usato da ognuno una volta che sono terminati.
-
-Quello che segue è uno script di esempio per un personaggio di nome "`Ned`":
-
-[source,hugo]
-------------------------------------------------------------
-setscript[Script(ned, 4)] = &CharMove, s_obj,
-                     &CharGet, palladicannone,
-                     &CharMove, n_obj,
-                     &CharWait, 0,
-                     &CharDrop, palladicannone
-------------------------------------------------------------
-
-Ned andrà a sud, raccoglierà l'oggetto `palladicannone`, la porterà con sé a nord, attenderà un turno e lascerà la `palladicannone`. (Le routine di script per i personaggi fornite dalla libreria sono relativamente elementari; ad esempio, `CharGet` assume che l'oggetto specificato sia presente quando il personaggio cerca di prenderlo).
-
-Altre routine di gestione script in `HUGOLIB.H` comprendono:
-
-[cols=",",]
-|===
-|`CancelScript(ogg)` |per terminare immediatamente l'esecuzione dello script per `<ogg>`
-|`PauseScript(ogg)` |ferma temporaneamente l'esecuzione dello script per `<ogg>`
-|`ResumeScript(ogg)` |riprende l'esecuzione di uno script fermato
-|`SkipScript(ogg)` |salta lo script per `<ogg>` per la successiva esecuzione di `RunScripts`
-|===
-
-La routine `RunScripts` controlla anche le proprietà `before` e `after`.
-Continua con l'azione predefinita -- la routine di azione del personaggio specificata nello script -- se trova un valore _false_.
-
-Per ignorare una routine di azione predefinata per un personaggio si include una proprietà `before` per l'oggetto del personaggio usando la forma seguente:
-
-[source,hugo]
-------------------------------------------------------------
-before
-{
-    actor      CharRoutine
-    {
-        ...
-    }
-}
-------------------------------------------------------------
-
-dove `CharRoutine` è `CharWait`, `CharMove`, `CharGet`, `CharDrop`, ecc.
-
-== Una nota sulla globale event_flag
-
-Le routine della libreria -- in particolare le routine verbo `DoWait...` -- si aspettano che la variabile globale `event_flag` venga impostata con un valore non falso se qualcosa accade (in un evento o uno script) così che al giocatore venga notificato e venga data l'opportunita si smettere si aspettare.
-Ad esempio le routine di script dei personaggi in `HUGOLIB.H` impostano `event_flag` ogni volta che un personaggio fa qualcosa nella stessa locazione del giocatore.
-
-Se si usa `HUGOLIB.H` deve essere seguita la regola di impostare `event_flag` dopo ogni evento significativo.
-
-= GRAMMATICA E PARSING
-
-== Definizione della grammatica
-
-Ogni comando valido del giocatore deve essere specificato.
-Più precisamente ogni uso di un particolare verbo deve essere dettagliato per intero nel codice sorgente.
-
-Le definizioni della grammatica devono essere inserite sempre all'inizio del codice, prima di ogni oggetto o codice da eseguire.
-In pratica se diversi file addizionali di grammatica devono essere inclusi, o una nuova grammatica deve essere definita esplicitamente nel codice sorgente, deve essere fatto prima dell'inclusione dei file che contengono del codice da eseguire, o prima della definizione di ogni routine, oggetto, ecc.
-
-La sintassi da usare è:
-
-[source,hugo]
-------------------------------------------------------------
-[x]verb "<verbo1>" [, "<verbo2>",      "<verbo3>",...]
-    * <specificazione      di sintassi 1> <RoutineVerbo1>
-    *      <specificazione di sintassi 2> <RoutineVerbo2>
-    ...
-------------------------------------------------------------
-
-Bene, che vuol dire?
-Ecco alcuni esempi tratti dal file di grammatica della libreria `VERBLIB.G`:
-
-[source,hugo]
-------------------------------------------------------------
-verb "get"
-         *                                           DoVague
-    *      "up"/"out"/"off"                          DoExit
-    * "outof"/"offof"/"off"      object         DoExit
-    * "in"/"on"      object                          DoEnter
-    * multinotheld "from"/"off"      parent     DoGet
-    *      multinotheld "offof"/"outof" parent  DoGet
-    *      multinotheld                              DoGet
-
-verb "take"
-         *                                           DoVague
-    * "off"      multiheld                           DoTakeOff
-    * multiheld      "off"                           DoTakeOff
-    *      multinotheld                              DoGet
-    * multinotheld "from"/"off"      parent     DoGet
-    *      multinotheld "offof"/"outof" parent  DoGet
-
-xverb "save"
-         *                 DoSave
-    * "game"          DoSave
-
-verb "read", "peruse"
-         *                   DoVague
-    * readable          DoRead
-
-verb "unlock"
-         *                           DoVague
-    *      lockable                  DoUnLock
-    * lockable "with" held      DoUnLock
-------------------------------------------------------------
-
-Ogni intestazione '`verb`' o '`xverb`' comincia con una nuova definizione di un verbo.
-Un '`xverb`' è un qualificatore speciale che indica che l'interprete non deve chiamare la routine `Main` dopo aver completato con successo l'azione.
-Un '`xverb`' viene di solito usato con i verbi non di azione, o di utilità come il salvataggio, il ripristino, l'uscita dal gioco, o il ricominciare da capo.
-
-Successivamente nell'intestazione sono indicati uno o più nomi del verbo.
-Ogni nome specificato userà la grammatica seguente allo stesso modo. +
-Questo è il motivo per il quale "`get`" e "`take`" negli esempi precedenti sono definiti separatamente, invece di
-
-[source,hugo]
-------------------------------------------------------------
-verb "get", "take"
-------------------------------------------------------------
-
-In questo modo i comandi
-
-[example,role="gametranscript"]
-================================================================================
-get up
-================================================================================
-
-
-e
-
-[example,role="gametranscript"]
-================================================================================
-take off hat
-================================================================================
-
-
-sono consentiti, mentre
-
-[example,role="gametranscript"]
-================================================================================
-take up
-================================================================================
-
-
-e
-
-[example,role="gametranscript"]
-================================================================================
-get off hat
-================================================================================
-
-
-non hanno senso.
-
-Ogni riga che comincia con l'asterisco ('`*`') è un uso valido del verbo che si sta defininendo. (Ogni input del giocatore deve cominciare con un verbo.
-Le eccezioni, dove un comando è diretto ad un oggetto come in
-
-[example,role="gametranscript"]
-================================================================================
-Ned, get the ball
-================================================================================
-
-
-verranno dettagliate in seguito).
-
-Fino a due oggetti ed un qualunque numero di parole del dizionario possono essere usate per creare una riga di sintassi.
-Gli oggetti devono essere separati ad almeno una parola del dizionario.
-
-Specificazioni di oggetto valide sono:
-
-[cols=",",]
-|===
-|`object` |qualunque oggetto visibile (l'oggetto diretto)
-|`xobject` |l'oggetto indiretto
-|`attribute` |qualunque oggetto visibile che ha l'attributo `<attribute>`
-|`parent` |qualunque `xobject` che è il padre dell'oggetto
-|`held` |qualunque oggetto in possesso del giocatore
-|`notheld` |un oggetto non in possesso del giocatore
-|`multi` |oggetti visibili multipli
-|`multiheld` |oggetti multipli in possesso del giocatore
-|`multinotheld` |oggetti multipli non posseduti dal giocatore
-|`number` |un numero intero positivo
-|`word` |qualunque parola del dizionario
-|`string` |una stringa tra virgolette
-|`(NomeRoutine)` |un nome di routine, tra parentesi
-|`(nomeogg)` |un nome di oggetto, tra parentesi
-|===
-
-(Se viene specificato un numero nella sintassi della grammatica, questo viene passato alla routine verbo nell'oggetto `global`.
-Se viene specificata una stringa, questa viene passata nella variabile dell'interprete `parse$`, che può essere trasformata in un array di stringhe usando la funzione '`string`').
-
-Le parole del dizionario che possono essere usate in maniera intercambiabile vanno separate da una barra ('`/`').
-
-Due o più parole del dizionario digitate in sequenza devono essere specificate separatamente.
-Cioè se la riga in input è:
-
-[example,role="gametranscript"]
-================================================================================
-take hat out of suitcase
-================================================================================
-
-
-la riga di sintassi
-
-[source,hugo]
-------------------------------------------------------------
-* object "out" "of" container
-------------------------------------------------------------
-
-corrisponderà, mentre
-
-[source,hugo]
-------------------------------------------------------------
-* object "out of" container
-------------------------------------------------------------
-
-non verrà mai riconosciuta, visto che l'interprete tratta in automatico "`out`" e "`of`" come due parole separate; il parser non troverà mai una corrispondenza per "`out of`".
-
-Per quel che riguarda l'indicazione degli oggetti nella riga di sintassi: Una volta che l'oggetto diretto è stato trovato, l'oggetto rimanente sulla riga di input verrà memorizzato come `xobject`.
-In pratica nell'esempio precendente, un oggetto valido sulla riga di input con l'attributo `container` verrà considerato l'oggetto indiretto dalla routine verbo.
-
-[NOTE]
-================================================================================
-Un punto importante da ricordare quando si mischiano parole del dizionario ed oggetti in una riga di sintassi è che, a meno che sia stato indirizzato diversamente, il parser può confondere una combinazione parola-oggetto con un nome di oggetto non valido.
-Considerate questo:
-
-[source,hugo]
-------------------------------------------------------------
-verb "pick"
-    *      object      DoGet
-    *      "up" object DoGet
-------------------------------------------------------------
-
-Questa definizione avrà come risultato qualcosa tipo
-
-[example,role="gametranscript"]
-=======================================================
->pick up box
-You haven't seen any "up box", nor are you likely to in
-the near future even if such a thing exists.
-=======================================================
-
-
-(partendo dal presupposto che "`up`" sia stato definito da qualche altra parte come parte di un altro nome di oggetto, come in `OBJLIB.H`), visto che il processore processa la sintassi
-
-[source,hugo]
--------------
-* object
--------------
-
-e determina che un nome di oggetto non valido viene usato; non arriva mai a
-
-[source,hugo]
--------------
-* "up" object
--------------
-
-La definizione corretta del verbo deve essere ordinata come
-
-[source,hugo]
-----------------------------
-verb "pick"
-    * "up" object      DoGet
-    * object           DoGet
-----------------------------
-
-così che "`pick <oggetto>`" e "`pick up    <oggetto>`" sono comandi validi.
-================================================================================
-
-Per definire una nuova condizione grammaticale che abbia la precedenza rispetto ad una già esistente -- come in `VERBLIB.G` -- basta definire la nuova condizione prima (ad esempio prima di includere `VERBLIB.G`).
-
-[NOTE]
-================================================================================
-Come regola generale, a meno che si abbia la necessità di anticipare il normale processo della grammatica della libreria, la nuova grammatica va inserita dopo l'inclusione dei file della libreria. (La ragione di questo è che la grammatica della libreria è stata messa punto per gestire situazioni come quelle esposte più sopra).
-================================================================================
-
-Un oggetto singolo può essere specificato come l'unico oggetto valido per una particolare sintassi:
-
-[source,hugo]
-------------------------------------------------------------
-verb "sfrega"
-    *      (lampada_magica) DoSfregaLampadaMagica
-------------------------------------------------------------
-
-che produrrà un errore "`You can't do that with...`" per ogni oggetto diverso dall'oggetto `lampada_magica`.
-
-Usare un nome di routine per specificare un oggetto è leggermente più complicato: l'interpete chiama la routine indicata passandole l'oggetto specificato nell'input come argomento; se la routine restituisce _true_ allora l'oggetto è valido, altrimenti un errore di interpretazione deve essere stampato dalla routine.
-Se due nomi di routine vengono usati in una determinata sintassi, come in
-
-[source,hugo]
-------------------------------------------------------------
-* (PrimaRoutine) "con"    (SecondaRoutine)
-------------------------------------------------------------
-
-allora `PrimaRoutine` viene usata per la validazione di `object` e `SecondaRoutine` per la validazione di `xobject`.
-
-== Il parser
-
-Subito dopo che una riga in input è stata ricevuta, l'interprete chiama il parser, ed il primo passo consiste nell'identificare tutte le parole non valide, cioè le parole che non sono nella tabella del dizionario.
-
-[NOTE]
-================================================================================
-Nella riga di input è consentito inserire una parola o frase non compresa nel dizionario a patto che venga racchiusa tra virgolette ("`{wj}`").
-Se il comando viene interpretato correttamente, questa stringa viene passata a `parse$`.
-Non è possibile avere più di una parola o frase non compresa nel dizionario (anche se le frasi addizionali vengono racchiuse tra virgolette).
-================================================================================
-
-Il passo successivo consiste nel suddividere la riga in parole singole.
-Le parole sono separate da spazi e simboli di punteggiatura (inclusi "`!`" e "`?`") che vengono rimossi.
-Tutti i caratteri della riga di input vengono convertiti in minuscolo.
-
-Successivamente si tratta di processare i tre tipi di parole speciali che possono essere definiti nel codice sorgente.
-
-I *REMOVAL* [rimuovibili] sono i più semplici.
-Sono semplicemente parole che vengono automaticamente rimosse dalla riga in input, e sono fondamentalmente limitati a parole come "`a`" e "`the`", che renderebbero l'esame della grammatica più complicato e difficile.
-
-La sintassi per la definizione di un removal è:
-
-[source,hugo]
-------------------------------------------------------------
-removal "<parola1>"[, "<parola2>",      "<parola3>",...]
-------------------------------------------------------------
-
-come in
-
-[source,hugo]
-------------------------------------------------------------
-removal "a", "an", "the"
-------------------------------------------------------------
-
-Il *PUNCTUATION* [punteggiatura] è simile al removal, solo che specifica la rimozione di caratteri singoli invece di intere parole:
-
-[source,hugo]
-------------------------------------------------------------
-punctuation    "<carattere1>[<carattere2>...]"
-------------------------------------------------------------
-
-come in
-
-[source,hugo]
-------------------------------------------------------------
-punctuation "$%"
-------------------------------------------------------------
-
-I *SYNONYM* [sinonimi] sono più complicati.
-Sono parole che non verranno mai trovate nella riga di input interpretata; sono sostituiti dalla parola specificata per la quale sono sinonimi.
-
-[source,hugo]
-------------------------------------------------------------
-synonym "<sinonimo>" for "<parola>"
-------------------------------------------------------------
-
-come in
-
-[source,hugo]
-------------------------------------------------------------
-synonym "myself" for "me"
-------------------------------------------------------------
-
-L'esempio precedente sostituisce tutte le ricorrenze di "`myself`" nella riga di input con "`me`".
-L'uso dei sinonimi non deve essere molto esteso, visto che esiste la possibilità, particolarmente nel caso dei nomi di oggetti e degli aggettivi, di specificare come sinonimi parole che vengono già trattate come distinte.
-
-I *COMPOUND* [compositi] sono l'ultimo tipo di parole speciali, specificati con:
-
-[source,hugo]
-------------------------------------------------------------
-compound "<parola1>",    "<parola2>"
-------------------------------------------------------------
-
-come in
-
-[source,hugo]
-------------------------------------------------------------
-compound "out", "of"
-------------------------------------------------------------
-
-così che la riga di input
-
-[example,role="gametranscript"]
-================================================================================
-get hat out of suitcase
-================================================================================
-
-
-venga interpretata come
-
-[example,role="gametranscript"]
-================================================================================
-get hat outof suitcase
-================================================================================
-
-
-A seconda della progettazione delle tabelle di grammatica per alcune sintassi, l'uso dei compound può rendere la definizione della grammatica più semplice, così che usando il compound precedente,
-
-[source,hugo]
-------------------------------------------------------------
-verb "get"
-    * multinotheld      "outof"/"offof"/"from" parent
-------------------------------------------------------------
-
-è possibile, e preferibile a
-
-[source,hugo]
-------------------------------------------------------------
-verb "get"
-    * multinotheld      "out"/"off" "of" parent
-    * multinotheld      "from" parent
-------------------------------------------------------------
-
-Quando il parser ha terminato di processare la riga di input, il risultato è un array definito (da Hugo Engine) in maniera speciale chiamato `word`, il cui numero di elementi validi è contenuto nella variabile globale `words`.
-
-Perciò in
-
-[example,role="gametranscript"]
-===============================
-get the hat from the table
-===============================
-
-
-il parser -- usando i removal definiti in `HUGOLIB.H` -- produce i seguenti risultati:
-
-[source,hugo]
------------------
-word[1] = "get"
-word[2] = "hat"
-word[3] = "from"
-word[4] = "table"
-
-words = 4
------------------
-
-[NOTE]
-================================================================================
-Le righe di comandi multipli sono consentite, purché ogni comando venga separato da un punto ("`.`").
-
-[example,role="gametranscript"]
-===============================
-get hat. go n. go e.
-===============================
-
-
-diventa
-
-[source,hugo]
----------------
-word[1] = "get"
-word[2] = "hat"
-word[3] = ""
-word[4] = "go"
-word[5] = "n"
-word[6] = ""
-word[7] = "go"
-word[8] = "e"
-word[9] = ""
-
-words = 9
----------------
-
-(Controllate la routine `Parse` in `HUGOLIB.H` per un esempio di come
-
-[example,role="gametranscript"]
-===============================
-get hat then go n
-===============================
-
-
-viene tradotto in:
-
-[source,hugo]
----------------
-word[1] = "get"
-word[2] = "hat"
-word[3] = ""
-word[4] = "go"
-word[5] = "n")
----------------
-================================================================================
-
-È consentito un massimo di trentadue parole.
-Il punto viene in ogni caso convertito nella voce di dizionario `null` (`""`, indirizzo = 0), che segnala all'interprete che l'analisi del comando corrente termina qui.
-
-[NOTE]
-================================================================================
-le routine di parsing e della grammatica riconoscono anche diverse parole di sistema, ognuna nel formato "`~parola`".
-Queste sono:
-
-[cols=",",]
-|===
-|`~and` |riferendosi a: oggetti multipli specifici
-|`~all` |riferendosi a: oggetti multipli in generale
-|`~any` |riferendosi a: uno qualunque in una lista di oggetti
-|`~except` |riferendosi a: un oggetto da escludere
-|`~oops` |per correggere un errore nella riga di input precedente
-|===
-
-Per consentire ad una riga di input di accedere ad una di queste parole di sistema, bisogna definire un sinonimo come in
-
-[source,hugo]
-------------------------
-synonym "and" for "~and"
-------------------------
-
-La libreria definisce diversi di questi sinonimi.
-================================================================================
-
-= ROUTINE DI CONGIUNZIONE
-
-Visto che, per dirla semplice, l'interprete non conosce cose tipo attributi, proprietà ed oggetti se non nel senso tecnico, sono state fornite una serie di routine che servono a facilitare la comunicazione tra l'interprete ed il programma.
-
-Insieme a queste routine di congiunzione ci sono una serie di variabili globali e proprietà che sono predefinite dal compilatore ed a cui accede l'interprete.
-Queste sono:
-
-*GLOBALI:*
-
-
-[cols=",",]
-|===
-|`object` |l'oggetto diretto di un verbo
-|`xobject` |l'oggetto indiretto
-|`self` |l'oggetto che si riferisce a se stesso
-|`words` |numero totale di parole
-|`player` |l'oggetto giocatore
-|`location` |la posizione del giocatore
-|`verbroutine` |l'indirizzo della routine verbo
-|`endflag` |se non è _false_ (0) chiama `EndGame`
-|`prompt` |per la riga di input
-|`objects` |numero totale di oggetti
-|`system_status` |dopo determinate operazioni
-|===
-
-*PROPRIETÀ:*
-
-[cols=",",]
-|===
-|`name` |nome dell'oggetto
-|`before` |routine pre verbo
-|`after` |routine post verbo
-|`noun` |nome(i) con cui riferirsi all'oggetto
-|`adjective` |aggettivo(i) con cui riferirsi all'oggetto
-|`article` |"a", "an", "the", "some", ecc.
-|===
-
-(Insieme agli alias `nouns` e `adjectives` per `noun` e `adjective` definiti dalla libreria).
-
-Le routine di congiunzione non sono necessarie.
-L'interprete possiede delle routine di default già pronte, sebbene queste potrebbero essere non molto utili per la maggior parte dei programmatori.
-Per questo `HUGOLIB.H` contiene le routine seguenti che implementano tutte le funzionalità della libreria.
-Se si vuole usare una routine differente al posto di quella fornita, la routine deve essere sostituita usando '`replace`'.
-
-== Parse
-
-La routine `Parse`, se esiste, viene chiamata dal parser dell'interprete.
-Qui il programma può modificare la riga di input prima che venga controllata la grammatica.
-Quello che accade è:
-
-{empty}1. La riga di input è suddivisa in parole (dall'interprete). +
-2. La routine `Parse`, se esiste, viene chiamata. +
-3. Il controllo ritorna all'interprete per l'esame della grammatica.
-
-Ad esempio, la routine `Parse` in `HUGOLIB.H` si occupa di cose come i pronomi ("`he`", "`she`", "`it`", "`them`") e la ripetizione dell'ultimo comando valido (con "`again`" o "`g`").
-
-La restituzione di _true_ da parte della routine `Parse` comporta una nuova chiamata al parser dell'interprete; se si restituisce _false_ l'elaborazione prosegue normalmente.
-Questa cosa è utile nel caso la routine `Parse` abbia cambiato la riga di input in maniera sostanziale, richiedendo una riconfigurazione delle parole già suddivise.
-
-[NOTE]
-================================================================================
-Visto che la routine `Parse` della libreria è piuttosto grande, è stata fornita una routine `PreParse` -- che nella libreria è stata definita vuota -- che può essere sostituita più facilmente per un parsing addizionale.
-================================================================================
-
-== ParseError
-
-La routine `ParseError` viene chiamata tutte le volte che un comando non è valido. `ParseError` viene chiamata nella forma
-
-[source,hugo]
-------------------------------------------------------------
-ParseError(<numeroerrore>,    <oggetto>)
-------------------------------------------------------------
-
-dove `<oggetto>` è il numero dell'oggetto (se presente) dell'oggetto coinvolto nell'errore.
-
-[NOTE]
-================================================================================
-L'interprete imposta anche una variabile speciale chiamata '`parse$`', usabile solo in un'istruzione `print` (o insieme a '`string`'), che rappresenta il componente illegale di una riga di input, che sia il verbo, un nome di oggetto, un nome parziale di oggetto, od ogni altra combinazione di parole.
-Ad esempio:
-
-[source,hugo]
-------------------------------------------------
-print "La parola illegale era: "; parse$;    "."
-------------------------------------------------
-================================================================================
-
-Le risposte di default fornite dalla routine di errore del parser dell'interprete sono:
-
-
-[cols=">d,<m"options="header,autowidth"]
-|=======================================
-| NUMERO ERRORE | RISPOSTA
-|  0 | "What?"
-|  1 | "You can't use the word <parse$>."
-|  2 | "Better start with a verb."
-|  3 | "You can't <parse$> multiple objects."
-|  4 | "Can't do that."
-|  5 | "You haven't seen any <parse$>, nor are you likely to in the near future even if such a thing exists."
-|  6 | "That doesn't make any sense."
-|  7 | "You can't use multiple objects like that."
-|  8 | "Which <parse$> do you mean,...?"
-|  9 | "Nothing to <parse$>."
-| 10 | "You haven't seen anything like that."
-| 11 | "You don't see that."
-| 12 | "You can't do that with the <parse$>."
-| 13 | "You'll have to be a little more specific."
-| 14 | "You don't see that there."
-| 15 | "You don't have that."
-| 16 | "You'll have to make a mistake first."
-| 17 | "You can only correct one word at a time."
-|=======================================
-
-La routine `ParseError` in `HUGOLIB.H` fornisce risposte su misura che tengono conto di cose come, ad esempio, il giocatore è in prima o seconda persona, un oggetto è un personaggio o meno, e se è maschio o femmina.
-
-Se la routine `ParseError` non fornisce una risposta per un particolare `<numeroerrore>` deve restituire _false_.
-La restituzione di _false_ è un segnale che indica all'interprete di continuare con il messaggio predefinito.
-La restituizione di 2 indica che bisogna reinterpretare l'intera riga (utile nel caso in cui una particolare sintassi sia stata intercettata come un errore, cambiata, e debba essere reinterpretata).
-
-[NOTE]
-================================================================================
-Se si vogliono usare dei messaggi di errore personalizzati per le routine di parsing dell'utente, bisogna sostiture (`replace`) la routine `CustomError` con una nuova routine (chiamata con gli stessi parametri di `ParseError`), assicurandosi che `<numeroerrore>` sia maggiore od uguale a 100.
-================================================================================
-
-== EndGame
-
-La routine `EndGame` viene chiamata immediatamente tutte le volte che la variabile globale `EndFlag` è diversa da 0, senza curarsi del fatto che la funzione corrente sia o meno terminata.
-
-La routine `EndGame` di `HUGOLIB.H` reagisce in maniera differente a seconda di come sia stata impostata `endflag`:
-
-[cols=",",]
-|===
-|`endflag` |RISULTATO
-| |
-|`1` |Il giocatore vince
-|`2` |Il giocatore muore
-|(`3` |Altra fine non fornita di default dalla routine `PrintEndGame`)
-|===
-
-Restituire _false_ da `EndGame` comporta il termine del gioco; un valore non falso ricomincia da capo.
-
-[NOTE]
-================================================================================
-Per modificare solo il messaggio visualizzato alla fine del gioco (default: "`*** YOU'VE WON THE GAME! ***`" e "`*** YOU ARE    DEAD ***`") bisogna sostituire la routine `PrintEndGame`.
-Oltre che ad essere non falsi i vari valori di `endflag` non hanno significato, tranne per `PrintEndGame.`
-================================================================================
-
-== FindObject
-
-La routine si occupa di controllare tutte le proprietà necessarie, gli attributi e la gerarchia degli oggetti per determinare se un particolare oggetto è disponibile o meno.
-Ad esempio il _child_ [figlio] di un oggetto _parent_ [padre] potrebbe essere disponibile se il padre è un _platform_ [piattaforma], ma non disponibile se il _parent_ è un _container_ [contenitore] (e chiuso) -- sebbene internamente la gerarchia degli oggetti sia la stessa.
-
-`FindObject` viene chiamata con:
-
-[source,hugo]
-------------------------------------------------------------
-FindObject(<oggetto>,    <locazione>)
-------------------------------------------------------------
-
-dove `<oggetto>` è l'oggetto in questione e `<locazione>` è l'oggetto dove la disponibilità deve essere controllata. (Di solito `<locazione>` è una stanza, a meno che un _parent_ differente sia stato specificato nella riga di input).
-
-`FindObject` restituisce _true_ (1) se l'oggetto è disponibile, _false_ (0) altrimenti.
-Restituisce 2 se l'oggetto è visibile, ma non raggiungibile fisicamente.
-
-La routine `FindObject` in `HUGOLIB.H` considera non solo la posizione di `<oggetto>` nell'albero degli oggetti, ma controlla anche gli attributi del _parent_ per vedere se è aperto o chiuso.
-Inoltre controlla la proprietà `found_in` [trovato_in], nel caso in cui `<oggetto>` sia assegnato a locazioni multiple invece di un determinato _parent_, e poi controlla la proprietà `in_scope` [a_portata] dell'oggetto (se esiste).
-
-Infine il comportamento predefinito di `FindObject` richiede che il giocatore abbia incontrato l'oggetto per renderlo valido in un'azione, deve avere l'attributo `known` [conosciuto] impostato.
-Per evitarlo bisogna sostituire la routine `ObjectIsKnown` con una routine che restituisce un valore _true_ incondizionatamente.
-
-Esiste un caso speciale in cui l'interprete si aspetta che la routine `FindObject` sia utile: ed è quando la routine viene chiamata con `<locazione>` uguale a 0.
-Questo avviene tutte le volte che l'interprete ha bisogno di sapere se un oggetto è disponibile -- ignorando le regole che normalemente governano la disponibilità degli oggetti -- come quando un'istruzione grammaticale '`anything`' [qualunque cosa] viene incontrata, o quando l'interprete ha bisogno di distinguere tra due o più oggetti apparentemente identici.
-
-(Inoltre `FindObject` può essere chiamata dall'interprete con `<oggetto> `e `<locazione>` entrambi a 0 per ripristinare una distinzione di oggetti operata dalla libreria).
-
-== SpeakTo
-
-La routine `SpeakTo` viene chiamata tutte le volte che una riga di input comincia con un nome di un oggetto valido invece di un verbo.
-In questo modo il giocatore può indirizzare i comandi ai personaggi (di solito) nel gioco.
-Ad esempio:
-
-[source,hugo]
-------------------------------------------------------------
-Professor Plum, drop the lead pipe
-------------------------------------------------------------
-
-È compito della routine `SpeakTo` interpretare correttamente l'istruzione.
-
-`SpeakTo` viene chiamata con:
-
-[source,hugo]
-------------------------------------------------------------
-SpeakTo(<personaggio>)
-------------------------------------------------------------
-
-dove `<personaggio>` nell'esempio precedente dovrebbe essere l'oggetto `Professor Plum`.
-
-Le variabili globali `object`, `xobject` e `verbroutine` vengono impostate normalmente.
-Nell'esempio precedente i valori sarebbero
-
-[source,hugo]
-------------------------------------------------------------
-object      leadpipe
-xobject     nothing
-verbroutine      &DoDrop
-------------------------------------------------------------
-
-quando `SpeakTo` viene chiamata.
-
-La routine `SpeakTo` di `HUGOLIB.H` fornisce un'interpretazione base delle domande, così che
-
-[example,role="gametranscript"]
-================================================================================
-Professor Plum, what about the lead    pipe?
-================================================================================
-
-
-viene indirizzata alla routine verbo appropriata, come se il giocatore avesse scritto:
-
-[example,role="gametranscript"]
-================================================================================
-ask Professor Plum about the lead pipe
-================================================================================
-
-
-I comandi imperativi, come
-
-[example,role="gametranscript"]
-================================================================================
-Colonel Mustard, stand up
-================================================================================
-
-
-vengono prima indirizzati alla proprietà `order_response` dell'oggetto personaggio in questione.
-A questo punto è compito di `<personaggio>.order_response` analizzare `verbroutine` (così come `object` e `xobject` se necessario) per vedere se la richiesta è valida.
-Se non è prevista nessuna risposta, `order_response` deve restituire _false_.
-
-[source,hugo]
-------------------------------------------------------------
-order_response
-{
-    if verbroutine = &DoGet
-        "Vorrei, ma la mia      schiena mi fa troppo male."
-    else
-        return false
-}
-------------------------------------------------------------
-
-== Perform
-
-La routine `Perform` è quella che viene chiamata dall'interprete per eseguire la `verbroutine` appropriata, con gli oggetti diretti e indiritti forniti.
-È compito di `Perform` eseguire i controlli alle routine `before` per determinare se l'esecuzione corrisponde a `verbroutine`.
-
-`Perform` viene chiamata con:
-
-[source,hugo]
-------------------------------------------------------------
-Perform(<verbroutine>, <object>,      <xobject>, <accoda>)
-------------------------------------------------------------
-
-I primi tre argomenti sono il verbo (sempre), l'oggetto (se fornito) e l'oggetto indiretto, cioè l'`xobject` (se fornito).
-Il parametro `<accoda>` è 0 a meno che la routine verbo debba essere chiamata più di una volta per oggetti multipli. (Come caso speciale `<accoda>` è -1 se `object` o `xobject` sono un numero fornito in input come una o più cifre, in modo da indicare a `Perform` di non effettuare le normali chiamate alle routine `before/after`).
-
-Ad esempio i vari comandi del giocatore potrebbero (approssimativamente, a seconda delle routine verbo e degli oggetti) generare le chiamate:
-
-[example,role="gametranscript"]
-================================================================================
->i
-================================================================================
-
-[source,hugo]
---------------------------------------------------------------------------------
-Perform(&doInventory, 0, 0,      0)
---------------------------------------------------------------------------------
-
-
-[example,role="gametranscript"]
-================================================================================
->get key
-================================================================================
-
-[source,hugo]
---------------------------------------------------------------------------------
-Perform(&DoGet, key_object, 0, 0)
---------------------------------------------------------------------------------
-
-
-[example,role="gametranscript"]
-================================================================================
->put the key on the table
-================================================================================
-
-[source,hugo]
---------------------------------------------------------------------------------
-Perform(&DoPutIn, key_object, table_object, 0)
---------------------------------------------------------------------------------
-
-
-[example,role="gametranscript"]
-================================================================================
->turn the dial to 127
-================================================================================
-
-[source,hugo]
---------------------------------------------------------------------------------
-Perform(&DoTurn, dial, 127, -1)
---------------------------------------------------------------------------------
-
-
-[example,role="gametranscript"]
-================================================================================
->get key and banana
-================================================================================
-
-[source,hugo]
---------------------------------------------------------------------------------
-Perform(&DoGet, key_object, 0, 1)
-Perform(&DoGet, banana, 0, 2)
---------------------------------------------------------------------------------
-
-
-(Se non esiste una routine `Perform`, l'interprete esegue la chiamata di default a `player.before`, `location.before`, `xobject.before` e `object.before`, infine `verbroutine` se nessuno di questi restituisce _true_).
-
-= IL CICLO DEL GIOCO
-
-Questo è il modello che segue *Hugo Engine* (l'interprete) durante l'esecuzione del programma. (Vengono menzionate anche le chiamate alle routine `before` e a `verbroutine` da parte di `Perform` in `HUGOLIB.H`.
-Sebbene non facenti parte necessariamente del ciclo di gioco -- visto che possono o meno essere incluse in un programma -- vengono menzionate perché sono relative ad ogni programma Hugo che faccia uso della libreria standard di Hugo).
-
-(`INIT`: la routine `Init` viene chiamata solo quando il programma viene eseguito la prima volta, o quando viene dato un comando '`restart`' [ricomincia]).
-
-`MAIN`: all'inizio del ciclo di gioco l'interprete chiama la routine `Main`.
-La routine dovrebbe -- come nei programmi di esempio forniti -- prendersi cura dell'avanzamento del contatore dei turni, eseguire il comando '`runevents`' e chiamare le routine della libreria come `RunScripts` e `PrintStatusLine`.
-
-`INPUT`: l'input da tastiera viene ricevuto.
-
-`PARSING`: viene controllata la validità della riga di input, vengono controllati i sinonimi ed altre parole speciali, e viene chiamata (se presente) la routine `Parse` dell'utente.
-
-`GRAMMAR MATCHING`: l'interprete cerca di far corrispondere la riga di input con un verbo ed una sintassi validi nella tavola della grammatica.
-Se non viene trovata nessuna corrispondenza l'interprete torna ad `INPUT`. +
-Altrimenti se viene trovata una corrispondenza si ha almeno l'impostazione della variabile globale `verbroutine`, così come le eventuali `object` e `xobject`.
-
-`BEFORE ROUTINES` (chiamate da `Perform` in `HUGOLIB.H`):
-
-se degli oggetti sono stati specificati nella riga di input, le loro routine before vengono controllate nel seguente ordine, per ciascun oggetto:
-
-* `player.before`
-* `location.before`
-* `xobject.before` (se appropriato)
-* `object.before` (se appropriato)
-
-Se una qualunque di queste routine restituisce _true_, l'interprete salta la routine verbo.
-
-`VERB ROUTINE` (chiamata da `Perform` in `HUGOLIB.H`): +
-se nessuna routine `before` restituisce _true_ la routine verbo viene eseguita.
-
-Se un'azione viene completata con successo, la routine verbo deve restituire _true_.
-Un valore di ritorno _false_ annulla gli eventuali comandi rimanenti sulla riga di input.
-
-`Perform` non esegue nessuna proprietà `after` per `object` o `xobject`; questo è compito della routine verbo.
-Esegue sia `player.after` che `location.after` se la routine verbo restituisce _true_.
-
-(Il controllo ritorna dalla routine `Perform` della libreria all'interprete)
-
-Quando ha finito l'interprete ritorna a `MAIN`, chiamando la routine `Main` solo se l'ultimo verbo verificato non era un `xverb`.
-
-Impostare la variabile globale `endflag` in qualunque punto ad un valore diverso da zero comporta il termine del ciclo di gioco e l'esecuzione della routine `EndGame`.
-
-[NOTE]
-================================================================================
-Le informazioni di annullamento richiamate da '`undo`' vengono salvate ad ogni turno solo durante la routine `Main` (compreso qualunque comando o funzione richiamati al suo interno, come gli eventi, le micce ed i demoni, o gli script dei personaggi) e le routine verbo (a meno che il verbo sia un `xverb`).
-È perciò raccomandato che nessun'altra routine cambi un dato di gioco significativo, visto che questo non sarebbe recuperabile da '`undo`'.
-================================================================================
-
-= FUNZIONALITÀ AVANZATE
-
-== L'oggetto Display
-
-L'interprete fornisce un accesso alle seguenti proprietà di sola lettura (sebbene i nomi siano definiti in `HUGOLIB.H`):
-
-[cols=",",]
-|===
-|`screenwidth` |la larghezza dello schermo, in caratteri
-|`screenheight` |l'altezza dello schermo, in caratteri
-|`linelength` |la larghezza della finestra di testo corrente
-|`windowlines` |l'altezza della finestra di testo corrente
-| |
-|`cursor_column` |posizione orizzontale e verticale del cursore nella
-|`cursor_row` |finestra di testo corrente
-|===
-
-La libreria di Hugo definisce anche la proprietà leggibile/scrivibile:
-
-[cols=",",]
-|===
-|`statusline_height` |altezza dell'ultima riga di stato stampata
-|===
-
-Per consentire all'interprete di identificare correttamente l'oggetto `display`, viene selezionato l'oggetto (se presente) con il nome "`(display)`", cioè un oggetto che è definito come
-
-[source,hugo]
-------------------------------------------------------------
-object display
-{
-
-}
-------------------------------------------------------------
-
-senza nessun nome indicato.
-Questo è il modo in cui la libreria definisce l'oggetto `display`, così che le varie proprietà dell'oggetto `display` siano leggibili come in `display.screenheight`, `display.cursor_column`, ecc.
-
-== Finestre
-
-È possibile creare una finestra all'interno dello schermo per l'output del testo.
-La posizione del cursore, il ritorno a capo delle righe, ecc., vengono tarati ai limiti della finestra corrente.
-La posizione del cursore ed i limiti della finestra vengono sempre calcolati sulla dimensione dei caratteri a larghezza fissa.
-Le varie sintassi dell'istruzione '`window`' sono:
-
-
-[cols=",",]
-|===
-|`window 0` |Ripristina la visualizzazione a tutto schermo
-|`window n` +
-`{...}` |Crea una finestra di `n` righe dimensionandola come l'intero schermo
-|`window l, t, r, b {...}` |Crea una finestra con angolo in alto a sinistra (`l,t`) ed un angolo in basso a destra (`r, b`), con queste coordinate indicate in coordinate di caratteri dell'intero schermo
-|`window ` +
-`{...}` |ridisegna l'ultima finestra definita
-|===
-
-Ognuna di queste sintassi, tranne "`window 0`", è seguita da un blocco di codice durante il quale, normalmente, il testo viene inviato alla finestra.
-
-La finestra (i suoi limiti) esiste per la durata del blocco "`{...}`".
-Quando finisce la sommità della finestra di testo principale viene ridefinita come se cominciasse immediatamente sotto l'ultima finestra disegnata.
-Per cancellare la registrazione di qualunque finestra e ripristinare la finestra di testo principale allo schermo intero, si usa "`window 0`".
-
-Il file di libreria per la gestione delle finestre si chiama `WINDOW.H` e definisce una classe finestra chiamata `window_class` con le proprietà associate, così che una finestra possa essere creata con:
-
-[source,hugo]
-------------------------------------------------------------
-window_class <nome finestra> "titolo"
-{
-    win_position        <colonna schermo>, <riga schermo>
-    win_size            <colonne>, <righe>
-
-    win_textcolor  <colore del testo>
-    win_backcolor  <colore dello      sfondo>
-    win_titlecolor <colore del      testo del titolo>
-    win_titleback       <colore dello sfondo del titolo>
-}
-------------------------------------------------------------
-
-La `window_class` incorpora anche le routine proprietà `win_init`, `win_clear` e `win_end`.
-
-[NOTE]
+[IMPORTANT]
 ================================================================================
-Può essere importante tenere a mente che le misure come `display.screenwidth` possono cambiare durante l'esecuzione, in particolar modo in un ambiente con un'interfaccia grafica a finestre che consente il ridimensionamento della finestra del programma Hugo. +
-Per questa ragione è prudente controllare `display.<proprietà>` ogni volta che una finestra deve essere disegnata, invece di basare le coordinate su, ad esempio, un insieme di limiti calcolati durante l'inizializzazione del programma.
+Questo significa che la sostituzione [`replace`] deve avvenire *PRIMA* dell'uso della classe dagli altri oggetti.
 ================================================================================
-
-== Leggere e scrivere i file
-
-Ci possono essere delle occasioni in cui sia utile memorizzare dei dati in un file per una lettura successiva.
-Il modo più semplice per farlo richiede
-
-[source,hugo]
-------------------------------------------------------------
-x = save
-------------------------------------------------------------
-
-e
-
-[source,hugo]
-------------------------------------------------------------
-x = restore
-------------------------------------------------------------
-
-dove le funzioni '`save`' e '`restore`' restituiscono il valore _true_ a `x` se hanno avuto successo, o il valore _false_ se per qualche ragione sono andate in errore.
-In ogni caso, tutto l'insieme dei dati di gioco -- comprese le posizioni degli oggetti, i valori delle variabili, gli array, gli attributi, ecc. -- vengono salvati o ripristinati.
-
-Altre volte può essere preferibile salvare solo determinati valori. +
-Ad esempio, un determinato gioco può consentire al giocatore di creare alcune caratteristiche del personaggio o altri "`dati da ricordare`" che possono essere ripristinati nello stesso gioco od in altri giochi.
-
-Per fare questo si usano le operazioni '`writefile`' e '`readfile`'.
-
-La struttura
-
-[source,hugo]
-------------------------------------------------------------
-writefile <nomefile>
-{
-    ...
-}
-------------------------------------------------------------
-
-aprirà, all'inizio del blocco `writefile`, il file `<nomefile>` per la scrittura e posizionerà `<nomefile>` all'inizio del file (vuoto). (Se il file esiste verrà pulito/cancellato).
-Alla fine del blocco il file verrà nuovamente chiuso.
-
-All'interno di un blocco `writefile` si scrivono i valori usando
-
-[source,hugo]
-------------------------------------------------------------
-writeval <valore1>[, <valore2>,    ...]
-------------------------------------------------------------
-
-dove uno o più valori possono essere specificati.
-
-Per leggere il file si usa la struttura
-
-[source,hugo]
-------------------------------------------------------------
-readfile <nomefile>
-{
-    ...
-}
-------------------------------------------------------------
-
-che conterrà le assegnazioni
-
-[source,hugo]
-------------------------------------------------------------
-x = readval
-------------------------------------------------------------
-
-per ogni valore che deve essere letto, con `x` che rappresenta una variabile, o una proprietà, o un altro valore scrivibile.
-
-Ad esempio,
-
-[source,hugo]
-------------------------------------------------------------
-local conta, test
-
-conta = 10
-writefile "filetest"
-{
-    writeval count, "telefono", 10
-    test = FILE_CHECK
-         writeval test
-}
-if test ~= FILE_CHECK ! c'è stato un errore
-{
-    print "Errore      durante la scrittura."
-}
-------------------------------------------------------------
-
-scriverà la variabile `conta`, la voce di dizionario "`telefono`" ed il valore `10` in "`filetest`".
-
-[source,hugo]
-------------------------------------------------------------
-local a, b, c, test
-
-readfile "filetest"
-{
-    a = readval
-    b = readval
-    c = readval
-    test = readval
-}
-if test ~= FILE_CHECK ! c'è stato un errore
-{
-    print "Errore durante la lettura."
-}
-------------------------------------------------------------
-
-Se il blocco `readfile` viene eseguito con successo, `a` sarà uguale al precedente valore di `conta`, `b` conterrà "`telefono`" e `c` sarà uguale a `10`.
-
-La costante `FILE_CHECK`, definita in `HUGOLIB.H`, è utile perché `writefile` e `readfile` non forniscono nessun valore di ritorno esplicito per indicare un errore. `FILE_CHECK` è una sequenza di due byte univoca che può essere usata per verificare la correttezza delle operazioni.
-
-Nel blocco `writefile`, se il blocco termina prematuramente a causa di un errore, la variabile `test` non viene impostata a `FILE_CHECK`.
-L'istruzione '`if`' che segue il blocco verifica proprio questo.
-
-Nel blocco `readfile`, `test` viene impostata a `FILE_CHECK` sono se la sequenza di funzioni `readval` trova il numero corretto di valori in "`filetest`".
-Se ce ne sono troppi o troppo pochi, o se un errore causa un termine prematuro del blocco, `test` sarà uguale ad un valore diverso da `FILE_CHECK`.
-
-
-
-= RISORSE
-
-L'interprete consente ad un programma Hugo di accedere a dei dati esterni (chiamati risorse) compilati in un file formattato in maniera speciale chiamato _resourcefile_ [file delle risorse].
-Un _resourcefile_ viene creato usando:
-
-[source,hugo]
---------------------------------------------------------------------------------
-resource "<filerisorse>"
-{
-    "<risorsa1>"
-    "<risorsa2>"
-    ...
-}
---------------------------------------------------------------------------------
-
-Il nome `<filerisorse>` deve essere di 8 caratteri (o meno) alfanumerici che vengono automaticamente convertiti in maiuscolo. (La ragione è quella di massimizzare la portabilità attraverso le differenti piattaforme ed i differenti sistemi di nomenclatura dei file -- sfortunatamente non tutti seguono le stesse convenzioni, così questa restrizione vuole ridurre la nomenclatura dei file al minimo comun denominatore).
-
-Attualmente la versione v2.5 supporta i file grafici JPEG, i campionamenti audio RIFF/WAV, e i moduli musicali MOD/S3M/XM come risorse.
-
-Ad esempio, quello che segue è un file di risorse immaginario compilato su una piattaforma Windows 95/NT:
-
-[source,hugo]
---------------------------------------------------------------------------------
-resource "gameres1"
-{
-    "c:\hugo\graphics\logo.jpg"
-    "h:\data\scenic panorama.jpg"
-    "h:\data\background.jpg"
-    "c:\music\intro_theme.s3m"
-    "c:\music\theme2.xm"
-    "c:\sounds\sample1.wav"
-    "c:\sounds\sample2.wav"
-}
---------------------------------------------------------------------------------
-
-Non importa che la nomenclatura all'interno della definizione della risorsa non sia portabile.
-Nel precedente "`gameres1`", ad esempio, i nomi dei file sono specifici di Windows 95/NT, visto che è dove i file originali sono posizionati.
-Le risorse, comunque, vengono accedute solo per mezzo del nome del file come voci nell'indice del file delle risorse.
-Perciò, dopo che "`gameres1`" è stato creato, ci si riferisce alle tre immagini come "`logo`", "`scenic panorama`" e "`background`" all'interno del file delle risorse "`gameres1`".
-(Notate come qualunque indicazione di disco/percorso o estensione di file siano stati rimossi e non inclusi nell'indice.
-Come risultato due risorse con lo stesso nome, ma con percorsi o estensioni differenti non possono essere inclusi nello stesso file delle risorse).
-
-A causa della relativa non portabilità dei _resourcefile_ (più il tempo aggiuntivo richiesto su macchine lente dall'indicizzazione ed il consolidamento di centinaia di kilobyte di dati ponteziali), si raccomanda di compilare le risorse da file sorgenti separati del resto del gioco Hugo.
-
-L'estensione della libreria `RESOURCE.H` fornisce delle routine utili alla gestione delle risorse in un programma Hugo.
-
-Definisce inoltre i seguenti valori potenziali per `system_status`, che può essere controllata dopo un'operazione sulle risorse.
-Se `system_status` ha un valore diverso da zero (indicante lo stato normale), può contenere uno dei seguenti valori:
-
-
-[cols=",",]
-|===
-|`-1` |`STAT_UNAVAILABLE`
-|`101` |`STAT_NOFILE`
-|`102` |`STAT_NORESOURCE`
-|`103` |`STAT_LOADERROR`
-|===
-
-== Immagini
-
-Un'immagine memorizzata in un _resourcefile_ viene visualizzata mediante:
-
-[source,hugo]
---------------------------------------------------------------------------------
-picture "<resourcefile>", "<immagine>"
---------------------------------------------------------------------------------
-
-Ad esempio,
-
-[source,hugo]
---------------------------------------------------------------------------------
-picture "gameres1", "logo"
---------------------------------------------------------------------------------
-
-(È possibile inserire il percorso diretto di un'immagine come in
-
-[source,hugo]
---------------------------------------------------------------------------------
-picture "c:\hugo\graphics\logo.jpg"
---------------------------------------------------------------------------------
-
-ma visto che l'indicazione percorso/nomefile è specifica di un sistema operativo questa notazione deve essere usata solo per i test.
-Se l'immagine indicata non viene trovata nel resourcefile specificato, l'interprete cercherà di leggere l'immagine come un file nel percorso di ricerca corrente).
-
-L'immagine verrà visualizzata nella finestra di testo corrente.
-Se l'immagine è più piccola della finestra verrà centrata.
-Se è più larga, verrà ristretta per farla entrare.
-Se la versione di Hugo Engine che si sta usando non è abilitata alla grafica, allora '`picture`' non avrà effetto.
-
-Se l'immagine non viene trovata o se un errore non bloccante viene incontrato durante la lettura, l'esecuzione dell'interprete prosegue normalemente.
-
-`RESOURCE.H` fornisce un paio di routine per la gestione della grafica:
-
-[source,hugo]
---------------------------------------------------------------------------------
-LoadPicture("resourcefile", "immagine")
-LoadPicture("immagine")``
-
-PictureInText("file", "immagine", larghezza, altezza, preserva)
-PictureInText("immagine", larghezza, altezza, preserva)
---------------------------------------------------------------------------------
-
-Sostanzialmente `LoadPicture` è un _wrapper_ per l'istruzione '`picture`' che fornisce il servizio addizionale del controllo di `display.hasgraphics` per verificare che sia disponibile uno schermo grafico.
-
-`PictureInText` è leggermente più complicata.
-Consente ad un'immagine di essere visualizzata nel normale flusso del testo della finestra principale.
-Gli argomenti `<larghezza>` e `<altezza>` forniscono le dimensioni in caratteri a larghezza fissa dell'area dello schermo. (Visto che gli schermi differiscono nelle dimensioni dei caratteri, si raccomanda di calcolarle basandosi su `display.screenwidth` e `display.screenheight` invece di passare dei valori assoluti).
-Il parametro `<preserva>`, se fornito, assicura che una o più righe all'inizio dello schermo vengano protette dallo scrolling (si evita che scorrano fuori dallo schermo).
-
-(Sia `LoadPicture` che `PictureInText` possono essere chiamate solo con l'indicazione dell'immagine, senza indicare il _resourcefile_.
-In questo caso `RESOURCE.H` cerca di trovare la risorsa nell'ultimo _resourcefile_ usato, memorizzato nella variabile globale `last_resource_file`.
-Vista la potenziale imprecizione di questo metodo, si raccomanda di specificare sempre il nome del _resourcefile_).
-
-== Suono e musica
-
-I suoni e la musica vengono riprodotti usando le istruzioni Hugo:
-
-[source,hugo]
---------------------------------------------------------------------------------
-sound [repeat] <resourcefile>, <risorsa>[, <vol>]
-music [repeat] <resourcefile>, <risorsa>[, <vol>]
---------------------------------------------------------------------------------
-
-La parola chiave `repeat` è opzionale; se fornita si forza l'interprete a ripetere in continuazione la riproduzione della risorsa suono/musica fino ad una notifica successiva (cioè fino a che non viene fermata o quando viene riprodotta un'altra risorsa suono/musica).
-L'argomento `<vol>` è opzionale.
-Se fornito indica una percentuale di volume (da 0 a 100) per la riproduzione.
-
-Il suono o la musica che si stanno riproducendo possono essere interrotti usando:
-
-[source,hugo]
---------------------------------------------------------------------------------
-sound 0
-music 0
---------------------------------------------------------------------------------
-
-`RESOURCE.H` fornisce un paio di funzioni _wrapper_ per la gestione delle risorse audio:
-
-[source,hugo]
---------------------------------------------------------------------------------
-PlaySound(resourcefile, campione, ciclo, forza)
-PlayMusic(resourcefile, canzone, ciclo, forza)
---------------------------------------------------------------------------------
-
-In entrambi i casi se `<ciclo>` è _true_ ha lo stesso effetto di usare `repeat` nelle istruzioni '`sound`' e '`music`'.
-Se `<forza>` è _true_, il campione o la musica ripartono anche se quel campione o quella musica sono già in riproduzione (altrimenti le chiamate a `PlaySound` o `PlayMusic` non hanno effetti sostanziali).
-
-Per fermare la riproduzione di un campione o di una musica attraverso l'interfaccia della libreria si usa:
-
-[source,hugo]
---------------------------------------------------------------------------------
-PlaySound(SOUND_STOP)
-PlayMusic(MUSIC_STOP)
---------------------------------------------------------------------------------
-
-(dove `SOUND_STOP` e `MUSIC_STOP` sono costanti definite in `RESOURCE.H`).
 
 // EOF //

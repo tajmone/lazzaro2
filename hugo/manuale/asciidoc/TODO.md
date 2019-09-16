@@ -20,6 +20,7 @@ Pending tasks before merging in public branch.
     - [Chapters & Sections](#chapters-sections)
     - [Contents](#contents)
     - [CSS](#css)
+- [Highlight Hugo](#highlight-hugo)
 
 <!-- /MarkdownTOC -->
 
@@ -50,8 +51,11 @@ The whole document now needs to be thoroughly revised, chapter by chapter, by re
     + [ ] Proofread whole chapter.
     + [ ] Fix code blocks.
     + [ ] Fix typography.
-    + [ ] Fix cross-references.
+    + [ ] Fix cross-references:
+        * [ ] §3.3 &rarr; _App. B_.
     + [ ] Fix dead links: point to current location (but preserve old URL in t ext).
+    + [ ] Traduzioni da rivedere:
+        * [ ] _§3.1. L’albero degli oggetti_ — "Che, praticamente, rimuove `<oggetto>`…" non sembra corretta.
 - [ ] 4. **LA PROGRAMMAZIONE DI HUGO**
     + [ ] Proofread whole chapter.
     + [ ] Fix code blocks.
@@ -171,6 +175,16 @@ Once the document is production-ready:
 - [ ] Add additional roles for Hugo:
     + [ ] syntax
     + [ ] bad example?
+
+# Highlight Hugo
+
+I might need to revise my Highlight langDef for Hugo, for there might be some missing keywords (need to check if they actually are):
+
+- [ ] `alias`?
+- [ ] `attribute`?
+- [ ] `global`?
+- [ ] `property`?
+- [ ] `inherits`?
 
 <!-----------------------------------------------------------------------------
                                REFERENCE LINKS

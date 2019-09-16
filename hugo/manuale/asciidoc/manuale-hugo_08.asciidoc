@@ -49,7 +49,7 @@ Queste sono:
 Le routine di congiunzione non sono necessarie.
 L'interprete possiede delle routine di default già pronte, sebbene queste potrebbero essere non molto utili per la maggior parte dei programmatori.
 Per questo `HUGOLIB.H` contiene le routine seguenti che implementano tutte le funzionalità della libreria.
-Se si vuole usare una routine differente al posto di quella fornita, la routine deve essere sostituita usando '`replace`'.
+Se si vuole usare una routine differente al posto di quella fornita, la routine deve essere sostituita usando `replace`.
 
 == Parse
 

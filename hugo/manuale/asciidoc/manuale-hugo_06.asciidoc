@@ -43,7 +43,7 @@ Activate(<nome>)
 ------------------------------------------------------------
 
 che muove l'oggetto daemon specificato nell'area di visibilità del giocatore.
-In questo modo tutte le volte che un comando '`runevents`' viene eseguito (come dovrebbe essere nella routine `Main`), l'evento associato a `<nome>` viene eseguito.
+In questo modo tutte le volte che un comando `runevents` viene eseguito (come dovrebbe essere nella routine `Main`), l'evento associato a `<nome>` viene eseguito.
 
 Il daemon viene disattivato usando
 
@@ -54,7 +54,7 @@ Deactivate(<nome>)
 
 che rimuove l'oggetto daemon dalla visibilità.
 
-Si può vedere come un daemon sia in realtà uno speciale tipo di oggetto che che posto o meno nell'area di visibilità di '`runevents`', e che è l'evento associato al daemon che contiene veramente il codice.
+Si può vedere come un daemon sia in realtà uno speciale tipo di oggetto che che posto o meno nell'area di visibilità di `runevents`, e che è l'evento associato al daemon che contiene veramente il codice.
 
 Un fuse [miccia] è il nome con il quale si indica un timer -- cioè qualunque evento che debba accadere dopo uno specifico periodo di tempo.
 Il fuse è una versione un po' più complessa di un oggetto daemon, contenendo due proprietà addizionali in aggiunta a `in_scope`:

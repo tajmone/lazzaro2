@@ -15,7 +15,7 @@ Sebbene non facenti parte necessariamente del ciclo di gioco -- visto che posson
 (`INIT`: la routine `Init` viene chiamata solo quando il programma viene eseguito la prima volta, o quando viene dato un comando '`restart`' [ricomincia]).
 
 `MAIN`: all'inizio del ciclo di gioco l'interprete chiama la routine `Main`.
-La routine dovrebbe -- come nei programmi di esempio forniti -- prendersi cura dell'avanzamento del contatore dei turni, eseguire il comando '`runevents`' e chiamare le routine della libreria come `RunScripts` e `PrintStatusLine`.
+La routine dovrebbe -- come nei programmi di esempio forniti -- prendersi cura dell'avanzamento del contatore dei turni, eseguire il comando `runevents` e chiamare le routine della libreria come `RunScripts` e `PrintStatusLine`.
 
 `INPUT`: l'input da tastiera viene ricevuto.
 

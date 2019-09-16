@@ -534,7 +534,7 @@ div.literalblock.cmd pre .conum {
 <span id="author" class="author">Kent Tessman</span><br>
 <span id="revnumber">version 1,</span>
 <span id="revdate">25 Febbraio 1999</span>
-<br><span id="revremark">Alpha 5 (revisione documento)</span>
+<br><span id="revremark">Alpha 6 (revisione documento)</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contenuti</div>
@@ -5699,31 +5699,42 @@ Una routine può, o meno, restituire un valore, e può, o meno, richiedere una l
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">routine <span class="hl opt">&lt;</span>nomeroutine<span class="hl opt">&gt;</span> [(<span class="hl opt">&lt;</span>argomento1<span class="hl opt">&gt;</span>,      <span class="hl opt">&lt;</span>argomento2<span class="hl opt">&gt;</span>, ...)]&#x000A;{&#x000A;         ...&#x000A;}</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">routine <span class="hl opt">&lt;</span>nomeroutine<span class="hl opt">&gt;</span> [(<span class="hl opt">&lt;</span>argomento1<span class="hl opt">&gt;</span>, <span class="hl opt">&lt;</span>argomento2<span class="hl opt">&gt;</span>, ...)]&#x000A;{&#x000A;    ...&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>ancora una volta è necessario assicurarsi del fatto che la parentesi graffa aperta (&#8216;{&#8217;) compaia su una riga nuova dopo l&#8217;istruzione &#8216;routine&#8217;.</p>
+<p>ancora una volta è necessario assicurarsi del fatto che la parentesi graffa aperta (<code>{</code>) compaia su una riga nuova dopo l&#8217;istruzione <code>routine</code>.</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>(<em>NOTA</em>: Per sostituire una vecchia routine con una nuova con lo stesso nome (come in un file di libreria), si definisce la nuova usando &#8216;replace&#8217; invece di &#8216;routine&#8217;.</p>
+<p>Per sostituire una vecchia routine con una nuova con lo stesso nome (come in un file di libreria), si definisce la nuova usando <code>replace</code> invece di <code>routine</code>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">replace <span class="hl opt">&lt;</span>nomeroutine<span class="hl opt">&gt;</span> [(<span class="hl opt">&lt;</span>argomento1<span class="hl opt">&gt;</span>,      <span class="hl opt">&lt;</span>argomento2<span class="hl opt">&gt;</span>, ...)]</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">replace <span class="hl opt">&lt;</span>nomeroutine<span class="hl opt">&gt;</span> [(<span class="hl opt">&lt;</span>argomento1<span class="hl opt">&gt;</span>, <span class="hl opt">&lt;</span>argomento2<span class="hl opt">&gt;</span>, ...)]</code></pre>
 </div>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Ad esempio</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">routine RoutineProva(ogg)&#x000A;{&#x000A;    <span class="hl kwa">print</span> <span class="hl str">&quot;La &quot;</span>; ogg.name; <span class="hl str">&quot; ha una dimensione di      &quot;</span>;&#x000A;    <span class="hl kwa">print</span> ogg.size; <span class="hl str">&quot;.&quot;</span>&#x000A;    <span class="hl kwa">return</span> ogg.size&#x000A;}</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">routine RoutineProva(ogg)&#x000A;{&#x000A;    <span class="hl kwa">print</span> <span class="hl str">&quot;La &quot;</span>; ogg.name; <span class="hl str">&quot; ha una dimensione di &quot;</span>;&#x000A;    <span class="hl kwa">print</span> ogg.size; <span class="hl str">&quot;.&quot;</span>&#x000A;    <span class="hl kwa">return</span> ogg.size&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>prende un valore come argomento, lo assegna ad una variabile locale <code>ogg</code>, esegue una semplice sequenza di stampa e restituisce il valore della proprietà: <code>ogg.size</code>.
-La parola chiave &#8216;return&#8217; esce dalla routine corrente, e restituisce un valore se specificato.</p>
+La parola chiave <code>return</code> esce dalla routine corrente, e restituisce un valore se specificato.</p>
 </div>
 <div class="paragraph">
 <p>Sia</p>
@@ -5744,7 +5755,7 @@ La parola chiave &#8216;return&#8217; esce dalla routine corrente, e restituisce
 <div class="paragraph">
 <p>sono validi.
 Se non viene fornita nessuna espressione, la routine restituisce 0.
-Se nessuna istruzione &#8216;return&#8217; viene incontrata, la routine prosegue l&#8217;esecuzione fino alla parentesi graffa chiusa (&#8216;}&#8217;) e poi restituisce 0.</p>
+Se nessuna istruzione <code>return</code> viene incontrata, la routine prosegue l&#8217;esecuzione fino alla parentesi graffa chiusa (<code>}</code>) e poi restituisce 0.</p>
 </div>
 <div class="paragraph">
 <p><code>RoutineProva</code> può essere chiamata in diversi modi:</p>
@@ -5760,7 +5771,7 @@ Se nessuna istruzione &#8216;return&#8217; viene incontrata, la routine prosegue
 <div class="exampleblock gametranscript">
 <div class="content">
 <div class="paragraph">
-<p>"La grande valigia verde ha una dimensione di    25."</p>
+<p>La grande valigia verde ha una dimensione di 25.</p>
 </div>
 </div>
 </div>
@@ -5808,7 +5819,7 @@ Questo significa che, ad esempio, nelle routine seguenti:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">routine RoutineProva&#x000A;{&#x000A;    <span class="hl kwa">local</span> a&#x000A;&#x000A;    a <span class="hl opt">=</span> <span class="hl num">5</span>&#x000A;         Raddoppia(a)&#x000A;    <span class="hl kwa">print number</span> a&#x000A;}&#x000A;&#x000A;routine Raddoppia(a)&#x000A;{&#x000A;    a      <span class="hl opt">=</span> a <span class="hl opt">*</span> <span class="hl num">2</span>&#x000A;}</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">routine RoutineProva&#x000A;{&#x000A;    <span class="hl kwa">local</span> a&#x000A;    a <span class="hl opt">=</span> <span class="hl num">5</span>&#x000A;    Raddoppia(a)&#x000A;    <span class="hl kwa">print number</span> a&#x000A;}&#x000A;&#x000A;routine Raddoppia(a)&#x000A;{&#x000A;    a <span class="hl opt">=</span> a <span class="hl opt">*</span> <span class="hl num">2</span>&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5819,14 +5830,14 @@ Questo significa che, ad esempio, nelle routine seguenti:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">routine RoutineProva&#x000A;{&#x000A;    <span class="hl kwa">local</span> a&#x000A;&#x000A;    a <span class="hl opt">=</span> <span class="hl num">5</span>&#x000A;    a <span class="hl opt">=</span>      Raddoppia(a)&#x000A;    <span class="hl kwa">print number</span> a&#x000A;}&#x000A;&#x000A;routine Raddoppia(a)&#x000A;{&#x000A;         <span class="hl kwa">return</span> a <span class="hl opt">*</span> <span class="hl num">2</span>&#x000A;}</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">routine RoutineProva&#x000A;{&#x000A;    <span class="hl kwa">local</span> a&#x000A;    a <span class="hl opt">=</span> <span class="hl num">5</span>&#x000A;    a <span class="hl opt">=</span> Raddoppia(a)&#x000A;    <span class="hl kwa">print number</span> a&#x000A;}&#x000A;&#x000A;routine Raddoppia(a)&#x000A;{&#x000A;    <span class="hl kwa">return</span> a <span class="hl opt">*</span> <span class="hl num">2</span>&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Alla variabile locale <code>a</code> di <code>RoutineProva</code> viene assegnato il valore di ritorno di <code>Raddoppia</code>.</p>
 </div>
 <div class="paragraph">
-<p>Un effetto collaterale interessante di un valore di ritorno nullo (0) può essere visto usando il comando &#8216;print&#8217;.
+<p>Un effetto collaterale interessante di un valore di ritorno nullo (0) può essere visto usando il comando <code>print</code>.
 Considerando la routine <code>The</code> di <code>HUGOLIB.H</code>, che stampa l&#8217;articolo di un oggetto (ad es., &#8220;la&#8221; se appropriato), seguito dalla proprietà <code>name</code> [nome] dell&#8217;oggetto.</p>
 </div>
 <div class="listingblock">
@@ -5845,41 +5856,35 @@ Considerando la routine <code>The</code> di <code>HUGOLIB.H</code>, che stampa l
 </div>
 </div>
 <div class="paragraph">
-<p>Notate che il comando &#8216;print&#8217; stampa solo</p>
+<p>Notate che il comando <code>print</code> stampa solo</p>
 </div>
-<div class="exampleblock gametranscript">
+<div class="literalblock">
 <div class="content">
-<div class="paragraph">
-<p>"Apri "</p>
-</div>
+<pre>"Apri "</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>e</p>
 </div>
-<div class="exampleblock gametranscript">
+<div class="literalblock">
 <div class="content">
-<div class="paragraph">
-<p>"."</p>
-</div>
+<pre>"."</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>È la routine <code>The</code> che stampa</p>
 </div>
-<div class="exampleblock gametranscript">
+<div class="literalblock">
 <div class="content">
-<div class="paragraph">
-<p>la valigia</p>
-</div>
+<pre>la valigia</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Visto che <code>The</code> restituisce 0 (la stringa nulla, o <code>""</code>), il comando &#8216;print&#8217; in realtà visualizza</p>
+<p>Visto che <code>The</code> restituisce 0 (la stringa nulla, o <code>""</code>), il comando <code>print</code> in realtà visualizza</p>
 </div>
-<div class="listingblock">
+<div class="literalblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo"><span class="hl str">&quot;Apri &quot;</span>`, `<span class="hl str">&quot;&quot;</span>`, e `<span class="hl str">&quot;.&quot;</span></code></pre>
+<pre>"Apri ", "", e "."</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5905,7 +5910,7 @@ Normalmente una routine proprietà viene eseguita quando il programma cerca di l
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">size&#x000A;{&#x000A;    <span class="hl kwa">return</span> x      <span class="hl opt">+</span> <span class="hl num">5</span>&#x000A;}</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">size&#x000A;{&#x000A;    <span class="hl kwa">return</span> x <span class="hl opt">+</span> <span class="hl num">5</span>&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5929,7 +5934,7 @@ La libreria controlla <code>&lt;oggetto&gt;.n_to</code> per vedere se esiste un 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">n_to&#x000A;    {<span class="hl str">&quot;La porta dell&#39;ufficio      è chiusa.&quot;</span>}</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">n_to&#x000A;{&#x000A;    <span class="hl str">&quot;La porta dell&#39;ufficio è chiusa.&quot;</span>&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5937,7 +5942,7 @@ La libreria controlla <code>&lt;oggetto&gt;.n_to</code> per vedere se esiste un 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">n_to&#x000A;{&#x000A;    <span class="hl str">&quot;La      porta dell&#39;ufficio è chiusa. &quot;</span>;&#x000A;    <span class="hl kwa">return      false</span>&#x000A;}</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">n_to&#x000A;{&#x000A;    <span class="hl str">&quot;La porta dell&#39;ufficio è chiusa. &quot;</span>;&#x000A;    <span class="hl kwa">return false</span>&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5948,15 +5953,15 @@ Nel terzo caso, il messaggio personalizzato di mossa non valida verrà visualizz
 <div class="exampleblock gametranscript">
 <div class="content">
 <div class="paragraph">
-<p>"La porta dell&#8217;ufficio è chiusa. You can&#8217;t go that    way."</p>
+<p>La porta dell&#8217;ufficio è chiusa. You can&#8217;t go that way.</p>
 </div>
 </div>
 </div>
-<div class="admonitionblock note">
+<div class="admonitionblock important">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -5966,11 +5971,22 @@ Nel terzo caso, il messaggio personalizzato di mossa non valida verrà visualizz
 </tr>
 </table>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>(Per quelli che si stanno domandando come mai il valore di ritorno <em>true</em> nel secondo caso non cerchi di effettuare uno spostamento all&#8217;oggetto numero 1, la routine <code>DoGo</code> della libreria assume che non ci sarà mai un oggetto stanza col numero uno.)</p>
+<p>Per quelli che si stanno domandando come mai il valore di ritorno <em>true</em> nel secondo caso non cerchi di effettuare uno spostamento all&#8217;oggetto numero 1, la routine <code>DoGo</code> della libreria assume che non ci sarà mai un oggetto stanza col numero uno.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>Le routine proprietà possono essere eseguite direttamente usando il comando &#8216;run&#8217; [esegui]:</p>
+<p>Le routine proprietà possono essere eseguite direttamente usando il comando <code>run</code> [esegui]:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5987,7 +6003,7 @@ Le routine proprietà non accettano argomenti.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo"><span class="hl opt">&lt;</span>oggetto<span class="hl opt">&gt;</span>.<span class="hl opt">&lt;</span>proprietà<span class="hl opt">&gt; =    &lt;</span>valore<span class="hl opt">&gt;</span></code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo"><span class="hl opt">&lt;</span>oggetto<span class="hl opt">&gt;</span>.<span class="hl opt">&lt;</span>proprietà<span class="hl opt">&gt; = &lt;</span>valore<span class="hl opt">&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -6016,7 +6032,7 @@ Un semplice</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo"><span class="hl opt">&lt;</span>proprietà<span class="hl opt">&gt;</span> {<span class="hl kwa">return false</span>}</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo"><span class="hl opt">&lt;</span>proprietà<span class="hl opt">&gt;</span> { <span class="hl kwa">return false</span> }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -6040,7 +6056,7 @@ Quando si assegna un valore, od un insieme di valori, ad una routine proprietà,
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">found_in <span class="hl opt">=</span> {<span class="hl kwa">return</span> scantinato}</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">found_in <span class="hl opt">=</span> { <span class="hl kwa">return</span> scantinato }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -6064,7 +6080,7 @@ Per evitarlo, come quando si &#8220;<em>prende</em>&#8221; una proprietà da un 
 </div>
 </div>
 <div class="paragraph">
-<p>usando &#8216;..&#8217; invece del normale operatore.</p>
+<p>usando <code>..</code> invece del normale operatore.</p>
 </div>
 <div class="sect3">
 <h4 id="_esempio_prendere_a_prestito_le_routine_proprietà"><a class="anchor" href="#_esempio_prendere_a_prestito_le_routine_proprietà"></a>Esempio: &#8220;Prendere a prestito&#8221; le Routine Proprietà</h4>
@@ -6075,7 +6091,7 @@ Ma potrebbe presentarsi una situazione in cui uno di questi oggetti deve avere u
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">class cibo&#x000A;{&#x000A;         morsi_rimasti <span class="hl num">5</span>&#x000A;    mangiare&#x000A;    {&#x000A;        self.morsi_rimasti <span class="hl opt">=</span>      self.morsi_rimasti <span class="hl opt">-</span> <span class="hl num">1</span>&#x000A;        <span class="hl kwa">if</span> self.morsi_rimasti <span class="hl opt">=</span>      <span class="hl num">0</span>&#x000A;                 <span class="hl kwa">remove</span> self <span class="hl slc">! tutto mangiato</span>&#x000A;    }&#x000A;}&#x000A;&#x000A;cibo alimento_naturale&#x000A;{&#x000A;         mangiare&#x000A;    {&#x000A;        actor.salute <span class="hl opt">=</span>      actor.salute <span class="hl opt">+</span> <span class="hl num">1</span>&#x000A;        <span class="hl kwa">run</span>      cibo..mangiare&#x000A;    }&#x000A;}</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">class cibo&#x000A;{&#x000A;    morsi_rimasti <span class="hl num">5</span>&#x000A;    mangiare&#x000A;    {&#x000A;        self.morsi_rimasti <span class="hl opt">=</span> self.morsi_rimasti <span class="hl opt">-</span> <span class="hl num">1</span>&#x000A;        <span class="hl kwa">if</span> self.morsi_rimasti <span class="hl opt">=</span> <span class="hl num">0</span>&#x000A;            <span class="hl kwa">remove</span> self <span class="hl slc">! tutto mangiato</span>&#x000A;    }&#x000A;}&#x000A;&#x000A;cibo alimento_naturale&#x000A;{&#x000A;    mangiare&#x000A;    {&#x000A;        actor.salute <span class="hl opt">=</span> actor.salute <span class="hl opt">+</span> <span class="hl num">1</span>&#x000A;        <span class="hl kwa">run</span> cibo..mangiare&#x000A;    }&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -6083,7 +6099,7 @@ Ma potrebbe presentarsi una situazione in cui uno di questi oggetti deve avere u
 </div>
 <div class="paragraph">
 <p>In questo caso sarebbe stato scomodo dover riscrivere la routine <code>cibo.mangiare</code> per l&#8217;oggetto <code>alimento_naturale</code> solo perché quest&#8217;ultimo deve anche incrementare <code>actor.salute</code>.
-Usando &#8216;..&#8217; si chiama <code>cibo.mangiare</code> con <code>self</code> impostata a <code>alimento_naturale</code>, non la classe <code>cibo</code>, così che <code>cibo.mangiare</code> riguarda <code>alimento_naturale</code>.
+Usando <code>..</code> si chiama <code>cibo.mangiare</code> con <code>self</code> impostata a <code>alimento_naturale</code>, non la classe <code>cibo</code>, così che <code>cibo.mangiare</code> riguarda <code>alimento_naturale</code>.
 Questo consente di apportare delle modifiche ad ogni proprietà, attributo, o routine proprietà in una classe, e quella modifica verrà ripetuta in tutti gli oggetti costruiti da quella classe.</p>
 </div>
 </div>
@@ -6099,7 +6115,7 @@ Sono uniche nel senso che non solo sono sempre routine, ma sono anche molto più
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">property <span class="hl opt">&lt;</span>nome proprietà<span class="hl opt">&gt;</span> $complex <span class="hl opt">&lt;</span>valore      default<span class="hl opt">&gt;</span></code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">property <span class="hl opt">&lt;</span>nome proprietà<span class="hl opt">&gt;</span> $complex <span class="hl opt">&lt;</span>valore default<span class="hl opt">&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -6107,7 +6123,7 @@ Sono uniche nel senso che non solo sono sempre routine, ma sono anche molto più
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">property before $complex&#x000A;property after      $complex</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">property before $complex&#x000A;property after $complex</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -6115,19 +6131,19 @@ Sono uniche nel senso che non solo sono sempre routine, ma sono anche molto più
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">before&#x000A;{&#x000A;         <span class="hl opt">&lt;</span>uso1<span class="hl opt">&gt; &lt;</span>routineverbo1<span class="hl opt">&gt;</span>[, <span class="hl opt">&lt;</span>routineverbo2<span class="hl opt">&gt;</span>,...]&#x000A;    {&#x000A;        ...&#x000A;    }&#x000A;    <span class="hl opt">&lt;</span>uso2<span class="hl opt">&gt;      &lt;</span>routineverbo3<span class="hl opt">&gt;</span>[, <span class="hl opt">&lt;</span>routineverbo4<span class="hl opt">&gt;</span>,...]&#x000A;    {&#x000A;        ...&#x000A;    }&#x000A;    ...&#x000A;}</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">before&#x000A;{&#x000A;    <span class="hl opt">&lt;</span>uso1<span class="hl opt">&gt; &lt;</span>routineverbo1<span class="hl opt">&gt;</span>[, <span class="hl opt">&lt;</span>routineverbo2<span class="hl opt">&gt;</span>, ...]&#x000A;    {&#x000A;        ...&#x000A;    }&#x000A;    <span class="hl opt">&lt;</span>uso2<span class="hl opt">&gt; &lt;</span>routineverbo3<span class="hl opt">&gt;</span>[, <span class="hl opt">&lt;</span>routineverbo4<span class="hl opt">&gt;</span>, ...]&#x000A;    {&#x000A;        ...&#x000A;    }&#x000A;    ...&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>(La routine <code>after</code> è uguale, basta sostituire &#8216;after&#8217; a &#8216;before&#8217;).</p>
+<p>(La routine <code>after</code> è uguale, basta sostituire <code>after</code> a <code>before</code>).</p>
 </div>
 <div class="paragraph">
 <p>Lo specificatore <code>&lt;uso&gt;</code> è il valore con il quale l&#8217;oggetto specificato viene comparato.
-Più comunemente, è &#8220;object&#8221;, &#8220;xobject&#8221;, &#8220;location&#8221;, &#8220;actor&#8221;, &#8220;parent(object)&#8221;, ecc.
+Più comunemente, è <code>object</code>, <code>xobject</code>, <code>location</code>, <code>actor</code>, <code>parent(object)</code>, ecc.
 La <code>&lt;routineverbo&gt;</code> è il nome della routine verbo a cui l&#8217;uso in questione viene applicato.</p>
 </div>
 <div class="paragraph">
-<p>Se <code>&lt;oggetto&gt;.before</code> viene controllata, con la variabile globale <code>verbroutine</code> impostata con una delle routine verbo specificate nella proprietà <code>before</code>, e <code>&lt;uso&gt;</code> in quell&#8217;instanza è &#8220;object&#8221;, allora il blocco di codice seguente viene eseguito.
+<p>Se <code>&lt;oggetto&gt;.before</code> viene controllata, con la variabile globale <code>verbroutine</code> impostata con una delle routine verbo specificate nella proprietà <code>before</code>, e <code>&lt;uso&gt;</code> in quell&#8217;instanza è <code>object</code>, allora il blocco di codice seguente viene eseguito.
 Se non viene trovata nessuna corrispondenza, <code>&lt;oggetto&gt;.before</code> restituisce <em>false</em> [falso].</p>
 </div>
 <div class="paragraph">
@@ -6135,7 +6151,7 @@ Se non viene trovata nessuna corrispondenza, <code>&lt;oggetto&gt;.before</code>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">before&#x000A;{&#x000A;    <span class="hl kwa">object</span>      DoEat&#x000A;    {&#x000A;        <span class="hl str">&quot;Non puoi mangiare la      valigia!&quot;</span>&#x000A;    }&#x000A;}&#x000A;&#x000A;after&#x000A;{&#x000A;    <span class="hl kwa">object</span>      DoGet&#x000A;    {&#x000A;        <span class="hl str">&quot;Con grande sforzo      raccogli la valigia.&quot;</span>&#x000A;    }&#x000A;    <span class="hl kwa">xobject</span> DoPutIn&#x000A;         {&#x000A;        <span class="hl str">&quot;Hai messo &quot;</span>;&#x000A;        The(<span class="hl kwa">object</span>)&#x000A;        <span class="hl str">&quot; nella valigia.&quot;</span>&#x000A;    }&#x000A;}</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">before&#x000A;{&#x000A;    <span class="hl kwa">object</span> DoEat&#x000A;    {&#x000A;        <span class="hl str">&quot;Non puoi mangiare la valigia!&quot;</span>&#x000A;    }&#x000A;}&#x000A;&#x000A;after&#x000A;{&#x000A;    <span class="hl kwa">object</span> DoGet&#x000A;    {&#x000A;        <span class="hl str">&quot;Con grande sforzo raccogli la valigia.&quot;</span>&#x000A;    }&#x000A;    <span class="hl kwa">xobject</span> DoPutIn&#x000A;    {&#x000A;        <span class="hl str">&quot;Hai messo &quot;</span>;&#x000A;        The(<span class="hl kwa">object</span>)&#x000A;        <span class="hl str">&quot; nella valigia.&quot;</span>&#x000A;    }&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -6144,7 +6160,7 @@ Il modo di ingannare l&#8217;interprete per farlo continuare normalmente, come s
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">after&#x000A;{&#x000A;    <span class="hl kwa">object</span>      DoGet&#x000A;    {<span class="hl str">&quot;Bene. &quot;</span>;&#x000A;    <span class="hl kwa">return false</span>}&#x000A;}</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">after&#x000A;{&#x000A;    <span class="hl kwa">object</span> DoGet&#x000A;    {&#x000A;        <span class="hl str">&quot;Bene. &quot;</span>;&#x000A;        <span class="hl kwa">return false</span>&#x000A;    }&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -6153,27 +6169,27 @@ Il modo di ingannare l&#8217;interprete per farlo continuare normalmente, come s
 <div class="exampleblock gametranscript">
 <div class="content">
 <div class="paragraph">
-<p>&gt;get valigia
-Bene.    Taken.</p>
+<p>&gt; <em>get valigia</em><br>
+Bene. Taken.</p>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>Visto che la routine <code>after</code> restituisce <em>false</em>, e che la risposta predefinita della libreria per una chiamata a <code>DoGet</code> che ha avuto successo è "`Taken`." [Preso].</p>
+<p>Visto che la routine <code>after</code> restituisce <em>false</em>, e che la risposta predefinita della libreria per una chiamata a <code>DoGet</code> che ha avuto successo è &#8220;Taken.&#8221; [Preso].</p>
 </div>
 <div class="paragraph">
 <p>È importante ricordare che, a differenza delle altre routine, <code>before</code> e <code>after</code> sono routine &#8220;<em>aggiuntive</em>&#8221;; cioè, una routine <code>before</code> (o <code>after</code>) definita in una classe ereditata o un oggetto non viene sovrascritta da una nuova routine proprietà nel nuovo oggetto.
 Invece la definizione della nuova routine viene&#8201;&#8212;&#8201;in sostanza&#8201;&#8212;&#8201;aggiunta.
-Una proprietà aggiuntiva viene definita usando il qualificatore &#8216;$additive&#8217;, come in:</p>
+Una proprietà aggiuntiva viene definita usando il qualificatore <code>$additive</code>, come in:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">property <span class="hl opt">&lt;</span>nome proprietà<span class="hl opt">&gt;</span> $additive <span class="hl opt">&lt;</span>valore      default<span class="hl opt">&gt;</span></code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">property <span class="hl opt">&lt;</span>nome proprietà<span class="hl opt">&gt;</span> $additive <span class="hl opt">&lt;</span>valore default<span class="hl opt">&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Tutte le subroutine <code>before/after</code> precedenti vengono sovrapposte.
-Il processo di esame di una proprietà <code>before/after</code> comincia con l&#8217;oggetto presente, andando indietro attraverso i parenti dell&#8217;oggetto fino a che viene trovata una combinazione <code>uso/routineverbo</code> valida; una volta che la corrispondenza è stata trovata, nessun&#8217;altra classe precedente nell&#8217;ereditarietà viene processata (a meno che la routine proprietà in questione restituisca <em>false</em>).</p>
+<p>Tutte le subroutine <code>before</code>/<code>after</code> precedenti vengono sovrapposte.
+Il processo di esame di una proprietà <code>before</code>/<code>after</code> comincia con l&#8217;oggetto presente, andando indietro attraverso i parenti dell&#8217;oggetto fino a che viene trovata una combinazione <code>uso</code>/<code>routineverbo</code> valida; una volta che la corrispondenza è stata trovata, nessun&#8217;altra classe precedente nell&#8217;ereditarietà viene processata (a meno che la routine proprietà in questione restituisca <em>false</em>).</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -6190,11 +6206,11 @@ Il processo di esame di una proprietà <code>before/after</code> comincia con l&
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">before&#x000A;{&#x000A;         <span class="hl kwa">xobject</span>&#x000A;    {&#x000A;        ...&#x000A;    }&#x000A;}</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">before&#x000A;{&#x000A;    <span class="hl kwa">xobject</span>&#x000A;    {&#x000A;        ...&#x000A;    }&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>La routine specificata viene eseguita ogni volta che l&#8217;oggetto in questione è l'`xobject` per <strong>OGNI</strong> input valido.</p>
+<p>La routine specificata viene eseguita ogni volta che l&#8217;oggetto in questione è l&#8217;<code>xobject</code> per <strong>OGNI</strong> input valido.</p>
 </div>
 </td>
 </tr>
@@ -6202,11 +6218,11 @@ Il processo di esame di una proprietà <code>before/after</code> comincia con l&
 </div>
 <div class="paragraph">
 <p>Se questo blocco non specifico capita prima di qualunque blocco che specifica routine verbo, allora i blocchi seguenti, se corrispondenti, verranno eseguiti a condizione che il blocco non restituisca <em>true</em>.
-Se il blocco non specifico viene dopo gli altri blocchi, allora verrà eseguito solo se nessuna altra combinazione <code>object/routineverbo</code> viene trovata.</p>
+Se il blocco non specifico viene dopo gli altri blocchi, allora verrà eseguito solo se nessuna altra combinazione <code>object</code>/<code>routineverbo</code> viene trovata.</p>
 </div>
 <div class="paragraph">
 <p>Un difetto di questa non specificazione è che tutte le routine verbo vengono controllate&#8201;&#8212;&#8201;sia <code>verbs</code> che <code>xverbs</code>.
-Questo può essere particolarmente sgradevole nel caso delle proprietà <code>before/after</code> per le locazioni, dove una risposta non specifica viene eseguita anche per &#8216;save&#8217;, &#8216;restore&#8217;, ecc.</p>
+Questo può essere particolarmente sgradevole nel caso delle proprietà <code>before</code>/<code>after</code> per le locazioni, dove una risposta non specifica viene eseguita anche per &#8216;save&#8217;, &#8216;restore&#8217;, ecc.</p>
 </div>
 <div class="paragraph">
 <p>Per evitarlo la libreria fornisce la funzione <code>AnyVerb</code> che come argomento accetta un oggetto e restituisce il numero di quell&#8217;oggetto se la routine <code>verbroutine</code> attuale non è nel gruppo degli <code>xverb</code>; altrimenti restituisce <em>false</em>.
@@ -6214,7 +6230,7 @@ Perciò può essere usata tramite:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">before&#x000A;{&#x000A;         AnyVerb(location)&#x000A;    {&#x000A;        ...&#x000A;    }&#x000A;}</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">before&#x000A;{&#x000A;    AnyVerb(location)&#x000A;    {&#x000A;        ...&#x000A;    }&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -6222,7 +6238,7 @@ Perciò può essere usata tramite:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">before&#x000A;{&#x000A;         location&#x000A;    {&#x000A;        ...&#x000A;    }&#x000A;}</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">before&#x000A;{&#x000A;    location&#x000A;    {&#x000A;        ...&#x000A;    }&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -6237,7 +6253,7 @@ Ma <code>AnyVerb(location)</code> sarà uguale alla variabile globale <code>loca
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo"><span class="hl kwa">object</span> mobiledilegno <span class="hl str">&quot;mobiletto di legno&quot;</span>&#x000A;{&#x000A;    <span class="hl kwa">in</span> empryroom&#x000A;    article <span class="hl str">&quot;un&quot;</span>&#x000A;         nouns <span class="hl str">&quot;mobiletto&quot;</span>, <span class="hl str">&quot;scaffale&quot;</span>, <span class="hl str">&quot;mensole&quot;</span>, \&#x000A;        <span class="hl str">&quot;mobilio&quot;</span>, <span class="hl str">&quot;sportelli&quot;</span>,      <span class="hl str">&quot;sportello&quot;</span>&#x000A;    adjectives <span class="hl str">&quot;legno&quot;</span>, <span class="hl str">&quot;fine&quot;</span>,      <span class="hl str">&quot;mogano&quot;</span>&#x000A;&#x000A;    short_desc <span class="hl slc">! descrizione sintetica</span>&#x000A;        <span class="hl str">&quot;Un mobiletto di legno è      posto lungo una parete.&quot;</span>&#x000A;    when_open <span class="hl slc">! quando      aperto</span>&#x000A;        <span class="hl str">&quot;Un mobiletto      di legno aperto è posto lungo una parete.&quot;</span>&#x000A;         long_desc <span class="hl slc">! descrizione estesa</span>&#x000A;    {&#x000A;        <span class="hl str">&quot;Il mobiletto è fatto di      fine legno di mogano,</span>&#x000A;<span class="hl str">        costruito a mano da un      falegname esperto. Nella parte</span>&#x000A;<span class="hl str">        anteriore ci sono due      sportelli (al momento &quot;</span>;&#x000A;        <span class="hl kwa">if</span> self <span class="hl kwa">is</span> open&#x000A;                 <span class="hl kwa">print</span> <span class="hl str">&quot;aperti&quot;</span>;&#x000A;             <span class="hl kwa">else</span>: <span class="hl kwa">print</span> <span class="hl str">&quot;chiusi&quot;</span>;&#x000A;        <span class="hl kwa">print</span> <span class="hl str">&quot;).&quot;</span>&#x000A;    }&#x000A;contains_desc <span class="hl slc">! descrizione del      contenuto</span>&#x000A;    <span class="hl str">&quot;Dietro gli sportelli aperti del      mobiletto</span>&#x000A;<span class="hl str">        puoi      vedere&quot;</span>; <span class="hl slc">! punto e virgola - niente riga nuova</span>&#x000A;&#x000A;key_object chiave_mobiletto <span class="hl slc">! un oggetto chiave_mobiletto</span>&#x000A;<span class="hl slc">! deve essere creato</span>&#x000A;&#x000A;holding <span class="hl num">0</span> <span class="hl slc">! comincia vuoto</span>&#x000A;capacity <span class="hl num">100</span>&#x000A;&#x000A;before&#x000A;{&#x000A;    <span class="hl kwa">object</span>      DoLookUnder <span class="hl slc">! guarda sotto l&#39;oggetto</span>&#x000A;        {<span class="hl str">&quot;Niente tranne la      polvere.&quot;</span>}&#x000A;    <span class="hl kwa">object</span> DoGet <span class="hl slc">! prendi      l&#39;oggetto</span>&#x000A;             {<span class="hl str">&quot;L&#39;armadietto è troppo pesante per</span>&#x000A;<span class="hl str">                 essere spostato!&quot;</span>}&#x000A;}&#x000A;after&#x000A;{&#x000A;    <span class="hl kwa">object</span> DoLock <span class="hl slc">! chiudi a chiave</span>&#x000A;        {<span class="hl str">&quot;Con una girata di      chiavi chiudi l&#39;armadietto</span>&#x000A;<span class="hl str">                 per bene.&quot;</span>}&#x000A;}&#x000A;&#x000A;<span class="hl slc">! contenitore, apribile, non aperto</span>&#x000A;<span class="hl kwa">is</span> container,      openable, <span class="hl kwa">not</span> open&#x000A;&#x000A;<span class="hl slc">! chiudibile a chiave, non spostabile</span>&#x000A;<span class="hl kwa">is</span> lockable,      static&#x000A;}</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo"><span class="hl kwa">object</span> mobiledilegno <span class="hl str">&quot;mobiletto di legno&quot;</span>&#x000A;{&#x000A;    <span class="hl kwa">in</span> emptyroom&#x000A;    article <span class="hl str">&quot;un&quot;</span>&#x000A;    nouns <span class="hl str">&quot;mobiletto&quot;</span>, <span class="hl str">&quot;scaffale&quot;</span>, <span class="hl str">&quot;mensole&quot;</span>, \&#x000A;        <span class="hl str">&quot;mobilio&quot;</span>, <span class="hl str">&quot;sportelli&quot;</span>, <span class="hl str">&quot;sportello&quot;</span>&#x000A;    adjectives <span class="hl str">&quot;legno&quot;</span>, <span class="hl str">&quot;fine&quot;</span>, <span class="hl str">&quot;mogano&quot;</span>&#x000A;    short_desc <span class="hl slc">! descrizione sintetica</span>&#x000A;        <span class="hl str">&quot;Un mobiletto di legno è posto lungo una parete.&quot;</span>&#x000A;    when_open <span class="hl slc">! quando aperto</span>&#x000A;        <span class="hl str">&quot;Un mobiletto di legno aperto è posto lungo una parete.&quot;</span>&#x000A;    long_desc <span class="hl slc">! descrizione estesa</span>&#x000A;    {&#x000A;        <span class="hl str">&quot;Il mobiletto è fatto di fine legno di mogano,</span>&#x000A;<span class="hl str">        costruito a mano da un falegname esperto. Nella parte</span>&#x000A;<span class="hl str">        anteriore ci sono due sportelli (al momento &quot;</span>;&#x000A;        <span class="hl kwa">if</span> self <span class="hl kwa">is</span> open&#x000A;            <span class="hl kwa">print</span> <span class="hl str">&quot;aperti&quot;</span>;&#x000A;        <span class="hl kwa">else</span>: <span class="hl kwa">print</span> <span class="hl str">&quot;chiusi&quot;</span>;&#x000A;        <span class="hl kwa">print</span> <span class="hl str">&quot;).&quot;</span>&#x000A;    }&#x000A;contains_desc <span class="hl slc">! descrizione del contenuto</span>&#x000A;    <span class="hl str">&quot;Dietro gli sportelli aperti del mobiletto</span>&#x000A;<span class="hl str">        puoi vedere&quot;</span>; <span class="hl slc">! punto e virgola - niente riga nuova</span>&#x000A;&#x000A;key_object chiave_mobiletto <span class="hl slc">! un oggetto chiave_mobiletto</span>&#x000A;                            <span class="hl slc">! deve essere creato</span>&#x000A;&#x000A;holding <span class="hl num">0</span> <span class="hl slc">! comincia vuoto</span>&#x000A;capacity <span class="hl num">100</span>&#x000A;&#x000A;before&#x000A;{&#x000A;    <span class="hl kwa">object</span> DoLookUnder <span class="hl slc">! guarda sotto l&#39;oggetto</span>&#x000A;        {<span class="hl str">&quot;Niente tranne la polvere.&quot;</span>}&#x000A;    <span class="hl kwa">object</span> DoGet <span class="hl slc">! prendi l&#39;oggetto</span>&#x000A;        {<span class="hl str">&quot;L&#39;armadietto è troppo pesante per</span>&#x000A;<span class="hl str">            essere spostato!&quot;</span>}&#x000A;}&#x000A;after&#x000A;{&#x000A;    <span class="hl kwa">object</span> DoLock <span class="hl slc">! chiudi a chiave</span>&#x000A;        {<span class="hl str">&quot;Con una girata di chiavi chiudi l&#39;armadietto</span>&#x000A;<span class="hl str">            per bene.&quot;</span>}&#x000A;}&#x000A;&#x000A;<span class="hl slc">! contenitore, apribile, non aperto</span>&#x000A;<span class="hl kwa">is</span> container, openable, <span class="hl kwa">not</span> open&#x000A;&#x000A;<span class="hl slc">! chiudibile a chiave, non spostabile</span>&#x000A;<span class="hl kwa">is</span> lockable, static&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -6248,11 +6264,11 @@ Ma <code>AnyVerb(location)</code> sarà uguale alla variabile globale <code>loca
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">door_to secondroom <span class="hl slc">! un nuovo oggetto    stanza</span></code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">door_to secondroom <span class="hl slc">! un nuovo oggetto stanza</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Ora si può entrare nell&#8217;armadietto con: &#8220;go    armadietto&#8221;, &#8220;get into armadietto&#8221;, &#8220;enter armadietto&#8221;, ecc.</p>
+<p>Ora si può entrare nell&#8217;armadietto con: &#8220;go armadietto&#8221;, &#8220;get into armadietto&#8221;, &#8220;enter armadietto&#8221;, ecc.</p>
 </div>
 </div>
 </div>
@@ -6277,14 +6293,14 @@ Dovrebbe prendersi cura delle faccende generali del gioco come l&#8217;increment
 <p>Gli eventi sono utili per rendere vivo un gioco, così che piccoli sotterfugi, comportamenti, e avvenimenti possono essere forniti con piccolo sforzo.</p>
 </div>
 <div class="paragraph">
-<p>Gli eventi sono anche routine, ma la loro caratteristica speciale è che possono essere attaccati ad un particolare oggetto, e che sono eseguiti in gruppo dal comando &#8216;runevents&#8217;.</p>
+<p>Gli eventi sono anche routine, ma la loro caratteristica speciale è che possono essere attaccati ad un particolare oggetto, e che sono eseguiti in gruppo dal comando <code>runevents</code>.</p>
 </div>
 <div class="paragraph">
 <p>Gli eventi vengono definiti con</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">event&#x000A;{&#x000A;         ...&#x000A;}</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">event&#x000A;{&#x000A;    ...&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -6296,8 +6312,8 @@ Dovrebbe prendersi cura delle faccende generali del gioco come l&#8217;increment
 </div>
 </div>
 <div class="paragraph">
-<p>per gli eventi <em>allegati</em> ad un particolare oggetto. (La parola &#8216;in&#8217; è opzionale, ma è utile per favorire la leggibilità).
-Se un evento è allegato ad un oggetto viene eseguito solo quando quell&#8217;oggetto ha lo stesso '<em>nonno</em>' dell&#8217;oggetto giocatore (dove con 'nonno' ci si riferisce all&#8217;ultimo oggetto prima di 0, l&#8217;oggetto <code>nothing</code>).</p>
+<p>per gli eventi <em>allegati</em> ad un particolare oggetto. (La parola <code>in</code> è opzionale, ma è utile per favorire la leggibilità).
+Se un evento è allegato ad un oggetto viene eseguito solo quando quell&#8217;oggetto ha lo stesso '<em>nonno</em>' dell&#8217;oggetto giocatore (dove con &#8216;nonno&#8217; ci si riferisce all&#8217;ultimo oggetto prima di 0, l&#8217;oggetto <code>nothing</code>).</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -6321,7 +6337,7 @@ Questa è una possibile routine:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">event <span class="hl kwa">in</span> orologio&#x000A;{&#x000A;    <span class="hl kwa">local</span> minuti, ore&#x000A;&#x000A;    ore <span class="hl opt">=</span> counter <span class="hl opt">/</span> <span class="hl num">60</span>&#x000A;         minuti <span class="hl opt">=</span> counter <span class="hl opt">-</span> (ore <span class="hl opt">*</span> <span class="hl num">60</span>)&#x000A;&#x000A;    <span class="hl kwa">if</span> minuti <span class="hl opt">=</span> <span class="hl num">0</span>&#x000A;         {&#x000A;        <span class="hl kwa">print</span> <span class="hl str">&quot;L&#39;orologio      suona &quot;</span>;&#x000A;        <span class="hl kwa">select</span>      ore&#x000A;                 <span class="hl kwa">case</span> <span class="hl num">1</span>: <span class="hl kwa">print</span> <span class="hl str">&quot;l&#39;una&quot;</span>;&#x000A;                 <span class="hl kwa">case</span> <span class="hl num">2</span>: <span class="hl kwa">print</span> <span class="hl str">&quot;le due&quot;</span>;&#x000A;                 <span class="hl kwa">case</span> <span class="hl num">3</span>: <span class="hl kwa">print</span> <span class="hl str">&quot;le tre&quot;</span>;&#x000A;                 .&#x000A;                 .&#x000A;                 .&#x000A;                 <span class="hl kwa">case</span> <span class="hl num">12</span>: <span class="hl kwa">print</span> <span class="hl str">&quot;le dodici&quot;</span>;&#x000A;        <span class="hl kwa">print</span> <span class="hl str">&quot; in punto.&quot;</span>&#x000A;    }&#x000A;}</code></pre>
+<pre class="highlight" lang="hugo"><code class="language-hugo" data-lang="hugo">event <span class="hl kwa">in</span> orologio&#x000A;{&#x000A;    <span class="hl kwa">local</span> minuti, ore&#x000A;    ore <span class="hl opt">=</span> counter <span class="hl opt">/</span> <span class="hl num">60</span>&#x000A;    minuti <span class="hl opt">=</span> counter <span class="hl opt">-</span> (ore <span class="hl opt">*</span> <span class="hl num">60</span>)&#x000A;&#x000A;    <span class="hl kwa">if</span> minuti <span class="hl opt">=</span> <span class="hl num">0</span>&#x000A;    {&#x000A;        <span class="hl kwa">print</span> <span class="hl str">&quot;L&#39;orologio suona &quot;</span>;&#x000A;        <span class="hl kwa">select</span> ore&#x000A;            <span class="hl kwa">case</span> <span class="hl num">1</span>: <span class="hl kwa">print</span> <span class="hl str">&quot;l&#39;una&quot;</span>;&#x000A;            <span class="hl kwa">case</span> <span class="hl num">2</span>: <span class="hl kwa">print</span> <span class="hl str">&quot;le due&quot;</span>;&#x000A;            <span class="hl kwa">case</span> <span class="hl num">3</span>: <span class="hl kwa">print</span> <span class="hl str">&quot;le tre&quot;</span>;&#x000A;            .&#x000A;            .&#x000A;            .&#x000A;            <span class="hl kwa">case</span> <span class="hl num">12</span>: <span class="hl kwa">print</span> <span class="hl str">&quot;le dodici&quot;</span>;&#x000A;        <span class="hl kwa">print</span> <span class="hl str">&quot; in punto.&quot;</span>&#x000A;    }&#x000A;}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -6382,7 +6398,7 @@ Hugo gestisce i daemon come eventi speciali allegati ad oggetti che possono esse
 </div>
 <div class="paragraph">
 <p>che muove l&#8217;oggetto daemon specificato nell&#8217;area di visibilità del giocatore.
-In questo modo tutte le volte che un comando &#8216;runevents&#8217; viene eseguito (come dovrebbe essere nella routine <code>Main</code>), l&#8217;evento associato a <code>&lt;nome&gt;</code> viene eseguito.</p>
+In questo modo tutte le volte che un comando <code>runevents</code> viene eseguito (come dovrebbe essere nella routine <code>Main</code>), l&#8217;evento associato a <code>&lt;nome&gt;</code> viene eseguito.</p>
 </div>
 <div class="paragraph">
 <p>Il daemon viene disattivato usando</p>
@@ -6396,7 +6412,7 @@ In questo modo tutte le volte che un comando &#8216;runevents&#8217; viene esegu
 <p>che rimuove l&#8217;oggetto daemon dalla visibilità.</p>
 </div>
 <div class="paragraph">
-<p>Si può vedere come un daemon sia in realtà uno speciale tipo di oggetto che che posto o meno nell&#8217;area di visibilità di &#8216;runevents&#8217;, e che è l&#8217;evento associato al daemon che contiene veramente il codice.</p>
+<p>Si può vedere come un daemon sia in realtà uno speciale tipo di oggetto che che posto o meno nell&#8217;area di visibilità di <code>runevents</code>, e che è l&#8217;evento associato al daemon che contiene veramente il codice.</p>
 </div>
 <div class="paragraph">
 <p>Un fuse [miccia] è il nome con il quale si indica un timer&#8201;&#8212;&#8201;cioè qualunque evento che debba accadere dopo uno specifico periodo di tempo.
@@ -7345,7 +7361,7 @@ Queste sono:</p>
 <p>Le routine di congiunzione non sono necessarie.
 L&#8217;interprete possiede delle routine di default già pronte, sebbene queste potrebbero essere non molto utili per la maggior parte dei programmatori.
 Per questo <code>HUGOLIB.H</code> contiene le routine seguenti che implementano tutte le funzionalità della libreria.
-Se si vuole usare una routine differente al posto di quella fornita, la routine deve essere sostituita usando &#8216;replace&#8217;.</p>
+Se si vuole usare una routine differente al posto di quella fornita, la routine deve essere sostituita usando <code>replace</code>.</p>
 </div>
 <div class="sect2">
 <h3 id="_parse"><a class="anchor" href="#_parse"></a>8.1. Parse</h3>
@@ -7796,7 +7812,7 @@ Sebbene non facenti parte necessariamente del ciclo di gioco&#8201;&#8212;&#8201
 </div>
 <div class="paragraph">
 <p><code>MAIN</code>: all&#8217;inizio del ciclo di gioco l&#8217;interprete chiama la routine <code>Main</code>.
-La routine dovrebbe&#8201;&#8212;&#8201;come nei programmi di esempio forniti&#8201;&#8212;&#8201;prendersi cura dell&#8217;avanzamento del contatore dei turni, eseguire il comando &#8216;runevents&#8217; e chiamare le routine della libreria come <code>RunScripts</code> e <code>PrintStatusLine</code>.</p>
+La routine dovrebbe&#8201;&#8212;&#8201;come nei programmi di esempio forniti&#8201;&#8212;&#8201;prendersi cura dell&#8217;avanzamento del contatore dei turni, eseguire il comando <code>runevents</code> e chiamare le routine della libreria come <code>RunScripts</code> e <code>PrintStatusLine</code>.</p>
 </div>
 <div class="paragraph">
 <p><code>INPUT</code>: l&#8217;input da tastiera viene ricevuto.</p>

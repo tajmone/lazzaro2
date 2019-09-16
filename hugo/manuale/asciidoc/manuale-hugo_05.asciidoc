@@ -19,20 +19,25 @@ Una routine viene definita come
 
 [source,hugo]
 ------------------------------------------------------------
-routine <nomeroutine> [(<argomento1>,      <argomento2>, ...)]
+routine <nomeroutine> [(<argomento1>, <argomento2>, ...)]
 {
-         ...
+    ...
 }
 ------------------------------------------------------------
 
-ancora una volta è necessario assicurarsi del fatto che la parentesi graffa aperta ('`{`') compaia su una riga nuova dopo l'istruzione '`routine`'.
+ancora una volta è necessario assicurarsi del fatto che la parentesi graffa aperta (`{`) compaia su una riga nuova dopo l'istruzione `routine`.
 
-(_NOTA_: Per sostituire una vecchia routine con una nuova con lo stesso nome (come in un file di libreria), si definisce la nuova usando '`replace`' invece di '`routine`'.
+[TIP]
+================================================================================
+Per sostituire una vecchia routine con una nuova con lo stesso nome (come in un file di libreria), si definisce la nuova usando `replace` invece di `routine`.
 
 [source,hugo]
 ------------------------------------------------------------
-replace <nomeroutine> [(<argomento1>,      <argomento2>, ...)]
+replace <nomeroutine> [(<argomento1>, <argomento2>, ...)]
 ------------------------------------------------------------
+================================================================================
+
+
 
 Ad esempio
 
@@ -40,14 +45,14 @@ Ad esempio
 ------------------------------------------------------------
 routine RoutineProva(ogg)
 {
-    print "La "; ogg.name; " ha una dimensione di      ";
+    print "La "; ogg.name; " ha una dimensione di ";
     print ogg.size; "."
     return ogg.size
 }
 ------------------------------------------------------------
 
 prende un valore come argomento, lo assegna ad una variabile locale `ogg`, esegue una semplice sequenza di stampa e restituisce il valore della proprietà: `ogg.size`.
-La parola chiave '`return`' esce dalla routine corrente, e restituisce un valore se specificato.
+La parola chiave `return` esce dalla routine corrente, e restituisce un valore se specificato.
 
 Sia
 
@@ -65,7 +70,7 @@ return <espressione>
 
 sono validi.
 Se non viene fornita nessuna espressione, la routine restituisce 0.
-Se nessuna istruzione '`return`' viene incontrata, la routine prosegue l'esecuzione fino alla parentesi graffa chiusa ('`}`') e poi restituisce 0.
+Se nessuna istruzione `return` viene incontrata, la routine prosegue l'esecuzione fino alla parentesi graffa chiusa (`}`) e poi restituisce 0.
 
 `RoutineProva` può essere chiamata in diversi modi:
 
@@ -78,7 +83,7 @@ stamperà (assumendo che l'oggetto `valigia` sia stato definito come in preceden
 
 [example,role="gametranscript"]
 ================================================================================
-"La grande valigia verde ha una dimensione di    25."
+La grande valigia verde ha una dimensione di 25.
 ================================================================================
 
 
@@ -122,15 +127,14 @@ Questo significa che, ad esempio, nelle routine seguenti:
 routine RoutineProva
 {
     local a
-
     a = 5
-         Raddoppia(a)
+    Raddoppia(a)
     print number a
 }
 
 routine Raddoppia(a)
 {
-    a      = a * 2
+    a = a * 2
 }
 ------------------------------------------------------------
 
@@ -143,21 +147,20 @@ Queste due routine dovrebbero, d'altra parte, stampare "`10`":
 routine RoutineProva
 {
     local a
-
     a = 5
-    a =      Raddoppia(a)
+    a = Raddoppia(a)
     print number a
 }
 
 routine Raddoppia(a)
 {
-         return a * 2
+    return a * 2
 }
 ------------------------------------------------------------
 
 Alla variabile locale `a` di `RoutineProva` viene assegnato il valore di ritorno di `Raddoppia`.
 
-Un effetto collaterale interessante di un valore di ritorno nullo (0) può essere visto usando il comando '`print`'.
+Un effetto collaterale interessante di un valore di ritorno nullo (0) può essere visto usando il comando `print`.
 Considerando la routine `The` di `HUGOLIB.H`, che stampa l'articolo di un oggetto (ad es., "`la`" se appropriato), seguito dalla proprietà `name` [nome] dell'oggetto.
 
 [source,hugo]
@@ -173,36 +176,24 @@ Apri la valigia.
 ================================================================================
 
 
-Notate che il comando '`print`' stampa solo
+Notate che il comando `print` stampa solo
 
-[example,role="gametranscript"]
-================================================================================
-"Apri "
-================================================================================
+    "Apri "
 
 
 e
 
-[example,role="gametranscript"]
-================================================================================
-"."
-================================================================================
+    "."
 
 
 È la routine `The` che stampa
 
-[example,role="gametranscript"]
-================================================================================
-la valigia
-================================================================================
+    la valigia
 
 
-Visto che `The` restituisce 0 (la stringa nulla, o `""`), il comando '`print`' in realtà visualizza
+Visto che `The` restituisce 0 (la stringa nulla, o `""`), il comando `print` in realtà visualizza
 
-[source,hugo]
-------------------------------------------------------------
-"Apri "`, `""`, e `"."
-------------------------------------------------------------
+    "Apri ", "", e "."
 
 dove la stringa nulla (`""`) è preceduta sulla riga di output dalla stampa di `"la    "` e del nome dell'oggetto da parte di `The`.
 
@@ -224,7 +215,7 @@ un oggetto può contenere la proprietà
 ------------------------------------------------------------
 size
 {
-    return x      + 5
+    return x + 5
 }
 ------------------------------------------------------------
 
@@ -246,7 +237,9 @@ e
 [source,hugo]
 ------------------------------------------------------------
 n_to
-    {"La porta dell'ufficio      è chiusa."}
+{
+    "La porta dell'ufficio è chiusa."
+}
 ------------------------------------------------------------
 
 o
@@ -255,8 +248,8 @@ o
 ------------------------------------------------------------
 n_to
 {
-    "La      porta dell'ufficio è chiusa. ";
-    return      false
+    "La porta dell'ufficio è chiusa. ";
+    return false
 }
 ------------------------------------------------------------
 
@@ -266,18 +259,21 @@ Nel terzo caso, il messaggio personalizzato di mossa non valida verrà visualizz
 
 [example,role="gametranscript"]
 ================================================================================
-"La porta dell'ufficio è chiusa. You can't go that    way."
+La porta dell'ufficio è chiusa. You can't go that way.
 ================================================================================
 
 
-[NOTE]
+[IMPORTANT]
 ================================================================================
 Mentre le routine normali resituiscono _false_ (o 0) per default, le routine proprietà restituiscono _true_ (o 1) per default.
 ================================================================================
 
-(Per quelli che si stanno domandando come mai il valore di ritorno _true_ nel secondo caso non cerchi di effettuare uno spostamento all'oggetto numero 1, la routine `DoGo` della libreria assume che non ci sarà mai un oggetto stanza col numero uno.)
+[NOTE]
+================================================================================
+Per quelli che si stanno domandando come mai il valore di ritorno _true_ nel secondo caso non cerchi di effettuare uno spostamento all'oggetto numero 1, la routine `DoGo` della libreria assume che non ci sarà mai un oggetto stanza col numero uno.
+================================================================================
 
-Le routine proprietà possono essere eseguite direttamente usando il comando '`run`' [esegui]:
+Le routine proprietà possono essere eseguite direttamente usando il comando `run` [esegui]:
 
 [source,hugo]
 ------------------------------------------------------------
@@ -292,7 +288,7 @@ Ricordate che in qualunque punto del programma, una proprietà può essere modif
 
 [source,hugo]
 ------------------------------------------------------------
-<oggetto>.<proprietà> =    <valore>
+<oggetto>.<proprietà> = <valore>
 ------------------------------------------------------------
 
 Una routine proprietà può essere cambiata usando
@@ -320,7 +316,7 @@ o
 
 [source,hugo]
 ------------------------------------------------------------
-<proprietà> {return false}
+<proprietà> { return false }
 ------------------------------------------------------------
 
 è sufficiente.
@@ -340,7 +336,7 @@ e ad un certo punto venisse eseguito:
 
 [source,hugo]
 ------------------------------------------------------------
-found_in = {return scantinato}
+found_in = { return scantinato }
 ------------------------------------------------------------
 
 allora l'istruzione seguente non potrebbe funzionare:
@@ -360,7 +356,7 @@ Per evitarlo, come quando si "`__prende__`" una proprietà da un altro oggetto d
 <oggetto>..<proprietà>
 ------------------------------------------------------------
 
-usando '`..`' invece del normale operatore.
+usando `..` invece del normale operatore.
 
 === Esempio: "`Prendere a prestito`" le Routine Proprietà
 
@@ -372,21 +368,21 @@ Ma potrebbe presentarsi una situazione in cui uno di questi oggetti deve avere u
 ------------------------------------------------------------
 class cibo
 {
-         morsi_rimasti 5
+    morsi_rimasti 5
     mangiare
     {
-        self.morsi_rimasti =      self.morsi_rimasti - 1
-        if self.morsi_rimasti =      0
-                 remove self ! tutto mangiato
+        self.morsi_rimasti = self.morsi_rimasti - 1
+        if self.morsi_rimasti = 0
+            remove self ! tutto mangiato
     }
 }
 
 cibo alimento_naturale
 {
-         mangiare
+    mangiare
     {
-        actor.salute =      actor.salute + 1
-        run      cibo..mangiare
+        actor.salute = actor.salute + 1
+        run cibo..mangiare
     }
 }
 ------------------------------------------------------------
@@ -394,8 +390,9 @@ cibo alimento_naturale
 (Presupponendo che `morsi_rimasti`, `mangiare`, e `salute` siano definiti come proprietà, con `mangiare` che viene chiamata tutte le volte che un oggetto `cibo` viene mangiato).
 
 In questo caso sarebbe stato scomodo dover riscrivere la routine `cibo.mangiare` per l'oggetto `alimento_naturale` solo perché quest'ultimo deve anche incrementare `actor.salute`.
-Usando '`..`' si chiama `cibo.mangiare` con `self` impostata a `alimento_naturale`, non la classe `cibo`, così che `cibo.mangiare` riguarda `alimento_naturale`.
+Usando `..` si chiama `cibo.mangiare` con `self` impostata a `alimento_naturale`, non la classe `cibo`, così che `cibo.mangiare` riguarda `alimento_naturale`.
 Questo consente di apportare delle modifiche ad ogni proprietà, attributo, o routine proprietà in una classe, e quella modifica verrà ripetuta in tutti gli oggetti costruiti da quella classe.
+
 
 == Le routine Before e After
 
@@ -406,7 +403,7 @@ Proprietà complesse come `before` e `after` vengono definite con
 
 [source,hugo]
 ------------------------------------------------------------
-property <nome proprietà> $complex <valore      default>
+property <nome proprietà> $complex <valore default>
 ------------------------------------------------------------
 
 come in:
@@ -414,7 +411,7 @@ come in:
 [source,hugo]
 ------------------------------------------------------------
 property before $complex
-property after      $complex
+property after $complex
 ------------------------------------------------------------
 
 Questa è la sintassi della proprietà `before`:
@@ -423,11 +420,11 @@ Questa è la sintassi della proprietà `before`:
 ------------------------------------------------------------
 before
 {
-         <uso1> <routineverbo1>[, <routineverbo2>,...]
+    <uso1> <routineverbo1>[, <routineverbo2>, ...]
     {
         ...
     }
-    <uso2>      <routineverbo3>[, <routineverbo4>,...]
+    <uso2> <routineverbo3>[, <routineverbo4>, ...]
     {
         ...
     }
@@ -435,13 +432,13 @@ before
 }
 ------------------------------------------------------------
 
-(La routine `after` è uguale, basta sostituire '`after`' a '`before`').
+(La routine `after` è uguale, basta sostituire `after` a `before`).
 
 Lo specificatore `<uso>` è il valore con il quale l'oggetto specificato viene comparato.
-Più comunemente, è "`object`", "`xobject`", "`location`", "`actor`", "`parent(object)`", ecc.
+Più comunemente, è `object`, `xobject`, `location`, `actor`, `parent(object)`, ecc.
 La `<routineverbo>` è il nome della routine verbo a cui l'uso in questione viene applicato.
 
-Se `<oggetto>.before` viene controllata, con la variabile globale `verbroutine` impostata con una delle routine verbo specificate nella proprietà `before`, e `<uso>` in quell'instanza è "`object`", allora il blocco di codice seguente viene eseguito.
+Se `<oggetto>.before` viene controllata, con la variabile globale `verbroutine` impostata con una delle routine verbo specificate nella proprietà `before`, e `<uso>` in quell'instanza è `object`, allora il blocco di codice seguente viene eseguito.
 Se non viene trovata nessuna corrispondenza, `<oggetto>.before` restituisce _false_ [falso].
 
 Questo è un esempio più chiaro che usa l'oggetto `valigia` che stiamo sviluppando:
@@ -450,26 +447,28 @@ Questo è un esempio più chiaro che usa l'oggetto `valigia` che stiamo sviluppa
 ------------------------------------------------------------
 before
 {
-    object      DoEat
+    object DoEat
     {
-        "Non puoi mangiare la      valigia!"
+        "Non puoi mangiare la valigia!"
     }
 }
 
 after
 {
-    object      DoGet
+    object DoGet
     {
-        "Con grande sforzo      raccogli la valigia."
+        "Con grande sforzo raccogli la valigia."
     }
     xobject DoPutIn
-         {
+    {
         "Hai messo ";
         The(object)
         " nella valigia."
     }
 }
 ------------------------------------------------------------
+
+// @TODO: Missing XRef
 
 Ognuno di questi esempi restituisce _true_, scavalcando quindi l'operazione di default dell'interprete (controllate la sezione sul "`Ciclo del gioco`").
 Il modo di ingannare l'interprete per farlo continuare normalmente, come se non fossero state trovate proprietà `before` o `after`, è quello di restituire _false_ dalla routine proprietà.
@@ -478,9 +477,11 @@ Il modo di ingannare l'interprete per farlo continuare normalmente, come se non 
 ------------------------------------------------------------
 after
 {
-    object      DoGet
-    {"Bene. ";
-    return false}
+    object DoGet
+    {
+        "Bene. ";
+        return false
+    }
 }
 ------------------------------------------------------------
 
@@ -488,24 +489,24 @@ avrà come risultato:
 
 [example,role="gametranscript"]
 ================================================================================
->get valigia
-Bene.    Taken.
+&gt; _get valigia_ +
+Bene. Taken.
 ================================================================================
 
 
-Visto che la routine `after` restituisce _false_, e che la risposta predefinita della libreria per una chiamata a `DoGet` che ha avuto successo è "`Taken`." [Preso].
+Visto che la routine `after` restituisce _false_, e che la risposta predefinita della libreria per una chiamata a `DoGet` che ha avuto successo è "`Taken.`" [Preso].
 
 È importante ricordare che, a differenza delle altre routine, `before` e `after` sono routine "`__aggiuntive__`"; cioè, una routine `before` (o `after`) definita in una classe ereditata o un oggetto non viene sovrascritta da una nuova routine proprietà nel nuovo oggetto.
 Invece la definizione della nuova routine viene -- in sostanza -- aggiunta.
-Una proprietà aggiuntiva viene definita usando il qualificatore '`$additive`', come in:
+Una proprietà aggiuntiva viene definita usando il qualificatore `$additive`, come in:
 
 [source,hugo]
 ------------------------------------------------------------
-property <nome proprietà> $additive <valore      default>
+property <nome proprietà> $additive <valore default>
 ------------------------------------------------------------
 
-Tutte le subroutine `before/after` precedenti vengono sovrapposte.
-Il processo di esame di una proprietà `before/after` comincia con l'oggetto presente, andando indietro attraverso i parenti dell'oggetto fino a che viene trovata una combinazione `uso/routineverbo` valida; una volta che la corrispondenza è stata trovata, nessun'altra classe precedente nell'ereditarietà viene processata (a meno che la routine proprietà in questione restituisca _false_).
+Tutte le subroutine `before`/`after` precedenti vengono sovrapposte.
+Il processo di esame di una proprietà `before`/`after` comincia con l'oggetto presente, andando indietro attraverso i parenti dell'oggetto fino a che viene trovata una combinazione `uso`/`routineverbo` valida; una volta che la corrispondenza è stata trovata, nessun'altra classe precedente nell'ereditarietà viene processata (a meno che la routine proprietà in questione restituisca _false_).
 
 // @TODO: Check were this note should end! (it seems it could go on for many paragraphs!)
 
@@ -519,21 +520,21 @@ Ad esempio,
 ------------------------------------------------------------
 before
 {
-         xobject
+    xobject
     {
         ...
     }
 }
 ------------------------------------------------------------
 
-La routine specificata viene eseguita ogni volta che l'oggetto in questione è l'`xobject` per *OGNI* input valido.
+La routine specificata viene eseguita ogni volta che l'oggetto in questione è l`'``xobject`` per *OGNI* input valido.
 ================================================================================
 
 Se questo blocco non specifico capita prima di qualunque blocco che specifica routine verbo, allora i blocchi seguenti, se corrispondenti, verranno eseguiti a condizione che il blocco non restituisca _true_.
-Se il blocco non specifico viene dopo gli altri blocchi, allora verrà eseguito solo se nessuna altra combinazione `object/routineverbo` viene trovata.
+Se il blocco non specifico viene dopo gli altri blocchi, allora verrà eseguito solo se nessuna altra combinazione `object`/`routineverbo` viene trovata.
 
 Un difetto di questa non specificazione è che tutte le routine verbo vengono controllate -- sia `verbs` che `xverbs`.
-Questo può essere particolarmente sgradevole nel caso delle proprietà `before/after` per le locazioni, dove una risposta non specifica viene eseguita anche per '`save`', '`restore`', ecc.
+Questo può essere particolarmente sgradevole nel caso delle proprietà `before`/`after` per le locazioni, dove una risposta non specifica viene eseguita anche per '`save`', '`restore`', ecc.
 
 Per evitarlo la libreria fornisce la funzione `AnyVerb` che come argomento accetta un oggetto e restituisce il numero di quell'oggetto se la routine `verbroutine` attuale non è nel gruppo degli `xverb`; altrimenti restituisce _false_.
 Perciò può essere usata tramite:
@@ -542,7 +543,7 @@ Perciò può essere usata tramite:
 ------------------------------------------------------------
 before
 {
-         AnyVerb(location)
+    AnyVerb(location)
     {
         ...
     }
@@ -555,7 +556,7 @@ al posto di
 ------------------------------------------------------------
 before
 {
-         location
+    location
     {
         ...
     }
@@ -574,56 +575,55 @@ A questo punto è stato coperto abbastanza materiale per sviluppare un esempio c
 ------------------------------------------------------------
 object mobiledilegno "mobiletto di legno"
 {
-    in empryroom
+    in emptyroom
     article "un"
-         nouns "mobiletto", "scaffale", "mensole", \
-        "mobilio", "sportelli",      "sportello"
-    adjectives "legno", "fine",      "mogano"
-
+    nouns "mobiletto", "scaffale", "mensole", \
+        "mobilio", "sportelli", "sportello"
+    adjectives "legno", "fine", "mogano"
     short_desc ! descrizione sintetica
-        "Un mobiletto di legno è      posto lungo una parete."
-    when_open ! quando      aperto
-        "Un mobiletto      di legno aperto è posto lungo una parete."
-         long_desc ! descrizione estesa
+        "Un mobiletto di legno è posto lungo una parete."
+    when_open ! quando aperto
+        "Un mobiletto di legno aperto è posto lungo una parete."
+    long_desc ! descrizione estesa
     {
-        "Il mobiletto è fatto di      fine legno di mogano,
-        costruito a mano da un      falegname esperto. Nella parte
-        anteriore ci sono due      sportelli (al momento ";
+        "Il mobiletto è fatto di fine legno di mogano,
+        costruito a mano da un falegname esperto. Nella parte
+        anteriore ci sono due sportelli (al momento ";
         if self is open
-                 print "aperti";
-             else: print "chiusi";
+            print "aperti";
+        else: print "chiusi";
         print ")."
     }
-contains_desc ! descrizione del      contenuto
-    "Dietro gli sportelli aperti del      mobiletto
-        puoi      vedere"; ! punto e virgola - niente riga nuova
+contains_desc ! descrizione del contenuto
+    "Dietro gli sportelli aperti del mobiletto
+        puoi vedere"; ! punto e virgola - niente riga nuova
 
 key_object chiave_mobiletto ! un oggetto chiave_mobiletto
-! deve essere creato
+                            ! deve essere creato
 
 holding 0 ! comincia vuoto
 capacity 100
 
 before
 {
-    object      DoLookUnder ! guarda sotto l'oggetto
-        {"Niente tranne la      polvere."}
-    object DoGet ! prendi      l'oggetto
-             {"L'armadietto è troppo pesante per
-                 essere spostato!"}
+    object DoLookUnder ! guarda sotto l'oggetto
+        {"Niente tranne la polvere."}
+    object DoGet ! prendi l'oggetto
+        {"L'armadietto è troppo pesante per
+            essere spostato!"}
 }
 after
 {
     object DoLock ! chiudi a chiave
-        {"Con una girata di      chiavi chiudi l'armadietto
-                 per bene."}
+        {"Con una girata di chiavi chiudi l'armadietto
+            per bene."}
 }
 
 ! contenitore, apribile, non aperto
-is container,      openable, not open
+is container, openable, not open
 
 ! chiudibile a chiave, non spostabile
-is lockable,      static
+is lockable, static
 }
 ------------------------------------------------------------
 
@@ -633,10 +633,11 @@ _RISPOSTA_: basta aggiungere una proprietà `door_to`, come in:
 
 [source,hugo]
 ------------------------------------------------------------
-door_to secondroom ! un nuovo oggetto    stanza
+door_to secondroom ! un nuovo oggetto stanza
 ------------------------------------------------------------
 
-Ora si può entrare nell'armadietto con: "`go    armadietto`", "`get into armadietto`", "`enter armadietto`", ecc.
+Ora si può entrare nell'armadietto con: "`go armadietto`", "`get into armadietto`", "`enter armadietto`", ecc.
+
 
 == Init e Main
 
@@ -649,11 +650,12 @@ La routine dovrebbe configurare tutte le variabili, gli oggetti e gli array nece
 `Main` viene chiamata ad ogni turno.
 Dovrebbe prendersi cura delle faccende generali del gioco come l'incremento del contatore, così come l'esecuzione di eventi e script.
 
+
 == Eventi
 
 Gli eventi sono utili per rendere vivo un gioco, così che piccoli sotterfugi, comportamenti, e avvenimenti possono essere forniti con piccolo sforzo.
 
-Gli eventi sono anche routine, ma la loro caratteristica speciale è che possono essere attaccati ad un particolare oggetto, e che sono eseguiti in gruppo dal comando '`runevents`'.
+Gli eventi sono anche routine, ma la loro caratteristica speciale è che possono essere attaccati ad un particolare oggetto, e che sono eseguiti in gruppo dal comando `runevents`.
 
 Gli eventi vengono definiti con
 
@@ -661,7 +663,7 @@ Gli eventi vengono definiti con
 ------------------------------------------------------------
 event
 {
-         ...
+    ...
 }
 ------------------------------------------------------------
 
@@ -675,8 +677,8 @@ event [in] <oggetto>
 }
 ------------------------------------------------------------
 
-per gli eventi _allegati_ ad un particolare oggetto. (La parola '`in`' è opzionale, ma è utile per favorire la leggibilità).
-Se un evento è allegato ad un oggetto viene eseguito solo quando quell'oggetto ha lo stesso '_nonno_' dell'oggetto giocatore (dove con 'nonno' ci si riferisce all'ultimo oggetto prima di 0, l'oggetto `nothing`).
+per gli eventi _allegati_ ad un particolare oggetto. (La parola `in` è opzionale, ma è utile per favorire la leggibilità).
+Se un evento è allegato ad un oggetto viene eseguito solo quando quell'oggetto ha lo stesso '_nonno_' dell'oggetto giocatore (dove con '`nonno`' ci si riferisce all'ultimo oggetto prima di 0, l'oggetto `nothing`).
 
 [NOTE]
 ================================================================================
@@ -693,21 +695,20 @@ Questa è una possibile routine:
 event in orologio
 {
     local minuti, ore
-
     ore = counter / 60
-         minuti = counter - (ore * 60)
+    minuti = counter - (ore * 60)
 
     if minuti = 0
-         {
-        print "L'orologio      suona ";
-        select      ore
-                 case 1: print "l'una";
-                 case 2: print "le due";
-                 case 3: print "le tre";
-                 .
-                 .
-                 .
-                 case 12: print "le dodici";
+    {
+        print "L'orologio suona ";
+        select ore
+            case 1: print "l'una";
+            case 2: print "le due";
+            case 3: print "le tre";
+            .
+            .
+            .
+            case 12: print "le dodici";
         print " in punto."
     }
 }

@@ -69,7 +69,8 @@ The whole document now needs to be thoroughly revised, chapter by chapter, by re
     + [ ] Proofread whole chapter.
     + [ ] Fix code blocks.
     + [ ] Fix typography.
-    + [ ] Fix cross-references.
+    + [ ] Fix cross-references:
+        * [ ] §5.3 &rarr; _Ciclo del gioco_.
     + [ ] Fix dead links: point to current location (but preserve old URL in t ext).
 - [ ] 6. **MICCE, DEMONI E SCRIPT**
     + [ ] Proofread whole chapter.
@@ -189,14 +190,22 @@ Once the document is production-ready:
 
 I might need to revise my Highlight langDef for Hugo, for there might be some missing keywords (need to check if they actually are):
 
+- [ ] `$additive`?
+- [ ] `$complex`?
+- [ ] `after`?
 - [ ] `alias`?
 - [ ] `attribute`?
+- [ ] `before`?
+- [ ] `class`?
 - [ ] `constant`?
 - [ ] `enumerate`?
+- [ ] `event`?
 - [ ] `global`?
 - [ ] `inherits`?
 - [ ] `property`?
+- [ ] `replace`?
 - [ ] `routine`?
+- [ ] `self`?
 
 <!-----------------------------------------------------------------------------
                                REFERENCE LINKS

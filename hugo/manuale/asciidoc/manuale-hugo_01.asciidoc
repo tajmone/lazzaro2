@@ -26,7 +26,7 @@ link:http://www.generalcoffee.com/hugo/gethugo.html[http://www.geocities.com/hol
 == Note legali
 
 I programmi creati usando il compilatore di Hugo (Hugo Compiler) sono di proprietà dei rispettivi autori.
-Fate attenzione al fatto, comunque, che i file della libreria sono copyright by Kent Tessman, il creatore di Hugo, così come l'inteprete (Hugo Engine).
+Fate attenzione al fatto, comunque, che i file della libreria sono copyright by Kent Tessman, il creatore di Hugo, così come l'interprete (Hugo Engine).
 
 L'uso dei file della libreria di Hugo e la distribuzione dell'interprete sono autorizzati fino a quando le transazioni sono non commerciali e gratuite (tranne il caso in cui il prezzo richiesto serva a coprire i costi di distribuzione), e che i file della libreria e l'interprete non siano distribuiti in forma modificata.
 

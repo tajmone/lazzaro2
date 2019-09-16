@@ -19,7 +19,7 @@ Pending tasks before merging in public branch.
     - [Formatting](#formatting)
     - [Chapters & Sections](#chapters-sections)
     - [Contents](#contents)
-    - [CSS](#css)
+- [Sass/CSS](#sasscss)
 - [Highlight Hugo](#highlight-hugo)
 
 <!-- /MarkdownTOC -->
@@ -60,7 +60,10 @@ The whole document now needs to be thoroughly revised, chapter by chapter, by re
     + [ ] Proofread whole chapter.
     + [ ] Fix code blocks.
     + [ ] Fix typography.
-    + [ ] Fix cross-references.
+    + [ ] Fix cross-references:
+        * [ ] §4.1 &rarr; _Risorse_.
+        * [ ] §4.7 &rarr; _ROUTINE DI CONGIUNZIONE_.
+        * [ ] §4.8 &rarr; _App, E_.
     + [ ] Fix dead links: point to current location (but preserve old URL in t ext).
 - [ ] 5. **ROUTINE ED EVENTI**
     + [ ] Proofread whole chapter.
@@ -169,9 +172,15 @@ Once the document is production-ready:
 
 ## Contents
 
-## CSS
+# Sass/CSS
 
 - [x] Customize theme for Hugo.
+    + [ ] Add `<span>` classes (e.g. in $4.4):
+        * [ ] `.underlined` (for inline `[underlined]#sottolineato#`)
+        * [ ] `.red` (predefined, but ugly)
+        * [ ] `.yellow` (predefined, but ugly)
+        * [ ] `.green` (predefined, but ugly)
+        * [ ] `.monospaced` (anziché usare inline-code)
 - [ ] Add additional roles for Hugo:
     + [ ] syntax
     + [ ] bad example?
@@ -182,9 +191,12 @@ I might need to revise my Highlight langDef for Hugo, for there might be some mi
 
 - [ ] `alias`?
 - [ ] `attribute`?
+- [ ] `constant`?
+- [ ] `enumerate`?
 - [ ] `global`?
-- [ ] `property`?
 - [ ] `inherits`?
+- [ ] `property`?
+- [ ] `routine`?
 
 <!-----------------------------------------------------------------------------
                                REFERENCE LINKS
